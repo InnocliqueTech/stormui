@@ -21,8 +21,8 @@ const Alert = ({data}) => {
         }
       }, [data])
       return (
-    <Card style={{ minHeight: '320px', borderRadius: 5 }}>
-        <Card.Body>
+    <Card className='card-social' style={{ minHeight: '320px', borderRadius: 5 }}>
+        <Card.Body style={{padding:'16px !important'}}>
             <Row className="mb-2 justify-content-around">
                 <Col md={1} sm={1} xs={1} className="alertContainer">
                     <Image src={alert} alt="alert" className="alertIcon" />
@@ -49,23 +49,25 @@ const Alert = ({data}) => {
                     </div>
                 </Col>
             </Row>
-            {data.alerts && data.alerts.map((alert, index) => {
-                return (
-                  
-                    <Row key={index} style={{ borderBottom: '1px solid #ccc', paddingBottom: 5, marginTop: 10 }}>
-                        <Col md={1} sm={1} xs={1}>
-                            <Image src={meter} alt="gateway" className="align-items-center float-start mt-2" />
-                        </Col>
-                        <Col className='alertTitle' md={6} xs={6} sm={6}>
-                            <div className="alertheading">{alert.alertName}</div>
-                            <div className="alertsubheading">{alert.alertDescription}</div>
-                        </Col>
-                        <Col md={4} sm={4} xs={4}>
-                            <h6 className="align-items-center float-end alertsubheading mt-3">{alert.alertTime}</h6>
-                        </Col>
-                    </Row>
-                )
-            })}
+            <div className='alert-scroll'>
+              {data.alerts && data.alerts.map((alert, index) => {
+                  return (
+                    
+                      <Row key={index} style={{ borderBottom: '1px solid #ccc', paddingBottom: 5, marginTop: 10 }}>
+                          <Col md={1} sm={1} xs={1}>
+                              <Image src={meter} alt="gateway" className="align-items-center float-start mt-2" />
+                          </Col>
+                          <Col className='alertTitle' md={6} xs={6} sm={6}>
+                              <div className="alertheading">{alert.alertName}</div>
+                              <div className="alertsubheading">{alert.alertDescription}</div>
+                          </Col>
+                          <Col md={4} sm={4} xs={4}>
+                              <h6 className="align-items-center float-end alertsubheading mt-3">{alert.alertTime}</h6>
+                          </Col>
+                      </Row>
+                  )
+              })}
+          </div>
 
             {/* <Row style={{ borderBottom: '1px solid #ccc', paddingBottom: 5, marginTop: 10 }}>
                 <Col md={1} sm={1} xs={1}>

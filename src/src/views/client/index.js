@@ -93,7 +93,7 @@ const Client = () => {
         <Col md={6} xl={4} sm={12}>
           <Link style={{cursor:'pointer' , textDecoration:'none'}} onClick={handleClickOpen}>
           <Card className="card-social">
-            <Card.Body className="border-bottom">
+            <Card.Body className="">
               <ClientDma data={dashboardData.totalMeters} />
             </Card.Body>
           </Card>
@@ -104,7 +104,7 @@ const Client = () => {
 
         </Col>
         <Col md={6} xl={7}>
-          <Card className="user-list">
+          <Card className="card-social">
             <Card.Body className="p-0">
               <div className="row">
                 <div className="col-md-12">

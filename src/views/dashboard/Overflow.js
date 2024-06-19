@@ -89,7 +89,7 @@ const Overflow = (props) => {
   //   handleReset
 
   return (
-    <div className="col-span-12 px-4 pt-3 rounded-sm bg-white px-1 pt-7.5 shadow-default sm:px-2 xl:col-span-5">
+    <div className="col-span-12 rounded-sm bg-white px-1 shadow-default sm:px-2 xl:col-span-6">
       <Row>
         <Col md={1} sm={1} xs={1} className='iconContainer' style={{ backgroundColor: '#F6C574' }}>
           <Image src={over} alt="over" className='icon' />
@@ -103,7 +103,7 @@ const Overflow = (props) => {
           </div>
         </Col>
       </Row>
-      <ReactApexChart options={options} series={data} type="bar" width="100%" height={350} />
+      <ReactApexChart options={options} series={data} type="bar" width="100%" height={250} />
     </div>
   );
 };

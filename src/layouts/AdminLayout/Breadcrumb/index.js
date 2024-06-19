@@ -141,8 +141,7 @@ const Breadcrumb = () => {
                       </Select>
                     </FormControl> */}
                     <div className="form-group selectcustom">
-                    <i className="zmdi zmdi-chevron-down" />
-                      <select>
+                      <select className="form-control">
                         <option>Select Client</option>
                         <option>All</option>
                         <option>KSCCL-WATER ..</option>

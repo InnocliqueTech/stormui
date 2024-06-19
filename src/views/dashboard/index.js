@@ -78,7 +78,7 @@ const DashDefault = () => {
       <Row>
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
-            <Card.Body className="border-bottom">
+            <Card.Body className="">
               <CustomPieChart name="Zones" data={dashboardData.totalZone} />
             </Card.Body>
           </Card>
@@ -86,14 +86,14 @@ const DashDefault = () => {
 
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
-            <Card.Body className="border-bottom">
+            <Card.Body className="">
               <TotalDma data={dashboardData.totalDma} />
             </Card.Body>
           </Card>
         </Col>
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
-            <Card.Body className="border-bottom">
+            <Card.Body className="">
               <TotalMeters data={dashboardData.totalMeters} />
             </Card.Body>
           </Card>
@@ -102,7 +102,7 @@ const DashDefault = () => {
           <Alert data={alertData} />
         </Col>
         <Col md={6} xl={7}>
-          <Card className="user-list">
+          <Card className="card-social">
             <Card.Body className="p-0">
               <div className="row">
                 <div className="col-md-12">

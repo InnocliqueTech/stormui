@@ -97,7 +97,7 @@ const routes = [
       },
       {
         exact: 'true',
-        path: '/app/settings',
+        path: '/app/setting',
         element: lazy(() => import('./views/client/settings'))
       },
       {

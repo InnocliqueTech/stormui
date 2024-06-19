@@ -96,6 +96,11 @@ const routes = [
         element: lazy(() => import('./views/client/MeterList'))
       },
       {
+        exact: 'true',
+        path: '/app/settings',
+        element: lazy(() => import('../views/client/settings'))
+      },
+      {
         path: '*',
         exact: 'true',
         element: () => <Navigate to={BASE_URL} />

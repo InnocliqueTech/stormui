@@ -76,13 +76,11 @@ const Breadcrumb = () => {
   }
   if (item && item.type === 'item') {
     title = item.title;
-    // itemContent = (
-    //   <ListGroup.Item as="li" bsPrefix=" " className="breadcrumb-item">
-    //     <Link to="#">{title}</Link>
-    //   </ListGroup.Item>
-    // );
 
-    if (item.breadcrumbs !== false) {
+    if (title === 'Settings') {
+      // Don't render breadcrumbContent for Settings page
+      breadcrumbContent = null;
+    } else {
       breadcrumbContent = (
         <div className="page-header pb-3">
           <div className="page-block">

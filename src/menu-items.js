@@ -33,7 +33,7 @@ const menuItems = {
           title: 'Settings',
           type: 'item',
           icon: 'feather icon-settings',
-          url: '/app/settings'
+          url: '/app/setting'
         }
       ]
     }

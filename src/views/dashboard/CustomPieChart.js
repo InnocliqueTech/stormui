@@ -15,7 +15,6 @@ const options = {
     fontFamily: 'inter',
     fontWeight: 600,
     fontSize: '14px',
-
     markers: {
       radius: 0
     }
@@ -26,36 +25,34 @@ const options = {
   plotOptions: {
     pie: {
       donut: {
-        size: 60,
+        size: '60%',
         background: 'transparent',
         labels: {
           show: true,
           total: {
             show: true,
             label: "Total Zones",
-            fontSize: 12,
+            fontSize: '12px',
             color: "#495057",
             fontWeight: 400
           },
           name: {
             show: true,
-            fontSize: 12,
+            fontSize: '12px',
             color: "#495057",
             fontWeight: 400
           },
           value: {
             show: true,
-            fontSize: 24,
+            fontSize: '24px',
             fontWeight: 700,
             color: "#000"
           }
         }
-      
       },
     }
   },
-  labels: ['Active 88%', 'Inactive 80%'],
-
+  labels: ['Active', 'Inactive'],
   dataLabels: {
     enabled: false
   },
@@ -78,26 +75,20 @@ const options = {
     }
   ]
 };
+
 const CustomPieChart = (props) => {
   const [data, setData] = useState([]);
   const [opt, setOpt] = useState(options);
+
   useEffect(() => {
     if (props && props.data) {
-      setData([parseInt(props.data.activeZone), parseInt(props.data.InactiveZone)])
+      setData([parseInt(props.data.activeZones), parseInt(props.data.inactiveZones)]);
       setOpt({
         ...options,
-        labels: [`Active ${props.data.activeZone}`, `Inactive ${props.data.InactiveZone}`]
-      })
+        labels: [`Active ${props.data.activeZones}`, `Inactive ${props.data.inactiveZones}`]
+      });
     }
-  }, [props])
-
-
-  // const handleReset = () => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     series: [65, 34, 12, 56],
-  //   }));
-  // };
+  }, [props]);
 
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5">

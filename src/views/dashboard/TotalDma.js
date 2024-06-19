@@ -15,7 +15,6 @@ const options = {
     fontFamily: 'inter',
     fontWeight: 600,
     fontSize: '14px',
-
     markers: {
       radius: 0
     }
@@ -23,30 +22,30 @@ const options = {
   fill: {
     opacity: 1
   },
-  labels: ['Active 88%', 'Inactive 88%', 'Faculty 88%'],
+  labels: ['Active 88%', 'Inactive 88%', 'Faulty 88%'],
   plotOptions: {
     pie: {
       donut: {
-        size: 60,
+        size: '60%',
         background: 'transparent',
         labels: {
           show: true,
           total: {
             show: true,
             label: "Total DMA's",
-            fontSize: 12,
+            fontSize: '12px',
             color: "#495057",
             fontWeight: 400
           },
           name: {
             show: true,
-            fontSize: 12,
+            fontSize: '12px',
             color: "#495057",
             fontWeight: 400
           },
           value: {
             show: true,
-            fontSize: 24,
+            fontSize: '24px',
             fontWeight: 700,
             color: "#000"
           }
@@ -54,7 +53,6 @@ const options = {
       }
     },
   },
-  
   dataLabels: {
     enabled: false
   },
@@ -74,7 +72,6 @@ const options = {
           width: 280
         },
       },
-      
     }
   ]
 };
@@ -82,15 +79,25 @@ const options = {
 const TotalDma = (props) => {
   const [data, setData] = useState([]);
   const [opt, setOpt] = useState(options);
-  useEffect(()=>{
-    if(props && props.data) {
-      setData([parseInt(props.data.activeCount), parseInt(props.data.InactiveZone), parseInt(props.data.faultyZone), ])
+
+  useEffect(() => {
+    if (props && props.data) {
+      setData([
+        parseInt(props.data.activeDma), 
+        parseInt(props.data.inactiveDma), 
+        parseInt(props.data.faultyDma)
+      ]);
       setOpt({
         ...options,
-        labels: [`Active ${((props.data.activeCount/props.data.totalCount) * 100).toFixed(0)}%`, `Inactive ${((props.data.InactiveZone/props.data.totalCount) * 100).toFixed(0)}%`, `Faculty ${((props.data.faultyZone/props.data.totalCount) * 100).toFixed(0)}%`]
-      })
+        labels: [
+          `Active ${((props.data.activeDma / props.data.totalCount) * 100).toFixed(0)}%`, 
+          `Inactive ${((props.data.inactiveDma / props.data.totalCount) * 100).toFixed(0)}%`, 
+          `Faulty ${((props.data.faultyDma / props.data.totalCount) * 100).toFixed(0)}%`
+        ]
+      });
     }
-  }, [props])
+  }, [props]);
+
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5">
       <Row>
@@ -102,26 +109,6 @@ const TotalDma = (props) => {
         </Col>
       </Row>
       <ReactApexChart options={opt} series={data} type="donut" height={255} />
-      {/* <div className="row">
-        <div className="col-md-1">
-         <div style={{backgroundColor:'#3C50E0', height:15, width:15}}></div>
-        </div>
-        <div className="col-md-5">
-         Active 80%
-        </div>
-        <div className="col-md-1">
-         <div style={{backgroundColor:'#3C50E0', height:15, width:15}}></div>
-        </div>
-        <div className="col-md-5">
-         Inactive 80%
-        </div>
-        <div className="col-md-1">
-         <div style={{backgroundColor:'#3C50E0', height:15, width:15}}></div>
-        </div>
-        <div className="col-md-5">
-         Faculty 80%
-        </div>
-      </div> */}
     </div>
   );
 };

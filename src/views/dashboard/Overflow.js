@@ -103,7 +103,7 @@ const Overflow = (props) => {
           </div>
         </Col>
       </Row>
-      <ReactApexChart options={options} series={data} type="bar" width="100%" height={250} />
+      <ReactApexChart options={options} series={data} type="bar" width="100%" height={350} />
     </div>
   );
 };

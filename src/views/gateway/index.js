@@ -3,15 +3,15 @@ import { Row, Col, Card, Image } from 'react-bootstrap';
 // import { Link } from 'react-router-dom';
 import TotalDma from '../dashboard/TotalDma';
 import TotalMeters from '../dashboard/TotalMeters';
-import Overflow from '../dashboard/Overflow';
 import axios from 'axios';
-import { BASE_API_URL } from '../../config/constant';
+import { BASE_API_URL, BASE_API_URL1 } from '../../config/constant';
 import "../dashboard/dashboard.scss";
 import Alert from '../dashboard/Alert';
 import CustomPieChart from '../dashboard/CustomPieChart';
 import fluent from '../../assets/images/fluent_water.svg';
 import { Download, Refresh, ReportProblemOutlined } from '@mui/icons-material';
 import GatewayTable from './GatewayTable';
+import DMAFlowChart from '../dashboard/DmaFlowChart';
 
 
 const Gateway = () => {
@@ -23,7 +23,9 @@ const Gateway = () => {
   }, [])
   const getDashboardData = async() => {
     try {
-      const response = await axios.post(BASE_API_URL + "/getTotalDashboards");
+      const response = await axios.post(BASE_API_URL1 + "dashboard/getAllDashboardValues", {
+        clientId: 1
+      });
       setDashboardData(response.data)
       const aData = await axios.post(BASE_API_URL + "/getAlerts");
       setAlertData(aData.data);
@@ -68,7 +70,7 @@ const Gateway = () => {
             <Card.Body className="p-0">
               <div className="row">
                 <div className="col-md-12">
-                  <Overflow data={outFlowData} />
+                  <DMAFlowChart data={outFlowData} />
                 </div>
               </div>
             </Card.Body>

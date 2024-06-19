@@ -1,37 +1,78 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card} from 'react-bootstrap';
-// import { Link } from 'react-router-dom';
+import { Row, Col, Card } from 'react-bootstrap';
 import CustomPieChart from './CustomPieChart';
 import TotalDma from './TotalDma';
 import TotalMeters from './TotalMeters';
 import Overflow from './Overflow';
 import axios from 'axios';
-import { BASE_API_URL } from '../../config/constant';
+import { BASE_API_URL, BASE_API_URL1 } from '../../config/constant';
 import "./dashboard.scss";
 import Alert from './Alert';
-
 
 const DashDefault = () => {
   const [dashboardData, setDashboardData] = useState({});
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
-  useEffect(()=>{
+
+  useEffect(() => {
     getDashboardData();
-  }, [])
-  const getDashboardData = async() => {
+  }, []);
+
+  const getDashboardData = async () => {
     try {
-      const response = await axios.post(BASE_API_URL + "/getTotalDashboards");
-      setDashboardData(response.data)
+      const response = await axios.post(BASE_API_URL1 + 'dashboard/getAllDashboardValues', {
+        clientId: 1
+      });
+      console.log('API Response:', response.data); // Debugging: Log the API response
+      const parsedData = parseDashboardData(response.data);
+      console.log('Parsed Dashboard Data:', parsedData); // Debugging: Log the parsed dashboard data
+      setDashboardData(parsedData);
+
       const aData = await axios.post(BASE_API_URL + "/getAlerts");
       setAlertData(aData.data);
+
       const flowData = await axios.post(BASE_API_URL + "/getTotalOutFlow");
       setOutFlowData(flowData.data);
       console.log(flowData);
-    }
-    catch(e){
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
   }
+
+  const parseNumber = (value) => {
+    console.log('Parsing value:', value); // Debugging: Log each value being parsed
+    const number = Number(value);
+    console.log('Parsed number:', number); // Debugging: Log the parsed number
+    return isNaN(number) ? 0 : number;
+  }
+
+  const parseDashboardData = (data) => {
+    return {
+      totalZone: {
+        activeZones: parseNumber(data.totalZone?.activeZones),
+        inactiveZones: parseNumber(data.totalZone?.inactiveZones),
+        totalCount: parseNumber(data.totalZone?.totalCount),
+      },
+      totalDma: {
+        activeDma: parseNumber(data.totalDma?.activeDma),
+        inactiveDma: parseNumber(data.totalDma?.inactiveDma),
+        faultyDma: parseNumber(data.totalDma?.faultyDma),
+        totalCount: parseNumber(data.totalDma?.totalCount),
+      },
+      totalMeters: {
+        activeMeters: parseNumber(data.totalMeters?.activeMeters),
+        inactiveMeters: parseNumber(data.totalMeters?.inactiveMeters),
+        faultyMeters: parseNumber(data.totalMeters?.faultyMeters),
+        totalCount: parseNumber(data.totalMeters?.totalCount),
+      },
+      totalGateway: {
+        activeGateways: parseNumber(data.totalGateway?.activeGateways),
+        inactiveGateways: parseNumber(data.totalGateway?.inactiveGateways),
+        totalCount: parseNumber(data.totalGateway?.totalCount),
+      }
+    };
+  }
+
   return (
     <React.Fragment>
       <Row>
@@ -42,7 +83,7 @@ const DashDefault = () => {
             </Card.Body>
           </Card>
         </Col>
-        
+
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
             <Card.Body className="border-bottom">
@@ -59,7 +100,6 @@ const DashDefault = () => {
         </Col>
         <Col md={6} xl={5}>
           <Alert data={alertData} />
-          
         </Col>
         <Col md={6} xl={7}>
           <Card className="user-list">

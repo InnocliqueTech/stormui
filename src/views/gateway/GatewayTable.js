@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Card, Checkbox, Link } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
-import { CachedOutlined, DeleteOutlineOutlined, FileUploadOutlined, ModeEditOutline } from '@mui/icons-material';
+import { CachedOutlined, FileUploadOutlined } from '@mui/icons-material';
 import Table from 'react-bootstrap/Table';
 import Pagination from 'react-bootstrap/Pagination';
 import Paginations from '../../components/Paginatons';
@@ -169,16 +169,16 @@ export default function GatewayTable() {
         <Row style={{ padding: 15 }}>
           <Col md={2} xs={12} sm={12}>
             <Button style={{ backgroundColor: '#1976D2', color: '#fff' }}>
-              <CachedOutlined style={{ marginRight: 5 }} /> Refresh
+              <CachedOutlined style={{ marginRight: 20}} /> Refresh
             </Button>
           </Col>
-          <Col md={1} xs={12} sm={12} style={{ marginLeft: -10 }}>
+          <Col md={1} xs={12} sm={12} style={{ marginRight: 10 }}>
             <Button style={{ backgroundColor: '#fff', color: '#1976D2', border: '1px solid #1976D2' }}>
               <FileUploadOutlined style={{ marginRight: 5 }} />Export
             </Button>
           </Col>
           <Col md={6} xs={1} sm={1}></Col>
-          <Col md={1} xs={12} sm={12} style={{ marginRight: 20 }}>
+          {/* <Col md={1} xs={12} sm={12} style={{ marginRight: 20 }}>
             <Button style={{ backgroundColor: '#fff', color: '#1976D2', border: '1px solid #1976D2' }}>
               <ModeEditOutline style={{ marginRight: 5 }} />Edit
             </Button>
@@ -187,7 +187,7 @@ export default function GatewayTable() {
             <Button style={{ backgroundColor: '#fff', color: '#DE315E', border: '1px solid #DE315E' }}>
               <DeleteOutlineOutlined style={{ marginRight: 5 }} /> Delete
             </Button>
-          </Col>
+          </Col> */}
         </Row>
         <Card style={{ margin: 10, padding: 30, paddingTop: 10 }}>
           <div style={{ fontFamily: 'inter', fontWeight: 600, fontSize: '18px' }}>Basic Details</div>

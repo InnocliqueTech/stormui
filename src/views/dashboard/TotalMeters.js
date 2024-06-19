@@ -23,30 +23,30 @@ const options = {
   fill: {
     opacity: 1
   },
-  labels: ['Active 88%', 'Inactive 88%', 'Faculty 88%'],
+  labels: ['Active 88%', 'Inactive 88%', 'Faulty 88%'],
   plotOptions: {
     pie: {
       donut: {
-        size: 65,
+        size: '65%',
         background: 'transparent',
         labels: {
           show: true,
           total: {
             show: true,
             label: "Total Meters",
-            fontSize: 12,
+            fontSize: '12px',
             color: "#495057",
             fontWeight: 400
           },
           name: {
             show: true,
-            fontSize: 12,
+            fontSize: '12px',
             color: "#495057",
             fontWeight: 400
           },
           value: {
             show: true,
-            fontSize: 24,
+            fontSize: '24px',
             fontWeight: 700,
             color: "#000"
           }
@@ -80,22 +80,24 @@ const options = {
 const TotalMeters = (props) => {
   const [data, setData] = useState([]);
   const [opt, setOpt] = useState(options);
+
   useEffect(() => {
     if (props && props.data) {
-      setData([parseInt(props.data.activeCount), parseInt(props.data.InactiveZone), parseInt(props.data.faultyZone),])
+      setData([
+        parseInt(props.data.activeMeters), 
+        parseInt(props.data.inactiveMeters), 
+        parseInt(props.data.faultyMeters)
+      ]);
       setOpt({
         ...options,
-        labels: [`Active ${((props.data.activeCount / props.data.totalCount) * 100).toFixed(0)}%`, `Inactive ${((props.data.InactiveZone / props.data.totalCount) * 100).toFixed(0)}%`, `Faculty ${((props.data.faultyZone / props.data.totalCount) * 100).toFixed(0)}%`]
-      })
+        labels: [
+          `Active ${((props.data.activeMeters / props.data.totalCount) * 100).toFixed(0)}%`, 
+          `Inactive ${((props.data.inactiveMeters / props.data.totalCount) * 100).toFixed(0)}%`, 
+          `Faulty ${((props.data.faultyMeters / props.data.totalCount) * 100).toFixed(0)}%`
+        ]
+      });
     }
-  }, [props])
-
-  // const handleReset = () => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     series: [65, 34, 12, 56],
-  //   }));
-  // };
+  }, [props]);
 
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5">
@@ -108,26 +110,6 @@ const TotalMeters = (props) => {
         </Col>
       </Row>
       <ReactApexChart options={opt} series={data} type="donut" height={255} />
-      {/* <div className="row">
-        <div className="col-md-1">
-         <div style={{backgroundColor:'#3C50E0', height:15, width:15}}></div>
-        </div>
-        <div className="col-md-5">
-         Active 80%
-        </div>
-        <div className="col-md-1">
-         <div style={{backgroundColor:'#3C50E0', height:15, width:15}}></div>
-        </div>
-        <div className="col-md-5">
-         Inactive 80%
-        </div>
-        <div className="col-md-1">
-         <div style={{backgroundColor:'#3C50E0', height:15, width:15}}></div>
-        </div>
-        <div className="col-md-5">
-         Faculty 80%
-        </div>
-      </div> */}
     </div>
   );
 };

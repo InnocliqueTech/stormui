@@ -1,5 +1,6 @@
 @import 'assets/scss/style.scss';
-
+@import 'assets/scss/custom.css';
+body {    font-family: "Inter";    font-size: 14px;}
 .nav-outside.mob-backdrop {
   &.mob-fixed .pcoded-navbar {
     z-index: 1032;

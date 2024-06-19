@@ -3,8 +3,8 @@ import { Col, ListGroup, Row } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Typography,
-  // Select,
-  // MenuItem,
+  //Select,
+  //MenuItem,
   FormControl,
   // InputLabel,
   Button,
@@ -14,7 +14,7 @@ import {
   FormLabel,
   Radio,
   Grid,
-  // OutlinedInput
+  //OutlinedInput
 } from '@mui/material';
 import navigation from '../../../menu-items';
 import { BASE_TITLE } from '../../../config/constant';
@@ -22,7 +22,7 @@ import { DateRange, FilterAltOutlined } from '@mui/icons-material';
 
 const Breadcrumb = () => {
   const location = useLocation();
-  const [value, setValue] = useState("")
+  //const [value, setValue] = useState("")
   const [selectedDate, setSelectedDate] = useState("7D");
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
@@ -91,7 +91,7 @@ const Breadcrumb = () => {
                 <div className="page-header-title">
                   <h5 className="m-b-10">{mainContent}</h5>
                 </div>
-                <Row>
+                <Row className='d-flex justify-content-around'>
                   <Col md={7} sm={12} xs={12}>
                     <div className="dashheading">
                       <Link className={title == "Dashboard" ? "title" : location.pathname.toLowerCase().includes("list") ? "tab" : "tab active"} to={`/app/${title}`} >{title != "Dashboard" ? "Dashboard": title}</Link>
@@ -102,7 +102,7 @@ const Breadcrumb = () => {
                       }
                     </div> 
                   </Col>
-                  <Col md={2} sm={12} xs={12} style={{ padding: 2, marginRight: 10 }}>
+                  <Col md={2} sm={12} xs={12} style={{ padding: 2 }}>
                     <div className="row days-filter">
                       <div className="col-md-12" style={{ padding:0 }}>
                         <button className={`days ${selectedDate == "1D" ? "active": ""}`} onClick={()=>setSelectedDate("1D")}>1D</button>
@@ -115,34 +115,40 @@ const Breadcrumb = () => {
                       </div>
                     </div>
                   </Col>
-                  <Col md={2} sm={7} xs={7} >
-                    {/* <FormControl variant="outlined"> */}
-              <select
-        onChange={(e) => setValue(e.target.value)}
-        value={value}
-        style={{
-          fontSize: 16,
-          color: '#1565C0',
-          width: 190,
-          border: '1px solid #1565C0',
-          height: 50,
-        }}
-        aria-label="Select Client"
-      >
-        <option value="" style={{ fontSize: 16 }}>
-          Select Client
-        </option>
-        <option value="10" style={{ fontSize: 16 }}>
-          All
-        </option>
-        <option value="20" style={{ fontSize: 16 }}>
-          KSCCL-WATER-SUPPLY-OTAA
-        </option>
-        <option value="30" style={{ fontSize: 16 }}>
-          TEST_ABP_01
-        </option>
-      </select>
-                    {/* </FormControl> */}
+                  <Col md={2} sm={7} xs={7} style={{ padding: 2, textAlign: 'end',justifyContent:'end',display:'flex', width:'160px' }}
+                      >
+                    {/* <FormControl variant="outlined" sx={{ minWidth: 210, height: 50, }}>
+                      <InputLabel style={{ color: '#1565C0', marginTop: -10 }} id="demo-simple-select-autowidth-label">
+                        Select Client
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-autowidth-label"
+                        id="demo-simple-select-autowidth-label"
+                        inputProps={{ 'aria-label': 'Without label' }}
+                        input={<OutlinedInput />}
+                        displayEmpty
+                        className="select"
+                        onChange={(val)=>setValue(val.target.value)}
+                        value={value}
+                        style={{ fontSize: 16, color: '#1565C0', width: 190, border: '1px solid #1565C0', height: 48,borderRadius:'8px',padding:'8px 16px' }}
+                      >
+                        <MenuItem disabled value="">
+                          Select Client
+                        </MenuItem>
+                        <MenuItem value={10}>All</MenuItem>
+                        <MenuItem value={20}>KSCCL-WATER-SUPPLY-OTAA</MenuItem>
+                        <MenuItem value={30}>TEST_ABP_01</MenuItem>
+                      </Select>
+                    </FormControl> */}
+                    <div className="form-group selectcustom">
+                    <i className="zmdi zmdi-chevron-down" />
+                      <select>
+                        <option>Select Client</option>
+                        <option>All</option>
+                        <option>KSCCL-WATER ..</option>
+                        <option>TEST_ABP_01</option>
+                      </select>
+                    </div>
                   </Col>
                   <Col md={1} sm={4} xs={4} style={{ textAlign: 'end', width: '100px', padding: 2 }}>
                     <button
@@ -152,7 +158,9 @@ const Breadcrumb = () => {
                         border: '1px solid #1565C0',
                         paddingLeft: 10,
                         paddingRight: 10,
-                        height: 50
+                        height: 48,
+                        width:103,
+                        borderRadius:'8px'
                       }}
                       className="filter"
                       aria-describedby={id}

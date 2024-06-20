@@ -42,8 +42,8 @@ export default function GatewayTable() {
     setOpen(false);
   };
   return (
-    <div style={{marginBottom:100}}>
-      <Table responsive style={{ marginTop: 30, borderRadius: 10, border: '1px solid #ccc' }}>
+    <div style={{marginBottom:100}} className='customer-table shadow-scroll-x'>
+      <Table style={{borderRadius:8}} className='custom-table'>
         <thead style={{ backgroundColor: '#F4F5F5' }}>
           <tr>
             <th className='tablehead'><Checkbox /></th>

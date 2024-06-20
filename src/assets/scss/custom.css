@@ -144,4 +144,58 @@ header {
   .card .card-block, .card .card-body {
     padding: 0px 10px !important;
   }
+
+  .client-customer {
+    border-radius: 16px !important;
+    padding: 24px;
+  }
+  .customer-table {
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid #D6D9DC;
+  }
+  .customer-table .table-responsive {
+    border-radius: 8px;
+  }
+  .customer-table .table-responsive table thead tr th {
+    background-color: #F4F5F5;
+  }
+
+  .shadow-scroll-x {
+    overflow-x: auto;
+
+    background-color: white;
+    background-image: /* Shadows */ 
+    linear-gradient(to right, white 0%, white 50%, rgba(255, 255, 255, 0) 100%), 
+    linear-gradient(to left, white 0%, white 50%, rgba(255, 255, 255, 0) 100%), 
+    
+    /* Shadow covers */ 
+    linear-gradient(to right, rgba(0, 0, 0, .1) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%), 
+    linear-gradient(to left, rgba(0, 0, 0, .1) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%);
+    background-repeat: no-repeat;
+
+    background-position: left center, right center, left center, right center;
+    background-size: 10px 100%, 10px 100%, 10px 100%, 10px 100%;
+
+    /* Opera doesn't support this in the shorthand */
+    background-attachment: local, local, scroll, scroll;
+    -webkit-overflow-scrolling: touch;
+
+    /* 
+Progressive enhancement of scrollbar on webkit
+Use media queries to only use on mobile */
+    &::-webkit-scrollbar {
+        height: 6px;
+        background-color: white;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #999;
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+}
     

@@ -116,14 +116,14 @@ const Client = () => {
         </Col>
       </Row>
 
-     <Card style={{padding:10, paddingTop:20, borderRadius:8}}>
+     <Card className='client-customer'>
      <Row>
-        <Col md={9} sm={7} xs={7}>
-          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>
-            <span className='iconContainergreen'>
+        <Col md={9} sm={7} xs={7} className='d-flex'> 
+          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className='d-flex align-items-center'>
+            <span className='iconContainergreen p-0 d-flex align-items-center justify-content-center me-2' style={{width:"48px", height:'48px'}}>
               <Image src={customer} alt="customer" className='icon' />
-            </span> Customer Segmentation </span><span><Image src={info} alt="info" className='icon' /></span>
-          <span style={{ textAlign: 'end' }}></span>
+            </span> Customer Segmentation </span><span style={{padding:'13px'}}><Image src={info} alt="info" className='icon' /></span>
+          <span className='d-flex' style={{ textAlign: 'end' }}></span>
         </Col>
         <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
           <span style={{marginRight:20}}><Image src={refresh} alt="refresh" className='icon' /></span>
@@ -133,20 +133,20 @@ const Client = () => {
       <CustomerTable />
      </Card>
 
-      <Card style={{padding:10, paddingTop:20, borderRadius:8}}>
-      <Row>
-        <Col md={9} sm={7} xs={7}>
-          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>
-            <span className='iconContainer'>
-              <Image src={zone} alt="zone" className='icon' />
-            </span> Zone Segmentation </span><span><Image src={info} alt="gateway" /></span>
-          <span style={{ textAlign: 'end' }}></span>
-        </Col>
-        <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
-          <span style={{marginRight:20}}><Image src={refresh} alt="refresh" className='icon' /></span>
-          <span><Image src={download} alt="download" className='icon' /></span>
-        </Col>
-      </Row>
+      <Card className='client-customer'>
+        <Row>
+          <Col md={9} sm={7} xs={7} className='d-flex'>
+            <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className='d-flex align-items-center'>
+              <span className='iconContainer p-0 d-flex align-items-center justify-content-center me-2' style={{width:"48px", height:'48px'}}>
+                <Image src={zone} alt="zone" className='icon' />
+              </span> Zone Segmentation </span><span style={{padding:'13px'}}><Image src={info} alt="gateway" /></span>
+            <span style={{ textAlign: 'end' }}></span>
+          </Col>
+          <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+            <span style={{marginRight:20}}><Image src={refresh} alt="refresh" className='icon' /></span>
+            <span><Image src={download} alt="download" className='icon' /></span>
+          </Col>
+        </Row>
       <CustomerTable />
       </Card>
 

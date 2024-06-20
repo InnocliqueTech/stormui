@@ -76,25 +76,24 @@ const Gateway = () => {
             </Card.Body>
           </Card>
         </Col>
-        
-      <Card style={{padding:10, paddingTop:40, borderRadius:10}}>
+      </Row>
+      <Card className='client-customer'>
       <Row>
-            <Col md={9} sm={7} xs={7}>
-                <span style={{ fontSize: 20, fontWeight: 'bold', color:'rgba(33, 33, 33, 1)' }}>
-                    <span className='iconContainer'> 
+            <Col md={9} sm={7} xs={7} className='d-flex'>
+                <span style={{ fontSize: 20, fontWeight: 'bold', color:'rgba(33, 33, 33, 1)' }} className='d-flex align-items-center'>
+                    <span className='iconContainer  p-0 d-flex align-items-center justify-content-center me-2' style={{width:"48px", height:'48px'}}> 
                     <Image src={fluent} alt="fluent" className='icon' style={{ color: '#95ACFF' }} />
                     </span> Gateway List </span>
                     <span style={{ textAlign: 'end' }}></span>
             </Col>
-            <Col md={3} sm={5} xs={5} style={{ textAlign:'end' }}>
+            <Col md={3} sm={5} xs={5} className='d-flex align-items-center justify-content-end' style={{ textAlign:'end' }}>
             <Refresh style={{marginRight:10, color:'#000'}} />
           <Download  style={{marginRight:5, color:'#000'}}/>
-          <span style={{backgroundColor:'#FEF0F4', color:'#DE315E', padding:10}}>5 <ReportProblemOutlined  style={{height:20, width:20}}/></span>
+          <span style={{backgroundColor:'#FEF0F4', color:'#DE315E', padding:'10px 15px',borderRadius:'8px',alignItems:'center',display:'flex'}}>5 &nbsp; <ReportProblemOutlined  style={{height:20, width:20}}/></span>
             </Col>
         </Row>
       <GatewayTable />
       </Card>
-      </Row>
       
     </React.Fragment>
   );

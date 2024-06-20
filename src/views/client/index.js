@@ -11,7 +11,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import CustomPieChart from '../dashboard/CustomPieChart';
+// import CustomPieChart from '../dashboard/CustomPieChart';
 import customer from '../../assets/images/customer.svg';
 import zone from '../../assets/images/zone.svg';
 import refresh from '../../assets/images/refresh.svg';
@@ -23,6 +23,8 @@ import ClientDma from './ClientDma';
 import {  Link } from '@mui/material';
 import DmaTable from './dmatable';
 import ZoneTable from './Zonetable';
+import Totalcounsumption from '../../src/views/dashboard/Totalcounsumption';
+import over from '../../assets/images/symbols_water.svg';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -77,8 +79,20 @@ const Client = () => {
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
             <Card.Body>
-              <CustomPieChart name="Gateways" data={dashboardData.totalZone} />
-            </Card.Body>
+            <Col md={1} sm={1} xs={1} className='iconContainer' style={{ backgroundColor: '#F6C574' }}>
+          <Image src={over} alt="over" className='icon' />
+        </Col>
+        <Col md={8} sm={8} xs={8}>
+          <div className="alerttext">
+            Total Out flow{' '}
+            <span>
+              <Image src={info} alt="gateway" />
+            </span>{' '}
+          </div>
+        </Col>
+
+            <Totalcounsumption data={outFlowData}/>
+                        </Card.Body>
           </Card>
         </Col>
         <Col md={6} xl={4} sm={12}>

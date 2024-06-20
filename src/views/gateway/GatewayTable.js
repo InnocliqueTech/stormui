@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Card, Checkbox, Link } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
-import { CachedOutlined, DeleteOutlineOutlined, FileUploadOutlined, ModeEditOutline } from '@mui/icons-material';
+import { CachedOutlined, FileUploadOutlined } from '@mui/icons-material';
 import Table from 'react-bootstrap/Table';
 import Pagination from 'react-bootstrap/Pagination';
 import Paginations from '../../components/Paginatons';
@@ -42,8 +42,8 @@ export default function GatewayTable() {
     setOpen(false);
   };
   return (
-    <div style={{marginBottom:100}} className='customer-table shadow-scroll-x'>
-      <Table style={{borderRadius:8}} className='custom-table'>
+    <div style={{marginBottom:100}}>
+      <Table responsive style={{ marginTop: 30, borderRadius: 10, border: '1px solid #ccc' }}>
         <thead style={{ backgroundColor: '#F4F5F5' }}>
           <tr>
             <th className='tablehead'><Checkbox /></th>
@@ -178,7 +178,7 @@ export default function GatewayTable() {
             </Button>
           </Col>
           <Col md={6} xs={1} sm={1}></Col>
-          <Col md={1} xs={12} sm={12} style={{ marginRight: 20 }}>
+          {/* <Col md={1} xs={12} sm={12} style={{ marginRight: 20 }}>
             <Button style={{ backgroundColor: '#fff', color: '#1976D2', border: '1px solid #1976D2' }}>
               <ModeEditOutline style={{ marginRight: 5 }} />Edit
             </Button>
@@ -187,7 +187,7 @@ export default function GatewayTable() {
             <Button style={{ backgroundColor: '#fff', color: '#DE315E', border: '1px solid #DE315E' }}>
               <DeleteOutlineOutlined style={{ marginRight: 5 }} /> Delete
             </Button>
-          </Col>
+          </Col> */}
         </Row>
         <Card style={{ margin: 10, padding: 30, paddingTop: 10 }}>
           <div style={{ fontFamily: 'inter', fontWeight: 600, fontSize: '18px' }}>Basic Details</div>

@@ -77,7 +77,8 @@ const Breadcrumb = () => {
   if (item && item.type === 'item') {
     title = item.title;
 
-    if (title === 'Settings') {
+
+    if (title === 'Settings' || title === 'Home') {
       // Don't render breadcrumbContent for Settings page
       breadcrumbContent = null;
     } else {

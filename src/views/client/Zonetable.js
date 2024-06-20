@@ -8,7 +8,7 @@ import info from "../../assets/images/info.svg"
 
 function ZoneTable() {
   return (
-    <div style={{padding:10,marginTop:30, marginBottom:120}}>
+    <div style={{padding:10,marginTop:30, marginBottom:120, height:"500px"}}>
     <Row>
         <Col md={9} sm={7} xs={7}>
           <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>

@@ -160,8 +160,8 @@ const Client = () => {
         className='clientpopup'
       >
 
-        <Row container style={{ backgroundColor: '#000' }}>
-          <Col md={10} sm={12} xs={10}>
+<Row container >
+<Col md={10} sm={12} xs={10}>
             <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
             Consumption Details
             </DialogTitle>

@@ -1,0 +1,36 @@
+/* Location.css */
+.card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+  }
+  
+  .card .d-flex div {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .card .d-flex div strong {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .custom-zones {
+    width: 118px;
+    height: 64px;
+    padding-top: 8px;
+    ;
+    gap: 10px;
+    border-radius: 10px 0 0 0;
+    opacity: 1; /* Assuming you want it to be visible */
+    background-color: #BBDEFB;
+    margin: 6px;
+  }
+  

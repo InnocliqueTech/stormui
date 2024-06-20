@@ -199,3 +199,8 @@ Use media queries to only use on mobile */
     }
 }
     
+
+.gatewaytable table thead tr th {
+  background-color: #F4F5F5;
+}
+

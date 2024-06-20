@@ -90,7 +90,7 @@ const Breadcrumb = () => {
                   <h5 className="m-b-10">{mainContent}</h5>
                 </div>
                 <Row className='d-flex justify-content-around'>
-                  <Col md={7} sm={12} xs={12}>
+                  <Col md={6} sm={12} xs={12}>
                     <div className="dashheading">
                       <Link className={title == "Dashboard" ? "title" : location.pathname.toLowerCase().includes("list") ? "tab" : "tab active"} to={`/app/${title}`} >{title != "Dashboard" ? "Dashboard": title}</Link>
                       {title != "Dashboard" &&
@@ -100,8 +100,8 @@ const Breadcrumb = () => {
                       }
                     </div> 
                   </Col>
-                  <Col md={2} sm={12} xs={12} style={{ padding: 2 }}>
-                    <div className="row days-filter">
+                  <Col md={6} sm={12} xs={12} className='d-flex justify-content-end' style={{paddingRight:'18px'}}>
+                    <div className="row days-filter float-end" style={{marginRight:'15px' }}>
                       <div className="col-md-12" style={{ padding:0 }}>
                         <button className={`days ${selectedDate == "1D" ? "active": ""}`} onClick={()=>setSelectedDate("1D")}>1D</button>
                         <button className={`days ${selectedDate == "7D" ? "active": ""}`} onClick={()=>setSelectedDate("7D")}>7D</button>
@@ -112,8 +112,8 @@ const Breadcrumb = () => {
                         </button>
                       </div>
                     </div>
-                  </Col>
-                  <Col md={2} sm={7} xs={7} style={{ padding: 2, textAlign: 'end',justifyContent:'end',display:'flex', width:'160px' }}
+                  
+                  <Col md={2} sm={7} xs={7} style={{ padding: 2, textAlign: 'end',justifyContent:'end',display:'flex', width:'160px',marginRight:'15px'  }}
                       >
                     {/* <FormControl variant="outlined" sx={{ minWidth: 210, height: 50, }}>
                       <InputLabel style={{ color: '#1565C0', marginTop: -10 }} id="demo-simple-select-autowidth-label">
@@ -242,6 +242,7 @@ const Breadcrumb = () => {
                       </Typography>
                     </Popover>
                   </Col>
+                </Col>
                 </Row>
 
                 {/* <ListGroup as="ul" bsPrefix=" " className="breadcrumb">

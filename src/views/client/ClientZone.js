@@ -97,7 +97,7 @@ const ClientZone = (props) => {
         <Col md={1} sm={1} xs={1} className='iconContainergreen'>
           <Image src={water} alt="water" className='icon' />
         </Col>
-        <Col md={8} sm={8} xs={8}>
+        <Col md={9} sm={8} xs={8}>
           <div className="cardhead">Zone-wise consumption</div>
         </Col>
       </Row>

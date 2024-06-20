@@ -42,9 +42,9 @@ export default function GatewayTable() {
     setOpen(false);
   };
   return (
-    <div style={{marginBottom:100 }} className='gatewaytable'>
-      <Table responsive style={{ marginTop: 30, borderRadius: 10, border: '1px solid #ccc' }}>
-        <thead >
+    <div className='customer-table'>
+      <Table responsive style={{borderRadius:8}}>
+        <thead  style={{backgroundColor:'#F4F5F5'}}>
           <tr>
             <th className='tablehead'><Checkbox /></th>
             <th className='tablehead'>Gateway ID</th>

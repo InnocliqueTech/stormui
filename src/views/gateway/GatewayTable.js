@@ -166,18 +166,18 @@ export default function GatewayTable() {
             </IconButton>
           </Col>
         </Row>
-        <Row style={{ padding: 15 }}>
-          <Col md={2} xs={12} sm={12}>
+        <Row style={{ padding: 15, justifyContent:"end" , display:"flex" }}>
+          <Col md={3} xs={12} sm={12} style={{width:"144px", justifyContent:"end" , display:"flex" }}>
             <Button style={{ backgroundColor: '#1976D2', color: '#fff' }}>
               <CachedOutlined style={{ marginRight: 5 }} /> Refresh
             </Button>
           </Col>
-          <Col md={1} xs={12} sm={12} style={{ marginLeft: -10 }}>
+          <Col md={2} xs={12} sm={12} style={{ marginLeft: -10 }}>
             <Button style={{ backgroundColor: '#fff', color: '#1976D2', border: '1px solid #1976D2' }}>
               <FileUploadOutlined style={{ marginRight: 5 }} />Export
             </Button>
           </Col>
-          <Col md={6} xs={1} sm={1}></Col>
+          {/* <Col md={6} xs={1} sm={1}></Col> */}
           {/* <Col md={1} xs={12} sm={12} style={{ marginRight: 20 }}>
             <Button style={{ backgroundColor: '#fff', color: '#1976D2', border: '1px solid #1976D2' }}>
               <ModeEditOutline style={{ marginRight: 5 }} />Edit

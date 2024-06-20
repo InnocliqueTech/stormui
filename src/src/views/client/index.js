@@ -74,10 +74,14 @@ const Client = () => {
   return (
     <React.Fragment>
       <Row>
-        <Col md={6} xl={4} sm={12}>
+      <Col md={6} xl={7}>
           <Card className="card-social">
-            <Card.Body>
-              <CustomPieChart name="Gateways" data={dashboardData.totalZone} />
+            <Card.Body className="p-0">
+              <div className="row">
+                <div className="col-md-12">
+                  <Overflow data={outFlowData} />
+                </div>
+              </div>
             </Card.Body>
           </Card>
         </Col>

@@ -11,7 +11,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import CustomPieChart from '../dashboard/CustomPieChart';
+// import CustomPieChart from '../dashboard/CustomPieChart';
 import customer from '../../assets/images/customer.svg';
 import zone from '../../assets/images/zone.svg';
 import refresh from '../../assets/images/refresh.svg';

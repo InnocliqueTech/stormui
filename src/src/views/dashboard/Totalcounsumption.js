@@ -96,7 +96,7 @@ const Totalcounsumption = (props) => {
         </Col>
         <Col md={8} sm={8} xs={8}>
           <div className="alerttext">
-            Total Out flow{' '}
+            {/* Total Out flow{' '} */}
             <span>
               <Image src={info} alt="gateway" />
             </span>{' '}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import over from '../../assets/images/symbols_water.svg';
+// import over from '../../assets/images/symbols_water.svg';
 import { Col, Image, Row } from 'react-bootstrap';
 import info from '../../assets/images/i_icons.svg';
 
@@ -75,7 +75,10 @@ const Totalcounsumption = (props) => {
         d.push(flow.count)
       });
       setData([{
-        name: "Total Outflow",
+        name: "In Flow",
+        data: d
+      }, {
+        name: "Out Flow",
         data: d
       }]);
     }
@@ -91,9 +94,7 @@ const Totalcounsumption = (props) => {
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 shadow-default sm:px-2 xl:col-span-6">
       <Row>
-        <Col md={1} sm={1} xs={1} className='iconContainer' style={{ backgroundColor: '#F6C574' }}>
-          <Image src={over} alt="over" className='icon' />
-        </Col>
+       
         <Col md={8} sm={8} xs={8}>
           <div className="alerttext">
             {/* Total Out flow{' '} */}
@@ -104,6 +105,13 @@ const Totalcounsumption = (props) => {
         </Col>
       </Row>
       <ReactApexChart options={options} series={data} type="bar" width="100%" height={250} />
+{/* 
+       <div style={{ marginTop: '20px' }}>
+        <span style={{ display: 'inline-block', width: '20px', height: '10px', backgroundColor: '#2196F3', marginRight: '10px' }}></span>
+        <span>Total Outflow</span>
+        <span style={{ display: 'inline-block', width: '20px', height: '10px', backgroundColor: '#80CAEE', marginLeft: '20px', marginRight: '10px' }}></span>
+        <span>Total Inflow</span>
+      </div> */}
     </div>
   );
 };

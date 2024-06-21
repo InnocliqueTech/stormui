@@ -204,3 +204,18 @@ Use media queries to only use on mobile */
   background-color: #F4F5F5;
 }
 
+
+.client-flow-orange { width: 18px; height: 18px; background-color: #FFA400; border-radius: 100%;}
+.client-flow-blue{background-color: #2196F3;}
+.bg-blue1 { background-color: #E3F2FD !important;}
+.bg-blue2 { background-color: #BBDEFB !important; color: #fff !important;}
+.bg-blue3 { background-color: #1976D2 !important; color: #fff !important;}
+.bg-blue4 { background-color: #0D47A1 !important; color: #fff !important;}
+.bg-blue5 { background-color: #42A5F5 !important; color: #fff !important;}
+.client-zone-table .table td, .client-zone-table .table th {
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid #fff;
+}
+
+.client-zone-table .table td { text-align: center;}
+

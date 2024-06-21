@@ -1,5 +1,11 @@
 
 body {    font-family: "Inter";    font-size: 14px;}
+.dashheading {
+  font-family: 'Inter';
+  font-size: 32px;
+  font-weight: 700;
+  color: #212121;
+}
 header { 
     padding: 16px 24px !important;
     min-height: 74px !important;
@@ -218,4 +224,8 @@ Use media queries to only use on mobile */
 }
 
 .client-zone-table .table td { text-align: center;}
-
+.setting-nav { background-color: #edf1f1;  border-radius: 12px;}
+.setting-nav ul { padding: 11px 12px;display: flex;justify-content: space-between;margin: 0px;}
+.setting-nav ul li {list-style: none; }
+.setting-nav ul li a {  font-size: 16px; color: #212121; font-weight: 400; text-decoration: none;}
+.setting-nav ul li a.active{background:#FDFDFD; padding: 8px 12px; gap: 8;border-radius: 8px; color: #1565C0;}

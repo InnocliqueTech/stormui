@@ -22,7 +22,7 @@ function ZoneTable() {
           <span style={{marginRight:10}}><Image src={download} alt="download" className='icon' /></span>
         </Col>
       </Row>
-    <Table responsive style={{marginTop:30, borderRadius:10, border:'1px solid #ccc'}}>
+    <Table>
       <thead  style={{backgroundColor:'#F4F5F5'}}>
       <tr>
           <th className='clienttablehead'>Zone Id</th>

@@ -4,8 +4,9 @@
   }
   
   .card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 600;
+    color: #121212;
   }
   
   .card-text {
@@ -28,9 +29,14 @@
     padding-top: 8px;
     ;
     gap: 10px;
-    border-radius: 10px 0 0 0;
+    border-radius:6px;
     opacity: 1; /* Assuming you want it to be visible */
-    background-color: #BBDEFB;
+    background-color: #f1f8fe;
     margin: 6px;
   }
+  .custom-zones strong {font-size: 16px; font-weight: 700;}
+  .custom-zones small { font-size: 12px;}
+  .card-img-top { border-radius: 10px; margin-bottom: 8px;}
+  .card { padding: 16px;}
+  .card-body { padding: 0 !important;}
   

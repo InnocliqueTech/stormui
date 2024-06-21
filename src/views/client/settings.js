@@ -5,6 +5,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'; 
 import { EmailOutlined,  StickyNote2Outlined, } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
+import { Col,Row } from 'react-bootstrap';
 
  
 function Settings() {
@@ -18,6 +19,20 @@ function Settings() {
 
   return (
     <Container maxWidth="lm">
+      <Row>
+        <Col md={8} sm={6} xs={12}>
+          <div className="dashheading"><a className="title">Profile</a></div>
+        </Col>
+        <Col md={4} sm={6} xs={12}>
+            <div className='setting-nav'>
+                <ul>
+                  <li><a className='active' href='#'>Profile</a></li>
+                  <li><a href='#'>About us</a></li>
+                  <li><a href='#'>Terms & Conditions</a></li>
+                </ul>
+            </div>
+        </Col>
+      </Row>
       <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">

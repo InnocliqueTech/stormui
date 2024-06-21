@@ -82,11 +82,11 @@ const Client = () => {
         <Col md={6} xl={6} sm={12}>
           <Card className="card-social">
             <Card.Body>
-              <Col md={8} sm={8} xs={8}>
+              <Col md={8} sm={8} xs={8} className='d-flex'>
             <Col md={1} sm={1} xs={1} className='iconContainer' style={{ backgroundColor: '#F6C574' }}>
           <Image src={over} alt="over" className='icon' />
         </Col>
-                <div className="alerttext">
+                <div className="alerttext ms-2">
                   Total Out flow{' '}
                   <span>
                   </span>{' '}

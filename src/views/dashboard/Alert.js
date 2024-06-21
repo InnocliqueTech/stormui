@@ -22,7 +22,7 @@ const Alert = ({data}) => {
       }, [data])
       return (
     <Card className='card-social' style={{ minHeight: '320px', borderRadius: 5 }}>
-        <Card.Body style={{padding:'16px !important'}}>
+        <Card.Body style={{padding:'15px !important'}}>
             <Row className="mb-2 justify-content-around">
                 <Col md={1} sm={1} xs={1} className="alertContainer">
                     <Image src={alert} alt="alert" className="alertIcon" />
@@ -127,12 +127,12 @@ const Alert = ({data}) => {
                 </div>
               </div> */}
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'center', marginTop: 10 }}>
-                <div style={{ backgroundColor: '#F66060', width: 15, height: 15 }}></div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'center', marginTop: 10, paddingBottom:17 }}>
+                <div style={{ backgroundColor: '#F66060', width: 12, height: 12 }}></div>
                 <div>{data.alertsCount && data.alertsCount.highAlert.label}</div>
-                <div style={{ backgroundColor: '#FCA311', width: 15, height: 15 }}></div>
+                <div style={{ backgroundColor: '#FCA311', width: 12, height: 12 }}></div>
                 <div>{data.alertsCount && data.alertsCount.mediumAlert.label}</div>
-                <div style={{ backgroundColor: '#1976D2', width: 15, height: 15 }}></div>
+                <div style={{ backgroundColor: '#1976D2', width: 12, height: 12 }}></div>
                 <div>{data.alertsCount && data.alertsCount.lowAlert.label}</div>
             </div>
         </Card.Body>

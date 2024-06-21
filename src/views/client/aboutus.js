@@ -1,10 +1,28 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 import { Box, List, ListItem, Grid, Divider, TextField, Container, Paper } from '@mui/material';
+import { Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function aboutUs() {
   return (
+    <>
     <Container maxWidth="lm">
+      <Row>
+        <Col md={8} sm={6} xs={12}>
+          <div className="dashheading"><a className="title">About us</a></div>
+        </Col>
+        <Col md={4} sm={5} xs={12}>
+            <div className='setting-nav'>
+                <ul>
+                <li><Link to='/app/setting'>Profile</Link></li>
+              <li><Link className='active'  to='/app/about'>About us</Link></li>
+              <li><Link to='/app/terms'>Terms & Conditions</Link></li>
+ 
+                </ul>
+            </div>
+        </Col>
+      </Row>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper elevation={0} sx={{ padding: 2, border: '1px solid #e0e0e0' }}>
@@ -63,7 +81,7 @@ function aboutUs() {
                         color: 'grey'
                       }
                     }}
-                  />
+                    />
                 </Box>
 
                 <Box display="flex" flexDirection="column" alignItems="flex-start" width="45%">
@@ -79,7 +97,7 @@ function aboutUs() {
                         color: 'grey'
                       }
                     }}
-                  />
+                    />
                 </Box>
               </Box>
 
@@ -97,7 +115,7 @@ function aboutUs() {
                         color: 'grey'
                       }
                     }}
-                  />
+                    />
                 </Box>
               </Box>
             </Box>
@@ -107,6 +125,7 @@ function aboutUs() {
       </Box>
 
     </Container>
+                    </>
   );
 }
 

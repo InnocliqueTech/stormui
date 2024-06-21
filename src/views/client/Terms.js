@@ -1,10 +1,26 @@
 import React from 'react';
 import { Container, Grid, Paper, Typography } from '@mui/material';
+import { Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function Terms() {
   return ( 
     <Container maxWidth="lm">
-      <Paper  sx={{ padding: 2, border: '1px solid #e0e0e0' }}> 
+    <Row>
+      <Col md={8} sm={6} xs={12}>
+        <div className="dashheading"><a className="title">Terms & Conditions</a></div>
+      </Col>
+      <Col md={4} sm={5} xs={12}>
+          <div className='setting-nav'>
+              <ul>
+              <li><Link to='/app/setting'>Profile</Link></li>
+              <li><Link to='/app/about'>About us</Link></li>
+              <li><Link className='active' to='/app/terms'>Terms & Conditions</Link></li>
+ 
+              </ul>
+          </div>
+      </Col>
+    </Row>      <Paper  sx={{ padding: 2, border: '1px solid #e0e0e0' }}> 
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="body1" sx={{ fontSize: '12px' }}>

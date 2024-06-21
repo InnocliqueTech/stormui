@@ -106,6 +106,16 @@ const routes = [
         element: lazy(() => import('./views/client/settings'))
       },
       {
+        exact: 'true',
+        path: '/app/about',
+        element: lazy(() => import('./views/client/aboutus'))
+      },
+      {
+        exact: 'true',
+        path: '/app/terms',
+        element: lazy(() => import('./views/client/Terms'))
+      },
+      {
         path: '*',
         exact: 'true',
         element: () => <Navigate to={BASE_URL} />

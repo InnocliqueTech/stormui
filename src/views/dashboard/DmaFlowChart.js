@@ -75,7 +75,10 @@ const DMAFlowChart = (props) => {
         d.push(flow.count)
       });
       setData([{
-        name: "DMA Outflow",
+        name: "In flow",
+        data: d
+      }, {
+        name: "Outflow",
         data: d
       }]);
     }

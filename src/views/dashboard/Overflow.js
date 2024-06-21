@@ -75,7 +75,10 @@ const Overflow = (props) => {
         d.push(flow.count)
       });
       setData([{
-        name: "Total Outflow",
+        name: "In flow",
+        data: d
+      }, {
+        name: "Outflow",
         data: d
       }]);
     }

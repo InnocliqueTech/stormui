@@ -24,7 +24,7 @@ import {  Link } from '@mui/material';
 import DmaTable from './dmatable';
 import ZoneTable from './Zonetable';
 import Totalcounsumption from '../../src/views/dashboard/Totalcounsumption';
-//import over from '../../assets/images/symbols_water.svg';
+import over from '../../assets/images/symbols_water.svg';
 import UpArrow from '../../assets/images/UpArrow.png';
 import DownArrow from '../../assets/images/DownArrow.png'
 
@@ -83,10 +83,12 @@ const Client = () => {
           <Card className="card-social">
             <Card.Body>
               <Col md={8} sm={8} xs={8}>
+            <Col md={1} sm={1} xs={1} className='iconContainer' style={{ backgroundColor: '#F6C574' }}>
+          <Image src={over} alt="over" className='icon' />
+        </Col>
                 <div className="alerttext">
                   Total Out flow{' '}
                   <span>
-                    <Image src={info} alt="gateway" />
                   </span>{' '}
                 </div>
               </Col>
@@ -139,7 +141,7 @@ const Client = () => {
         <Col md={6} xl={3} sm={12}>
           <Link style={{cursor:'pointer' , textDecoration:'none'}} onClick={handleClickOpen}>
           <Card className="card-social">
-            <Card.Body className="">
+            <Card.Body className="" >
               <ClientDma data={dashboardData.totalMeters} />
             </Card.Body>
           </Card>

@@ -16,7 +16,7 @@ const projects = [
     imgSrc: image, // Use the imported image
   },
   {
-    title: 'MCK Smart City Corporation LTD Hyd, Telangana',
+    title: 'MCK ',
     description: '24/7 Water Supply Pilot Project',
     zones: 6,
     dmas: 24,
@@ -24,7 +24,7 @@ const projects = [
     imgSrc: image, // Use the imported image
   },
   {
-    title: 'Smart City Corporation LTD Hyd, Telangana',
+    title: 'Smart City',
     description: '24/7 Water Supply Pilot Project',
     zones: 6,
     dmas: 24,
@@ -35,8 +35,9 @@ const projects = [
 
 export default function Location() {
   return (
-    <div className="container mt-5">
+    <>
       <h2 style={{fontSize:32,fontWeight:700, color:'#212121'}} className="mb-4">Welcome to Strom Energy</h2>
+    <div className="container mt-5" style={{margin:"-4px"}}>
       <div className="row">
         {projects.map((project, index) => (
           <div className="col-md-4 mb-4" key={index}>
@@ -75,5 +76,6 @@ export default function Location() {
         ))}
       </div>
     </div>
+        </>
   );
 }

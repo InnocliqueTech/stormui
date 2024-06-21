@@ -8,7 +8,7 @@ import { Row } from 'react-bootstrap';
 
 const projects = [
   {
-    title: 'Karimnagar Smart City Corporation LTD',
+    title: 'Karimnagar Smart City Corporation',
     description: '24/7 Water Supply Pilot Project',
     zones: 6,
     dmas: 24,

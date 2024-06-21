@@ -36,8 +36,8 @@ const projects = [
 export default function Location() {
   return (
     <>
-      <h2 style={{fontSize:32,fontWeight:700, color:'#212121'}} className="mb-4">Welcome to Strom Energy</h2>
-    <div className="container mt-5" style={{margin:"-4px"}}>
+      <h2 style={{fontSize:32,fontWeight:700, color:'#212121'}} className="mb-2 mt-3">Welcome to Strom Energy</h2>
+    <div className="container mt-4" style={{margin:"-4px"}}>
       <div className="row">
         {projects.map((project, index) => (
           <div className="col-md-4 mb-4" key={index}>

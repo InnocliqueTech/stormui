@@ -101,7 +101,7 @@ const ClientZone = (props) => {
           <div className="cardhead">Zone-wise consumption</div>
         </Col>
       </Row>
-      <ReactApexChart options={opt} series={data} type="donut" height={320} />
+      <ReactApexChart options={opt} series={data} type="donut" height={260} />
       {/* <div className="row">
         <div className="col-md-1">
          <div style={{backgroundColor:'#3C50E0', height:15, width:15}}></div>

@@ -9,8 +9,8 @@ import info from "../../assets/images/info.svg"
 
 function DmaTable() {
   return (
-    <div style={{padding:10,marginTop:30, marginBottom:120}}>
-    <Row>
+    <div style={{padding:10,marginTop:40, marginBottom:120, height:"500px"}}>
+    <Row style={{marginBottom:24}}>
         <Col md={9} sm={7} xs={7}>
           <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>
             <span className='iconContainer'>
@@ -23,53 +23,55 @@ function DmaTable() {
           <span style={{marginRight:10}}><Image src={download} alt="download" className='icon' /></span>
         </Col>
       </Row>
-    <Table responsive style={{marginTop:30, borderRadius:10, border:'1px solid #ccc'}}>
-      <thead  style={{backgroundColor:'#F4F5F5'}}>
-      <tr>
-          <th className='clienttablehead'>DMA Id</th>
-          <th className='clienttablehead'>Gateway ID</th>
-          <th className='clienttablehead'>Last Communication Time</th>
-          <th className='clienttablehead'>Meters</th>
-          <th className='clienttablehead'>Status</th>
-          <th className='clienttablehead'>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td className='clienttabletext'>#DMA 1</td>
-          <td className='clienttabletext'>0xF04CD5FFFE01B1A9</td>
-          <td className='clienttabletext'>02/05/2024 17:32:10</td>
-          <td className='clienttabletext'>
-          <span style={{backgroundColor:'rgba(149, 172, 255, 0.2)', padding:8,paddingLeft:40, paddingRight:40, borderRadius:20}}>5</span></td>
-          <td className='clienttabletext'>
-          <span style={{backgroundColor:'rgba(47, 182, 23, 1)', padding:8,paddingLeft:20, paddingRight:20, color:'#fff'}}>Active</span></td>
-          <td className='clienttabletext'><MoreVert /></td>
-        </tr>
+      <div className='customer-table'>
+        <Table  style={{borderRadius:8}}>
+          <thead>
+          <tr>
+              <th className='clienttablehead'>DMA Id</th>
+              <th className='clienttablehead'>Gateway ID</th>
+              <th className='clienttablehead'>Last Communication Time</th>
+              <th className='clienttablehead'>Meters</th>
+              <th className='clienttablehead'>Status</th>
+              <th className='clienttablehead'>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className='clienttabletext'>#DMA 1</td>
+              <td className='clienttabletext'>0xF04CD5FFFE01B1A9</td>
+              <td className='clienttabletext'>02/05/2024 17:32:10</td>
+              <td className='clienttabletext'>
+              <span style={{backgroundColor:'#E3F2FD', padding:8,paddingLeft:40, paddingRight:40, borderRadius:20,color:'#1976D2', fontWeight:600}}>5</span></td>
+              <td className='clienttabletext'>
+              <span style={{backgroundColor:'rgba(47, 182, 23, 1)', padding:8,paddingLeft:20, paddingRight:20, color:'#fff'}}>Active</span></td>
+              <td className='clienttabletext'><MoreVert /></td>
+            </tr>
 
-        <tr>
-          <td className='clienttabletext'>#DMA 1</td>
-          <td className='clienttabletext'>0xF04CD5FFFE01B1A9</td>
-          <td className='clienttabletext'>02/05/2024 17:32:10</td>
-          <td className='clienttabletext'>
-          <span style={{backgroundColor:'rgba(149, 172, 255, 0.2)', padding:8,paddingLeft:40, paddingRight:40, borderRadius:20}}>5</span></td>
-          <td className='clienttabletext'>
-          <span style={{backgroundColor:'rgba(47, 182, 23, 1)', padding:8,paddingLeft:20, paddingRight:20, color:'#fff'}}>Active</span></td>
-          <td className='clienttabletext'><MoreVert /></td>
-        </tr>
+            <tr>
+              <td className='clienttabletext'>#DMA 1</td>
+              <td className='clienttabletext'>0xF04CD5FFFE01B1A9</td>
+              <td className='clienttabletext'>02/05/2024 17:32:10</td>
+              <td className='clienttabletext'>
+              <span style={{backgroundColor:'#E3F2FD', padding:8,paddingLeft:40, paddingRight:40, borderRadius:20,color:'#1976D2', fontWeight:600}}>5</span></td>
+              <td className='clienttabletext'>
+              <span style={{backgroundColor:'rgba(47, 182, 23, 1)', padding:8,paddingLeft:20, paddingRight:20, color:'#fff'}}>Active</span></td>
+              <td className='clienttabletext'><MoreVert /></td>
+            </tr>
 
-        <tr>
-          <td className='clienttabletext'>#DMA 1</td>
-          <td className='clienttabletext'>0xF04CD5FFFE01B1A9</td>
-          <td className='clienttabletext'>02/05/2024 17:32:10</td>
-          <td className='clienttabletext'>
-          <span style={{backgroundColor:'rgba(149, 172, 255, 0.2)', padding:8,paddingLeft:40, paddingRight:40, borderRadius:20}}>5</span></td>
-          <td className='clienttabletext'>
-          <span style={{backgroundColor:'rgba(47, 182, 23, 1)', padding:8,paddingLeft:20, paddingRight:20, color:'#fff'}}>Active</span></td>
-          <td className='clienttabletext'><MoreVert /></td>
-        </tr>
+            <tr>
+              <td className='clienttabletext'>#DMA 1</td>
+              <td className='clienttabletext'>0xF04CD5FFFE01B1A9</td>
+              <td className='clienttabletext'>02/05/2024 17:32:10</td>
+              <td className='clienttabletext'>
+              <span style={{backgroundColor:'#E3F2FD', padding:8,paddingLeft:40, paddingRight:40, borderRadius:20,color:'#1976D2', fontWeight:600}}>5</span></td>
+              <td className='clienttabletext'>
+              <span style={{backgroundColor:'rgba(47, 182, 23, 1)', padding:8,paddingLeft:20, paddingRight:20, color:'#fff'}}>Active</span></td>
+              <td className='clienttabletext'><MoreVert /></td>
+            </tr>
 
-      </tbody>
-    </Table>
+          </tbody>
+        </Table>
+      </div>
     </div>
   );
 }

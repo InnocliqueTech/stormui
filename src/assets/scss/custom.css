@@ -160,13 +160,37 @@ header {
     border-radius: 8px;
     border: 1px solid #D6D9DC;
   }
-  .customer-table .table-responsive {
+  .customer-table {
     border-radius: 8px;
   }
-  .customer-table .table-responsive table thead tr th {
+  .customer-table table thead tr th {
     background-color: #F4F5F5;
   }
 
+  /* Styles for custom scrollbars */
+.customer-table {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  position: relative; /* Ensure absolute positioning works inside */
+}
+
+.customer-table::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+  height: 5px;
+}
+
+.customer-table::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.customer-table::-webkit-scrollbar-thumb {
+  background-color: #888; /* Thumb color */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.customer-table::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker thumb color on hover */
+}
   .shadow-scroll-x {
     overflow-x: auto;
 
@@ -230,3 +254,11 @@ Use media queries to only use on mobile */
 .setting-nav ul li a {  font-size: 16px; color: #212121; font-weight: 400; text-decoration: none;}
 .setting-nav ul li a.active{background:#FDFDFD; padding: 8px 12px; gap: 8;border-radius: 8px; color: #1565C0;}
 .dashheading a { text-decoration: none;}
+.zonelist-nav{background:#F4F5F5;}
+.zonelist-nav ul li a.active {background-color: #E3F2FD; color: #1565C0; font-weight: 600;}
+.inner-heading { font-size: 20px;font-weight: 700; color: #121212; line-height: 24px;}
+.zone-breadcrum { background-color: #FDFDFD !important; border-radius: 8px !important;padding:0 16px !important}
+.zone-breadcrum li a { color: #1976D2; font-size: 16px;font-weight: 600;}
+.zone-breadcrum li.active {font-size: 16px; }
+
+

@@ -340,28 +340,30 @@ const Client = () => {
         className='clientpopup'
       >
 
-<Row container >
-<Col md={10} sm={12} xs={10}>
-            <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-            Consumption Details
-            </DialogTitle>
-          </Col>
-          <Col md={1} sm={1} xs={1}>
-            <IconButton
-              aria-label="close"
-              onClick={handleClose}
-              sx={{
-                position: 'absolute',
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500],
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </Col>
-        </Row>
-        <DmaTable />
+        <Card >
+          <Row container style={{ backgroundColor: '#000' }}>
+            <Col md={10} sm={12} xs={10}>
+              <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                Consumption Details
+              </DialogTitle>
+            </Col>
+            <Col md={1} sm={1} xs={1}>
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Col>
+          </Row>
+          <DmaTable />
+        </Card>
       </BootstrapDialog>
 
       {/* ------------------------zone--------------------------------------- */}
@@ -372,30 +374,30 @@ const Client = () => {
         fullWidth={fullWidth}
       >
 
-<Card className='client-customer'>
-        <Row container style={{ backgroundColor: '#000' }}>
-          <Col md={10} sm={12} xs={10}>
-            <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-            Consumption Details
-            </DialogTitle>
-          </Col>
-          <Col md={1} sm={1} xs={1}>
-            <IconButton
-              aria-label="close"
-              onClick={handledmaClose}
-              sx={{
-                position: 'absolute',
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500],
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </Col>
-        </Row>
-        <ZoneTable />
-    </Card>
+        <Card >
+          <Row container style={{ backgroundColor: '#000' }}>
+            <Col md={10} sm={12} xs={10}>
+              <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                Consumption Details
+              </DialogTitle>
+            </Col>
+            <Col md={1} sm={1} xs={1}>
+              <IconButton
+                aria-label="close"
+                onClick={handledmaClose}
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Col>
+          </Row>
+          <ZoneTable />
+        </Card>
         
       </BootstrapDialog>
       

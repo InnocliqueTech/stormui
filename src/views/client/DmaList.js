@@ -4,10 +4,11 @@ import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { Col, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import { Link } from '@mui/material';
+import { Accordion, AccordionSummary, Link } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
 import Paginations from '../../components/Paginatons';
 // import { useLocation } from 'react-router-dom';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 export default function DmaList() {
@@ -66,6 +67,7 @@ export default function DmaList() {
             <Table responsive style={{ marginTop: 30, borderRadius: 10, border: '1px solid #ccc' }}>
                 <thead style={{ backgroundColor: '#F4F5F5' }}>
                     <tr>
+                        <th className='tablehead'></th>
                         <th className='tablehead'>DMA ID</th>
                         <th className='tablehead'>Region</th>
                         <th className='tablehead'>Gateway ID</th>
@@ -78,6 +80,17 @@ export default function DmaList() {
                 </thead>
                 <tbody>
                     <tr>
+                        <td className='tablecontent'>
+                        <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon    />}
+          aria-controls="panel1-content"
+          id="panel1-header"
+        >
+        
+        </AccordionSummary>
+        </Accordion>
+                        </td>
                         <td className='tablecontent'>
                             <Link href="/app/meterlist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }} >#1472 </Link>
                         </td>

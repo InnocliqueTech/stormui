@@ -8,7 +8,7 @@ import { ConfigContext } from '../../../contexts/ConfigContext';
 import * as actionType from '../../../store/actions';
 import { Image } from 'react-bootstrap';
 import logo from '../../../assets/images/logo-white.png';
-import secondLogo from './image6.png'; // Import your second logo
+import secondLogo from './image6-removebg-preview.png'; // Import your second logo
 
 const NavBar = () => {
   const [moreToggle, setMoreToggle] = useState(false);
@@ -45,18 +45,18 @@ const NavBar = () => {
   return (
     <header className={headerClass.join(' ')}>
       <div className="m-header">
-        <Link to="#" className={toggleClass.join(' ')} id="mobile-collapse" onClick={navToggleHandler}>
+        <Link to="#" className={toggleClass.join(' ')}  onClick={navToggleHandler}>
           <span />
         </Link>
-        <Link to="#" className="b-brand">
           {/* Original logo */}
- <Image src={secondLogo} style={{ height: 500, width: 100 }} alt="nmdsdsm" />
           <span className="b-title"></span>
-        </Link>
+      
+        <Image src={logo} style={{ height: 50, width: 100 }} alt="First logo" />
         {showSecondLogo && showLogos && (
           <Link to="#" className="b-brand">
+ <Image src={secondLogo} style={{ height: 50, width: 100 }} alt="logo" />
             {/* Second logo */}
-            <Image src={logo} style={{ height: 50, width: 100 }} alt="Second Logo" />
+
             <span className="b-title"></span>
           </Link>
         )}

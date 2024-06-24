@@ -26,24 +26,24 @@ export default function ClientList() {
     <div className='col-md-12'>
       <div className="d-flex justify-content-around row">
         <div className="col-md-6 col-sm-12 col-12">
-          <div className="dashheading">
+          {/* <div className="dashheading">
             <a className="tab " href="#">Dashboard</a>
             <span><a className="tab active" href="#">Client List</a></span>
-          </div>
+          </div> */}
         </div>
         <div className="d-flex justify-content-end col-md-6 col-sm-12 col-12">
-          <div className="row days-filter float-end">
-            <div className="col-md-12">
-              <div className="col-md-1 col-sm-4 col-4" style={{ textAlign: 'end', width: 100, padding: 2 }}>
+          {/* <div className="row days-filter float-end"> */}
+            {/* <div className="col-md-12"> */}
+              {/* <div className="col-md-1 col-sm-4 col-4" style={{ textAlign: 'end', width: 100, padding: 2 }}>
                 <button className="filter" style={{ background: 'transparent', color: 'rgb(21, 101, 192)', border: '1px solid rgb(21, 101, 192)', paddingLeft: 10, paddingRight: 10, height: 48, width: 103, borderRadius: '8px' }}>
                   <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="FilterAltOutlinedIcon" style={{ color: 'rgb(21, 101, 192)' }}>
                     <path d="M7 6h10l-5.01 6.3zm-2.75-.39C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61"></path>
                   </svg>
                   Filter
                 </button>
-              </div>
-            </div>
-          </div>
+              </div> */}
+            {/* </div> */}
+          {/* </div> */}
         </div>
       </div>
 

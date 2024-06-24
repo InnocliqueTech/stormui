@@ -6,6 +6,12 @@ body {    font-family: "Inter";    font-size: 14px;}
   font-weight: 700;
   color: #212121;
 }
+.fs-18 {font-size: 18px;}
+.fs-16 {font-size: 16px;}
+.fw6{ font-weight: 600;}
+.fw7{ font-weight: 700;}
+.fw4{ font-weight: 400;}
+
 header { 
     padding: 16px 24px !important;
     min-height: 74px !important;
@@ -261,4 +267,8 @@ Use media queries to only use on mobile */
 .zone-breadcrum li a { color: #1976D2; font-size: 16px;font-weight: 600;}
 .zone-breadcrum li.active {font-size: 16px; }
 
-
+.setting-detail label { font-size: 14px;font-weight: 400;color: #212121;}
+.aboutus-details p, .aboutus-details Typography, .aboutus-details ul li 
+{font-family: "Inter"; font-size: 16px; color: #121212; font-weight: 400; line-height: 19px;}
+.tc-details strong { font-size: 16px; line-height: 19px; color: #121212; padding-bottom: 8px;font-weight: 600;display: block;}
+.tc-details p { font-size: 16px; color: #121212; font-weight: 400; }

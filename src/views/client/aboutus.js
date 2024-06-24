@@ -1,44 +1,43 @@
 import React from 'react';
 import { Typography } from '@mui/material';
-import { Box, List, ListItem, Grid, Divider, TextField, Container, Paper } from '@mui/material';
+import { Box, List, ListItem, Grid, Divider, TextField, Paper } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function aboutUs() {
   return (
     <>
-    <Container maxWidth="lm">
-      <Row>
+    <>
+      <Row style={{marginBottom:'30px'}}>
         <Col md={8} sm={6} xs={12}>
           <div className="dashheading"><a className="title">About us</a></div>
         </Col>
-        <Col md={4} sm={5} xs={12}>
+          <Col md={4} sm={5} xs={12}>
             <div className='setting-nav'>
-                <ul>
+              <ul>
                 <li><Link to='/app/setting'>Profile</Link></li>
-              <li><Link className='active'  to='/app/about'>About us</Link></li>
-              <li><Link to='/app/terms'>Terms & Conditions</Link></li>
- 
-                </ul>
+                <li><Link className='active' to='/app/about'>About us</Link></li>
+                <li><Link to='/app/terms'>Terms & Conditions</Link></li>
+              </ul>
             </div>
-        </Col>
+          </Col>
       </Row>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={12} className='aboutus-details'>
           <Paper elevation={0} sx={{ padding: 2, border: '1px solid #e0e0e0' }}>
-            <Typography variant="body2">
+            <p>
               While clean water is the primary concern, Water and Wastewater organizations must prioritize meeting regulations and reducing costs. With solutions coming from Storm&apos;s basket like Centralized monitoring, controlling and reporting, Storm provides a crystal clear view resulting in greater safety and efficiency.
-            </Typography>
-            <Typography variant="body2" sx={{ marginBottom: 2 }}>
+            </p>
+            <Typography variant="body2" >
               Our solutions cater to:
             </Typography>
-            <Typography variant="body2" component="ul">
+            <Typography variant="body2" component="ul" sx={{ marginBottom: 2 }}>
               <li>Desalination</li>
               <li>Water Pumping Stations</li>
               <li>Water Distribution &amp; Irrigation</li>
               <li>Water Treatment Plants</li>
             </Typography>
-            <Typography variant="body2" sx={{ marginBottom: 2 }}>
+            <Typography variant="body2">
               We offer a comprehensive range of solutions for W&amp;WW industry viz:
             </Typography>
             <Typography variant="body2" component="ul" sx={{ marginBottom: 2 }}>
@@ -62,19 +61,18 @@ function aboutUs() {
       <Box>
         <List sx={{ p: 0, width: '100%', borderRadius: 2, border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', marginTop: '25px' }} aria-label="mailbox folders">
           <ListItem>
-            <Typography paddingLeft={1} display="flex" flexDirection="column" alignItems="flex-start" variant="h6" gutterBottom>Contact Us</Typography>
+            <h5 className='fs18 fw6 d-flex' style={{padding:'8px', paddingBottom:'0px'}}>Contact Us</h5>
           </ListItem>
           <Divider component="li" />
           <ListItem>
             <Box sx={{ borderRadius: "7px", borderWidth: "1px", padding: "10px", width: "100%" }}>
               <Box display="flex" flexDirection="row" justifyContent="space-between">
-                <Box display="flex" flexDirection="column" alignItems="flex-start" marginRight={2} width="45%">
-                  <Typography>Contact</Typography>
+                <Box display="flex" className="setting-detail" flexDirection="column" alignItems="flex-start" marginRight={2} width="45%">
+                <label>Contact</label>
                   <TextField
                     fullWidth
                     variant="outlined"
                     defaultValue="+91 9000000001"
-                    margin="normal"
                     InputProps={{
                       sx: {
                         height: '36px', // Adjust the height as per your requirement
@@ -84,13 +82,12 @@ function aboutUs() {
                     />
                 </Box>
 
-                <Box display="flex" flexDirection="column" alignItems="flex-start" width="45%">
-                  <Typography>G-mail</Typography>
+                <Box display="flex" className="setting-detail" flexDirection="column" alignItems="flex-start" width="45%">
+                  <label>G-mail</label>
                   <TextField
                     fullWidth
                     variant="outlined"
                     defaultValue="srinivasalwala22@gmail.com"
-                    margin="normal"
                     InputProps={{
                       sx: {
                         height: '36px', // Adjust the height as per your requirement
@@ -102,13 +99,12 @@ function aboutUs() {
               </Box>
 
               <Box display="flex" flexDirection="row" justifyContent="space-between" marginTop={2}>
-                <Box display="flex" flexDirection="column" alignItems="flex-start" marginRight={2} width="45%">
-                  <Typography>Address</Typography>
+                <Box display="flex" className="setting-detail" flexDirection="column" alignItems="flex-start" marginRight={2} width="45%">
+                  <label>Address</label>
                   <TextField
                     fullWidth
                     variant="outlined"
                     defaultValue="12-39302-28192,Hitech-city"
-                    margin="normal"
                     InputProps={{
                       sx: {
                         height: '36px', // Adjust the height as per your requirement
@@ -124,7 +120,7 @@ function aboutUs() {
         </List>
       </Box>
 
-    </Container>
+    </>
                     </>
   );
 }

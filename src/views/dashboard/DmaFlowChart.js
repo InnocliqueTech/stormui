@@ -46,7 +46,7 @@ const options = {
   },
 
   xaxis: {
-    categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    categories: ['Dma-1', 'Dma-2', '', 'Thu', 'Fri', 'Sat', 'Sun']
   },
   legend: {
     position: 'bottom',

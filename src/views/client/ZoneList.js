@@ -4,9 +4,10 @@ import Table from 'react-bootstrap/Table';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import { Link } from '@mui/material';
+import { Accordion, AccordionSummary, Link } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
 import Paginations from '../../components/Paginatons'; // Make sure this path is correct
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function ZoneList() {
   return (
@@ -54,8 +55,8 @@ export default function ZoneList() {
             <div className="col-md-3 col-sm-6 col-12">
               <div className="setting-nav zonelist-nav">
                 <ul>
-                  <li><a className="active" href="#">Zone List</a></li>
-                  <li><a href="#">DMA’s List</a></li>
+                  <li><a className="active" href="http://localhost:3000/app/zonelist">Zone List</a></li>
+                  <li><a href="http://localhost:3000/app/dmalist">DMA’s List</a></li>
                 </ul>
               </div>
             </div>
@@ -83,6 +84,17 @@ export default function ZoneList() {
             </thead>
             <tbody>
               <tr>
+              <td className='tablecontent'>
+                  <Accordion style={{boxShadow:'none'}}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1-content"
+                      id="panel1-header"
+                    >
+
+                    </AccordionSummary>
+                  </Accordion>
+                </td>
                 <td className='tablecontent'>
                   <Link to="/app/dmalist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }} >#1472</Link>
                 </td>

@@ -61,7 +61,7 @@ const Overflow = (props) => {
           plotOptions: {
             bar: {
               borderRadius: 0,
-              columnWidth: 10
+              columnWidth: 20 // Adjust column width here for better spacing
             }
           }
         }
@@ -71,7 +71,7 @@ const Overflow = (props) => {
       bar: {
         horizontal: false,
         borderRadius: 0,
-        columnWidth: 40,
+        columnWidth: '50%', // Adjust column width here for better spacing
         borderRadiusApplication: 'end',
         borderRadiusWhenStacked: 'last'
       }
@@ -80,7 +80,37 @@ const Overflow = (props) => {
       enabled: false
     },
     xaxis: {
-      categories: categories
+      categories: categories,
+      tickPlacement: 'on',
+      labels: {
+        show: true,
+        rotate: -45,
+        rotateAlways: true,
+        hideOverlappingLabels: true,
+        showDuplicates: false,
+        trim: true,
+        maxHeight: 120,
+        style: {
+          fontSize: '12px',
+          fontWeight: 400
+        }
+      },
+      title: {
+        offsetY: -10,
+        style: {
+          fontSize: '14px',
+          fontWeight: 600
+        }
+      },
+      scrollbar: {
+        enabled: true, // Enable the scrollbar
+        height: 20,
+        borderRadius: 2,
+        barBackgroundColor: '#90CAF9',
+        barHeight: 2,
+        barBorderRadius: 2,
+        barBorderColor: '#2196F3'
+      }
     },
     legend: {
       position: 'bottom',

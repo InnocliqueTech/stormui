@@ -4,11 +4,10 @@ import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { Col, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import { Accordion, AccordionSummary, Link } from '@mui/material';
+import {  Link } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
 import Paginations from '../../components/Paginatons';
 // import { useLocation } from 'react-router-dom';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 export default function DmaList() {
@@ -60,7 +59,7 @@ export default function DmaList() {
             <div className="col-md-3 col-sm-6 col-12">
               <div className="setting-nav zonelist-nav">
                 <ul>
-                  <li><a href="#">Zone List</a></li>
+                  <li><a href="http://localhost:3000/app/zonelist">Zone List</a></li>
                   <li><a className="active" href="#">DMA’s List</a></li>
                 </ul>
               </div>
@@ -90,7 +89,6 @@ export default function DmaList() {
           <Table style={{ borderRadius: 8 }}>
             <thead style={{ backgroundColor: '#F4F5F5' }}>
               <tr>
-                <th className='tablehead'></th>
                 <th className='tablehead'>DMA ID</th>
                 <th className='tablehead'>Region</th>
                 <th className='tablehead'>Gateway ID</th>
@@ -103,17 +101,7 @@ export default function DmaList() {
             </thead>
             <tbody>
               <tr>
-                <td className='tablecontent'>
-                  <Accordion style={{boxShadow:'none'}}>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-
-                    </AccordionSummary>
-                  </Accordion>
-                </td>
+               
                 <td className='tablecontent'>
                   <Link href="/app/meterlist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }} >#1472 </Link>
                 </td>

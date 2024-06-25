@@ -50,6 +50,7 @@ export default function Location() {
                     <h5 className="card-title">{project.title}</h5>
                     </a>
                   </Col>
+                  
                   <Col md={2} sm={1} xs={1} className='p-0 text-end' >
                     <img src={HomeEdit} style={{background:'#F4F5F5', width:24, height:24, borderRadius:6, padding:4}}  alt="uparrow" /> 
                   </Col>

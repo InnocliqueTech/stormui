@@ -23,9 +23,7 @@ const DashDefault = () => {
       const response = await axios.post(BASE_API_URL1 + 'dashboard/getAllDashboardValues', {
         clientId: 1
       });
-      console.log('API Response:', response.data); // Debugging: Log the API response
       const parsedData = parseDashboardData(response.data);
-      console.log('Parsed Dashboard Data:', parsedData); // Debugging: Log the parsed dashboard data
       setDashboardData(parsedData);
 
       const aData = await axios.post(BASE_API_URL + "/getAlerts");
@@ -40,9 +38,7 @@ const DashDefault = () => {
   }
 
   const parseNumber = (value) => {
-    console.log('Parsing value:', value); // Debugging: Log each value being parsed
     const number = Number(value);
-    console.log('Parsed number:', number); // Debugging: Log the parsed number
     return isNaN(number) ? 0 : number;
   }
 
@@ -75,6 +71,7 @@ const DashDefault = () => {
 
   return (
     <React.Fragment>
+      
       <Row>
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">

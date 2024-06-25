@@ -46,7 +46,7 @@ export default function Location() {
               <div className="">
                 <Row className='row p-0 m-0'>
                   <Col className='p-0' md={10} sm={1} xs={1}>
-                    <a style={{color:"black", textDecoration:'none'}} href = "http://localhost:3000/app/dashboard/default">
+                    <a style={{color:"black", textDecoration:'none'}} href = "http://49.207.11.223:3308/app/dashboard/default">
                     <h5 className="card-title">{project.title}</h5>
                     </a>
                   </Col>

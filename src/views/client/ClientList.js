@@ -126,6 +126,7 @@ export default function ClientList() {
         </div>
         <Paginations />
       </div>
+      
     </div>
   );
 }

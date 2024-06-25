@@ -10,7 +10,7 @@ import { Card, Checkbox, Link } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { CachedOutlined, FileUploadOutlined } from '@mui/icons-material';
 import Table from 'react-bootstrap/Table';
-import Pagination from 'react-bootstrap/Pagination';
+//import Pagination from 'react-bootstrap/Pagination';
 import Paginations from '../../components/Paginatons';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -143,6 +143,7 @@ export default function GatewayTable() {
         aria-labelledby="customized-dialog-title"
         open={open}
         fullWidth={fullWidth}
+        className='clientpopup'
       >
 
         <Row container style={{ backgroundColor: '#000' }}>

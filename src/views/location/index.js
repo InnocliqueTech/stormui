@@ -36,7 +36,7 @@ const projects = [
 export default function Location() {
   return (
     <>
-      <h2 style={{fontSize:32,fontWeight:700, color:'#212121', marginTop:10}} className="">Welcome to Strom Energy</h2>
+      <h2 style={{fontSize:32,fontWeight:700, color:'#212121', marginTop:0}} className="">Welcome to Strom Energy</h2>
     <div className="mt-4">
       <div className="row">
         {projects.map((project, index) => (
@@ -47,7 +47,7 @@ export default function Location() {
                 <Row className='row p-0 m-0'>
                   <Col className='p-0' md={10} sm={1} xs={1}>
                     <a style={{color:"black", textDecoration:'none'}} href = "http://49.207.11.223:3308/app/dashboard/default">
-                    <h5 className="card-title">{project.title}</h5>
+                    <h5 className="card-title m-0 p-0">{project.title}</h5>
                     </a>
                   </Col>
                   

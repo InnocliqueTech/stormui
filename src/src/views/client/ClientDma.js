@@ -12,7 +12,7 @@ const options = {
   legend: {
     position: 'bottom',
     horizontalAlign: 'center',
-    fontFamily: 'inter',
+    fontFamily: 'Inter',
     fontWeight: 600,
     fontSize: '14px',
 

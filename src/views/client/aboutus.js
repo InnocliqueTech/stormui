@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@mui/material';
-import { Box, List, ListItem, Grid, Divider, TextField, Paper } from '@mui/material';
+import { Box, List, ListItem, Grid, Divider, Paper } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -24,7 +24,9 @@ function aboutUs() {
       </Row>
       <Grid container spacing={3}>
         <Grid item xs={12} className='aboutus-details'>
-          <Paper elevation={0} sx={{ padding: 2, border: '1px solid #e0e0e0' }}>
+          <Paper elevation={0} sx={{ padding: 2, border: '1px solid #F4F5F5' }}
+            style={{borderRadius:'16px'}}
+          >
             <p>
               While clean water is the primary concern, Water and Wastewater organizations must prioritize meeting regulations and reducing costs. With solutions coming from Storm&apos;s basket like Centralized monitoring, controlling and reporting, Storm provides a crystal clear view resulting in greater safety and efficiency.
             </p>
@@ -59,64 +61,44 @@ function aboutUs() {
       </Grid>
 
       <Box>
-        <List sx={{ p: 0, width: '100%', borderRadius: 2, border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', marginTop: '25px' }} aria-label="mailbox folders">
-          <ListItem>
-            <h5 className='fs18 fw6 d-flex' style={{padding:'8px', paddingBottom:'0px'}}>Contact Us</h5>
+      <List className='setting-detail-list' style={{borderRadius:16, border:'1px solid #F4F5F5' }} sx={{ p: 0,
+            width: '100%',
+            marginTop: '25px'}}aria-label="mailbox folders">
+          <ListItem> 
+            <h5 className='fs18 fw6 d-flex'>Contact Us</h5>
           </ListItem>
           <Divider component="li" />
           <ListItem>
-            <Box sx={{ borderRadius: "7px", borderWidth: "1px", padding: "10px", width: "100%" }}>
+            <Box sx={{ borderRadius: "7px", borderWidth: "1px", padding: "16px", width: "100%" }}>
               <Box display="flex" flexDirection="row" justifyContent="space-between">
-                <Box display="flex" className="setting-detail" flexDirection="column" alignItems="flex-start" marginRight={2} width="45%">
+              <Box className="setting-detail" display="flex" flexDirection="column" alignItems="flex-start"  marginRight={2} width="45%">
                 <label>Contact</label>
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    defaultValue="+91 9000000001"
-                    InputProps={{
-                      sx: {
-                        height: '36px', // Adjust the height as per your requirement
-                        color: 'grey'
-                      }
-                    }}
-                    />
-                </Box>
+                <input type='text' placeholder='+91 9000000001'></input>
+              </Box>
 
                 <Box display="flex" className="setting-detail" flexDirection="column" alignItems="flex-start" width="45%">
                   <label>G-mail</label>
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    defaultValue="srinivasalwala22@gmail.com"
-                    InputProps={{
-                      sx: {
-                        height: '36px', // Adjust the height as per your requirement
-                        color: 'grey'
-                      }
-                    }}
-                    />
+                  <input type='text' placeholder='srinivasalwala22@gmail.com'></input>
                 </Box>
               </Box>
 
               <Box display="flex" flexDirection="row" justifyContent="space-between" marginTop={2}>
                 <Box display="flex" className="setting-detail" flexDirection="column" alignItems="flex-start" marginRight={2} width="45%">
                   <label>Address</label>
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    defaultValue="12-39302-28192,Hitech-city"
-                    InputProps={{
-                      sx: {
-                        height: '36px', // Adjust the height as per your requirement
-                        color: 'grey'
-                      }
-                    }}
-                    />
+                  <input type='text' placeholder='12-39302-28192,Hitech-city'></input>
                 </Box>
               </Box>
+              <Box display="flex" flexDirection="row" justifyContent="space-between" marginTop={2}>
+                <Box display="flex" className="setting-detail" flexDirection="column" alignItems="flex-start" marginRight={2} width="45%">
+                  <label className="form-label">PDF Attachment</label>
+                  <input type="file" id="file" style={{ display: 'none' }} />
+                  <label htmlFor="file" className="custom-file-upload">Choose a file</label>
+                </Box>
+
+              </Box>
+
             </Box>
           </ListItem>
-          <Divider component="li" />
         </List>
       </Box>
 

@@ -21,7 +21,9 @@ function Terms() {
           </div>
       </Col>
     </Row>
-    <Paper  sx={{ padding: 2, border: '1px solid #e0e0e0' }}> 
+    <Paper className='setting-detail-list' style={{borderRadius:16,padding:16, border:'1px solid #F4F5F5', boxShadow:'none' }} sx={{ 
+            width: '100%',
+            marginTop: '25px'}} aria-label="mailbox folders"> 
         <Grid container spacing={2}>
           <Grid item xs={12} className='tc-details'>
             <strong>1. ACCEPTANCE THE USE OF LOREM IPSUM TERMS AND CONDITIONS</strong>

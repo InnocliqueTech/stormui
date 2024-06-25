@@ -6,26 +6,30 @@ import refresh from '../../../assets/images/refresh_both.svg';
 import upload from '../../../assets/images/upload.svg';
 import deleteimg from '../../../assets/images/delete.svg';
 import Device from './Device';
+import Details from './Details';
+import Photos from './Photos';
 
 function Meter() {
     return (
         <>
-        <Row style={{padding:10, paddingTop:30}}>
-            <Col md={12} sm={12} xs={12}>
+        <Row style={{padding:'32px', background:'#F4F5F5'}}>
+            <Col md={12} sm={12} xs={12} className='meterlist'>
                 <Tabs
                     defaultActiveKey="home"
                     id="fill-tab-example"
-                    className="mb-3"
                     fill
                 >
                     <Tab eventKey="home" title="Analytics">
                         Tab content for Home
                     </Tab>
+                    <Tab eventKey="details" title="Details">
+                        <Details />
+                    </Tab>
                     <Tab eventKey="device" title="Device">
                         <Device />
                     </Tab>
                     <Tab eventKey="photos" title="Photos">
-                        Tab content for Loooonger Tab
+                        <Photos/>
                     </Tab>
                 </Tabs>
             </Col>

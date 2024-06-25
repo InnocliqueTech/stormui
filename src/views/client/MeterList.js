@@ -35,60 +35,116 @@ export default function MeterList() {
         setOpen(false);
     };
     return (
-        <div style={{ backgroundColor: '#fff', padding: 10, borderRadius: 10, paddingTop: 30, marginTop: 10, paddingBottom: 100 }}>
+        <div className='col-md-12'>
+            <div className="d-flex justify-content-around row">
+                <div className="col-md-6 col-sm-12 col-12">
+                <nav className='d-flex' style={{width:'auto'}}>
+                    <ol className="breadcrumb  zone-breadcrum">
+                    <li className="breadcrumb-item"><a href="#">Clients</a></li>
+                    <li className="breadcrumb-item"><a href="#">Zones</a></li>
+                    <li className="breadcrumb-item"><a href="#">DMA’s</a></li>
+                    <li className="breadcrumb-item"><a href="#">Meters</a></li>
+                    </ol>
+                </nav>
+                <div className="inner-heading"  style={{marginBottom:'24px'}}>
+                    <a >KSCCL-WATER-SUPPLY-OTAA</a>
+                </div>
+                </div>
+                <div className="d-flex justify-content-end col-md-6 col-sm-12 col-12" style={{marginTop:'12px'}}>
+                <div className="row days-filter float-end">
+                    <div className="col-md-12 d-flex">
+                        <div className="form-group selectcustom me-2" style={{width:'160px'}}>
+                            <select className="form-control">
+                            <option>Select Client</option>
+                            <option>All</option>
+                            <option>KSCCL-WATER ..</option>
+                            <option>TEST_ABP_01</option>
+                            </select>
+                        </div>
+                        <div className="form-group selectcustom me-2" style={{width:'160px'}}>
+                            <select className="form-control">
+                            <option>Select Zone1</option>
+                            <option>All</option>
+                            <option>KSCCL-WATER ..</option>
+                            <option>TEST_ABP_01</option>
+                            </select>
+                        </div>
+                        <div className="form-group selectcustom me-2" style={{width:'160px'}}>
+                            <select className="form-control">
+                            <option>Select DMA1</option>
+                            <option>All</option>
+                            <option>KSCCL-WATER ..</option>
+                            <option>TEST_ABP_01</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, paddingBottom: 100 }}>
+        <Row style={{marginBottom:'24px'}}>
+          <Col md={9} sm={7} xs={7}>
             <Row>
                 <Col md={9} sm={7} xs={7}>
                     <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Meter List</span> <span style={{ textAlign: 'end' }}><InfoOutlinedIcon style={{ height: 20, width: 20, justifyContent: 'center', color: '#D6D9DC', marginLeft: 5 }} /></span>
                 </Col>
-                <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
-                    <CachedOutlinedIcon style={{ color: '#6C757D' }} /> <span> <FilterAltOutlinedIcon style={{ color: '#6C757D', marginLeft: 20, marginRight: 20 }} /></span><span> <FileUploadOutlinedIcon style={{ color: '#6C757D' }} /></span>
-                </Col>
             </Row>
+          </Col>
+          <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+            <CachedOutlinedIcon style={{ color: '#6C757D' }} /> 
+            <FilterAltOutlinedIcon style={{ color: '#6C757D', marginLeft: 20, marginRight: 20 }} />
+            <FileUploadOutlinedIcon style={{ color: '#6C757D' }} />
+          </Col>
+        </Row>
 
-            <Table responsive style={{ marginTop: 30, borderRadius: 10, border: '1px solid #ccc' }}>
-                <thead style={{ backgroundColor: '#F4F5F5' }}>
-                    <tr>
-                        <th className='tablehead'>Meter Id</th>
-                        <th className='tablehead'>Gateway Id</th>
-                        <th className='tablehead'>DEVEUI</th>
-                        <th className='tablehead'>Zone no</th>
-                        <th className='tablehead'>DMA no</th>
-                        <th className='tablehead'>Timestamp</th>
-                        <th className='tablehead'>Reading</th>
-                        <th className='tablehead'>Consum (in KL)</th>
-                        <th className='tablehead'>Status</th>
-                        <th className='tablehead'>Battery Life</th>
-                        <th className='tablehead'>Remarks</th>
-                        <th className='tablehead'>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td className='tablecontent'>
-                            <Link onClick={handleClickOpen} style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }} >1941472 </Link>
-                        </td>
-                        <td className='tablecontent'>0fnjckdy778t7y6778</td>
-                        <td className='tablecontent'>0fnjckdy778t7y6778</td>
-                        <td className='tablecontent'>
-                            <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>Zone</span>
-                        </td>
-                        <td className='tablecontent'>
-                            <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>#1472</span>
-                        </td>
-                        <td className='tablecontent'>02/05/2024 16:40:28</td>
-                        <td className='tablecontent'>
-                            <span style={{ backgroundColor: '#F4F5F5', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#6C757D' }}>0</span>
-                        </td><td className='tablecontent'>675</td>
-                        <td className='tablecontent'>
-                            <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>Active</span>
-                        </td>
-                        <td className='tablecontent'>OxFE</td>
-                        <td className='tablecontent'>Null</td>
-                        <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td>
-                    </tr>
-                </tbody>
-            </Table>
-            <Paginations />
+        <div className='customer-table mt-0'>
+          <Table style={{ borderRadius: 8 }}>
+            <thead>
+                <tr>
+                    <th className='tablehead'>Meter Id</th>
+                    <th className='tablehead'>Gateway Id</th>
+                    <th className='tablehead'>DEVEUI</th>
+                    <th className='tablehead'>Zone no</th>
+                    <th className='tablehead'>DMA no</th>
+                    <th className='tablehead'>Timestamp</th>
+                    <th className='tablehead'>Reading</th>
+                    <th className='tablehead'>Consum (in KL)</th>
+                    <th className='tablehead'>Status</th>
+                    <th className='tablehead'>Battery Life</th>
+                    <th className='tablehead'>Remarks</th>
+                    <th className='tablehead'>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td className='tablecontent'>
+                        <Link onClick={handleClickOpen} style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }} >1941472 </Link>
+                    </td>
+                    <td className='tablecontent'>0fnjckdy778t7y6778</td>
+                    <td className='tablecontent'>0fnjckdy778t7y6778</td>
+                    <td className='tablecontent'>
+                        <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0', fontWeight:'600' }}>Zone</span>
+                    </td>
+                    <td className='tablecontent'>
+                        <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0', fontWeight:'600' }}>#1472</span>
+                    </td>
+                    <td className='tablecontent'>02/05/2024 16:40:28</td>
+                    <td className='tablecontent'>
+                        <span style={{ backgroundColor: '#F4F5F5', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#6C757D' }}>0</span>
+                    </td><td className='tablecontent'>675</td>
+                    <td className='tablecontent'>
+                        <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>Active</span>
+                    </td>
+                    <td className='tablecontent'>OxFE</td>
+                    <td className='tablecontent'>Null</td>
+                    <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td>
+                </tr>
+            </tbody>
+          </Table>
+        </div>
+        <Paginations />
+      </div>
+            
             {/* ------------------------meter list--------------------------------------- */}
             <BootstrapDialog
                 onClose={handleClose}

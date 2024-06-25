@@ -1,12 +1,17 @@
 import React from 'react';
-import { Box,Typography,List,ListItem,useMediaQuery, useTheme,Divider, TextField, FormControlLabel, Switch, Button, Avatar, Paper } from '@mui/material';
+import { Box,Typography,List,ListItem,useMediaQuery, useTheme,Divider, FormControlLabel, Switch, Button, Avatar, Paper } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'; 
-import { EmailOutlined,  StickyNote2Outlined, } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import { Col,Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import './setting.css';
+import ClientNotification from '../../src/assets/images/ClientNotification.png';
+import Mail from '../../src/assets/images/Mail.png';
+import UpdateSystem from '../../src/assets/images/UpdateSystem.png';
+import Logout from '../../src/assets/images/Logout.png';
+
+
+
 
  
 function Settings() {
@@ -22,7 +27,7 @@ function Settings() {
     <>
       <Row>
         <Col md={8} sm={6} xs={12}>
-          <div className="dashheading"><a className="title">Profile</a></div>
+          <div className="dashheading">Profile</div>
         </Col>
         <Col md={4} sm={5} xs={12}>
             <div className='setting-nav'>
@@ -35,7 +40,7 @@ function Settings() {
             </div>
         </Col>
       </Row>
-      <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
+      <Paper elevation={3} style={{ padding: '0px', marginTop: '20px', boxShadow:'none' }}>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">
             <Avatar
@@ -45,114 +50,65 @@ function Settings() {
             />
             <Box display="flex" flexDirection="column" alignItems="flex-start">
               <h4 className='fs-18 fw6' >Srinivas Alwala</h4>
-              <span className='fs16 fw4' style={{color:'#808E9D'}}>Project Manager</span>
+              <span className='fs-16 fw4' style={{color:'#808E9D'}}>Project Manager</span>
             </Box>
           </Box>
           <Button sx={{borderRadius: "7px", borderWidth:"2px"}} startIcon={<EditIcon />} variant="outlined">Edit</Button>
         </Box>
 
     <Box>
-    <List sx={{ p: 0,
+    <List className='setting-detail-list' style={{borderRadius:16, border:'1px solid #F4F5F5' }} sx={{ p: 0,
                 width: '100%',
-                borderRadius: 2,
-                border: '1px solid',
-                borderColor: 'divider',
-                backgroundColor: 'background.paper',
                 marginTop: '25px'}} aria-label="mailbox folders">
       <ListItem>
-      <h5 className='fs18 fw6 d-flex'>Basic Details</h5>
+      <h5 className='fs-18 fw6 d-flex'>Basic Details</h5>
       </ListItem>
-      <Divider component="li" />
+      <Divider component="li" style={{borderBottom:'1px solid #F4F5F5' }}/>
       <ListItem>
         
-      <Box sx={{ borderRadius: "7px", borderWidth: "1px", padding: "10px" ,width:"100%" }}>
+      <Box sx={{ borderRadius: "7px", borderWidth: "1px", padding: "16px" ,width:"100%" }}>
       <Box display="flex" flexDirection="row" justifyContent="space-between"  >
         <Box className="setting-detail" display="flex" flexDirection="column" alignItems="flex-start"  marginRight={2} width="45%">
           <label>Name</label>
-          <TextField
-            fullWidth
-            variant="outlined"
-            defaultValue="Srikar Mitta"
-            InputProps={{
-              sx: {
-                height: '36px', // Adjust the height as per your requirement
-                color:'grey',marginTop:0
-              }
-            }}
-          />
+          <input type='text' placeholder='Srikar Mitta'></input>
         </Box>
 
         <Box className="setting-detail" display="flex" flexDirection="column" alignItems="flex-start" width="45%">
           <label>Email</label>
-          <TextField
-            fullWidth
-            variant="outlined"
-            defaultValue="srinivasalwala22@gmail.com"
-            InputProps={{
-              sx: {
-                height: '36px', // Adjust the height as per your requirement
-                color:'grey'
-              }
-            }}
-          />
+          <input type='text' placeholder='srinivasalwala22@gmail.com'></input>
         </Box>
       </Box>
 
       <Box display="flex" flexDirection="row" justifyContent="space-between" marginTop={2}>
         <Box className="setting-detail" display="flex" flexDirection="column" alignItems="flex-start" marginRight={2} width="45%">
           <label>Contact</label>
-          <TextField
-            fullWidth
-            variant="outlined"
-            defaultValue="+91 9000000001"
-            InputProps={{
-              sx: {
-                height: '36px', // Adjust the height as per your requirement
-                color:'grey'
-              }
-            }}
-          />
+          <input type='text' placeholder='+91 9000000001'></input>
         </Box>
 
         <Box className="setting-detail" display="flex" flexDirection="column" alignItems="flex-start" width="45%">
           <label>Job Title</label>
-          <TextField
-            fullWidth
-            variant="outlined"
-            defaultValue="Project Manager"
-            InputProps={{
-              sx: {
-                height: '36px', // Adjust the height as per your requirement
-                color:'grey'
-              }
-            }}
-          />
+          <input type='text' placeholder='Project Manager'></input>
         </Box>
       </Box>
       </Box>
       </ListItem>
-      <Divider component="li" />
     </List>
     </Box>
 
 <Box>
-<List sx={{ p: 0,
+<List className='setting-detail-list' style={{borderRadius:16, border:'1px solid #F4F5F5' }} sx={{ p: 0,
             width: '100%',
-            borderRadius: 2,
-            border: '1px solid',
-            borderColor: 'divider',
-            backgroundColor: 'background.paper',
             marginTop: '25px'}}aria-label="mailbox folders">
       <ListItem> 
-        <h5 className='fs18 fw6 d-flex'>Settings</h5>
+        <h5 className='fs-18 fw6 d-flex'>Settings</h5>
       </ListItem>
       
-      <Divider component="li" />
+      <Divider component="li" style={{borderBottom:'1px solid #F4F5F5' }}/>
       <ListItem sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center',padding:'8px' }}>
-        <StickyNote2Outlined style={{ color: 'blue' }}/> 
+      <Box sx={{ display: 'flex', alignItems: 'center',padding:'16px' }}>
+        <img src={ClientNotification}  alt="ClientNotification" width={20} height={20}/>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', ml: 2 }}>
-          <h5 className='fs16 fw7'>Client Notification</h5>
+          <h4 className='fs-16 fw7'>Client Notification</h4>
           <Typography variant="body2" color="#ADB5BD">
             You will be notified when customers order any product
           </Typography>
@@ -165,12 +121,12 @@ function Settings() {
       />
     </ListItem>
  
-      <Divider component="li" />
+      <Divider component="li" style={{borderBottom:'1px solid #F4F5F5' }}/>
       <ListItem sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center',padding:'8px' }}>
-        <EmailOutlined style={{ color: 'blue' }}/>
+      <Box sx={{ display: 'flex', alignItems: 'center',padding:'16px' }}>
+        <img src={Mail}  alt="Mail" width={20} height={20}/>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', ml: 2 }}>
-        <h5 className='fs16 fw7'>Setup Email Notification</h5>
+        <h4 className='fs-16 fw7'>Setup Email Notification</h4>
           <Typography variant="body2" color="#ADB5BD">
           Turn on email notification to get update through email
           </Typography>
@@ -183,12 +139,12 @@ function Settings() {
       />
     </ListItem>
 
-      <Divider component="li" />
+      <Divider component="li" style={{borderBottom:'1px solid #F4F5F5' }}/>
       <ListItem sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center',padding:'8px' }}>
-        <NotificationsNoneIcon style={{ color: 'blue' }} />
+      <Box sx={{ display: 'flex', alignItems: 'center',padding:'16px' }}>
+        <img src={UpdateSystem}  alt="UpdateSystem" width={20} height={20}/>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', ml: 2 }}>
-          <h5 className='fs16 fw7'>Update System Notification</h5>
+          <h4 className='fs-16 fw7'>Update System Notification</h4>
           <Typography variant="body2" color="#ADB5BD">
             You will be notified when customers order any product
           </Typography>
@@ -200,10 +156,10 @@ function Settings() {
         sx={{ marginLeft: 'auto' }}
       />
     </ListItem>
-    <Divider component="li" />
+    <Divider component="li" style={{borderBottom:'1px solid #F4F5F5' }}/>
       <ListItem sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <ExitToAppIcon style={{ color: '#D81B60' }}/> 
+      <Box sx={{ display: 'flex', alignItems: 'center',padding:'16px'  }}>
+      <img src={Logout}  alt="Logout" width={20} height={20}/> 
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', ml: 2 }}>
           <Typography gutterBottom style={{ color: '#D81B60',fontWeight: '700', fontSize:20, }}>LogOut</Typography>
           <Typography variant="body2" color="#ADB5BD">
@@ -211,13 +167,7 @@ function Settings() {
           </Typography>
         </Box>
       </Box>
-      <Button
-            variant="contained"
-            sx={{width:'93px', height:'40px', padding:'8px 16px', borderRadius:'8px', backgroundColor: '#D81B60', }}
-
-          >
-            Log Out
-      </Button>
+      <button className='btn logoutbtn'>Log Out</button>
 
     </ListItem>
   </List>

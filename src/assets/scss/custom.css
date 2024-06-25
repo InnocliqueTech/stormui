@@ -1,13 +1,8 @@
 
-body {    font-family: "Inter";    font-size: 14px;}
-.dashheading {
-  font-family: 'Inter';
-  font-size: 32px;
-  font-weight: 700;
-  color: #212121;
-}
+body {    font-family: "Inter", sans-serif !important;   font-size: 14px;}
+
 .fs-18 {font-size: 18px;}
-.fs-16 {font-size: 16px;}
+.fs-16 {font-size: 16px !important;}
 .fw6{ font-weight: 600;}
 .fw7{ font-weight: 700;}
 .fw4{ font-weight: 400;}
@@ -263,12 +258,30 @@ Use media queries to only use on mobile */
 .zonelist-nav{background:#F4F5F5;}
 .zonelist-nav ul li a.active {background-color: #E3F2FD; color: #1565C0; font-weight: 600;}
 .inner-heading { font-size: 20px;font-weight: 700; color: #121212; line-height: 24px;}
-.zone-breadcrum { background-color: #FDFDFD !important; border-radius: 8px !important;padding:0 16px !important}
+.zone-breadcrum { background-color: #FDFDFD !important; border-radius: 8px !important;padding:6px 16px !important;margin-bottom: 12px !important;}
 .zone-breadcrum li a { color: #1976D2; font-size: 16px;font-weight: 600;}
 .zone-breadcrum li.active {font-size: 16px; }
 
-.setting-detail label { font-size: 14px;font-weight: 400;color: #212121;}
+.setting-detail label { font-size: 14px;font-weight: 400;color: #212121;margin-bottom:8px;}
+.setting-detail input {border:1px solid #D6D9DC; height: 38px;border-radius: 8px; width: 100%;padding: 12px;}
 .aboutus-details p, .aboutus-details Typography, .aboutus-details ul li 
-{font-family: "Inter"; font-size: 16px; color: #121212; font-weight: 400; line-height: 19px;}
+{font-family: "Inter", sans-serif !important;font-size: 16px; color: #121212; font-weight: 400; line-height: 19px;}
 .tc-details strong { font-size: 16px; line-height: 19px; color: #121212; padding-bottom: 8px;font-weight: 600;display: block;}
 .tc-details p { font-size: 16px; color: #121212; font-weight: 400; }
+.filter {
+  font-family: "Inter";
+  font-size: 16px;
+  font-weight: 500;
+  padding: 6px;
+  border-radius: 5px;
+}
+.meterlist .nav-tabs .nav-link.active{padding: 12px 16px !important;border-radius: 12px !important;}
+.meterlist .nav-tabs .nav-item.show .nav-link { font-size: 20px; font-weight: 400;}
+.meterlist .nav-tabs { margin-bottom: 24px;}
+.meterlist .tab-content { padding: 0px; background: none; box-shadow: none;}
+.meterdetails-list { font-size: 16px; font-weight: 400; color: #6C757D;margin-bottom: 20px;}
+.meterdetails-list1 { font-size: 16px; color: #212121;font-weight: 400;margin-bottom: 20px;}
+.meter-gatewaytable thead tr th { background-color: #EFF8FF; font-size: 16px; font-weight: 600;}
+.logoutbtn { font-size: 16px !important; font-weight: 500 !important; border-radius: 8px !important; padding: 8px 16px !important; height: 40px !important;background-color: #DE315E !important; color: #fff !important; line-height: 18px !important;    margin-right: 20px !important;}
+
+

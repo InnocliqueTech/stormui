@@ -337,7 +337,7 @@ td {
 }
 
 .inter600 {
-  font-family: 'inter';
+  font-family: "Inter", sans-serif !important;
   font-weight: 600;
   font-size: 14px;
   color: #6C757D;
@@ -345,7 +345,7 @@ td {
 }
 
 .inter400black {
-  font-family: 'inter';
+  font-family: "Inter", sans-serif !important;
   font-weight: 400;
   font-size: 14px;
   color: #212121;
@@ -354,7 +354,7 @@ td {
 }
 
 .inter400red {
-  font-family: 'inter';
+  font-family: "Inter", sans-serif !important;
   font-weight: 600;
   font-size: 14px;
   color: #DE315E;
@@ -366,7 +366,7 @@ td {
   border-radius: 20px;
 }
 .inter600red {
-  font-family: 'inter';
+  font-family: "Inter", sans-serif !important;
   font-weight: 600;
   font-size: 14px;
   color: #DE315E;
@@ -379,7 +379,7 @@ td {
 }
 
 .inter400green {
-  font-family: 'inter';
+  font-family: "Inter", sans-serif !important;
   font-weight: 600;
   font-size: 14px;
   color: #25A244;
@@ -392,7 +392,7 @@ td {
 }
 
 .inter400yellow {
-  font-family: 'inter';
+  font-family: "Inter", sans-serif !important;
   font-weight: 600;
   font-size: 14px;
   color: #FCA311;
@@ -425,14 +425,14 @@ td {
 .tablecontent {
   font-size: 16px;
   font-weight: 400;
-  font-family: 'inter';
+  font-family: "Inter", sans-serif !important;
   color:#6C757D;
   text-align: left;
 }
 .tablehead {
   font-size: 16px;
   font-weight: 600;
-  font-family: 'inter';
+  font-family: "Inter", sans-serif !important;
   color:#212121;
   text-align: left;
 }
@@ -440,13 +440,13 @@ td {
   color:#121212 !important;
   font-size: 16px;
   font-weight: 400;
-  font-family: 'inter';
+  font-family: "Inter", sans-serif !important;
 }
 .clienttabletext {
   color:#6C757D !important;
   font-size: 16px;
   font-weight: 400;
-  font-family: 'inter';
+  font-family: "Inter", sans-serif !important;
 }
 .iconContainergreen {
   background-color: #3BEA96;
@@ -464,14 +464,14 @@ td {
   background-color: rgba(25, 118, 210, 0.12) !important;
   font-size: 20px !important;
   font-weight: 700 !important;
-  font-family: 'inter' !important;
+  font-family: "Inter", sans-serif !important;
   border-radius: 10px !important;
 }
 .nav-tabs .nav-link {
   color: #6C757D !important;
   font-size: 20px !important;
   font-weight: 400 !important;
-  font-family: 'inter' !important;
+  font-family: "Inter", sans-serif !important;
 }
 .nav-fill > .nav-link, .nav-fill .nav-item {
   flex: 0 !important;

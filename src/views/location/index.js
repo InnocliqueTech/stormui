@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './location.css';  // Import the CSS file
 import image from './image2835.png';
-import HomeEdit from '../../assets/images/HomeEdit.png'
+//import HomeEdit from '../../assets/images/HomeEdit.png'
 import { Col } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 
@@ -36,23 +36,23 @@ const projects = [
 export default function Location() {
   return (
     <>
-      <h2 style={{fontSize:32,fontWeight:700, color:'#212121'}} className="mb-2 mt-3">Welcome to Strom Energy</h2>
-    <div className="container mt-4" style={{margin:"-4px"}}>
+      <h2 style={{fontSize:32,fontWeight:700, color:'#212121', marginTop:10}} className="">Welcome to Strom Energy</h2>
+    <div className="mt-4">
       <div className="row">
         {projects.map((project, index) => (
           <div className="col-md-4 mb-4" key={index}>
-            <div className="card border-0">
+            <div className="card border-0" style={{borderRadius:16}}>
               <img className="card-img-top" src={project.imgSrc} alt={project.title} />
               <div className="">
                 <Row className='row p-0 m-0'>
                   <Col className='p-0' md={10} sm={1} xs={1}>
                     <a style={{color:"black", textDecoration:'none'}} href = "http://localhost:3000/app/dashboard/default">
-                    <h5 className="card-title">{project.title}</h5>
+                    <h5 className="card-title mb-0">{project.title}</h5>
                     </a>
                   </Col>
-                  <Col md={2} sm={1} xs={1} className='p-0 text-end' >
+                  {/* <Col md={2} sm={1} xs={1} className='p-0 text-end' >
                     <img src={HomeEdit} style={{background:'#F4F5F5', width:24, height:24, borderRadius:6, padding:4}}  alt="uparrow" /> 
-                  </Col>
+                  </Col> */}
                 </Row>
                 
                 <p className="card-text">{project.description}</p>

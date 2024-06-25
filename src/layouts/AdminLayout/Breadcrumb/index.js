@@ -93,6 +93,7 @@ const Breadcrumb = () => {
                 <Row className='d-flex justify-content-around'>
                   <Col md={6} sm={12} xs={12}>
                     <div className="dashheading">
+                      {/* <h2 className="dashheading">Dashboard</h2> */}
                       <Link className={title == "Dashboard" ? "title" : location.pathname.toLowerCase().includes("list") ? "tab" : "tab active"} to={`/app/${title}`} >{title != "Dashboard" ? "Dashboard": title}</Link>
                       {title != "Dashboard" &&
                         <span>

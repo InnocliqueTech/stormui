@@ -19,7 +19,7 @@ function Meter() {
                     fill
                 >
                     <Tab eventKey="home" title="Analytics">
-                        Tab content for Home
+                        Tab content for Home sdfasfd
                     </Tab>
                     <Tab eventKey="device" title="Device">
                         <Device />

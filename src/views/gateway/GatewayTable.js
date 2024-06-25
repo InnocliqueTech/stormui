@@ -124,126 +124,137 @@ const GatewayTable = () => {
           ))}
         </tbody>
       </Table>
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-        fullWidth={fullWidth}
-      >
-        <Row style={{ backgroundColor: '#000' }}>
-          <Col md={10} sm={12} xs={10}>
-            <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-              Gateway Details
-            </DialogTitle>
-          </Col>
-          <Col md={1} sm={1} xs={1}>
-            <IconButton
-              aria-label="close"
-              onClick={handleClose}
-              sx={{
-                position: 'absolute',
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500],
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </Col>
-        </Row>
-        <Row style={{ padding: 15, justifyContent: "end", display: "flex" }}>
-          <Col md={3} xs={12} sm={12} style={{ width: "144px", justifyContent: "end", display: "flex" }}>
-            <Button style={{ backgroundColor: '#1976D2', color: '#fff' }}>
-              <CachedOutlined style={{ marginRight: 5 }} /> Refresh
-            </Button>
-          </Col>
-          <Col md={2} xs={12} sm={12} style={{ marginLeft: -10 }}>
-            <Button style={{ backgroundColor: '#fff', color: '#1976D2', border: '1px solid #1976D2' }}>
-              <FileUploadOutlined style={{ marginRight: 5 }} /> Export
-            </Button>
-          </Col>
-        </Row>
-        <Card style={{ margin: 10, padding: 30, paddingTop: 10 }}>
-          <div style={{ fontFamily: 'inter', fontWeight: 600, fontSize: '18px' }}>Basic Details</div>
-          <Row>
-            <Col md={6} xs={12} sm={12}>
-              <Row>
-                <Col md={5} xs={6} sm={6}>
-                  <div className='inter600'>id:</div>
-                  <div className='inter600'>Type:</div>
-                  <div className='inter600'>Subnet:</div>
-                  <div className='inter600 marginTop'>Ceacon:</div>
-                  <div className='inter600 marginTop'>Transmitting Power:</div>
-                  <div className='inter600'>Created Time:</div>
-                </Col>
-                <Col md={7} xs={6} sm={6}>
-                  <div className='inter400black'>{basicDetails.id}</div>
-                  <div className='inter400black'>{basicDetails.type}</div>
-                  <div className='inter400black'>{basicDetails.subnet}</div>
-                  <div className='inter400red'>{basicDetails.ceacon}</div>
-                  <div className='inter400yellow'>{basicDetails.transmittingPower}</div>
-                  <div className='inter400black'>{basicDetails.createdTime}</div>
-                </Col>
-              </Row>
+      
+        <BootstrapDialog
+          onClose={handleClose}
+          aria-labelledby="customized-dialog-title"
+          open={open}
+          fullWidth={fullWidth}
+        >
+        <Row style={{padding:'0px',margin:0, background:'#F4F5F5'}}>
+          <Row style={{padding:'0px',margin:0, backgroundColor: '#000' }}>
+            <Col md={10} sm={12} xs={10}>
+              <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                Gateway Details
+              </DialogTitle>
             </Col>
-            <Col md={6} xs={12} sm={12}>
-              <Row>
-                <Col md={5} xs={6} sm={6}>
-                  <div className='inter600'>Name:</div>
-                  <div className='inter600'>Region:</div>
-                  <div className='inter600 marginTop'>Beacon:</div>
-                  <div className='inter600 marginTop'>GDTP:</div>
-                  <div className='inter600'>HTTP:</div>
-                  <div className='inter600'>Remarks:</div>
-                </Col>
-                <Col md={7} xs={6} sm={6}>
-                  <div className='inter400black'>{basicDetails.name}</div>
-                  <div className='inter400black'>{basicDetails.region}</div>
-                  <div className='inter400green'>{basicDetails.beacon}</div>
-                  <div className='inter400blue'>{basicDetails.gdtp}</div>
-                  <div className='inter400black'>{basicDetails.http}</div>
-                  <div className='inter400black'>{basicDetails.remarks}</div>
-                </Col>
-              </Row>
+            <Col md={1} sm={1} xs={1}>
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
             </Col>
           </Row>
-          <div style={{ fontFamily: 'inter', fontWeight: 600, fontSize: '18px' }}>Last Frame Data</div>
+          <Row style={{ padding: 15, justifyContent: "end", display: "flex" }}>
+            <Col md={3} xs={12} sm={12} style={{ width: "144px", justifyContent: "end", display: "flex" }}>
+              <Button style={{ backgroundColor: '#1976D2', color: '#fff' }}>
+                <CachedOutlined style={{ marginRight: 5 }} /> Refresh
+              </Button>
+            </Col>
+            <Col md={2} xs={12} sm={12} style={{ marginLeft: -10 }}>
+              <Button style={{ backgroundColor: '#fff', color: '#1976D2', border: '1px solid #1976D2' }}>
+                <FileUploadOutlined style={{ marginRight: 5 }} /> Export
+              </Button>
+            </Col>
+          </Row>
           <Row>
-            <Col md={6} xs={12} sm={12}>
-              <Row>
-                <Col md={5} xs={6} sm={6}>
-                  <div className='inter600'>Transmission Time:</div>
-                  <div className='inter600'>Device Type:</div>
-                  <div className='inter600'>Tx Power:</div>
-                  <div className='inter600'>Device ID:</div>
-                </Col>
-                <Col md={7} xs={6} sm={6}>
-                  <div className='inter400black'>{lastFrameData.transmissionTime}</div>
-                  <div className='inter400black'>{lastFrameData.deviceType}</div>
-                  <div className='inter400black'>{lastFrameData.txPower}</div>
-                  <div className='inter400black'>{lastFrameData.deviceId}</div>
+          <Card style={{ margin: 0, padding: '16px', borderRadius: 8, marginBottom:24, marginRight:16, marginLeft:16}}>
+            <div style={{ fontFamily: 'inter', fontWeight: 600, fontSize: '18px', color: '#212121', marginBottom: 16 }}>Basic Details</div>
+            <Row>
+              <Col md={6} xs={12} sm={12}>
+                <Row>
+                  <Col md={6} xs={6} sm={6}>
+                    <div className='meterdetails-list'>id:</div>
+                    <div className='meterdetails-list'>Type:</div>
+                    <div className='meterdetails-list'>Subnet:</div>
+                    <div className='meterdetails-list'>Ceacon:</div>
+                    <div className='meterdetails-list'>Transmitting Power:</div>
+                    <div className='meterdetails-list'>Created Time:</div>
+                  </Col>
+                  <Col md={6} xs={6} sm={6}>
+                    <div className='meterdetails-list1'>{basicDetails.id}</div>
+                    <div className='meterdetails-list1'>{basicDetails.type}</div>
+                    <div className='meterdetails-list1'>{basicDetails.subnet}</div>
+                    <div className='inter400red meterdetails-list1'>{basicDetails.ceacon}</div>
+                    <div className='inter400yellow meterdetails-list1'>{basicDetails.transmittingPower}</div>
+                    <div className='meterdetails-list1'>{basicDetails.createdTime}</div>
+                  </Col>
+                </Row>
+              </Col>
+              <Col md={6} xs={12} sm={12}>
+                <Row>
+                  <Col md={6} xs={6} sm={6}>
+                    <div className='meterdetails-list'>Name:</div>
+                    <div className='meterdetails-list'>Region:</div>
+                    <div className='meterdetails-list'>Beacon:</div>
+                    <div className='meterdetails-list'>GDTP:</div>
+                    <div className='meterdetails-list'>HTTP:</div>
+                    <div className='meterdetails-list'>Remarks:</div>
+                  </Col>
+                  <Col md={6} xs={6} sm={6}>
+                    <div className='meterdetails-list1'>{basicDetails.name}</div>
+                    <div className='meterdetails-list1'>{basicDetails.region}</div>
+                    <div className='meterdetails-list1'>{basicDetails.beacon}</div>
+                    <div className='inter400blue meterdetails-list1'>{basicDetails.gdtp}</div>
+                    <div className='meterdetails-list'>{basicDetails.http}</div>
+                    <div className='meterdetails-list'>{basicDetails.remarks}</div>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Card>
+          </Row>
+          <Row>
+            <Card style={{ margin: 0, padding: '16px', borderRadius: 8, marginBottom:24, marginRight:16, marginLeft:16}}>
+                <div style={{ fontFamily: 'inter', fontWeight: 600, fontSize: '18px', color: '#212121', marginBottom: 16 }}>Last Frame Data</div>
+                <Row>
+                  <Col md={6} xs={12} sm={12}>
+                    <Row>
+                      <Col md={6} xs={6} sm={6}>
+                        <div className='meterdetails-list'>Transmission Time:</div>
+                        <div className='meterdetails-list'>Device Type:</div>
+                        <div className='meterdetails-list'>Tx Power:</div>
+                        <div className='meterdetails-list'>Device ID:</div>
+                      </Col>
+                      <Col md={6} xs={6} sm={6}>
+                        <div className='meterdetails-list1'>{lastFrameData.transmissionTime}</div>
+                        <div className='meterdetails-list1'>{lastFrameData.deviceType}</div>
+                        <div className='meterdetails-list1'>{lastFrameData.txPower}</div>
+                        <div className='meterdetails-list1'>{lastFrameData.deviceId}</div>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col md={6} xs={12} sm={12}>
+                    <Row>
+                      <Col md={5} xs={6} sm={6}>
+                        <div className='meterdetails-list'>Temperature:</div>
+                        <div className='meterdetails-list'>Latitude:</div>
+                        <div className='meterdetails-list'>Humidity:</div>
+                        <div className='meterdetails-list'>Longitude:</div>
+                    </Col>
+                    <Col md={7} xs={6} sm={6}>
+                      <div className='meterdetails-list1'>{lastFrameData.temperature}</div>
+                      <div className='meterdetails-list1'>{lastFrameData.latitude}</div>
+                      <div className='meterdetails-list1'>{lastFrameData.humidity}</div>
+                      <div className='meterdetails-list1'>{lastFrameData.longitude}</div>
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
-            </Col>
-            <Col md={6} xs={12} sm={12}>
-              <Row>
-                <Col md={5} xs={6} sm={6}>
-                  <div className='inter600'>Temperature:</div>
-                  <div className='inter600'>Latitude:</div>
-                  <div className='inter600'>Humidity:</div>
-                  <div className='inter600'>Longitude:</div>
-                </Col>
-                <Col md={7} xs={6} sm={6}>
-                  <div className='inter400black'>{lastFrameData.temperature}</div>
-                  <div className='inter400black'>{lastFrameData.latitude}</div>
-                  <div className='inter400black'>{lastFrameData.humidity}</div>
-                  <div className='inter400black'>{lastFrameData.longitude}</div>
-                </Col>
-              </Row>
-            </Col>
-          </Row>1
-        </Card>
-      </BootstrapDialog>
+            </Card>
+          </Row>
+        </Row>
+        </BootstrapDialog>
+      
+      
       {/* <Paginations /> */}
     </div>
     

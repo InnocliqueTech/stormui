@@ -1,4 +1,3 @@
-// Breadcrumb.js
 import React, { useContext, useState, useEffect } from 'react';
 import { Col, ListGroup, Row } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
@@ -15,9 +14,10 @@ import {
   Grid,
 } from '@mui/material';
 import navigation from '../../../menu-items';
-import { BASE_TITLE } from '../../../config/constant';
+import { BASE_API_URL1, BASE_TITLE } from '../../../config/constant';
 import { DateRange, FilterAltOutlined } from '@mui/icons-material';
 import { FilterContext } from '../../../views/dashboard/context/filter';
+import axios from 'axios';
 
 const Breadcrumb = () => {
   const location = useLocation();
@@ -27,23 +27,37 @@ const Breadcrumb = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { clients, selectedClient, setSelectedClient } = useContext(ClientsContext);
   const { filters, setFilters, getOutFlowData } = useContext(FilterContext);
-console.log(filters, "sssssssssssss")
-  // rest of your code remains the same...
+  const [zones, setZones] = useState([]);
 
-  // Use clients and selectedClient directly from context
+  useEffect(() => {
+    const fetchZones = async (clientId) => {
+      try {
+        const response = await axios.post(BASE_API_URL1 +'zones/getAllZoneDetailsWithClientId', {
+          clientId,
+        });
+        setZones(response.data.zonesList);
+      } catch (error) {
+        console.error("Error fetching zones:", error);
+      }
+    };
+    
+    if (selectedClient) {
+      fetchZones(selectedClient);
+    }
+  }, [selectedClient]);
+
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleFilterChange = (newFilters) => {
-    // Update filters state
     setFilters(prevFilters => ({
       ...prevFilters,
       ...newFilters
     }));
-
-    // Fetch outflow data based on updated filters
     getOutFlowData();
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -192,38 +206,37 @@ console.log(filters, "sssssssssssss")
                             <FormLabel className="intelfont" id="demo-radio-buttons-group-label">
                               Clients
                             </FormLabel>
-                            <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="water" name="radio-buttons-group">
-                              <FormControlLabel value="water" control={<Radio />} label="KSCCL-WATER-SUPPLY-OTAA" />
-                              <FormControlLabel value="test" control={<Radio />} label="TEST_ABP_01" />
+                            <RadioGroup
+                              aria-labelledby="demo-radio-buttons-group-label"
+                              name="clients-group"
+                              value={filters.clientId}
+                              onChange={(e) => handleFilterChange({ clientId: e.target.value })}
+                            >
+                              {clients.map(client => (
+                                <FormControlLabel key={client.clientId} value={client.clientId} control={<Radio />} label={client.clientName} />
+                              ))}
                             </RadioGroup>
                           </FormControl>
 
                           <FormControl>
                             <FormLabel id="demo-radio-buttons-group-label">Zones</FormLabel>
-                            <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="female" name="radio-buttons-group">
-                              <FormControlLabel value="1" control={<Radio />} label="Zone 1" />
-                              <FormControlLabel value="2" control={<Radio />} label="Zone 2" />
-                              <FormControlLabel value="3" control={<Radio />} label="Zone 3" />
-                              <FormControlLabel value="4" control={<Radio />} label="Zone 4" />
+                            <RadioGroup
+                              aria-labelledby="demo-radio-buttons-group-label"
+                              name="zones-group"
+                              value={filters.zoneId}
+                              onChange={(e) => handleFilterChange({ zoneId: e.target.value })}
+                            >
+                              {zones.map(zone => (
+                                <FormControlLabel key={zone.zoneId} value={zone.zoneId} control={<Radio />} label={zone.zoneId} />
+                              ))}
                             </RadioGroup>
                           </FormControl>
                           <Grid container style={{ marginTop: 10 }}>
                             <Grid item xs={5}>
-                              <Button style={{ width: '100%', border: '1px solid #1565C0', textAlign: 'right' }}>Reset</Button>
+                              <Button style={{ width: '100%', border: '1px solid #1565C0', textAlign: 'right' }} onClick={() => handleFilterChange({ clientId: '', zoneId: '' })}>Reset</Button>
                             </Grid>
                             <Grid item xs={5}>
-                              <Button onClick={() => handleFilterChange({ clientId: 'exampleClientId', fromDate: '2024-06-01', toDate: '2024-06-30' })}
-                                style={{
-                                  width: '100%',
-                                  marginLeft: 30,
-                                  border: '1px solid #1565C0',
-                                  backgroundColor: '#1565C0',
-                                  color: '#fff',
-                                  textAlign: 'end'
-                                }}
-                              >
-                                Apply
-                              </Button>
+                              <Button onClick={handleClose} style={{ width: '100%', marginLeft: 30, border: '1px solid #1565C0', backgroundColor: '#1565C0', color: '#fff', textAlign: 'end' }}>Apply</Button>
                             </Grid>
                           </Grid>
                         </Typography>
@@ -231,7 +244,6 @@ console.log(filters, "sssssssssssss")
                     </Col>
                   </Col>
                 </Row>
-
               </div>
             </div>
           </div>

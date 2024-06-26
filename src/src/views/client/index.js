@@ -37,6 +37,7 @@ const Client = () => {
   const [dashboardData, setDashboardData] = useState({});
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
+  
   useEffect(() => {
     getDashboardData();
   }, [])
@@ -71,6 +72,13 @@ const Client = () => {
   const handledmaClose = () => {
     setOpendma(false);
   };
+//   {
+//     "clientId" : 1,
+//     "zoneId" : 0,
+//     "fromDate" : "2024-06-01",
+//     "toDate" : "2024-06-27"
+// }
+  // zones/getZoneWiseConsumptionInClientDashboard
   return (
     <React.Fragment>
       <Row>

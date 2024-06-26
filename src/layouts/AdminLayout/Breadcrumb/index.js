@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+// Breadcrumb.js
+import React, { useContext, useState, useEffect } from 'react';
 import { Col, ListGroup, Row } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { ClientsContext } from '../../../views/dashboard/context/index';
 import {
   Typography,
   FormControl,
@@ -14,8 +15,9 @@ import {
   Grid,
 } from '@mui/material';
 import navigation from '../../../menu-items';
-import { BASE_API_URL1, BASE_TITLE } from '../../../config/constant';
+import { BASE_TITLE } from '../../../config/constant';
 import { DateRange, FilterAltOutlined } from '@mui/icons-material';
+import { FilterContext } from '../../../views/dashboard/context/filter';
 
 const Breadcrumb = () => {
   const location = useLocation();
@@ -23,12 +25,25 @@ const Breadcrumb = () => {
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [clients, setClients] = useState([]);
+  const { clients, selectedClient, setSelectedClient } = useContext(ClientsContext);
+  const { filters, setFilters, getOutFlowData } = useContext(FilterContext);
+console.log(filters, "sssssssssssss")
+  // rest of your code remains the same...
 
+  // Use clients and selectedClient directly from context
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const handleFilterChange = (newFilters) => {
+    // Update filters state
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      ...newFilters
+    }));
 
+    // Fetch outflow data based on updated filters
+    getOutFlowData();
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -43,27 +58,6 @@ const Breadcrumb = () => {
       }
     });
   }, [location.pathname]);
-
-  useEffect(() => {
-    getSelectClient();
-  }, []);
-
-  const getSelectClient = async () => {
-    try {
-      const response = await axios.post(BASE_API_URL1 + 'clients/getAllClients', {
-        userId: 1
-      });
-      if (Array.isArray(response.data.clients)) {
-        setClients(response.data.clients); // Set the client data
-      } else {
-        console.error('Response data is not an array', response.data);
-        setClients([]); // Ensure clients is always an array
-      }
-    } catch (e) {
-      console.error('Error fetching clients:', e);
-      setClients([]); // Ensure clients is always an array
-    }
-  };
 
   const getCollapse = (item, index) => {
     if (item.children) {
@@ -131,11 +125,17 @@ const Breadcrumb = () => {
                     </div>
                     <Col md={2} sm={7} xs={7} style={{ padding: 2, textAlign: 'end', justifyContent: 'end', display: 'flex', width: '160px', marginRight: '15px' }}>
                       <div className="form-group selectcustom">
-                        <select className="form-control">
+                        <select
+                          className="form-control"
+                          value={selectedClient}
+                          onChange={(e) => setSelectedClient(e.target.value)}
+                        >
                           <option>Select Client</option>
-                          <option>All</option>
+                          <option value="all">All</option>
                           {clients.map(client => (
-                            <option key={client.clientId} value={client.clientId}>{client.clientName}</option>
+                            <option key={client.clientId} value={client.clientId}>
+                              {client.clientName}
+                            </option>
                           ))}
                         </select>
                       </div>
@@ -231,6 +231,10 @@ const Breadcrumb = () => {
                     </Col>
                   </Col>
                 </Row>
+
+                <button onClick={() => handleFilterChange({ clientId: 'exampleClientId', fromDate: '2024-06-01', toDate: '2024-06-30' })}>
+        Update Filters
+      </button>
               </div>
             </div>
           </div>

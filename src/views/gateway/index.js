@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
 // import { Link } from 'react-router-dom';
 import TotalDma from '../dashboard/TotalDma';
@@ -12,19 +12,24 @@ import fluent from '../../assets/images/fluent_water.svg';
 import { Download, Refresh, ReportProblemOutlined } from '@mui/icons-material';
 import GatewayTable from './GatewayTable';
 import DMAFlowChart from '../dashboard/DmaFlowChart';
+import { ClientsContext } from '../dashboard/context';
 
 
 const Gateway = () => {
   const [dashboardData, setDashboardData] = useState({});
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
+  const { clients, selectedClient } = useContext(ClientsContext);
+  console.log(clients, "ssssssssssssssssssssssssssssssssssssssssssssss")
   useEffect(()=>{
+    if (selectedClient) {
     getDashboardData();
-  }, [])
+    }
+  }, [selectedClient]);
   const getDashboardData = async() => {
     try {
       const response = await axios.post(BASE_API_URL1 + "dashboard/getAllDashboardValues", {
-        clientId: 1
+        clientId: selectedClient
       });
       setDashboardData(response.data)
       const aData = await axios.post(BASE_API_URL + "/getAlerts");

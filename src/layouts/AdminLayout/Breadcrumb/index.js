@@ -212,7 +212,7 @@ console.log(filters, "sssssssssssss")
                               <Button style={{ width: '100%', border: '1px solid #1565C0', textAlign: 'right' }}>Reset</Button>
                             </Grid>
                             <Grid item xs={5}>
-                              <Button
+                              <Button onClick={() => handleFilterChange({ clientId: 'exampleClientId', fromDate: '2024-06-01', toDate: '2024-06-30' })}
                                 style={{
                                   width: '100%',
                                   marginLeft: 30,
@@ -232,9 +232,6 @@ console.log(filters, "sssssssssssss")
                   </Col>
                 </Row>
 
-                <button onClick={() => handleFilterChange({ clientId: 'exampleClientId', fromDate: '2024-06-01', toDate: '2024-06-30' })}>
-        Update Filters
-      </button>
               </div>
             </div>
           </div>

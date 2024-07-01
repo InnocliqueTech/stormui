@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import Navigation from './Navigation';
 import NavBar from './NavBar';
 import Breadcrumb from './Breadcrumb';
-
+import { useLocation } from 'react-router-dom';
 import useWindowSize from '../../hooks/useWindowSize';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ConfigContext } from '../../contexts/ConfigContext';
@@ -17,7 +17,8 @@ const AdminLayout = ({ children }) => {
 
   const { collapseMenu, headerFixedLayout } = configContext.state;
   const { dispatch } = configContext;
-
+  const location = useLocation();
+  const isLandingPage = location.pathname === '/app/dashboard/location';
   useEffect(() => {
     if (windowSize.width > 992 && windowSize.width <= 1024) {
       dispatch({ type: actionType.COLLAPSE_MENU });
@@ -44,7 +45,7 @@ const AdminLayout = ({ children }) => {
 
   let common = (
     <React.Fragment>
-      <Navigation />
+     {!isLandingPage && <Navigation />}
       <NavBar />
     </React.Fragment>
   );

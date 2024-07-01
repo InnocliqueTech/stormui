@@ -15,7 +15,7 @@ const DashDefault = () => {
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
   const { clients, selectedClient } = useContext(ClientsContext);
-console.log(clients, "ssssssssssssssssssssssssssssssssssssssssssssss")
+console.log(clients, "the check")
   useEffect(() => {
     if (selectedClient) {
       getDashboardData();

@@ -2,21 +2,10 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Col, ListGroup, Row } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { ClientsContext } from '../../../views/dashboard/context/index';
-import {
-  Typography,
-  FormControl,
-  Button,
-  Popover,
-  FormControlLabel,
-  RadioGroup,
-  FormLabel,
-  Radio,
-  Grid,
-} from '@mui/material';
+
 import navigation from '../../../menu-items';
 import { BASE_API_URL1, BASE_TITLE } from '../../../config/constant';
-import { DateRange, FilterAltOutlined } from '@mui/icons-material';
-import { FilterContext } from '../../../views/dashboard/context/filter';
+import { DateRange } from '@mui/icons-material';
 import axios from 'axios';
 
 const Breadcrumb = () => {
@@ -24,10 +13,8 @@ const Breadcrumb = () => {
   const [selectedDate, setSelectedDate] = useState("7D");
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
   const { clients, selectedClient, setSelectedClient } = useContext(ClientsContext);
-  const { filters, setFilters, getOutFlowData } = useContext(FilterContext);
-  const [zones, setZones] = useState([]);
+  const [, setZones] = useState([]);
 
   useEffect(() => {
     const fetchZones = async (clientId) => {
@@ -46,24 +33,10 @@ const Breadcrumb = () => {
     }
   }, [selectedClient]);
 
-  const handleOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleFilterChange = (newFilters) => {
-    setFilters(prevFilters => ({
-      ...prevFilters,
-      ...newFilters
-    }));
-    getOutFlowData();
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+
 
   useEffect(() => {
     navigation.items.forEach((item, index) => {
@@ -154,94 +127,7 @@ const Breadcrumb = () => {
                         </select>
                       </div>
                     </Col>
-                    <Col md={1} sm={4} xs={4} style={{ textAlign: 'end', width: '100px', padding: 2 }}>
-                      <button
-                        style={{
-                          background: 'transparent',
-                          color: '#1565C0',
-                          border: '1px solid #1565C0',
-                          paddingLeft: 10,
-                          paddingRight: 10,
-                          height: 48,
-                          width: 103,
-                          borderRadius: '8px'
-                        }}
-                        className="filter"
-                        aria-describedby={id}
-                        onClick={handleOpen}
-                      >
-                        <FilterAltOutlined style={{ color: '#1565C0' }} />
-                        Filter
-                      </button>
-                      <Popover
-                        id={id}
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'center'
-                        }}
-                      >
-                        <Typography sx={{ p: 2, width: 400 }}>
-                          <Grid container>
-                            <Grid item xs={10}>
-                              <span className="intelfont">Filters</span>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={2}
-                              onClick={handleClose}
-                              style={{
-                                textAlign: 'right',
-                                cursor: 'pointer'
-                              }}
-                            >
-                              <span className="intelfont" style={{ fontWeight: 'bold', color: '#ccc' }}>
-                                X
-                              </span>
-                            </Grid>
-                          </Grid>
-                          <FormControl style={{ marginTop: 20, marginBottom: 20 }}>
-                            <FormLabel className="intelfont" id="demo-radio-buttons-group-label">
-                              Clients
-                            </FormLabel>
-                            <RadioGroup
-                              aria-labelledby="demo-radio-buttons-group-label"
-                              name="clients-group"
-                              value={filters.clientId}
-                              onChange={(e) => handleFilterChange({ clientId: e.target.value })}
-                            >
-                              {clients.map(client => (
-                                <FormControlLabel key={client.clientId} value={client.clientId} control={<Radio />} label={client.clientName} />
-                              ))}
-                            </RadioGroup>
-                          </FormControl>
-
-                          <FormControl>
-                            <FormLabel id="demo-radio-buttons-group-label">Zones</FormLabel>
-                            <RadioGroup
-                              aria-labelledby="demo-radio-buttons-group-label"
-                              name="zones-group"
-                              value={filters.zoneId}
-                              onChange={(e) => handleFilterChange({ zoneId: e.target.value })}
-                            >
-                              {zones.map(zone => (
-                                <FormControlLabel key={zone.zoneId} value={zone.zoneId} control={<Radio />} label={zone.zoneId} />
-                              ))}
-                            </RadioGroup>
-                          </FormControl>
-                          <Grid container style={{ marginTop: 10 }}>
-                            <Grid item xs={5}>
-                              <Button style={{ width: '100%', border: '1px solid #1565C0', textAlign: 'right' }} onClick={() => handleFilterChange({ clientId: '', zoneId: '' })}>Reset</Button>
-                            </Grid>
-                            <Grid item xs={5}>
-                              <Button onClick={handleClose} style={{ width: '100%', marginLeft: 30, border: '1px solid #1565C0', backgroundColor: '#1565C0', color: '#fff', textAlign: 'end' }}>Apply</Button>
-                            </Grid>
-                          </Grid>
-                        </Typography>
-                      </Popover>
-                    </Col>
+                   
                   </Col>
                 </Row>
               </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
@@ -9,16 +9,19 @@ import { Checkbox, Link } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
 import Paginations from '../../components/Paginatons';
 import Pagination from 'react-bootstrap/Pagination';
-
+import { ClientsContext } from '../dashboard/context';
 
 export default function ClientList() {
+  const { clients } = useContext(ClientsContext);
+  console.log(clients, "the check");
+
   let active = 2;
   let items = [];
   for (let number = 1; number <= 5; number++) {
     items.push(
       <Pagination.Item key={number} active={number === active}>
-      {number}
-    </Pagination.Item>,
+        {number}
+      </Pagination.Item>,
     );
   }
 
@@ -67,66 +70,47 @@ export default function ClientList() {
         </Row>
 
         <div className='customer-table'>
-        <Table style={{borderRadius:8}}>
-          <thead style={{ backgroundColor: '#F4F5F5' }}>
-            <tr>
-              <th className='tablehead'><Checkbox /></th>
-              <th className='tablehead'>CI Id</th>
-              <th className='tablehead'>Client Name</th>
-              <th className='tablehead'>Type</th>
-              <th className='tablehead'>Region</th>
-              <th className='tablehead'>Create Time</th>
-              <th className='tablehead'>Meter</th>
-              <th className='tablehead'>Status</th>
-              <th className='tablehead'>SI.No</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className='tablecontent'><Checkbox /></td>
-              <td className='tablecontent'>
-                <Link href="/app/zonelist" style={{ textDecoration:'none', cursor:'pointer', color:'#212121' }}>#1472</Link>
-              </td>
-              <td className='tablecontent'>KSCCL-WATER-SUPPLY-OTTA</td>
-              <td className='tablecontent'>OTAA</td>
-              <td className='tablecontent'>
-                <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>IN865</span>
-              </td>
-              <td className='tablecontent'>02/05/2024 16:40:28</td>
-              <td className='tablecontent'>
-                <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>4500</span>
-              </td>
-              <td className='tablecontent'>
-                <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>Active</span>
-              </td>
-              <td className='tablecontent'><MoreVert style={{ color:'#D6D9DC' }} /></td>
-            </tr>
-
-            <tr>
-              <td className='tablecontent'><Checkbox /></td>
-              <td className='tablecontent'>
-                <Link style={{ textDecoration:'none', cursor:'pointer', color:'#212121' }}>#1472</Link>
-              </td>
-              <td className='tablecontent'>KSCCL-WATER-SUPPLY-OTTA</td>
-              <td className='tablecontent'>OTAA</td>
-              <td className='tablecontent'>
-                <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>IN865</span>
-              </td>
-              <td className='tablecontent'>02/05/2024 16:40:28</td>
-              <td className='tablecontent'>
-                <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>4500</span>
-              </td>
-              <td className='tablecontent'>
-                <span style={{ backgroundColor: '#D6D9DC', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#FDFDFD' }}>Active</span>
-              </td>
-              <td className='tablecontent'><MoreVert style={{ color:'#D6D9DC' }} /></td>
-            </tr>
-          </tbody>
-        </Table>
+          <Table style={{borderRadius:8}}>
+            <thead style={{ backgroundColor: '#F4F5F5' }}>
+              <tr>
+                <th className='tablehead'><Checkbox /></th>
+                <th className='tablehead'>CI Id</th>
+                <th className='tablehead'>Client Name</th>
+                <th className='tablehead'>Type</th>
+                <th className='tablehead'>Region</th>
+                <th className='tablehead'>Create Time</th>
+                <th className='tablehead'>Meter</th>
+                <th className='tablehead'>Status</th>
+                <th className='tablehead'>SI.No</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clients.map((client) => (
+                <tr key={client.id}>
+                  <td className='tablecontent'><Checkbox /></td>
+                  <td className='tablecontent'>
+                    <Link href="/app/zonelist" style={{ textDecoration:'none', cursor:'pointer', color:'#212121' }}>{client.clientId}</Link>
+                  </td>
+                  <td className='tablecontent'>{client.clientName}</td>
+                  <td className='tablecontent'>{client.type}</td>
+                  <td className='tablecontent'>
+                    <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>{client.region}</span>
+                  </td>
+                  <td className='tablecontent'>{client.createTime}</td>
+                  <td className='tablecontent'>
+                    <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>{client.meters}</span>
+                  </td>
+                  <td className='tablecontent'>
+                    <span style={{ backgroundColor: client.status === 'Active' ? 'rgba(47, 182, 23, 1)' : '#D6D9DC', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>{client.status}</span>
+                  </td>
+                  <td className='tablecontent'><MoreVert style={{ color:'#D6D9DC' }} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </div>
         <Paginations />
       </div>
-      
     </div>
   );
 }

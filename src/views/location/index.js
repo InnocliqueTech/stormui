@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './location.css';  // Import the CSS file
-import image from './image2835.png';
+import image from './image2836.png';
 import HomeEdit from '../../assets/images/HomeEdit.png'
 import { Col } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';

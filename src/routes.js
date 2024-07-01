@@ -78,7 +78,7 @@ const routes = [
       {
         exact: 'true',
         path: '/app/client',
-        element: lazy(() => import('./views/client'))
+        element: lazy(() => import('./views/client/ZoneList'))
       },
       {
         exact: 'true',

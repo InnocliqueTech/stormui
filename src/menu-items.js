@@ -30,7 +30,8 @@ const menuItems = {
         },
         {
           id: 'client',
-          title: 'Client',
+          title: 'Zonelist',
+          title1: 'DMA`s List',
           type: 'item',
           icon: 'feather icon-user',
           url: '/app/client'

@@ -62,7 +62,7 @@ const DashDefault = () => {
         totalCount: parseNumber(data.totalMeters?.totalCount),
       },
       totalGateway: {
-        activeGateways: parseNumber(data.totalGateway?.activeGateways),
+        activeGateways: parseNumber(data.totalGateway?.activeGateways), 
         inactiveGateways: parseNumber(data.totalGateway?.inactiveGateways),
         totalCount: parseNumber(data.totalGateway?.totalCount),
       }
@@ -71,7 +71,6 @@ const DashDefault = () => {
 
   return (
     <React.Fragment>
-      
       <Row>
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">

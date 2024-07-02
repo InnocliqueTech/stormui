@@ -83,7 +83,7 @@ const routes = [
       {
         exact: 'true',
         path: '/app/clientlist',
-        element: lazy(() => import('./views/client/ClientList'))
+        element: lazy(() => import('./views/client/ZoneList'))
       },
       {
         exact: 'true',

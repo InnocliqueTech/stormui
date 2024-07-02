@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 
 import Navigation from './Navigation';
 import NavBar from './NavBar';
@@ -14,6 +15,7 @@ const AdminLayout = ({ children }) => {
   const windowSize = useWindowSize();
   const ref = useRef();
   const configContext = useContext(ConfigContext);
+  const location = useLocation(); // Get the current location
 
   const { collapseMenu, headerFixedLayout } = configContext.state;
   const { dispatch } = configContext;
@@ -44,7 +46,7 @@ const AdminLayout = ({ children }) => {
 
   let common = (
     <React.Fragment>
-      <Navigation />
+      {location.pathname !== '/app/dashboard/location' && <Navigation />} {/* Conditionally render Navigation */}
       <NavBar />
     </React.Fragment>
   );
@@ -84,8 +86,8 @@ const AdminLayout = ({ children }) => {
         role="button"
         tabIndex="0"
         className="pcoded-outside"
-        onClick={() => mobileOutClickHandler}
-        onKeyDown={() => mobileOutClickHandler}
+        onClick={() => mobileOutClickHandler()}
+        onKeyDown={() => mobileOutClickHandler()}
       >
         {mainContainer}
       </div>
@@ -103,4 +105,5 @@ const AdminLayout = ({ children }) => {
 AdminLayout.propTypes = {
   children: PropTypes.node
 };
+
 export default AdminLayout;

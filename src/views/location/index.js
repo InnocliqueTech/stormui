@@ -11,21 +11,23 @@ export default function Location() {
   const { clients } = useContext(ClientsContext);
   return (
     <>
-      <h2 style={{fontSize:32,fontWeight:700, color:'#212121', marginTop:0}} className="">Welcome to Strom Energy</h2>
+    <h2 style={{fontSize:32,fontWeight:700, color:'#212121', marginTop:0}} className="">Welcome to Storm Energy</h2>
     <div className="mt-4">
-      <div className="row">
+      <Row className="justify-content-start">
         {clients.map((project, index) => (
-          <div className="col-md-4 mb-4" key={index}>
+          <Col md={4} className="mb-4" key={index}>
             <div className="card border-0" style={{borderRadius:16}}>
+            <Link to="/app/dashboard/default">
               <img className="card-img-top" src={image} alt={project.title} />
+              </Link>
               <div className="">
                 <Row className='row p-0 m-0'>
                   <Col className='p-0' md={10} sm={1} xs={1}>
-                  <Link to="/app/dashboard/default">
-  <a style={{ color: "black", textDecoration: 'none' }}>
-    <h5 className="card-title m-0 p-0">{project.clientName}</h5>
-  </a>
-</Link>
+                    <Link to="/app/dashboard/default">
+                      <a style={{ color: "black", textDecoration: 'none' }}>
+                        <h5 className="card-title m-0 p-0">{project.clientName}</h5>
+                      </a>
+                    </Link>
                   </Col>
                   
                   <Col md={2} sm={1} xs={1} className='p-0 text-end' >
@@ -36,8 +38,8 @@ export default function Location() {
                 <p className="card-text">{project.description}</p>
                 <div className="d-flex justify-content-between">
                   <div className="custom-zones">
-                  <small>Zones:</small>
-                  <strong> {project.totalZonesCount}</strong>
+                    <small>Zones:</small>
+                    <strong> {project.totalZonesCount}</strong>
                   </div>
                   <div className='custom-zones'>
                     <small>DMAs:</small>
@@ -50,10 +52,10 @@ export default function Location() {
                 </div>
               </div>
             </div>
-          </div>
+          </Col>
         ))}
-      </div>
+      </Row>
     </div>
-  </>
+</>
 );
 }

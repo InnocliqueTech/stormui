@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
@@ -14,6 +14,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Meter from './Meter';
+import { ClientsContext } from '../dashboard/context';
+import axios from 'axios';
+import { BASE_API_URL1 } from '../../config/constant';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -27,7 +30,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 export default function MeterList() {
     const [open, setOpen] = React.useState(false);
     const [fullWidth] = React.useState(true);
-
+    const { clients } = useContext(ClientsContext);
+    const [zonesList, setZonesList] = useState([]);
+    console.log(zonesList, "ssss")
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -35,7 +40,30 @@ export default function MeterList() {
         setOpen(false);
     };
 
+    useEffect(() => {
+        if (clients && clients.length > 0) {
+          getDashboardData(clients[0].clientId); // Assuming each client has an id field
+        }
+      }, [clients]);
     
+      const getDashboardData = async (clientId) => {
+        try {
+          const response = await axios.post(BASE_API_URL1 + 'meters/getAllMetersWithClientIdZoneIdAndDmaId', {
+            clientId: clientId,
+            zoneId: "0",
+            dmaId : 2,
+            startIndex : 0,
+            rowCount : 10
+          });
+          setZonesList(response.data.meters || []); // Ensure it's an array
+    
+        } catch (e) {
+          console.log('Error fetching data:', e);
+          // Optionally, handle error state or show error message to the user
+        } 
+      };
+
+   
     return (
         <div className='col-md-12'>
             <div className="d-flex justify-content-around row">

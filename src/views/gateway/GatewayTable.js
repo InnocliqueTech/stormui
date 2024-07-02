@@ -102,7 +102,7 @@ const GatewayTable = () => {
             </tr>
           </thead>
           <tbody>
-            {gateways.slice(0, 5).map(gateway => (
+            {gateways.map(gateway => (
               <tr key={gateway.gatewayId}>
                 {/* <td className='tablecontent'><Checkbox /></td> */}
                 <td className='tablecontent'>
@@ -133,6 +133,7 @@ const GatewayTable = () => {
                 <td className='tablecontent'>{gateway.batteryLevel}</td>
                 <td className='tablecontent'>{gateway.batteryVoltage}</td>
                 <td className='tablecontent'>{gateway.status}</td>
+                
               </tr>
             ))}
           </tbody>

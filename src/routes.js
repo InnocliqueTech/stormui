@@ -68,7 +68,7 @@ const routes = [
       {
         exact: 'true',
         path: '/app/gateway',
-        element: lazy(() => import('./views/gateway'))
+        element: lazy(() => import('./views/gateway/GatewayList'))
       },
       {
         exact: 'true',
@@ -78,7 +78,7 @@ const routes = [
       {
         exact: 'true',
         path: '/app/client',
-        element: lazy(() => import('./views/client/ZoneList'))
+        element: lazy(() => import('./views/client/index'))
       },
       {
         exact: 'true',

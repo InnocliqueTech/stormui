@@ -13,8 +13,8 @@ const Breadcrumb = () => {
   const [selectedDate, setSelectedDate] = useState("7D");
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
-  const { clients, selectedClient, setSelectedClient } = useContext(ClientsContext);
-  const [, setZones] = useState([]);
+  const {  selectedClient, setSelectedClient } = useContext(ClientsContext);
+  const [zones, setZones] = useState([]);
 
   useEffect(() => {
     const fetchZones = async (clientId) => {
@@ -117,16 +117,16 @@ const Breadcrumb = () => {
                           value={selectedClient}
                           onChange={(e) => setSelectedClient(e.target.value)}
                         >
-                          <option>Select Client</option>
+                          <option>Select Zone</option>
                           <option value="all">All</option>
-                          {clients.map(client => (
-                            <option key={client.clientId} value={client.clientId}>
-                              {client.clientName}
+                          {zones.map(zone => (
+                            <option key={zone.zoneId} value={zone.gatewayId}>
+                              {zone.zoneId}
                             </option>
                           ))}
                         </select>
                       </div>
-                    </Col>
+          </Col>
                    
                   </Col>
                 </Row>

@@ -14,7 +14,7 @@ const Overflow = (props) => {
       try {
         const response = await axios.post('http://49.207.11.223:3307/dashboard/getTotalOutflowInDashboard', {
           clientId: 1,
-          zoneId: 4,
+          zoneId: 0,
           fromDate: "2024-06-15",
           toDate: "2024-06-21"
         });

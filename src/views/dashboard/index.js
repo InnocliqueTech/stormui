@@ -65,7 +65,7 @@ console.log(clients, "the check")
         totalCount: parseNumber(data.totalMeters?.totalCount),
       },
       totalGateway: {
-        activeGateways: parseNumber(data.totalGateway?.activeGateways),
+        activeGateways: parseNumber(data.totalGateway?.activeGateways), 
         inactiveGateways: parseNumber(data.totalGateway?.inactiveGateways),
         totalCount: parseNumber(data.totalGateway?.totalCount),
       }

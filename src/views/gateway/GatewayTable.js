@@ -6,7 +6,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Card, Checkbox, Link } from '@mui/material';
+import { Card, Link } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { CachedOutlined, FileUploadOutlined } from '@mui/icons-material';
 import Table from 'react-bootstrap/Table';
@@ -84,7 +84,7 @@ const GatewayTable = () => {
         <Table style={{ borderRadius: 8 }}>
           <thead style={{ backgroundColor: '#F4F5F5' }}>
             <tr>
-              <th className='tablehead'><Checkbox /></th>
+              {/* <th className='tablehead'><Checkbox /></th> */}
               <th className='tablehead'>Gateway ID</th>
               {/* <th className='tablehead'>Gateway Name</th> */}
               {/* <th className='tablehead'>Region</th>
@@ -104,7 +104,7 @@ const GatewayTable = () => {
           <tbody>
             {gateways.map(gateway => (
               <tr key={gateway.gatewayId}>
-                <td className='tablecontent'><Checkbox /></td>
+                {/* <td className='tablecontent'><Checkbox /></td> */}
                 <td className='tablecontent'>
                   <Link
                     style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}
@@ -121,7 +121,10 @@ const GatewayTable = () => {
                   </span>
                 </td> */}
                 {/* <td className='tablecontent'>{gateway.gateway}</td> */}
-                <td className='tablecontent'>{gateway.time}</td>
+                <td className='tablecontent'>
+                {new Date(gateway.time).toISOString().replace('T', ' ').split('.')[0]}
+                </td>
+
                 <td className='tablecontent'>{gateway.ethState}</td>
                 <td className='tablecontent'>{gateway.lteState}</td>
                 <td className='tablecontent'>{gateway.temperature}</td>

@@ -75,7 +75,6 @@ export default function ZoneList() {
               <tr>
                 <th className='tablehead'></th>
                 <th className='tablehead'>Zone/DMA ID</th>
-                <th className='tablehead'>Region</th>
                 <th className='tablehead'>Gateway ID</th>
                 <th className='tablehead'>Last Communication Time</th>
                 <th className='tablehead'>Reading</th>
@@ -108,9 +107,6 @@ export default function ZoneList() {
                       </Link>
                     </td>
                     <td className='tablecontent'>
-{zone.region}
-                    </td>
-                    <td className='tablecontent'>
                       <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>
                         {zone.gatewayId}
                       </span>
@@ -137,21 +133,21 @@ export default function ZoneList() {
                     <tr key={dma.dmaId}>
                       <td className='tablecontent'>
 
-
+                      <tr></tr>
+                      {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
+                        {/* {dma.dmaId} */}
+                      {/* </span> */}
+                      </td>
+                      <td className='tablecontent'>
+                        
                       {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
                         {dma.dmaId}
                       {/* </span> */}
                       </td>
                       <td className='tablecontent'>
-                        
                       <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>
-                        {dma.region}
-                      </span>
-                      </td>
-                      <td className='tablecontent'>
-                      {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
                         {dma.gatewayId}
-                      {/* </span> */}
+                      </span>
                       </td>
                       <td className='tablecontent'>
 
@@ -161,22 +157,20 @@ export default function ZoneList() {
                       {/* </span> */}
                       </td>
                       <td className='tablecontent'>
-                        
-                      {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
+                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
                         {dma.reading || 'N/A'}
-                      {/* </span> */}
-                      </td>
-                      <td className='tablecontent'>
-                        
-                      {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
+                      </span>
+                    </td>
+                    <td className='tablecontent'>
+                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
                         {dma.meters}
-                      {/* </span> */}
-                      </td>
-                      <td className='tablecontent'>
-                      {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
+                      </span>
+                    </td>
+                    <td className='tablecontent'>
+                      <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>
                         {dma.status}
-                      {/* </span> */}
-                      </td>
+                      </span>
+                    </td>
                    
                     </tr>
                   ))}

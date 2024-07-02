@@ -63,7 +63,6 @@ export default function DmaList() {
               <thead style={{ backgroundColor: '#F4F5F5' }}>
                 <tr>
                   <th className='tablehead'>DMA ID</th>
-                  <th className='tablehead'>Region</th>
                   <th className='tablehead'>Gateway ID</th>
                   <th className='tablehead'>Last Communication Time</th>
                   <th className='tablehead'>Reading</th>
@@ -77,9 +76,6 @@ export default function DmaList() {
                   <tr key={index}>
                     <td className='tablecontent'>
                       <Link href="/app/meterlist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}>#{dma.dmaId} </Link>
-                    </td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>{dma.region}</span>
                     </td>
                     <td className='tablecontent'>{dma.gatewayId}</td>
                     <td className='tablecontent'>{new Date(dma.lastCommunicationTime).toLocaleString()}</td>

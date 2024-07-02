@@ -1,42 +1,37 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-// import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
-// import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-// import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import {  Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Link } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
 import Paginations from '../../components/Paginatons';
-import { ThreeDots } from 'react-loader-spinner'; // Import ThreeDots loader
+import { ThreeDots } from 'react-loader-spinner';
 import { ClientsContext } from '../dashboard/context';
 import { BASE_API_URL1 } from '../../config/constant';
 
 export default function DmaList() {
   const { clients } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
-  const [loading, setLoading] = useState(true); // State for loading
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (clients && clients.length > 0) {
-      getDashboardData(clients[0].clientId); // Assuming each client has an id field
+      getDashboardData(clients[0].clientId);
     }
   }, [clients]);
 
   const getDashboardData = async (clientId) => {
-    setLoading(true); // Set loading to true before API call
+    setLoading(true);
     try {
       const response = await axios.post(BASE_API_URL1 + 'dma/getAllDMAsWithClientIdAndZoneId', {
         clientId: clientId,
         zoneId: "0"
       });
-      setZonesList(response.data.dmasList || []); // Ensure it's an array
-
+      setZonesList(response.data.dmasList || []);
     } catch (e) {
       console.log('Error fetching data:', e);
-      // Optionally, handle error state or show error message to the user
     } finally {
-      setLoading(false); // Set loading to false after API call
+      setLoading(false);
     }
   };
 
@@ -78,10 +73,10 @@ export default function DmaList() {
                 </tr>
               </thead>
               <tbody>
-              {zonesList.length > 0 ? zonesList.map((dma, index) => (
+                {zonesList.slice(0, 5).map((dma, index) => (
                   <tr key={index}>
                     <td className='tablecontent'>
-                      <Link href="/app/meterlist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }} >#{dma.dmaId} </Link>
+                      <Link href="/app/meterlist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}>#{dma.dmaId} </Link>
                     </td>
                     <td className='tablecontent'>
                       <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>{dma.region}</span>
@@ -101,7 +96,8 @@ export default function DmaList() {
                       <MoreVert />
                     </td>
                   </tr>
-                )) : (
+                ))}
+                {zonesList.length === 0 && (
                   <tr>
                     <td colSpan="8" className='tablecontent' style={{ textAlign: 'center' }}>No data available</td>
                   </tr>
@@ -109,8 +105,8 @@ export default function DmaList() {
               </tbody>
             </Table>
           )}
-          <Paginations />
         </div>
+          <Paginations />
       </div>
     </>
   );

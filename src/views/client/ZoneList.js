@@ -85,7 +85,7 @@ export default function ZoneList() {
               </tr>
             </thead>
             <tbody>
-              {zonesList.map((zone) => (
+              {zonesList.slice(0,5).map((zone) => (
                 <tr key={zone.zoneId}>
                   <td className='tablecontent'>
                     <Accordion expanded={expandedZone === zone.zoneId} onChange={() => handleAccordionChange(zone.zoneId)} style={{ boxShadow: 'none' }}>

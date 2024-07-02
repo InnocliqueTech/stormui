@@ -121,7 +121,10 @@ const GatewayTable = () => {
                   </span>
                 </td> */}
                 {/* <td className='tablecontent'>{gateway.gateway}</td> */}
-                <td className='tablecontent'>{gateway.time}</td>
+                <td className='tablecontent'>
+                {new Date(gateway.time).toISOString().replace('T', ' ').split('.')[0]}
+                </td>
+
                 <td className='tablecontent'>{gateway.ethState}</td>
                 <td className='tablecontent'>{gateway.lteState}</td>
                 <td className='tablecontent'>{gateway.temperature}</td>

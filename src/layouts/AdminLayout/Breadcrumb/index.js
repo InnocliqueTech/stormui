@@ -1,40 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Col, ListGroup, Row } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import {
-  Typography,
-  FormControl,
-  Button,
-  Popover,
-  FormControlLabel,
-  RadioGroup,
-  FormLabel,
-  Radio,
-  Grid,
-} from '@mui/material';
+import { ClientsContext } from '../../../views/dashboard/context/index';
+
 import navigation from '../../../menu-items';
 import { BASE_API_URL1, BASE_TITLE } from '../../../config/constant';
-import { DateRange, FilterAltOutlined } from '@mui/icons-material';
+import { DateRange } from '@mui/icons-material';
+import axios from 'axios';
 
 const Breadcrumb = () => {
   const location = useLocation();
   const [selectedDate, setSelectedDate] = useState("7D");
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [clients, setClients] = useState([]);
+  const { clients, selectedClient, setSelectedClient } = useContext(ClientsContext);
+  const [, setZones] = useState([]);
 
-  const handleOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  useEffect(() => {
+    const fetchZones = async (clientId) => {
+      try {
+        const response = await axios.post(BASE_API_URL1 +'zones/getAllZoneDetailsWithClientId', {
+          clientId,
+        });
+        setZones(response.data.zonesList);
+      } catch (error) {
+        console.error("Error fetching zones:", error);
+      }
+    };
+    
+    if (selectedClient) {
+      fetchZones(selectedClient);
+    }
+  }, [selectedClient]);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+
+
+
 
   useEffect(() => {
     navigation.items.forEach((item, index) => {
@@ -43,27 +45,6 @@ const Breadcrumb = () => {
       }
     });
   }, [location.pathname]);
-
-  useEffect(() => {
-    getSelectClient();
-  }, []);
-
-  const getSelectClient = async () => {
-    try {
-      const response = await axios.post(BASE_API_URL1 + 'clients/getAllClients', {
-        userId: 1
-      });
-      if (Array.isArray(response.data.clients)) {
-        setClients(response.data.clients); // Set the client data
-      } else {
-        console.error('Response data is not an array', response.data);
-        setClients([]); // Ensure clients is always an array
-      }
-    } catch (e) {
-      console.error('Error fetching clients:', e);
-      setClients([]); // Ensure clients is always an array
-    }
-  };
 
   const getCollapse = (item, index) => {
     if (item.children) {
@@ -131,104 +112,22 @@ const Breadcrumb = () => {
                     </div>
                     <Col md={2} sm={7} xs={7} style={{ padding: 2, textAlign: 'end', justifyContent: 'end', display: 'flex', width: '160px', marginRight: '15px' }}>
                       <div className="form-group selectcustom">
-                        <select className="form-control">
+                        <select
+                          className="form-control"
+                          value={selectedClient}
+                          onChange={(e) => setSelectedClient(e.target.value)}
+                        >
                           <option>Select Client</option>
-                          <option>All</option>
+                          <option value="all">All</option>
                           {clients.map(client => (
-                            <option key={client.clientId} value={client.clientId}>{client.clientName}</option>
+                            <option key={client.clientId} value={client.clientId}>
+                              {client.clientName}
+                            </option>
                           ))}
                         </select>
                       </div>
                     </Col>
-                    <Col md={1} sm={4} xs={4} style={{ textAlign: 'end', width: '100px', padding: 2 }}>
-                      <button
-                        style={{
-                          background: 'transparent',
-                          color: '#1565C0',
-                          border: '1px solid #1565C0',
-                          paddingLeft: 10,
-                          paddingRight: 10,
-                          height: 48,
-                          width: 103,
-                          borderRadius: '8px'
-                        }}
-                        className="filter"
-                        aria-describedby={id}
-                        onClick={handleOpen}
-                      >
-                        <FilterAltOutlined style={{ color: '#1565C0' }} />
-                        Filter
-                      </button>
-                      <Popover
-                        id={id}
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'center'
-                        }}
-                      >
-                        <Typography sx={{ p: 2, width: 400 }}>
-                          <Grid container>
-                            <Grid item xs={10}>
-                              <span className="intelfont">Filters</span>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={2}
-                              onClick={handleClose}
-                              style={{
-                                textAlign: 'right',
-                                cursor: 'pointer'
-                              }}
-                            >
-                              <span className="intelfont" style={{ fontWeight: 'bold', color: '#ccc' }}>
-                                X
-                              </span>
-                            </Grid>
-                          </Grid>
-                          <FormControl style={{ marginTop: 20, marginBottom: 20 }}>
-                            <FormLabel className="intelfont" id="demo-radio-buttons-group-label">
-                              Clients
-                            </FormLabel>
-                            <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="water" name="radio-buttons-group">
-                              <FormControlLabel value="water" control={<Radio />} label="KSCCL-WATER-SUPPLY-OTAA" />
-                              <FormControlLabel value="test" control={<Radio />} label="TEST_ABP_01" />
-                            </RadioGroup>
-                          </FormControl>
-
-                          <FormControl>
-                            <FormLabel id="demo-radio-buttons-group-label">Zones</FormLabel>
-                            <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="female" name="radio-buttons-group">
-                              <FormControlLabel value="1" control={<Radio />} label="Zone 1" />
-                              <FormControlLabel value="2" control={<Radio />} label="Zone 2" />
-                              <FormControlLabel value="3" control={<Radio />} label="Zone 3" />
-                              <FormControlLabel value="4" control={<Radio />} label="Zone 4" />
-                            </RadioGroup>
-                          </FormControl>
-                          <Grid container style={{ marginTop: 10 }}>
-                            <Grid item xs={5}>
-                              <Button style={{ width: '100%', border: '1px solid #1565C0', textAlign: 'right' }}>Reset</Button>
-                            </Grid>
-                            <Grid item xs={5}>
-                              <Button
-                                style={{
-                                  width: '100%',
-                                  marginLeft: 30,
-                                  border: '1px solid #1565C0',
-                                  backgroundColor: '#1565C0',
-                                  color: '#fff',
-                                  textAlign: 'end'
-                                }}
-                              >
-                                Apply
-                              </Button>
-                            </Grid>
-                          </Grid>
-                        </Typography>
-                      </Popover>
-                    </Col>
+                   
                   </Col>
                 </Row>
               </div>

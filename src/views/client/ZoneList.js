@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import { Col, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
@@ -8,28 +9,50 @@ import { Accordion, AccordionSummary, Link } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
 import Paginations from '../../components/Paginatons'; // Make sure this path is correct
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { ClientsContext } from '../dashboard/context';
+import { BASE_API_URL1 } from '../../config/constant';
 
 export default function ZoneList() {
+  const { clients } = useContext(ClientsContext);
+  const [zonesList, setZonesList] = useState([]);
+
+  useEffect(() => {
+    if (clients && clients.length > 0) {
+      getDashboardData(clients[0].clientId); // Assuming each client has an id field
+    }
+  }, [clients]);
+
+  const getDashboardData = async (clientId) => {
+    try {
+      const response = await axios.post(BASE_API_URL1 + 'zones/getAllZoneDetailsWithClientId', {
+        clientId: clientId
+      });
+      setZonesList(response.data.zonesList);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className='col-md-12'>
-      <div className="d-flex justify-content-around row">
+      {/* <div className="d-flex justify-content-around row">
         <div className="col-md-6 col-sm-12 col-12">
-          <nav className='d-flex' style={{width:'auto'}}>
-            <ol className="breadcrumb  zone-breadcrum">
+          <nav className='d-flex' style={{ width: 'auto' }}>
+            <ol className="breadcrumb zone-breadcrumb">
               <li className="breadcrumb-item"><a href="#">Clients</a></li>
               <li className="breadcrumb-item"><a href="#">Zones</a></li>
               <li className="breadcrumb-item"><a href="#">DMA’s</a></li>
               <li className="breadcrumb-item active" aria-current="page">Meters</li>
             </ol>
           </nav>
-          <div className="inner-heading"  style={{marginBottom:'24px'}}>
-            <a >KSCCL-WATER-SUPPLY-OTAA</a>
+          <div className="inner-heading" style={{ marginBottom: '24px' }}>
+            <a>KSCCL-WATER-SUPPLY-OTAA</a>
           </div>
         </div>
-        <div className="d-flex justify-content-end col-md-6 col-sm-12 col-12" style={{marginTop:'12px'}}>
+        <div className="d-flex justify-content-end col-md-6 col-sm-12 col-12" style={{ marginTop: '12px' }}>
           <div className="row days-filter float-end">
             <div className="col-md-12 d-flex">
-              <div className="form-group selectcustom me-2" style={{width:'160px'}}>
+              <div className="form-group selectcustom me-2" style={{ width: '160px' }}>
                 <select className="form-control">
                   <option>Select Client</option>
                   <option>All</option>
@@ -48,21 +71,21 @@ export default function ZoneList() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, paddingBottom: 100 }}>
-        <Row style={{marginBottom:'24px'}}>
+        <Row style={{ marginBottom: '24px' }}>
           <Col md={9} sm={7} xs={7}>
-            <div className="col-md-3 col-sm-6 col-12">
+            {/* <div className="col-md-3 col-sm-6 col-12">
               <div className="setting-nav zonelist-nav">
                 <ul>
                   <li><a className="active" href="http://localhost:3000/app/zonelist">Zone List</a></li>
                   <li><a href="http://localhost:3000/app/dmalist">DMA’s List</a></li>
                 </ul>
               </div>
-            </div>
+            </div> */}
           </Col>
           <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
-            <CachedOutlinedIcon style={{ color: '#6C757D' }} /> 
+            <CachedOutlinedIcon style={{ color: '#6C757D' }} />
             <FilterAltOutlinedIcon style={{ color: '#6C757D', marginLeft: 20, marginRight: 20 }} />
             <FileUploadOutlinedIcon style={{ color: '#6C757D' }} />
           </Col>
@@ -83,37 +106,47 @@ export default function ZoneList() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-              <td className='tablecontent'>
-                  <Accordion style={{boxShadow:'none'}}>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-
-                    </AccordionSummary>
-                  </Accordion>
-                </td>
-                <td className='tablecontent'>
-                  <Link to="/app/dmalist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }} >#1472</Link>
-                </td>
-                <td className='tablecontent'>
-                  <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>IN865</span>
-                </td>
-                <td className='tablecontent'>0fnjckdy778t7y6778</td>
-                <td className='tablecontent'>02/05/2024 16:40:28</td>
-                <td className='tablecontent'>
-                  <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>4500</span>
-                </td>
-                <td className='tablecontent'>
-                  <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>4500</span>
-                </td>
-                <td className='tablecontent'>
-                  <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>Active</span>
-                </td>
-                <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td>
-              </tr>
+              {zonesList.map((zone) => (
+                <tr key={zone.zoneId}>
+                  <td className='tablecontent'>
+                    <Accordion style={{ boxShadow: 'none' }}>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1-content"
+                        id="panel1-header"
+                      >
+                      </AccordionSummary>
+                    </Accordion>
+                  </td>
+                  <td className='tablecontent'>
+                    <Link to="/app/dmalist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}>
+                      {zone.zoneId}
+                    </Link>
+                  </td>
+                  <td className='tablecontent'>
+                    <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>
+                      {zone.gatewayId}
+                    </span>
+                  </td>
+                  <td className='tablecontent'>{zone.lastCommunicationTime}</td>
+                  <td className='tablecontent'>
+                    <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
+                      {zone.reading || 'N/A'}
+                    </span>
+                  </td>
+                  <td className='tablecontent'>
+                    <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
+                      {zone.meters}
+                    </span>
+                  </td>
+                  <td className='tablecontent'>
+                    <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>
+                      {zone.status}
+                    </span>
+                  </td>
+                  <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td>
+                </tr>
+              ))}
             </tbody>
           </Table>
         </div>

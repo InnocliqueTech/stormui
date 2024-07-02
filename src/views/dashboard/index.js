@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 import CustomPieChart from './CustomPieChart';
 import TotalDma from './TotalDma';
@@ -8,20 +8,24 @@ import axios from 'axios';
 import { BASE_API_URL, BASE_API_URL1 } from '../../config/constant';
 import "./dashboard.scss";
 import Alert from './Alert';
+import { ClientsContext } from './context';
 
 const DashDefault = () => {
   const [dashboardData, setDashboardData] = useState({});
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
-
+  const { clients, selectedClient } = useContext(ClientsContext);
+console.log(clients, "the check")
   useEffect(() => {
-    getDashboardData();
-  }, []);
+    if (selectedClient) {
+      getDashboardData();
+    }
+  }, [selectedClient]);
 
   const getDashboardData = async () => {
     try {
       const response = await axios.post(BASE_API_URL1 + 'dashboard/getAllDashboardValues', {
-        clientId: 1
+        clientId: selectedClient
       });
       const parsedData = parseDashboardData(response.data);
       setDashboardData(parsedData);
@@ -31,7 +35,6 @@ const DashDefault = () => {
 
       const flowData = await axios.post(BASE_API_URL + "/getTotalOutFlow");
       setOutFlowData(flowData.data);
-      console.log(flowData);
     } catch (e) {
       console.log(e);
     }
@@ -74,7 +77,7 @@ const DashDefault = () => {
       <Row>
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
-            <Card.Body className="">
+            <Card.Body>
               <CustomPieChart name="Zones" data={dashboardData.totalZone} />
             </Card.Body>
           </Card>
@@ -82,14 +85,14 @@ const DashDefault = () => {
 
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
-            <Card.Body className="">
+            <Card.Body>
               <TotalDma data={dashboardData.totalDma} />
             </Card.Body>
           </Card>
         </Col>
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
-            <Card.Body className="">
+            <Card.Body>
               <TotalMeters data={dashboardData.totalMeters} />
             </Card.Body>
           </Card>
@@ -100,11 +103,11 @@ const DashDefault = () => {
         <Col md={6} xl={7}>
           <Card className="card-social">
             <Card.Body className="p-0">
-              <div className="row">
-                <div className="col-md-12">
+              <Row>
+                <Col md={12}>
                   <Overflow data={outFlowData} />
-                </div>
-              </div>
+                </Col>
+              </Row>
             </Card.Body>
           </Card>
         </Col>

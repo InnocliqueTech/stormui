@@ -110,6 +110,7 @@ const Breadcrumb = () => {
                         </button>
                       </div>
                     </div>
+                    {location.pathname !== '/app/GatewayList' && (
                     <Col md={2} sm={7} xs={7} style={{ padding: 2, textAlign: 'end', justifyContent: 'end', display: 'flex', width: '160px', marginRight: '15px' }}>
                       <div className="form-group selectcustom">
                         <select
@@ -127,7 +128,7 @@ const Breadcrumb = () => {
                         </select>
                       </div>
           </Col>
-                   
+                    )}
                   </Col>
                 </Row>
               </div>

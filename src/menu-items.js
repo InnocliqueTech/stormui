@@ -26,7 +26,7 @@ const menuItems = {
           title: 'Gateway',
           type: 'item',
           icon: 'feather icon-crosshair',
-          url: '/app/gateway'
+          url: '/app/GatewayList'
         },
         {
           id: 'client',

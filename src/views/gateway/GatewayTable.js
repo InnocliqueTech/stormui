@@ -102,7 +102,7 @@ const GatewayTable = () => {
             </tr>
           </thead>
           <tbody>
-            {gateways.map(gateway => (
+            {gateways.slice(0, 5).map(gateway => (
               <tr key={gateway.gatewayId}>
                 {/* <td className='tablecontent'><Checkbox /></td> */}
                 <td className='tablecontent'>

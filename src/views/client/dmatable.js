@@ -15,7 +15,7 @@ function DmaTable() {
           <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>
             <span className='iconContainer'>
               <Image src={zone} alt="zone" className='icon' />
-            </span>  DMA-wise  Consumption  </span><span><Image src={info} alt="gateway" /></span>
+            </span>  DMA-wise  Supply  </span><span><Image src={info} alt="gateway" /></span>
           <span style={{ textAlign: 'end' }}></span>
         </Col>
         <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>

@@ -98,7 +98,7 @@ const ClientDma = (props) => {
           <Image src={water} alt="water" className='icon' />
         </Col>
         <Col md={9} sm={8} xs={8} style={{marginBottom:"40px"}}>
-          <div className="cardhead">DMA-wise  Consumption </div>
+          <div className="cardhead">DMA-wise Supply </div>
         </Col>
       </Row>
       <ReactApexChart options={opt} series={data} type="donut" height={260} />

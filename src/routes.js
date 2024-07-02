@@ -20,7 +20,7 @@ export const renderRoutes = (routes = []) => (
             path={route.path}
             element={
               <Guard>
-                <Layout>{route.routes ? renderRoutes(route.routes) : <Element props={true} />}</Layout>
+                <Layout>{route.routes ? renderRoutes(route.routes) : <Element />}</Layout>
               </Guard>
             }
           />
@@ -32,22 +32,18 @@ export const renderRoutes = (routes = []) => (
 
 const routes = [
   {
-    exact: 'true',
     path: '/login',
     element: lazy(() => import('./views/auth/signin/SignIn1'))
   },
   {
-    exact: 'true',
     path: '/auth/signin-1',
     element: lazy(() => import('./views/auth/signin/SignIn1'))
   },
   {
-    exact: 'true',
     path: '/auth/signup-1',
     element: lazy(() => import('./views/auth/signup/SignUp1'))
   },
   {
-    exact: 'true',
     path: '/auth/reset-password-1',
     element: lazy(() => import('./views/auth/reset-password/ResetPassword1'))
   },
@@ -56,68 +52,55 @@ const routes = [
     layout: AdminLayout,
     routes: [
       {
-        exact: 'true',
         path: '/app/dashboard/location',
         element: lazy(() => import('./views/location/index'))
       },
       {
-        exact: 'true',
         path: '/app/dashboard/default',
         element: lazy(() => import('./views/dashboard/index'))
       },
       {
-        exact: 'true',
         path: '/app/gateway',
         element: lazy(() => import('./views/gateway/GatewayList'))
       },
       {
-        exact: 'true',
         path: '/app/gatewaylist',
         element: lazy(() => import('./views/gateway/GatewayList'))
       },
       {
-        exact: 'true',
         path: '/app/client',
         element: lazy(() => import('./views/client/index'))
       },
       {
-        exact: 'true',
         path: '/app/clientlist',
         element: lazy(() => import('./views/client/ZoneList'))
       },
       {
-        exact: 'true',
         path: '/app/zonelist',
         element: lazy(() => import('./views/client/ZoneList'))
       },
       {
-        exact: 'true',
         path: '/app/dmalist',
         element: lazy(() => import('./views/client/DmaList'))
       },
       {
-        exact: 'true',
         path: '/app/meterlist',
         element: lazy(() => import('./views/client/MeterList'))
       },
       {
-        exact: 'true',
         path: '/app/setting',
         element: lazy(() => import('./views/client/settings'))
       },
       {
-        exact: 'true',
         path: '/app/about',
         element: lazy(() => import('./views/client/aboutus'))
       },
       {
-        exact: 'true',
         path: '/app/terms',
         element: lazy(() => import('./views/client/Terms'))
       },
       {
         path: '*',
-        exact: 'true',
         element: () => <Navigate to={BASE_URL} />
       }
     ]

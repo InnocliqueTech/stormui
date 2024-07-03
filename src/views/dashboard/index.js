@@ -7,12 +7,12 @@ import Overflow from './Overflow';
 import axios from 'axios';
 import { BASE_API_URL, BASE_API_URL1 } from '../../config/constant';
 import "./dashboard.scss";
-import Alert from './Alert';
+// import Alert from './Alert';
 import { ClientsContext } from './context';
 
 const DashDefault = () => {
   const [dashboardData, setDashboardData] = useState({});
-  const [alertData, setAlertData] = useState({});
+  // const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
   const { clients, selectedClient } = useContext(ClientsContext);
 console.log(clients, "the check")
@@ -22,6 +22,7 @@ console.log(clients, "the check")
     }
   }, [selectedClient]);
 
+  
   const getDashboardData = async () => {
     try {
       const response = await axios.post(BASE_API_URL1 + 'dashboard/getAllDashboardValues', {
@@ -30,8 +31,8 @@ console.log(clients, "the check")
       const parsedData = parseDashboardData(response.data);
       setDashboardData(parsedData);
 
-      const aData = await axios.post(BASE_API_URL + "/getAlerts");
-      setAlertData(aData.data);
+      // const aData = await axios.post(BASE_API_URL + "/getAlerts");
+      // setAlertData(aData.data);
 
       const flowData = await axios.post(BASE_API_URL + "/getTotalOutFlow");
       setOutFlowData(flowData.data);
@@ -97,9 +98,9 @@ console.log(clients, "the check")
             </Card.Body>
           </Card>
         </Col>
-        <Col md={6} xl={5}>
+        {/* <Col md={6} xl={5}>
           <Alert data={alertData} />
-        </Col>
+        </Col> */}
         <Col md={6} xl={7}>
           <Card className="card-social">
             <Card.Body className="p-0">

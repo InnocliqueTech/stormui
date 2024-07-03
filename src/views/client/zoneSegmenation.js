@@ -13,7 +13,7 @@ const  ZoneSegmenation =() =>{
       dmaId: 0
     })
     .then(response => {
-      setCustomers(response.data.customerDetails);
+      setCustomers(response.data.zoneDetails);
     })
     .catch(error => {
       console.error('There was an error fetching the customer data!', error);

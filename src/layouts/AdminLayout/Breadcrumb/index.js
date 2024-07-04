@@ -8,6 +8,10 @@ import { BASE_API_URL1, BASE_TITLE } from '../../../config/constant';
 import { DateRange } from '@mui/icons-material';
 import axios from 'axios';
 
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 const Breadcrumb = () => {
   const location = useLocation();
   const [selectedDate, setSelectedDate] = useState("7D");
@@ -107,6 +111,11 @@ const Breadcrumb = () => {
                         <button className={`days ${selectedDate === "30D" ? "active" : ""}`} onClick={() => setSelectedDate("30D")}>30D</button>
                         <button className={`days`}>
                           <DateRange />
+                          <LocalizationProvider dateAdapter={AdapterDayjs} components={['DatePicker']}>
+                            <div >
+                              <DatePicker label="Basic date picker" />
+                            </div>
+                          </LocalizationProvider>
                         </button>
                       </div>
                     </div>

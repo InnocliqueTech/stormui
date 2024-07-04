@@ -38,6 +38,7 @@ const Breadcrumb = () => {
       if (!isNaN(startDate)) {
         const formattedDate = format(startDate, 'yyyy-MM-dd');
         setPresentDate(formattedDate);
+        setSelectedDate("")
       }
     }
     if (date[1]) {
@@ -45,6 +46,8 @@ const Breadcrumb = () => {
       if (!isNaN(endDate)) {
         const formattedDate = format(endDate, 'yyyy-MM-dd');
         setToDate(formattedDate);
+        setSelectedDate("")
+
       }
     }
   };

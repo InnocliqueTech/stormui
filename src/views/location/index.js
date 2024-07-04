@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './indexLanding.css';
 import './location.css';  // Import the CSS file
  
-import HomeEdit from '../../assets/images/HomeEdit.png'
+//import HomeEdit from '../../assets/images/HomeEdit.png'
 import { Col } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import image from './image2835.png';
@@ -13,8 +13,8 @@ export default function Location() {
   const { clients } = useContext(ClientsContext);
   return (
       <>
-      <h2 style={{fontSize:32,fontWeight:700, color:'#212121', marginTop:0}} className="">Welcome to Storm Energy</h2>
-      <div className="mt-4" style={{ marginLeft: '20px' }}>
+      <h2 style={{fontSize:32,fontWeight:700, color:'#212121', marginTop:0, marginBottom:'24px'}} className="">Welcome to Storm Energy</h2>
+      <div className="">
         <Row className="justify-content-start">
           {clients.map((project, index) => (
             <Col md={4} className="mb-4" key={index}>
@@ -25,16 +25,16 @@ export default function Location() {
                 <div className="">
                   <Row className='row p-0 m-0'>
                     <Col className='p-0' md={10} sm={1} xs={1}>
-                      <Link to="/app/dashboard/default">
+                      <Link to="/app/dashboard/default" style={{textDecoration: 'none' }}>
                         <a style={{ color: "black", textDecoration: 'none' }}>
                           <h5 className="card-title m-0 p-0">{project.clientName}</h5>
                         </a>
                       </Link>
                     </Col>
                     
-                    <Col md={2} sm={1} xs={1} className='p-0 text-end' >
+                    {/* <Col md={2} sm={1} xs={1} className='p-0 text-end' >
                       <img src={HomeEdit} style={{background:'#F4F5F5', width:24, height:24, borderRadius:6, padding:4}}  alt="uparrow" /> 
-                    </Col> 
+                    </Col>  */}
                   </Row>
                   
                   <p className="card-text">{project.description}</p>

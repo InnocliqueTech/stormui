@@ -4,9 +4,10 @@
   }
   
   .card-title {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     color: #121212;
+    padding-bottom: 8px;
   }
   
   .card-text {
@@ -36,7 +37,7 @@
   }
   .custom-zones strong {font-size: 16px; font-weight: 700;}
   .custom-zones small { font-size: 12px;}
-  .card-img-top { border-radius: 10px; margin-bottom: 8px;}
+  .card-img-top { border-radius: 10px; margin-bottom: 24px;}
   .card { padding: 16px;}
   .card-body { padding: 0 !important;}
   

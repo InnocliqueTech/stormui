@@ -8,7 +8,8 @@ import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { Accordion, AccordionSummary, AccordionDetails, Link } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
 import Paginations from '../../components/Paginatons'; // Make sure this path is correct
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+//import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { ClientsContext } from '../dashboard/context';
 import { BASE_API_URL1 } from '../../config/constant';
 
@@ -90,7 +91,7 @@ export default function ZoneList() {
                     <td className='tablecontent'>
                       <Accordion expanded={expandedZone === zone.zoneId} onChange={() => handleAccordionChange(zone.zoneId)} style={{ boxShadow: 'none' }}>
                         <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
+                          expandIcon={<NavigateNextIcon />}
                           aria-controls="panel1-content"
                           id="panel1-header"
                         >
@@ -131,46 +132,47 @@ export default function ZoneList() {
                   </tr>
                   {expandedZone === zone.zoneId && data[zone.zoneId] && data[zone.zoneId].map((dma) => (
                     <tr key={dma.dmaId}>
-                      <td className='tablecontent'>
+                      <td className='tablecontent tabelexpand-bg'>
 
                       <tr></tr>
                       {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
                         {/* {dma.dmaId} */}
                       {/* </span> */}
                       </td>
-                      <td className='tablecontent'>
+                      <td className='tablecontent tabelexpand-bg'>
                         
                       {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
                         {dma.dmaId}
                       {/* </span> */}
                       </td>
-                      <td className='tablecontent'>
+                      <td className='tablecontent tabelexpand-bg'>
                       <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>
                         {dma.gatewayId}
                       </span>
                       </td>
-                      <td className='tablecontent'>
+                      <td className='tablecontent tabelexpand-bg'>
 
                         
                       {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
                         {dma.lastCommunicationTime}
                       {/* </span> */}
                       </td>
-                      <td className='tablecontent'>
+                      <td className='tablecontent tabelexpand-bg'>
                       <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
                         {dma.reading || 'N/A'}
                       </span>
                     </td>
-                    <td className='tablecontent'>
+                    <td className='tablecontent tabelexpand-bg'>
                       <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
                         {dma.meters}
                       </span>
                     </td>
-                    <td className='tablecontent'>
+                    <td className='tablecontent tabelexpand-bg'>
                       <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>
                         {dma.status}
                       </span>
                     </td>
+                    <td className='tablecontent tabelexpand-bg'> </td>
                    
                     </tr>
                   ))}

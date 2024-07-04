@@ -7,9 +7,9 @@ import { BASE_API_URL1, BASE_TITLE } from '../../../config/constant';
 import { DateRange } from '@mui/icons-material';
 import axios from 'axios';
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const Breadcrumb = () => {
   const location = useLocation();
@@ -78,7 +78,7 @@ const Breadcrumb = () => {
       breadcrumbContent = null;
     } else {
       breadcrumbContent = (
-        <div className="page-header pb-3">
+        <div className="page-header pb-4">
           <div className="page-block">
             <div className="row align-items-center">
               <div className="col-md-12">
@@ -93,7 +93,7 @@ const Breadcrumb = () => {
                           {location.pathname.startsWith('/app/client') && (
                             <>
                               <Link className={location.pathname === "/app/client" ? "tab active" : "tab"} to="/app/client">Dashboard</Link>
-                              <Link className={location.pathname.toLowerCase().includes("clientlist") ? "tab active" : "tab"} to="/app/clientlist">Client List</Link>
+                              <Link className={location.pathname.toLowerCase().includes("clientlist") ? "tab active" : "tab"} to="/app/clientlist">Zone List</Link>
                               <Link className={location.pathname.toLowerCase().includes("dmalist") ? "tab active" : "tab"} to="/app/dmalist">DmaList</Link>
                             </>
                           )}
@@ -101,7 +101,7 @@ const Breadcrumb = () => {
                       )}
                     </div>
                   </Col>
-                  <Col md={6} sm={12} xs={12} className='d-flex justify-content-end' style={{ paddingRight: '18px' }}>
+                  <Col md={6} sm={12} xs={12} className='d-flex justify-content-end' style={{ paddingRight: '0px' }}>
                     <div className="row days-filter float-end" style={{ marginRight: '15px' }}>
                       <div className="col-md-12" style={{ padding: 0 }}>
                         <button className={`days ${selectedDate === "1D" ? "active" : ""}`} onClick={() => setSelectedDate("1D")}>1D</button>
@@ -110,11 +110,11 @@ const Breadcrumb = () => {
                         <button className={`days ${selectedDate === "30D" ? "active" : ""}`} onClick={() => setSelectedDate("30D")}>30D</button>
                         <button className={`days`}>
                           <DateRange />
-                          <LocalizationProvider dateAdapter={AdapterDayjs} components={['DatePicker']}>
+                          {/* <LocalizationProvider dateAdapter={AdapterDayjs} components={['DatePicker']}>
                             <div >
                               <DatePicker label="Basic date picker" />
                             </div>
-                          </LocalizationProvider>
+                          </LocalizationProvider> */}
                         </button>
                       </div>
                     </div>

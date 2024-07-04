@@ -20,17 +20,18 @@ const  ZoneSegmenation =() =>{
     });
   }, []);
   return (
-    <Table responsive style={{marginTop: 30, borderRadius: 10, border: '1px solid #ccc'}}>
-      <thead style={{backgroundColor: '#F4F5F5'}}>
+    <div className='customer-table'>
+      <Table style={{ borderRadius: 8 }} >
+        <thead style={{ backgroundColor: '#F4F5F5' }}>
         <tr>
-          <th className='clienttablehead'>ZoneId</th>
-          <th className='clienttablehead'>Gateway ID</th>
-          <th className='clienttablehead'>Last Communication Time</th>
-          <th className='clienttablehead'>Reading</th>
-          <th className='clienttablehead'>DMAS</th>
-          <th className='clienttablehead'>Meters</th>
-          <th className='clienttablehead'>Status</th>
-          <th className='clienttablehead'>Action</th>
+          <th className='tablehead'>ZoneId</th>
+          <th className='tablehead'>Gateway ID</th>
+          <th className='tablehead'>Last Communication Time</th>
+          <th className='tablehead'>Reading</th>
+          <th className='tablehead'>DMAS</th>
+          <th className='tablehead'>Meters</th>
+          <th className='tablehead'>Status</th>
+          <th className='tablehead'>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -59,7 +60,8 @@ const  ZoneSegmenation =() =>{
           </tr>
         ))}
       </tbody>
-    </Table>
+      </Table>
+    </div>
   );
 }
 

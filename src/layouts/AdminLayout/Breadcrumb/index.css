@@ -23,21 +23,19 @@
 
 .days-date-picker {
   display: flex;
-  padding: 0px !important;
+  padding: 8px !important;
   border-radius: 10px;
   background: #eaeaeb;
   align-items: center;
   justify-content: center;
   margin-right: 10px;
-
 }
-.days-date-picker button{
+.days-date-picker button {
   border: none;
   outline: none;
   cursor: pointer;
   background: transparent;
 }
-
 
 .date-picker {
   z-index: 1000000;
@@ -56,4 +54,11 @@
 .css-z3c6am-MuiFormControl-root-MuiTextField-root {
   border-radius: 10px;
   background: white !important;
+}
+
+.seconde-section {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-end;
 }

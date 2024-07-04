@@ -14,7 +14,7 @@ export const StateContextProvider = ({ children }) => {
     setPresentDate(newDate);
   };
 
-  console.log(presentDate, toDate, 'present date  , to date');
+
 
   return <StateContext.Provider value={{ toDate, setToDate, presentDate, setPresentDate, onDateChange,zoneId,setZoneId }}>{children}</StateContext.Provider>;
 };

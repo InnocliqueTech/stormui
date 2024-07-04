@@ -12,6 +12,7 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import { DateRangePicker, LocalizationProvider, SingleInputDateRangeField } from '@mui/x-date-pickers-pro';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 
 const handleChange = (e, setValue) => {
   const { value } = e.target;
@@ -20,7 +21,7 @@ const handleChange = (e, setValue) => {
 
 const Breadcrumb = () => {
   const location = useLocation();
-  const [selectedDate, setSelectedDate] = useState('7d');
+  const [selectedDate, setSelectedDate] = useState('7D');
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
   const { selectedClient, setSelectedClient } = useContext(ClientsContext);
@@ -38,7 +39,7 @@ const Breadcrumb = () => {
       if (!isNaN(startDate)) {
         const formattedDate = format(startDate, 'yyyy-MM-dd');
         setPresentDate(formattedDate);
-        setSelectedDate("")
+        setSelectedDate('');
       }
     }
     if (date[1]) {
@@ -46,8 +47,7 @@ const Breadcrumb = () => {
       if (!isNaN(endDate)) {
         const formattedDate = format(endDate, 'yyyy-MM-dd');
         setToDate(formattedDate);
-        setSelectedDate("")
-
+        setSelectedDate('');
       }
     }
   };
@@ -118,115 +118,103 @@ const Breadcrumb = () => {
                 <div className="page-header-title">
                   <h5 className="m-b-10">{mainContent}</h5>
                 </div>
-                <Row className="d-flex justify-content-around">
-                  <Col md={6} sm={12} xs={12}>
-                    <div className="dashheading">
-                      {title !== 'Dashboard' && (
-                        <span>
-                          {location.pathname.startsWith('/app/client') && (
-                            <>
-                              <Link className={location.pathname === '/app/client' ? 'tab active' : 'tab'} to="/app/client">
-                                Dashboard
-                              </Link>
-                              <Link
-                                className={location.pathname.toLowerCase().includes('clientlist') ? 'tab active' : 'tab'}
-                                to="/app/clientlist"
-                              >
-                                Client List
-                              </Link>
-                              <Link
-                                className={location.pathname.toLowerCase().includes('dmalist') ? 'tab active' : 'tab'}
-                                to="/app/dmalist"
-                              >
-                                DmaList
-                              </Link>
-                            </>
-                          )}
-                        </span>
-                      )}
-                    </div>
-                  </Col>
+                <Row className="d-flex">
                   <Col
-                    md={6}
-                    sm={12}
-                    xs={12}
-                    className="d-flex justify-content-end"
+                    className="d-flex align-items-center"
                     style={{
-                      padding: 2,
-                      width: '100%'
+                      padding: '0px 15px'
                     }}
                   >
-                    <div className="days-date-picker">
-                      <div className="" style={{ padding: 0 }}>
-                        {[
-                          { day: '1d', add: 1 },
-                          { day: '7d', add: 7 },
-                          { day: '14d', add: 14 },
-                          { day: '30d', add: 30 }
-                        ].map((obj) => {
-                          return (
-                            <button
-                              className={`days ${selectedDate === obj.day ? 'active' : ''}`}
-                              onClick={() => {
-                                setSelectedDate(obj.day);
-                                onDateChange(obj.add);
-                              }}
-                              key={obj.day}
-                            >
-                              {obj.day}
-                            </button>
-                          );
-                        })}
-
-                        {isDatePickerOpen && (
-                          <div className="date-picker" style={{ backgroundColor: 'white', border: 'none' }}>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                              <DemoContainer components={['SingleInputDateRangeField']}>
-                                <DateRangePicker
-                                  slots={{ field: SingleInputDateRangeField }}
-                                  name="allowedRange"
-                                  onChange={handleDateChange}
-                                />
-                              </DemoContainer>
-                            </LocalizationProvider>
-                          </div>
+                    <Col md={6} sm={12} xs={12}>
+                      <div className="dashheading">
+                        {title !== 'Dashboard' && (
+                          <span>
+                            {location.pathname.startsWith('/app/client') && (
+                              <>
+                                <Link className={location.pathname === '/app/client' ? 'tab active' : 'tab'} to="/app/client">
+                                  Dashboard
+                                </Link>
+                                <Link
+                                  className={location.pathname.toLowerCase().includes('clientlist') ? 'tab active' : 'tab'}
+                                  to="/app/clientlist"
+                                >
+                                  Client List
+                                </Link>
+                                <Link
+                                  className={location.pathname.toLowerCase().includes('dmalist') ? 'tab active' : 'tab'}
+                                  to="/app/dmalist"
+                                >
+                                  DmaList
+                                </Link>
+                              </>
+                            )}
+                          </span>
                         )}
                       </div>
+                    </Col>
 
-                      <div className="">
-                        <button className="icon-button" onClick={toggleDatePicker}>
-                          <DateRangeIcon />
-                        </button>
-                      </div>
-                    </div>
+                    <section className="seconde-section">
+                      <div className="days-date-picker">
+                        <div>
+                          {[
+                            { day: '1D', add: 1 },
+                            { day: '7D', add: 7 },
+                            { day: '14D', add: 14 },
+                            { day: '30D', add: 30 }
+                          ].map((obj) => {
+                            return (
+                              <button
+                                className={`days ${selectedDate === obj.day ? 'active' : ''}`}
+                                onClick={() => {
+                                  setSelectedDate(obj.day);
+                                  onDateChange(obj.add);
+                                }}
+                                key={obj.day}
+                              >
+                                {obj.day}
+                              </button>
+                            );
+                          })}
 
-                    {location.pathname !== '/app/GatewayList' && (
-                      <Col
-                        md={2}
-                        sm={7}
-                        xs={7}
-                        style={{
-                          padding: 2,
-                          textAlign: 'end',
-                          justifyContent: 'end',
-                          display: 'flex',
-                          width: '160px',
-                          marginRight: '15px'
-                        }}
-                      >
-                        <div className="form-group selectcustom">
-                          <select className="form-control" value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)}>
-                            <option>Select Zone</option>
-                            <option value="all">All</option>
-                            {zones.map((zone) => (
-                              <option key={zone.zoneId} value={zone.gatewayId}>
-                                {zone.zoneId}
-                              </option>
-                            ))}
-                          </select>
+                          {isDatePickerOpen && (
+                            <div className="date-picker" >
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={['SingleInputDateRangeField']}>
+                                  <DateRangePicker
+                                    slots={{ field: SingleInputDateRangeField }}
+                                    name="allowedRange"
+                                    onChange={handleDateChange}
+                                    maxDate={dayjs()}
+                                  />
+                                </DemoContainer>
+                              </LocalizationProvider>
+                            </div>
+                          )}
                         </div>
-                      </Col>
-                    )}
+
+                        <div className="">
+                          <button className="icon-button" onClick={toggleDatePicker}>
+                            <DateRangeIcon />
+                          </button>
+                        </div>
+                      </div>
+
+                      {location.pathname !== '/app/GatewayList' && (
+                        <div>
+                          <div className="form-group selectcustom">
+                            <select className="form-control" value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)}>
+                              <option>Select Zone</option>
+                              <option value="all">All</option>
+                              {zones.map((zone) => (
+                                <option key={zone.zoneId} value={zone.gatewayId}>
+                                  {zone.zoneId}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      )}
+                    </section>
                   </Col>
                 </Row>
               </div>

@@ -4,10 +4,12 @@ import axios from 'axios';
 import over from '../../assets/images/symbols_water.svg';
 import { Col, Image, Row } from 'react-bootstrap';
 import info from '../../assets/images/i_icons.svg';
+import { useStateContext } from '../../contexts/MainContext';
 
 const Overflow = (props) => {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
+  const { presentDate, toDate } = useStateContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,8 +17,8 @@ const Overflow = (props) => {
         const response = await axios.post('http://49.207.11.223:3307/dashboard/getTotalOutflowInDashboard', {
           clientId: 1,
           zoneId: 0,
-          fromDate: "2024-06-15",
-          toDate: "2024-06-21"
+          fromDate: presentDate,
+          toDate: toDate
         });
 
         if (response.data && response.data.totalOutFlow) {
@@ -26,19 +28,21 @@ const Overflow = (props) => {
             counts.push(flow.count);
             dates.push(flow.date);
           });
-          setData([{
-            name: "Total Outflow",
-            data: counts
-          }]);
+          setData([
+            {
+              name: 'Total Outflow',
+              data: counts
+            }
+          ]);
           setCategories(dates);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, [props]);
+  }, [props, presentDate, toDate]);
 
   const options = {
     colors: ['#2196F3', '#80CAEE'],
@@ -131,8 +135,8 @@ const Overflow = (props) => {
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 shadow-default sm:px-2 xl:col-span-6">
       <Row>
-        <Col md={1} sm={1} xs={1} className='iconContainer' style={{ backgroundColor: '#F6C574' }}>
-          <Image src={over} alt="over" className='icon' />
+        <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574' }}>
+          <Image src={over} alt="over" className="icon" />
         </Col>
         <Col md={8} sm={8} xs={8}>
           <div className="alerttext">

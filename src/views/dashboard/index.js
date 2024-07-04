@@ -5,10 +5,11 @@ import TotalDma from './TotalDma';
 import TotalMeters from './TotalMeters';
 import Overflow from './Overflow';
 import axios from 'axios';
-import { BASE_API_URL, BASE_API_URL1 } from '../../config/constant';
+import {  BASE_API_URL1 } from '../../config/constant';
 import "./dashboard.scss";
 // import Alert from './Alert';
 import { ClientsContext } from './context';
+// import DMAFlowChart from './DmaFlowChart';
 
 const DashDefault = () => {
   const [dashboardData, setDashboardData] = useState({});
@@ -98,9 +99,6 @@ console.log(clients, "the check")
             </Card.Body>
           </Card>
         </Col>
-        {/* <Col md={6} xl={5}>
-          <Alert data={alertData} />
-        </Col> */}
         <Col md={6} xl={7}>
           <Card className="card-social">
             <Card.Body className="p-0">
@@ -111,6 +109,9 @@ console.log(clients, "the check")
               </Row>
             </Card.Body>
           </Card>
+        </Col>
+        <Col md={6} xl={5}>
+              {/* <DMAFlowChart data={dashboardData.totalDma} /> */}
         </Col>
       </Row>
     </React.Fragment>

@@ -426,9 +426,10 @@ td {
   font-size: 16px;
   font-weight: 400;
   font-family: "Inter", sans-serif !important;
-  color:#6C757D;
+  color:#6C757D !important;
   text-align: left;
 }
+.tablecontent a { color:#6C757D;}
 .tablehead {
   font-size: 16px;
   font-weight: 600;
@@ -476,3 +477,4 @@ td {
 .nav-fill > .nav-link, .nav-fill .nav-item {
   flex: 0 !important;
 }
+

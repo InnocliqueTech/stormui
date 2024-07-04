@@ -125,13 +125,13 @@ const GatewayTable = () => {
                 {new Date(gateway.time).toISOString().replace('T', ' ').split('.')[0]}
                 </td>
 
-                <td className='tablecontent'>{gateway.ethState}</td>
-                <td className='tablecontent'>{gateway.lteState}</td>
-                <td className='tablecontent'>{gateway.temperature}</td>
-                <td className='tablecontent'>{gateway.powerState}</td>
-                <td className='tablecontent'>{gateway.batteryState}</td>
-                <td className='tablecontent'>{gateway.batteryLevel}</td>
-                <td className='tablecontent'>{gateway.batteryVoltage}</td>
+                <td className='tablecontent text-end'>{gateway.ethState}</td>
+                <td className='tablecontent text-end'>{gateway.lteState}</td>
+                <td className='tablecontent text-end'>{gateway.temperature}</td>
+                <td className='tablecontent text-end'>{gateway.powerState}</td>
+                <td className='tablecontent text-end'>{gateway.batteryState}</td>
+                <td className='tablecontent text-end'>{gateway.batteryLevel}</td>
+                <td className='tablecontent text-end'>{gateway.batteryVoltage}</td>
                 <td className='tablecontent'>{gateway.status}</td>
                 
               </tr>

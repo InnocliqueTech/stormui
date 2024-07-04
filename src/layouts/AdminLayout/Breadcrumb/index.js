@@ -24,9 +24,8 @@ const Breadcrumb = () => {
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
   const { selectedClient, setSelectedClient } = useContext(ClientsContext);
-  const { onDateChange, setPresentDate, presentDate, toDate, setToDate } = useStateContext(); //presentDate, toDate, setPresentDate, setToDate
+  const { onDateChange, setPresentDate, presentDate, toDate, setToDate } = useStateContext();
   const [zones, setZones] = useState([]);
-
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
 
   const toggleDatePicker = () => {
@@ -49,8 +48,7 @@ const Breadcrumb = () => {
       }
     }
   };
-  
-  console.log(presentDate, toDate, 'presentdate', 'toDate');
+
   useEffect(() => {
     const fetchZones = async (clientId) => {
       try {
@@ -110,7 +108,7 @@ const Breadcrumb = () => {
       breadcrumbContent = null;
     } else {
       breadcrumbContent = (
-        <div className="page-header pb-3">
+        <div className="page-header pb-4">
           <div className="page-block">
             <div className="row align-items-center">
               <div className="col-md-12">
@@ -177,9 +175,6 @@ const Breadcrumb = () => {
                           );
                         })}
 
-                        {/* Calendar icon to toggle date picker */}
-
-                        {/* Render the date picker based on state */}
                         {isDatePickerOpen && (
                           <div className="date-picker" style={{ backgroundColor: 'white', border: 'none' }}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -273,44 +268,3 @@ export function Date_Input({ name, placeholder, value, readOnly, setValue }) {
     </>
   );
 }
-
-// export const MultipleDateRangesChange = ({ setPresentDate, setToDate, presentDate, toDate }) => {
-
-//   console.log(setPresentDate,setToDate,presentDate,toDate)
-//   return (
-//     <Col
-//       md={2}
-//       sm={7}
-//       xs={7}
-//       style={{
-//         padding: 2,
-//         textAlign: 'end',
-//         justifyContent: 'end',
-//         display: 'flex',
-//         width: '300px',
-//         marginRight: '15px',
-//         gap: '10px',
-//         transform: 'translate(10px,-15px)'
-//       }}
-//       className="d-flex g-4"
-//     >
-
-//     <DateRange
-//         ranges={[{ startDate: presentDate, endDate: toDate, key: 'selection' }]}
-//         onChange={(ranges) => {
-
-//           if (ranges.selection) {
-//             setPresentDate(ranges.selection.startDate);
-//             setToDate(ranges.selection.endDate);
-//           }
-//         }}
-
-//         moveRangeOnFirstSelection={false}
-//         editableDateInputs={true}
-//         rangeColors={['#8774df']}
-//       />
-
-//       <h2>hello world</h2>
-//     </Col>
-//   );
-// };

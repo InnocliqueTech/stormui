@@ -24,7 +24,7 @@ const Breadcrumb = () => {
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
   const { selectedClient, setSelectedClient } = useContext(ClientsContext);
-  const { onDateChange, setPresentDate, presentDate, toDate, setToDate } = useStateContext();
+  const { onDateChange, setPresentDate,setToDate } = useStateContext();
   const [zones, setZones] = useState([]);
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
 
@@ -186,6 +186,8 @@ const Breadcrumb = () => {
                                   slots={{ field: SingleInputDateRangeField }}
                                   name="allowedRange"
                                   onChange={handleDateChange}
+                                  
+
                                 />
                               </DemoContainer>
                             </LocalizationProvider>

@@ -1,22 +1,59 @@
 .days {
-    border: none;
-    box-shadow: none;
-    background: none;
-    padding: 8px;
-    margin: 0 5px;
-    cursor: pointer;
-    outline: none;
-  }
-  
-  .days.active {
-    font-weight: bold;
-    color: #007bff;
-  }
-  
-  .days:hover {
-    background: #f0f0f0;
-  }
-  
-  .days svg {
-    vertical-align: middle;
+  border: none;
+  box-shadow: none;
+  background: none;
+  padding: 8px;
+  margin: 0 5px;
+  cursor: pointer;
+  outline: none;
+}
+
+.days.active {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.days:hover {
+  background: #f0f0f0;
+}
+
+.days svg {
+  vertical-align: middle;
+}
+
+.days-date-picker {
+  display: flex;
+  padding: 0px !important;
+  border-radius: 10px;
+  background: #eaeaeb;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+
+}
+.days-date-picker button{
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+
+.date-picker {
+  z-index: 1000000;
+  position: absolute;
+  border-radius: 10px;
+  padding: none;
+  /* top: 77px; */
+  margin-top: 5px;
+}
+
+.days-filter {
+  display: flex;
+  flex-direction: row;
+}
+
+.css-z3c6am-MuiFormControl-root-MuiTextField-root {
+  border-radius: 10px;
+  background: white !important;
 }

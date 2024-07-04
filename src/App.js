@@ -11,10 +11,9 @@ const App = () => {
   return (
     <React.Fragment>
       <ClientsProvider>
-<FilterProvider>
-
-      <BrowserRouter basename={process.env.REACT_APP_BASE_NAME}>{renderRoutes(routes)}</BrowserRouter>
-</FilterProvider>
+        <FilterProvider>
+          <BrowserRouter basename={process.env.REACT_APP_BASE_NAME}>{renderRoutes(routes)}</BrowserRouter>
+        </FilterProvider>
       </ClientsProvider>
     </React.Fragment>
   );

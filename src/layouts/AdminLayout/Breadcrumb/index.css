@@ -1,0 +1,22 @@
+.days {
+    border: none;
+    box-shadow: none;
+    background: none;
+    padding: 8px;
+    margin: 0 5px;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .days.active {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .days:hover {
+    background: #f0f0f0;
+  }
+  
+  .days svg {
+    vertical-align: middle;
+}

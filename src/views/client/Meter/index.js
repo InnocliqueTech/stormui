@@ -8,8 +8,12 @@ import deleteimg from '../../../assets/images/delete.svg';
 import Device from './Device';
 import Details from './Details';
 import Photos from './Photos';
+import Overflow from '../../dashboard/Overflow';
+import { useState } from 'react';
 
 function Meter() {
+    const [outFlowData] = useState('1');
+
     return (
         <>
         <Row style={{padding:'32px', background:'#F4F5F5'}}>
@@ -20,7 +24,8 @@ function Meter() {
                     fill
                 >
                     <Tab eventKey="home" title="Analytics">
-                        Tab content for Home
+             <Overflow data={outFlowData} />
+
                     </Tab>
                     <Tab eventKey="details" title="Details">
                         <Details />

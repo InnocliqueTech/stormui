@@ -1,6 +1,9 @@
 import { Card, Col, Row, Table } from 'react-bootstrap';
 
 function Device() {
+
+
+  
     return (
         <>
         <Card style={{ margin: 0, padding: '16px', borderRadius: 8, marginBottom:24}}>

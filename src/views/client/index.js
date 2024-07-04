@@ -29,6 +29,7 @@ import UpArrow from '../../assets/images/UpArrow.png';
 import DownArrow from '../../assets/images/DownArrow.png'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
+import ZoneSegmenation from './zoneSegmenation';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -187,7 +188,7 @@ const Client = () => {
             <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className='d-flex align-items-center'>
               <span className='iconContainergreen p-0 d-flex align-items-center justify-content-center me-2' style={{ width: "48px", height: '48px' }}>
                 <Image src={customer} alt="customer" className='icon' />
-              </span> Consumption By Zone </span><span style={{ padding: '13px' }}><Image src={info} alt="info" className='icon' /></span>
+              </span> Supply By Zone </span><span style={{ padding: '13px' }}><Image src={info} alt="info" className='icon' /></span>
             <span className='d-flex' style={{ textAlign: 'end' }}></span>
           </Col>
           <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
@@ -366,7 +367,7 @@ const Client = () => {
             <span><Image src={download} alt="download" className='icon' /></span>
           </Col>
         </Row>
-        <CustomerTable />
+        <ZoneSegmenation />
       </Card>
 
 
@@ -383,7 +384,7 @@ const Client = () => {
           <Row container style={{ backgroundColor: '#000' }}>
             <Col md={10} sm={12} xs={10}>
               <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                Consumption Details
+                Supply Details
               </DialogTitle>
             </Col>
             <Col md={1} sm={1} xs={1}>
@@ -417,7 +418,7 @@ const Client = () => {
           <Row container style={{ backgroundColor: '#000' }}>
             <Col md={10} sm={12} xs={10}>
               <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                Consumption Details
+                Supply Details
               </DialogTitle>
             </Col>
             <Col md={1} sm={1} xs={1}>

@@ -3,42 +3,40 @@ import axios from 'axios';
 import { MoreVert } from '@mui/icons-material';
 import Table from 'react-bootstrap/Table';
 
-function CustomerTable() {
+const  ZoneSegmenation =() =>{
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
-    axios.post('http://49.207.11.223:3307/clients/getTotalCustomerWiseSegementation', {
+    axios.post('http://49.207.11.223:3307/zones/getTotalZoneWiseSegementation', {
       clientId: 1,
       zoneId: 0,
       dmaId: 0
     })
     .then(response => {
-      setCustomers(response.data.customerDetails);
+      setCustomers(response.data.zoneDetails);
     })
     .catch(error => {
       console.error('There was an error fetching the customer data!', error);
     });
   }, []);
-console.log(customers, "ssssssssssssssssssssssssssssssssss")
   return (
     <Table responsive style={{marginTop: 30, borderRadius: 10, border: '1px solid #ccc'}}>
       <thead style={{backgroundColor: '#F4F5F5'}}>
         <tr>
-          <th className='clienttablehead'>#CAN</th>
-          <th className='clienttablehead'>Type</th>
+          <th className='clienttablehead'>ZoneId</th>
           <th className='clienttablehead'>Gateway ID</th>
           <th className='clienttablehead'>Last Communication Time</th>
           <th className='clienttablehead'>Reading</th>
-          <th className='clienttablehead'>Zones</th>
+          <th className='clienttablehead'>DMAS</th>
+          <th className='clienttablehead'>Meters</th>
           <th className='clienttablehead'>Status</th>
           <th className='clienttablehead'>Action</th>
         </tr>
       </thead>
       <tbody>
-        {customers.map((customer, index) => (
+      {customers.slice(0, 5).map((customer, index) => (
           <tr key={index}>
-            <td className='clienttabletext'>{customer.can || 'N/A'}</td>
-            <td className='clienttabletext'>{customer.type}</td>
+            <td className='clienttabletext'>{customer.zoneId || 'N/A'}</td>
             <td className='clienttabletext'>{customer.gatewayId}</td>
             <td className='clienttabletext'>{new Date(customer.lastCommunicationTime).toLocaleString()}</td>
             <td className='clienttabletext'>
@@ -46,9 +44,10 @@ console.log(customers, "ssssssssssssssssssssssssssssssssss")
                 {customer.reading}
               </span>
             </td>
+            <td className='clienttabletext'>{customer.dmas}</td>
             <td className='clienttabletext'>
               <span style={{backgroundColor: 'rgba(149, 172, 255, 0.2)', padding: 8, paddingLeft: 40, paddingRight: 40, borderRadius: 20}}>
-                {customer.zone}
+                {customer.meters}
               </span>
             </td>
             <td className='clienttabletext'>
@@ -64,4 +63,4 @@ console.log(customers, "ssssssssssssssssssssssssssssssssss")
   );
 }
 
-export default CustomerTable;
+export default ZoneSegmenation;

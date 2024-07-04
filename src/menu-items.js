@@ -26,11 +26,11 @@ const menuItems = {
           title: 'Gateway',
           type: 'item',
           icon: 'feather icon-crosshair',
-          url: '/app/gateway'
+          url: '/app/GatewayList'
         },
         {
           id: 'client',
-          title: 'Client List',
+          title: 'Zone',
           title1: 'DMA`s List',
           type: 'item',
           icon: 'feather icon-user',

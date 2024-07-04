@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Col, ListGroup, Row } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { ClientsContext } from '../../../views/dashboard/context/index';
-
 import navigation from '../../../menu-items';
 import { BASE_API_URL1, BASE_TITLE } from '../../../config/constant';
 import { DateRange } from '@mui/icons-material';
@@ -17,13 +16,13 @@ const Breadcrumb = () => {
   const [selectedDate, setSelectedDate] = useState("7D");
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
-  const { clients, selectedClient, setSelectedClient } = useContext(ClientsContext);
-  const [, setZones] = useState([]);
+  const { selectedClient, setSelectedClient } = useContext(ClientsContext);
+  const [zones, setZones] = useState([]);
 
   useEffect(() => {
     const fetchZones = async (clientId) => {
       try {
-        const response = await axios.post(BASE_API_URL1 +'zones/getAllZoneDetailsWithClientId', {
+        const response = await axios.post(BASE_API_URL1 + 'zones/getAllZoneDetailsWithClientId', {
           clientId,
         });
         setZones(response.data.zonesList);
@@ -31,16 +30,11 @@ const Breadcrumb = () => {
         console.error("Error fetching zones:", error);
       }
     };
-    
+
     if (selectedClient) {
       fetchZones(selectedClient);
     }
   }, [selectedClient]);
-
-
-
-
-
 
   useEffect(() => {
     navigation.items.forEach((item, index) => {
@@ -94,12 +88,17 @@ const Breadcrumb = () => {
                 <Row className='d-flex justify-content-around'>
                   <Col md={6} sm={12} xs={12}>
                     <div className="dashheading">
-                      <Link className={title === "Dashboard" ? "title" : location.pathname.toLowerCase().includes("list") ? "tab" : "tab active"} to={`/app/${title}`} >{title !== "Dashboard" ? "Dashboard" : title}</Link>
-                      {title !== "Dashboard" &&
+                      {title !== "Dashboard" && (
                         <span>
-                          <Link className={location.pathname.toLowerCase().includes("list") ? "tab active" : "tab"} to={`/app/${title}List`} >{title} List</Link>
+                          {location.pathname.startsWith('/app/client') && (
+                            <>
+                              <Link className={location.pathname === "/app/client" ? "tab active" : "tab"} to="/app/client">Dashboard</Link>
+                              <Link className={location.pathname.toLowerCase().includes("clientlist") ? "tab active" : "tab"} to="/app/clientlist">Client List</Link>
+                              <Link className={location.pathname.toLowerCase().includes("dmalist") ? "tab active" : "tab"} to="/app/dmalist">DmaList</Link>
+                            </>
+                          )}
                         </span>
-                      }
+                      )}
                     </div>
                   </Col>
                   <Col md={6} sm={12} xs={12} className='d-flex justify-content-end' style={{ paddingRight: '18px' }}>
@@ -119,24 +118,25 @@ const Breadcrumb = () => {
                         </button>
                       </div>
                     </div>
-                    <Col md={2} sm={7} xs={7} style={{ padding: 2, textAlign: 'end', justifyContent: 'end', display: 'flex', width: '160px', marginRight: '15px' }}>
-                      <div className="form-group selectcustom">
-                        <select
-                          className="form-control"
-                          value={selectedClient}
-                          onChange={(e) => setSelectedClient(e.target.value)}
-                        >
-                          <option>Select Client</option>
-                          <option value="all">All</option>
-                          {clients.map(client => (
-                            <option key={client.clientId} value={client.clientId}>
-                              {client.clientName}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </Col>
-                   
+                    {location.pathname !== '/app/GatewayList' && (
+                      <Col md={2} sm={7} xs={7} style={{ padding: 2, textAlign: 'end', justifyContent: 'end', display: 'flex', width: '160px', marginRight: '15px' }}>
+                        <div className="form-group selectcustom">
+                          <select
+                            className="form-control"
+                            value={selectedClient}
+                            onChange={(e) => setSelectedClient(e.target.value)}
+                          >
+                            <option>Select Zone</option>
+                            <option value="all">All</option>
+                            {zones.map(zone => (
+                              <option key={zone.zoneId} value={zone.gatewayId}>
+                                {zone.zoneId}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </Col>
+                    )}
                   </Col>
                 </Row>
               </div>

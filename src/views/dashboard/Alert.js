@@ -1,143 +1,170 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
 import alert from '../../assets/images/alert.svg';
 import meter from '../../assets/images/Meter.svg';
 import info from '../../assets/images/i_icons.svg';
-import "./dashboard.scss";
+import { FaPlus } from 'react-icons/fa';
+import './dashboard.scss';
 
-const Alert = ({data}) => {
-    // const [data, setData] = useState({});
-    useEffect(()=>{
-        console.log(data.totalOutFlow)
-        if(data && data.totalOutFlow) {
-          let d = [];
-          data.totalOutFlow.forEach((flow) => {
-            d.push(flow.count)
-          });
-          setData([{
-            name: "Total Outflow",
-            data: d
-          }]);
+const Alert = ({ data }) => {
+  useEffect(() => {
+    if (data && data.totalOutFlow) {
+      let d = [];
+      data.totalOutFlow.forEach((flow) => {
+        d.push(flow.count);
+      });
+      setData([
+        {
+          name: 'Total Outflow',
+          data: d
         }
-      }, [data])
-      return (
-    <Card className='card-social' style={{ minHeight: '320px', borderRadius: 5 }}>
-        <Card.Body style={{padding:'15px !important'}}>
-            <Row className="mb-2 justify-content-around">
-                <Col md={1} sm={1} xs={1} className="alertContainer">
-                    <Image src={alert} alt="alert" className="alertIcon" />
-                </Col>
-                <Col md={3} sm={4} xs={5}>
-                    <div className="alerttext">
-                        Alert
-                        <span>
-                            <Image src={info} alt="gateway" className='infoIcon' />
-                        </span>{' '}
-                    </div>
-                </Col>
-                <Col md={8} sm={6} xs={12} lg={7} style={{ display: 'flex',justifyContent: 'end', mt: 2 }}>
+      ]);
+    }
+  }, [data]);
 
-                    <div style={{ backgroundColor: '#F66060', width: 80, height: 30 }}>
-                        <h6 style={{ color: 'white', fontFamily: 'intel', textAlign: 'right', marginTop: 8, fontSize:10, paddingRight:'10px' }}>({data.alertsCount && data.alertsCount.highAlert.count})</h6>
-                    </div>
-                    <div style={{ backgroundColor: '#FCA311', width: 70, height: 30 }}>
-                        <h6 style={{ color: 'white', fontFamily: 'intel', textAlign: 'right', marginTop: 8, fontSize:10, paddingRight:'10px'  }}>({data.alertsCount && data.alertsCount.mediumAlert.count})</h6>
-                    </div>
+  let filteredAlertData = [];
+  if (data.alerts) {
+    filteredAlertData = data.alerts
+      .filter(item => item.alertName !== "Line Leakage")
+      .map(item => {
+        let newAlertName = item.alertName; // Default to the current alertName
 
-                    <div style={{ backgroundColor: '#1976D2', width: 30, height: 30 }}>
-                        <h6 style={{ color: 'white', fontFamily: 'intel', textAlign: 'right', marginTop: 8, fontSize:10, paddingRight:'10px'  }}>({data.alertsCount && data.alertsCount.lowAlert.count})</h6>
-                    </div>
-                </Col>
-            </Row>
-            <div className='alert-scroll'>
-              {data.alerts && data.alerts.map((alert, index) => {
-                  return (
-                    
-                      <Row key={index} style={{ borderBottom: '1px solid #ccc', paddingBottom: 5, marginTop: 10 }}>
-                          <Col md={1} sm={1} xs={1}>
-                              <Image src={meter} alt="gateway" className="align-items-center float-start mt-2" />
-                          </Col>
-                          <Col className='alertTitle' md={6} xs={6} sm={6}>
-                              <div className="alertheading">{alert.alertName}</div>
-                              <div className="alertsubheading">{alert.alertDescription}</div>
-                          </Col>
-                          <Col md={4} sm={4} xs={4}>
-                              <h6 className="align-items-center float-end alertsubheading mt-3">{alert.alertTime}</h6>
-                          </Col>
-                      </Row>
-                  )
-              })}
-          </div>
+        // Add your conditional logic here to assign new alert names
+        if (item.alertName === 'Gateway Failure') {
+          newAlertName = 'Gateway Communication Failure';
+        } else if (item.alertName === 'Meter Theft') {
+          newAlertName = 'Meter Communication Failure';
+        }
+        return {
+          ...item,
+          alertName: newAlertName,
+        };
+      });
+  }
 
-            {/* <Row style={{ borderBottom: '1px solid #ccc', paddingBottom: 5, marginTop: 10 }}>
-                <Col md={1} sm={1} xs={1}>
-                  <Image src={gateway} alt="gateway" className="align-items-center float-start mt-2" />
-                </Col>
-                <Col md={6} xs={6} sm={6}>
-                  <div className="alertheading">Heading</div>
-                  <div className="alertsubheading">Subheading</div>
-                </Col>
-                <Col md={4} sm={4} xs={4}>
-                  <h6 className="align-items-center float-end alertsubheading mt-3">11:32 am</h6>
-                </Col>
-              </Row>
+  const [expandedIndex, setExpandedIndex] = useState(null);
+  const [alertData, setAlertData] = useState(null);
+  const [loadingIndex, setLoadingIndex] = useState(null);
+  const [error, setError] = useState('');
 
-              <Row style={{ borderBottom: '1px solid #ccc', paddingBottom: 5, marginTop: 10 }}>
-                <Col md={1} sm={1} xs={1}>
-                  <Image src={gateway} alt="gateway" className="align-items-center float-start mt-2" />
-                </Col>
-                <Col md={6} xs={6} sm={6}>
-                  <div className="alertheading">Heading1</div>
-                  <div className="alertsubheading">Subheading</div>
-                </Col>
-                <Col md={4} sm={4} xs={4}>
-                  <h6 className="align-items-center float-end alertsubheading mt-3">11:32 am</h6>
-                </Col>
-              </Row> */}
-              {/* <div className='mt-3' style={{overflowY:'scroll',height:177}}>
-                <div className='alert-list d-flex justify-content-around'>
-                  <div className="iconContainer col-md-1 col-sm-1 col-1 me-2">
-                    <Image src="/static/media/water-loss.0c94000f4ec677859da43b1c19a54f60.svg" alt="water" className="icon"/>
-                  </div>
-                  <div className='alert-list-text col-md-8'>
-                    <h4 className='mb-0'>Gateway Failure</h4>
-                    <strong>#0xF04CD5FFFE01B1A9</strong>
-                  </div>
-                  <h5>11:32 am</h5>
-                </div>
-                <div className='alert-list d-flex justify-content-around'>
-                  <div className="iconContainer col-md-1 col-sm-1 col-1 me-2">
-                    <Image src="/static/media/water-loss.0c94000f4ec677859da43b1c19a54f60.svg" alt="water" className="icon"/>
-                  </div>
-                  <div className='alert-list-text col-md-8'>
-                    <h4 className='mb-0'>Gateway Failure</h4>
-                    <strong>#0xF04CD5FFFE01B1A9</strong>
-                  </div>
-                  <h5>11:32 am</h5>
-                </div>
-                <div className='alert-list d-flex justify-content-around'>
-                  <div className="iconContainer col-md-1 col-sm-1 col-1 me-2">
-                    <Image src="/static/media/water-loss.0c94000f4ec677859da43b1c19a54f60.svg" alt="water" className="icon"/>
-                  </div>
-                  <div className='alert-list-text col-md-8'>
-                    <h4 className='mb-0'>Gateway Failure</h4>
-                    <strong>#0xF04CD5FFFE01B1A9</strong>
-                  </div>
-                  <h5>11:32 am</h5>
-                </div>
-              </div> */}
+  const handleIconClick = async (index) => {
+    if (expandedIndex === index) {
+      setExpandedIndex(null); // Close the currently open alert
+      setAlertData(null); // Clear the alert data when closing
+    } else {
+      setExpandedIndex(index); // Open the selected alert
+      setLoadingIndex(index); // Set the loading state for the current alert
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'center', marginTop: 10, paddingBottom:17 }}>
-                <div style={{ backgroundColor: '#F66060', width: 12, height: 12 }}></div>
-                <div>{data.alertsCount && data.alertsCount.highAlert.label}</div>
-                <div style={{ backgroundColor: '#FCA311', width: 12, height: 12 }}></div>
-                <div>{data.alertsCount && data.alertsCount.mediumAlert.label}</div>
-                <div style={{ backgroundColor: '#1976D2', width: 12, height: 12 }}></div>
-                <div>{data.alertsCount && data.alertsCount.lowAlert.label}</div>
+      try {
+        const response = await fetch('http://49.207.11.223:3307/clients/getClientAlerts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ clientId: 1 }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const contentType = response.headers.get('Content-Type');
+        if (contentType && contentType.includes('application/json')) {
+          const data = await response.json();
+          setAlertData(data.clientAlerts); // Store the new alert data directly
+          setError('');
+        } else {
+          throw new Error('Expected JSON response');
+        }
+      } catch (error) {
+        console.error('Error fetching client alerts:', error);
+        setError(error.message);
+      } finally {
+        setLoadingIndex(null);
+      }
+    }
+  };
+
+  console.log(alertData);
+  return (
+    <Card className="card-social" style={{ minHeight: '320px', borderRadius: 5 }}>
+      <Card.Body style={{ padding: '15px !important' }}>
+        <Row className="mb-2 justify-content-start">
+          <Col md={1} sm={1} xs={1} className="alertContainer">
+            <Image src={alert} alt="alert" className="alertIcon" />
+          </Col>
+          <Col md={3} sm={4} xs={5}>
+            <div className="alerttext">
+              Alert
+              <span>
+                <Image src={info} alt="gateway" className="infoIcon" />
+              </span>{' '}
             </div>
-        </Card.Body>
+          </Col>
+        </Row>
+        <div className="alert-scroll">
+          {filteredAlertData &&
+            filteredAlertData.map((alert, index) => {
+              const isExpanded = expandedIndex === index;
+              return (
+                <Row key={index} style={{ borderBottom: '1px solid #ccc', paddingBottom: 5, marginTop: 10 }}>
+                  <Col md={1} sm={1} xs={1}>
+                    <Image src={meter} alt="gateway" className="align-items-center float-start mt-2" />
+                  </Col>
+                  <Col className='alertTitle' md={6} xs={6} sm={6}>
+                    <div className="alertheading">
+                      {alert.alertName}
+                      <FaPlus onClick={() => handleIconClick(index)} style={{ cursor: 'pointer', marginLeft: '10px' }} />
+                    </div>
+                   
+                      {isExpanded && (
+                        <>
+                          {loadingIndex === index && <div>Loading...</div>}
+                          {loadingIndex !== index && error && <div className="error-message">{error}</div>}
+                          {loadingIndex !== index && !error && alertData && (
+                            <>
+                              {alert.alertName === 'Gateway Communication Failure' && alertData.Gateway && alertData.Gateway.length > 0 && (
+                                <ul>
+                                  {alertData.Gateway.map((gateway) => (
+                                    <li key={gateway.id}>{gateway.CreatedAt}</li>
+                                  ))}
+                                </ul>
+                              )}
+
+                              {alert.alertName === 'Meter Communication Failure' && alertData.Meter && alertData.Meter.length > 0 && (
+                                <ul>
+                                  {alertData.Meter.map((meter) => (
+                                    <li key={meter.id}>{meter.CreatedAt}</li>
+                                  ))}
+                                </ul>
+                              )}
+
+                              {!alertData.Gateway && !alertData.Meter && (
+                                <div>No alerts available.</div>
+                              )}
+                            </>
+                          )}
+                        </>
+                      )}
+                   
+                  </Col>
+                  <Col md={4} sm={4} xs={4}>
+                    <h6 className="align-items-center float-end alertsubheading mt-3">{alert.alertTime}</h6>
+                  </Col>
+                </Row>
+              );
+            })}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'center', marginTop: 10, paddingBottom: 17 }}>
+          <div style={{ backgroundColor: '#F66060', width: 12, height: 12 }}></div>
+          <div>{data.alertsCount && data.alertsCount.highAlert.label}</div>
+          <div style={{ backgroundColor: '#FCA311', width: 12, height: 12 }}></div>
+          <div>{data.alertsCount && data.alertsCount.mediumAlert.label}</div>
+          <div style={{ backgroundColor: '#1976D2', width: 12, height: 12 }}></div>
+          <div>{data.alertsCount && data.alertsCount.lowAlert.label}</div>
+        </div>
+      </Card.Body>
     </Card>
-      );
+  );
 };
 
 export default Alert;

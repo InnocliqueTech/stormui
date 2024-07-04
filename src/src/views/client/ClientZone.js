@@ -33,7 +33,7 @@ const options = {
           show: true,
           total: {
             show: true,
-            label: "Zone-wise consumption",
+            label: "Zone-wise Supply",
             fontSize: 12,
             color: "#495057",
             fontWeight: 400
@@ -98,7 +98,7 @@ const ClientZone = (props) => {
           <Image src={water} alt="water" className='icon' />
         </Col>
         <Col md={8} sm={8} xs={8}>
-          <div className="cardhead">Zone-wise consumption</div>
+          <div className="cardhead">Zone-wise Supply</div>
         </Col>
       </Row>
       <ReactApexChart options={opt} series={data} type="donut" height={255} />

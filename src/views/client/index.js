@@ -3,7 +3,7 @@ import { Row, Col, Card, Image } from 'react-bootstrap';
 // import { Link } from 'react-router-dom';
 import Overflow from '../dashboard/Overflow';
 import axios from 'axios';
-import { BASE_API_URL } from '../../config/constant';
+import {  BASE_API_URL, BASE_API_URL1 } from '../../config/constant';
 import "../dashboard/dashboard.scss";
 import Alert from '../dashboard/Alert';
 import { styled } from '@mui/material/styles';
@@ -60,18 +60,31 @@ const Client = () => {
   const [dashboardData, setDashboardData] = useState({});
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
+  const [ dara, SetRes] = useState({})
   useEffect(() => {
     getDashboardData();
   }, [])
   const getDashboardData = async () => {
     try {
-      const response = await axios.post(BASE_API_URL + "/getTotalDashboards");
+      const res = await axios.post(`${BASE_API_URL1}dma/getDMAWiseConsumptionInClientDashboard`,{  clientId: 1,
+        zoneId: 0,
+        fromDate: '2023-06-01',
+        toDate: '2024-06-27'})
+        SetRes(res.data)
+       
+      const response = await axios.post(`${BASE_API_URL1}dma/getDMAWiseConsumptionInClientDashboard`, {  clientId: 1,
+        zoneId: 0,
+        fromDate: '2024-06-01',
+        toDate: '2024-06-27'});
       setDashboardData(response.data)
-      const aData = await axios.post(BASE_API_URL + "/getAlerts");
+      const aData = await axios.post(BASE_API_URL + "getAlerts");
+      
       setAlertData(aData.data);
-      const flowData = await axios.post(BASE_API_URL + "/getTotalOutFlow");
+      const flowData = await axios.post(`${BASE_API_URL1}dashboard/getTotalConsumptionInClientDashboard`, {  clientId: 1,
+        zoneId: 0,
+        fromDate: '2024-06-01',
+        toDate: '2024-06-27'});
       setOutFlowData(flowData.data);
-      console.log(flowData);
     }
     catch (e) {
       console.log(e)
@@ -94,7 +107,12 @@ const Client = () => {
   const handledmaClose = () => {
     setOpendma(false);
   };
-
+  const formatNumber = (number) => {
+    return new Intl.NumberFormat('en-US', {
+      notation: "compact",
+      compactDisplay: "short"
+    }).format(number);
+  };
   return (
     <React.Fragment>
       <Row>
@@ -119,7 +137,7 @@ const Client = () => {
                         <div className='client-flow-orange me-2'></div>
                         <h4 style={{ fontSize: 14, color: '#495057', fontWeight: '600' }}>In Flow</h4>
                       </div>
-                      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>5603.4</h2>
+                      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>  <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>{formatNumber(outFlowData?.inFlowDetails?.count)}</h2></h2>
                       <div className='client-flow-stock d-flex'>
                         <div style={{ width: 32, height: 23, borderRadius: 4, background: '#DEF7E4', color: '#25A244', textAlign: 'center', marginRight: '10px' }}>7%</div>
                         <img src={UpArrow} style={{ width: '12px', height: '15px', marginRight: '10px', marginTop: '3px' }} alt="uparrow" />
@@ -131,7 +149,7 @@ const Client = () => {
                         <div className='client-flow-orange client-flow-blue me-2'></div>
                         <h4 style={{ fontSize: 14, color: '#495057', fontWeight: '600' }}>Consumption</h4>
                       </div>
-                      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>5203.4</h2>
+                      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>{formatNumber(outFlowData?.consumptionDetails?.count)}</h2>
                       <div className='client-flow-stock d-flex'>
                         <div style={{ width: 32, height: 23, borderRadius: 4, background: '#FFE8EC', color: '#DE092F', textAlign: 'center', marginRight: '10px' }}>7%</div>
                         <img src={DownArrow} style={{ width: '12px', height: '15px', marginRight: '10px', marginTop: '3px' }} alt="uparrow" />
@@ -152,7 +170,7 @@ const Client = () => {
           <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handledmaClickOpen}>
             <Card className="card-social">
               <Card.Body>
-                <ClientZone data={dashboardData.totalDma} />
+                <ClientZone data={dashboardData.totalConsumption} />
               </Card.Body>
             </Card>
           </Link>
@@ -161,7 +179,7 @@ const Client = () => {
           <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handleClickOpen}>
             <Card className="card-social">
               <Card.Body className="" >
-                <ClientDma data={dashboardData.totalMeters} />
+                <ClientDma data={dara.totalConsumption} />
               </Card.Body>
             </Card>
           </Link>

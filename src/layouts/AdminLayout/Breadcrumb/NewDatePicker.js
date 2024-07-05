@@ -1,19 +1,39 @@
-import * as React from 'react';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { SingleInputDateRangeField } from '@mui/x-date-pickers-pro/SingleInputDateRangeField';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import React from 'react';
+import { DateRange } from 'react-date-range';
+import { useStateContext } from '../../../contexts/MainContext';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+import { format } from 'date-fns';
 
-export default function SingleInputDateRangePicker() {
+export default function DateRangePicker() {
+  const { presentDate, toDate, setPresentDate, setToDate,setSelectedDate } = useStateContext();
+
+  const handleSelect = (ranges) => {
+    const { startDate, endDate } = ranges.selection;
+    const formattedStartDate = format(startDate, 'yyyy-MM-dd');
+    const formattedEndDate = format(endDate, 'yyyy-MM-dd');
+    setPresentDate(formattedStartDate);
+    setToDate(formattedEndDate);
+    setSelectedDate("")
+  };
+
+  const today = new Date();
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['SingleInputDateRangeField']}>
-        <DateRangePicker
-          slots={{ field: SingleInputDateRangeField }}
-          name="allowedRange"
-        />
-      </DemoContainer>
-    </LocalizationProvider>
+    <>
+      <DateRange
+        editableDateInputs={true}
+        onChange={handleSelect}
+        moveRangeOnFirstSelection={false}
+        ranges={[
+          {
+            startDate: new Date(presentDate),
+            endDate: new Date(toDate),
+            key: 'selection'
+          }
+        ]}
+        maxDate={today} // Disable future dates, allow only up to today
+      />
+    </>
   );
 }

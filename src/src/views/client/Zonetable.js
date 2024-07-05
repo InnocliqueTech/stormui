@@ -37,19 +37,19 @@ function ZoneTable() {
       </thead>
       <tbody>
         <tr>
-          <td className='clienttabletext'>#Zone 1</td>
-          <td className='clienttabletext'>0xF04CD5FFFE01B1A9</td>
+          <td className='clienttabletext'></td>
+          <td className='clienttabletext'></td>
           <td className='clienttabletext'>
-          <span style={{backgroundColor:'rgba(244, 245, 245, 1)', padding:5,paddingLeft:20, paddingRight:20, borderRadius:20}}>17.875</span></td>
-          <td className='clienttabletext'>02/05/24</td>
+          <span style={{backgroundColor:'rgba(244, 245, 245, 1)', padding:5,paddingLeft:20, paddingRight:20, borderRadius:20}}></span></td>
+          <td className='clienttabletext'></td>
           <td className='clienttabletext'>
-          <span style={{backgroundColor:'rgba(149, 172, 255, 0.2)', padding:5,paddingLeft:25, paddingRight:25, borderRadius:30}}>5</span></td>
+          <span style={{backgroundColor:'rgba(149, 172, 255, 0.2)', padding:5,paddingLeft:25, paddingRight:25, borderRadius:30}}></span></td>
           <td className='clienttabletext'>
-          <span style={{backgroundColor:'rgba(149, 172, 255, 0.2)', padding:5,paddingLeft:25, paddingRight:25, borderRadius:20}}>5</span></td>
+          <span style={{backgroundColor:'rgba(149, 172, 255, 0.2)', padding:5,paddingLeft:25, paddingRight:25, borderRadius:20}}></span></td>
           <td className='clienttabletext'>
-          <span className='clienttabletext'>0%</span></td>
+          <span className='clienttabletext'></span></td>
           <td className='clienttabletext'>
-          <span style={{backgroundColor:'rgba(47, 182, 23, 1)', padding:8,paddingLeft:20, paddingRight:20, color:'#fff'}}>Active</span></td>
+          <span style={{backgroundColor:'rgba(47, 182, 23, 1)', padding:8,paddingLeft:20, paddingRight:20, color:'#fff'}}></span></td>
          
         </tr>
 

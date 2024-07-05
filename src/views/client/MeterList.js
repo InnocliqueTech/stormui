@@ -85,16 +85,14 @@ const MeterList = () => {
       <div className="d-flex justify-content-around row">
         <div className="col-md-6 col-sm-12 col-12">
           <nav className='d-flex' style={{ width: 'auto' }}>
-            <ol className="breadcrumb zone-breadcrum">
-              <li className="breadcrumb-item"><a href="#">Clients</a></li>
+            {/* <ol className="breadcrumb zone-breadcrum"> */}
+              {/* <li className="breadcrumb-item"><a href="#">Clients</a></li>
               <li className="breadcrumb-item"><a href="#">Zones</a></li>
               <li className="breadcrumb-item"><a href="#">DMA’s</a></li>
-              <li className="breadcrumb-item"><a href="#">Meters</a></li>
-            </ol>
+              <li className="breadcrumb-item"><a href="#">Meters</a></li> */}
+            {/* </ol> */}
           </nav>
-          <div className="inner-heading" style={{ marginBottom: '24px' }}>
-            <a>KSCCL-WATER-SUPPLY-OTAA</a>
-          </div>
+         
         </div>
         <div className="d-flex justify-content-end col-md-6 col-sm-12 col-12" style={{ marginTop: '12px' }}>
           <div className="row days-filter float-end">

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
 // import { Link } from 'react-router-dom';
-import Overflow from '../dashboard/Overflow';
 import axios from 'axios';
-import {  BASE_API_URL, BASE_API_URL1 } from '../../config/constant';
+import {   BASE_API_URL1 } from '../../config/constant';
 import "../dashboard/dashboard.scss";
 import Alert from '../dashboard/Alert';
 import { styled } from '@mui/material/styles';
@@ -30,6 +29,9 @@ import DownArrow from '../../assets/images/DownArrow.png'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import ZoneSegmenation from './zoneSegmenation';
+import { useStateContext } from '../../contexts/MainContext';
+import Overflowks from './OutFlowks';
+import { ClientsContext } from '../dashboard/context';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -60,36 +62,87 @@ const Client = () => {
   const [dashboardData, setDashboardData] = useState({});
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
-  const [ dara, SetRes] = useState({})
+  const { presentDate, toDate } = useStateContext();
+  const { clients } = useContext(ClientsContext);
+  const [dara, setDmaData] = useState({});
   useEffect(() => {
-    getDashboardData();
-  }, [])
-  const getDashboardData = async () => {
-    try {
-      const res = await axios.post(`${BASE_API_URL1}dma/getDMAWiseConsumptionInClientDashboard`,{  clientId: 1,
-        zoneId: 0,
-        fromDate: '2023-06-01',
-        toDate: '2024-06-27'})
-        SetRes(res.data)
-       
-      const response = await axios.post(`${BASE_API_URL1}dma/getDMAWiseConsumptionInClientDashboard`, {  clientId: 1,
-        zoneId: 0,
-        fromDate: '2024-06-01',
-        toDate: '2024-06-27'});
-      setDashboardData(response.data)
-      const aData = await axios.post(BASE_API_URL + "getAlerts");
-      
-      setAlertData(aData.data);
-      const flowData = await axios.post(`${BASE_API_URL1}dashboard/getTotalConsumptionInClientDashboard`, {  clientId: 1,
-        zoneId: 0,
-        fromDate: '2024-06-01',
-        toDate: '2024-06-27'});
-      setOutFlowData(flowData.data);
-    }
-    catch (e) {
-      console.log(e)
-    }
-  }
+    const fetchDashboardData = async () => {
+      try {
+        const response = await axios.post(
+          `${BASE_API_URL1}zones/getZoneWiseConsumptionInClientDashboard`,
+          { clientId: clients[0]?.clientId,
+            zoneId: 0,
+            fromDate: presentDate,
+            toDate: toDate,
+            
+           }
+        );
+        setDashboardData(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchDashboardData();
+  }, [presentDate, toDate]);
+
+  useEffect(() => {
+    const fetchAlertData = async () => {
+      try {
+        const response = await axios.post(`${BASE_API_URL1}clients/getClientAlerts`, {
+          clientId: clients[0]?.clientId,
+          
+        });
+        setAlertData(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchAlertData();
+  }, []);
+
+  useEffect(() => {
+    const fetchOutFlowData = async () => {
+      try {
+        const response = await axios.post(
+          `${BASE_API_URL1}dashboard/getTotalConsumptionInClientDashboard`,
+          {
+            clientId: clients[0]?.clientId,
+            zoneId: 0,
+            fromDate: presentDate,
+            toDate: toDate,
+          }
+        );
+        setOutFlowData(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchOutFlowData();
+  }, [presentDate, toDate]);
+
+  useEffect(() => {
+    const fetchDmaData = async () => {
+      try {
+        const response = await axios.post(
+          `${BASE_API_URL1}dma/getDMAWiseConsumptionInClientDashboard`,
+          {
+            clientId: clients[0]?.clientId,
+            zoneId: 0,
+            fromDate: presentDate,
+            toDate: toDate,
+          }
+        );
+        setDmaData(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchDmaData();
+  }, [presentDate, toDate]);
   const [open, setOpen] = React.useState(false);
   const [opendma, setOpendma] = React.useState(false);
   const [fullWidth] = React.useState(true);
@@ -107,12 +160,12 @@ const Client = () => {
   const handledmaClose = () => {
     setOpendma(false);
   };
-  const formatNumber = (number) => {
-    return new Intl.NumberFormat('en-US', {
-      notation: "compact",
-      compactDisplay: "short"
-    }).format(number);
-  };
+  // const formatNumber = (number) => {
+  //   return new Intl.NumberFormat('en-US', {
+  //     notation: "compact",
+  //     compactDisplay: "short"
+  //   }).format(number);
+  // };
   return (
     <React.Fragment>
       <Row>
@@ -137,9 +190,9 @@ const Client = () => {
                         <div className='client-flow-orange me-2'></div>
                         <h4 style={{ fontSize: 14, color: '#495057', fontWeight: '600' }}>In Flow</h4>
                       </div>
-                      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>  <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>{formatNumber(outFlowData?.inFlowDetails?.count)}</h2></h2>
+                      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>  <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>{outFlowData?.inFlowDetails?.count}</h2></h2>
                       <div className='client-flow-stock d-flex'>
-                        <div style={{ width: 32, height: 23, borderRadius: 4, background: '#DEF7E4', color: '#25A244', textAlign: 'center', marginRight: '10px' }}>7%</div>
+                        <div style={{ width: 32, height: 23, borderRadius: 4, background: '#DEF7E4', color: '#25A244', textAlign: 'center', marginRight: '10px' }}>{outFlowData?.inFlowDetails?.lastWeekPercentage}</div>
                         <img src={UpArrow} style={{ width: '12px', height: '15px', marginRight: '10px', marginTop: '3px' }} alt="uparrow" />
                         <span style={{ fontSize: 12, paddingTop: '3px' }}>last week</span>
                       </div>
@@ -149,9 +202,9 @@ const Client = () => {
                         <div className='client-flow-orange client-flow-blue me-2'></div>
                         <h4 style={{ fontSize: 14, color: '#495057', fontWeight: '600' }}>Consumption</h4>
                       </div>
-                      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>{formatNumber(outFlowData?.consumptionDetails?.count)}</h2>
+                      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>{outFlowData?.consumptionDetails?.count}</h2>
                       <div className='client-flow-stock d-flex'>
-                        <div style={{ width: 32, height: 23, borderRadius: 4, background: '#FFE8EC', color: '#DE092F', textAlign: 'center', marginRight: '10px' }}>7%</div>
+                        <div style={{ width: 32, height: 23, borderRadius: 4, background: '#FFE8EC', color: '#DE092F', textAlign: 'center', marginRight: '10px' }}>{outFlowData?.consumptionDetails?.lastWeekPercentage}</div>
                         <img src={DownArrow} style={{ width: '12px', height: '15px', marginRight: '10px', marginTop: '3px' }} alt="uparrow" />
                         <span style={{ fontSize: 12, paddingTop: '3px' }}>last week</span>
                       </div>
@@ -179,7 +232,7 @@ const Client = () => {
           <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handleClickOpen}>
             <Card className="card-social">
               <Card.Body className="" >
-                <ClientDma data={dara.totalConsumption} />
+                <ClientDma data={dara.dmaWiseConsumption?.consumption} />
               </Card.Body>
             </Card>
           </Link>
@@ -192,7 +245,7 @@ const Client = () => {
             <Card.Body className="p-0">
               <div className="row">
                 <div className="col-md-12">
-                  <Overflow data={outFlowData} />
+                  <Overflowks data={outFlowData} />
                 </div>
               </div>
             </Card.Body>

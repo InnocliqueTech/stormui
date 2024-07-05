@@ -9,6 +9,7 @@ import {  BASE_API_URL1 } from '../../config/constant';
 import "./dashboard.scss";
 // import Alert from './Alert';
 import { ClientsContext } from './context';
+import DMAFlowChart from './DmaFlowChart';
 // import DMAFlowChart from './DmaFlowChart';
 
 const DashDefault = () => {
@@ -111,7 +112,15 @@ console.log(clients, "the check")
           </Card>
         </Col>
         <Col md={6} xl={5}>
-              {/* <DMAFlowChart data={dashboardData.totalDma} /> */}
+        <Card className="card-social">
+            <Card.Body className="p-0">
+              <Row>
+                <Col md={12}>
+              <DMAFlowChart data={outFlowData} />
+                </Col>
+                </Row>
+                </Card.Body>
+                </Card>
         </Col>
       </Row>
     </React.Fragment>

@@ -23,7 +23,7 @@ const options = {
   fill: {
     opacity: 1
   },
-  labels: ['DMA 1(48%)', 'DMA 2(28%)', 'DMA 3(24%)'],
+  labels: ['DMA 1', 'DMA 2', 'DMA 3'],
   plotOptions: {
     pie: {
       donut: {

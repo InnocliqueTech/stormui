@@ -9,10 +9,7 @@ import axios from 'axios';
 import { useStateContext } from '../../../contexts/MainContext';
 import { format, isValid, parseISO } from 'date-fns';
 import DateRangeIcon from '@mui/icons-material/DateRange';
-import { DateRangePicker, LocalizationProvider, SingleInputDateRangeField } from '@mui/x-date-pickers-pro';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
+import NewDatePicker from './NewDatePicker';
 
 const handleChange = (e, setValue) => {
   const { value } = e.target;
@@ -21,36 +18,15 @@ const handleChange = (e, setValue) => {
 
 const Breadcrumb = () => {
   const location = useLocation();
-  const [selectedDate, setSelectedDate] = useState('7D');
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
   const { selectedClient, setSelectedClient } = useContext(ClientsContext);
-  const { onDateChange, setPresentDate, setToDate } = useStateContext();
+  const { onDateChange,selectedDate,setSelectedDate,isDatePickerOpen,toggleDatePicker  } = useStateContext();
   const [zones, setZones] = useState([]);
-  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
 
-  const toggleDatePicker = () => {
-    setDatePickerOpen(!isDatePickerOpen);
-  };
 
-  const handleDateChange = (date) => {
-    if (date[0]) {
-      const startDate = new Date(date[0]);
-      if (!isNaN(startDate)) {
-        const formattedDate = format(startDate, 'yyyy-MM-dd');
-        setPresentDate(formattedDate);
-        setSelectedDate('');
-      }
-    }
-    if (date[1]) {
-      const endDate = new Date(date[1]);
-      if (!isNaN(endDate)) {
-        const formattedDate = format(endDate, 'yyyy-MM-dd');
-        setToDate(formattedDate);
-        setSelectedDate('');
-      }
-    }
-  };
+
+
 
   useEffect(() => {
     const fetchZones = async (clientId) => {
@@ -177,17 +153,8 @@ const Breadcrumb = () => {
                           })}
 
                           {isDatePickerOpen && (
-                            <div className="date-picker" >
-                              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DemoContainer components={['SingleInputDateRangeField']}>
-                                  <DateRangePicker
-                                    slots={{ field: SingleInputDateRangeField }}
-                                    name="allowedRange"
-                                    onChange={handleDateChange}
-                                    maxDate={dayjs()}
-                                  />
-                                </DemoContainer>
-                              </LocalizationProvider>
+                            <div className="date-picker">
+                              <NewDatePicker />
                             </div>
                           )}
                         </div>

@@ -15,9 +15,19 @@ import { BASE_API_URL1 } from '../../config/constant';
 
 export default function ZoneList() {
   const { clients } = useContext(ClientsContext);
-  const [zonesList, setZonesList] = useState([]);
   const [expandedZone, setExpandedZone] = useState(null);
   const [data, setZoneData] = useState({});
+
+  //for Pagination
+  const [zonesList, setZonesList] = useState([]);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const lastIndex = currentPage * itemsPerPage 
+  const firstIndex = lastIndex - itemsPerPage
+  const filteredItems = zonesList.slice(firstIndex,lastIndex)
+
+
+  console.log(firstIndex,lastIndex,"indexz")
 
   useEffect(() => {
     if (clients && clients.length > 0) {
@@ -36,15 +46,17 @@ export default function ZoneList() {
     }
   };
 
+  console.log({ zonesList });
+
   const getZoneBasedOnData = async (clientId, zoneId) => {
     try {
       const response = await axios.post(BASE_API_URL1 + 'dma/getAllDMAsWithClientIdAndZoneId', {
         clientId: clientId,
-        zoneId: zoneId,
+        zoneId: zoneId
       });
       setZoneData((prevData) => ({
         ...prevData,
-        [zoneId]: response.data.dmasList,
+        [zoneId]: response.data.dmasList
       }));
     } catch (e) {
       console.log(e);
@@ -58,8 +70,13 @@ export default function ZoneList() {
     }
   };
 
+
+
+
+
   return (
-    <div className='col-md-12'>
+    <div className="col-md-12">
+      <h2>Hello world</h2>
       <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, paddingBottom: 100 }}>
         <Row style={{ marginBottom: '24px' }}>
           <Col md={9} sm={7} xs={7}></Col>
@@ -70,118 +87,188 @@ export default function ZoneList() {
           </Col>
         </Row>
 
-        <div className='customer-table mt-0'>
+        <div className="customer-table mt-0">
           <Table style={{ borderRadius: 8 }}>
             <thead>
               <tr>
-                <th className='tablehead'></th>
-                <th className='tablehead'>Zone/DMA ID</th>
-                <th className='tablehead'>Gateway ID</th>
-                <th className='tablehead'>Last Communication Time</th>
-                <th className='tablehead'>Reading</th>
-                <th className='tablehead'>Meters</th>
-                <th className='tablehead'>Status</th>
-                <th className='tablehead'>Action</th>
+                <th className="tablehead"></th>
+                <th className="tablehead">Zone/DMA ID</th>
+                <th className="tablehead">Gateway ID</th>
+                <th className="tablehead">Last Communication Time</th>
+                <th className="tablehead">Reading</th>
+                <th className="tablehead">Meters</th>
+                <th className="tablehead">Status</th>
+                <th className="tablehead">Action</th>
               </tr>
             </thead>
             <tbody>
-              {zonesList.slice(0, 5).map((zone) => (
+              {filteredItems?.map((zone) => (
                 <React.Fragment key={zone.zoneId}>
                   <tr>
-                    <td className='tablecontent'>
-                      <Accordion expanded={expandedZone === zone.zoneId} onChange={() => handleAccordionChange(zone.zoneId)} style={{ boxShadow: 'none' }}>
+                    <td className="tablecontent">
+                      <Accordion
+                        expanded={expandedZone === zone.zoneId}
+                        onChange={() => handleAccordionChange(zone.zoneId)}
+                        style={{ boxShadow: 'none' }}
+                      >
                         <AccordionSummary
                           expandIcon={<NavigateNextIcon />}
                           aria-controls="panel1-content"
                           id="panel1-header"
-                        >
-                    
-                        </AccordionSummary>
-                        <AccordionDetails>
-                         
-                        </AccordionDetails>
+                        ></AccordionSummary>
+                        <AccordionDetails></AccordionDetails>
                       </Accordion>
                     </td>
-                    <td className='tablecontent'>
+                    <td className="tablecontent">
                       <Link to="/app/dmalist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}>
                         {zone.zoneId}
                       </Link>
                     </td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>
+                    <td className="tablecontent">
+                      <span
+                        style={{
+                          backgroundColor: '#FFF3E8',
+                          padding: 8,
+                          paddingLeft: 20,
+                          paddingRight: 20,
+                          borderRadius: 20,
+                          color: '#FF8515'
+                        }}
+                      >
                         {zone.gatewayId}
                       </span>
                     </td>
-                    <td className='tablecontent'>{zone.lastCommunicationTime}</td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
+                    <td className="tablecontent">{zone.lastCommunicationTime}</td>
+                    <td className="tablecontent">
+                      <span
+                        style={{
+                          backgroundColor: '#E3F2FD',
+                          padding: 8,
+                          paddingLeft: 20,
+                          paddingRight: 20,
+                          borderRadius: 20,
+                          color: '#1565C0'
+                        }}
+                      >
                         {zone.reading || 'N/A'}
                       </span>
                     </td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
+                    <td className="tablecontent">
+                      <span
+                        style={{
+                          backgroundColor: '#E3F2FD',
+                          padding: 8,
+                          paddingLeft: 20,
+                          paddingRight: 20,
+                          borderRadius: 20,
+                          color: '#1565C0'
+                        }}
+                      >
                         {zone.meters}
                       </span>
                     </td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>
+                    <td className="tablecontent">
+                      <span
+                        style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}
+                      >
                         {zone.status}
                       </span>
                     </td>
-                    <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td>
+                    <td className="tablecontent">
+                      <MoreVert style={{ color: '#D6D9DC' }} />
+                    </td>
                   </tr>
-                  {expandedZone === zone.zoneId && data[zone.zoneId] && data[zone.zoneId].map((dma) => (
-                    <tr key={dma.dmaId}>
-                      <td className='tablecontent tabelexpand-bg'>
-
-                      <tr></tr>
-                      {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
-                        {/* {dma.dmaId} */}
-                      {/* </span> */}
-                      </td>
-                      <td className='tablecontent tabelexpand-bg'>
-                        
-                      {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
-                        {dma.dmaId}
-                      {/* </span> */}
-                      </td>
-                      <td className='tablecontent tabelexpand-bg'>
-                      <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>
-                        {dma.gatewayId}
-                      </span>
-                      </td>
-                      <td className='tablecontent tabelexpand-bg'>
-
-                        
-                      {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
-                        {dma.lastCommunicationTime}
-                      {/* </span> */}
-                      </td>
-                      <td className='tablecontent tabelexpand-bg'>
-                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
-                        {dma.reading || 'N/A'}
-                      </span>
-                    </td>
-                    <td className='tablecontent tabelexpand-bg'>
-                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
-                        {dma.meters}
-                      </span>
-                    </td>
-                    <td className='tablecontent tabelexpand-bg'>
-                      <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>
-                        {dma.status}
-                      </span>
-                    </td>
-                    <td className='tablecontent tabelexpand-bg'> </td>
-                   
-                    </tr>
-                  ))}
+                  {expandedZone === zone.zoneId &&
+                    data[zone.zoneId] &&
+                    data[zone.zoneId].map((dma) => (
+                      <tr key={dma.dmaId}>
+                        <td className="tablecontent tabelexpand-bg">
+                          <tr></tr>
+                          {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
+                          {/* {dma.dmaId} */}
+                          {/* </span> */}
+                        </td>
+                        <td className="tablecontent tabelexpand-bg">
+                          {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
+                          {dma.dmaId}
+                          {/* </span> */}
+                        </td>
+                        <td className="tablecontent tabelexpand-bg">
+                          <span
+                            style={{
+                              backgroundColor: '#FFF3E8',
+                              padding: 8,
+                              paddingLeft: 20,
+                              paddingRight: 20,
+                              borderRadius: 20,
+                              color: '#FF8515'
+                            }}
+                          >
+                            {dma.gatewayId}
+                          </span>
+                        </td>
+                        <td className="tablecontent tabelexpand-bg">
+                          {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
+                          {dma.lastCommunicationTime}
+                          {/* </span> */}
+                        </td>
+                        <td className="tablecontent tabelexpand-bg">
+                          <span
+                            style={{
+                              backgroundColor: '#E3F2FD',
+                              padding: 8,
+                              paddingLeft: 20,
+                              paddingRight: 20,
+                              borderRadius: 20,
+                              color: '#1565C0'
+                            }}
+                          >
+                            {dma.reading || 'N/A'}
+                          </span>
+                        </td>
+                        <td className="tablecontent tabelexpand-bg">
+                          <span
+                            style={{
+                              backgroundColor: '#E3F2FD',
+                              padding: 8,
+                              paddingLeft: 20,
+                              paddingRight: 20,
+                              borderRadius: 20,
+                              color: '#1565C0'
+                            }}
+                          >
+                            {dma.meters}
+                          </span>
+                        </td>
+                        <td className="tablecontent tabelexpand-bg">
+                          <span
+                            style={{
+                              backgroundColor: 'rgba(47, 182, 23, 1)',
+                              padding: 8,
+                              paddingLeft: 20,
+                              paddingRight: 20,
+                              color: '#fff'
+                            }}
+                          >
+                            {dma.status}
+                          </span>
+                        </td>
+                        <td className="tablecontent tabelexpand-bg"> </td>
+                      </tr>
+                    ))}
                 </React.Fragment>
               ))}
             </tbody>
           </Table>
         </div>
-        <Paginations />
+        <Paginations
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          zonesList={zonesList}
+          setZonesList={setZonesList}
+        />
       </div>
     </div>
   );

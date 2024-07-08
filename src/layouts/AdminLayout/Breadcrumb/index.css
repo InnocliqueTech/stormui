@@ -29,6 +29,7 @@
   align-items: center;
   justify-content: center;
   margin-right: 10px;
+  position: relative;
 }
 .days-date-picker button {
   border: none;
@@ -38,12 +39,21 @@
 }
 
 .date-picker {
-  z-index: 1000000;
+  z-index: 100;
   position: absolute;
   border-radius: 10px;
   padding: none;
   /* top: 77px; */
   margin-top: 5px;
+  right: -34px;
+  top: 50px;
+  padding: 2px;
+  /* background: rgb(105, 105, 105); */
+  border: 1px solid rgb(105, 105, 105);
+ 
+}
+.date-picker div{
+  border-radius: 10px;
 }
 
 .days-filter {
@@ -62,3 +72,7 @@
   align-items: center;
   justify-content: flex-end;
 }
+/* 
+.date-picker > div:nth-child(2) {
+  display: none;
+} */

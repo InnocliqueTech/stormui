@@ -21,12 +21,8 @@ const Breadcrumb = () => {
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
   const { selectedClient, setSelectedClient } = useContext(ClientsContext);
-  const { onDateChange,selectedDate,setSelectedDate,isDatePickerOpen,toggleDatePicker  } = useStateContext();
+  const { onDateChange, selectedDate, setSelectedDate, isDatePickerOpen, toggleDatePicker } = useStateContext();
   const [zones, setZones] = useState([]);
-
-
-
-
 
   useEffect(() => {
     const fetchZones = async (clientId) => {
@@ -114,13 +110,13 @@ const Breadcrumb = () => {
                                   className={location.pathname.toLowerCase().includes('clientlist') ? 'tab active' : 'tab'}
                                   to="/app/clientlist"
                                 >
-                                  Client List
+                                  Zones&apos;s List
                                 </Link>
                                 <Link
                                   className={location.pathname.toLowerCase().includes('dmalist') ? 'tab active' : 'tab'}
                                   to="/app/dmalist"
                                 >
-                                  DmaList
+                                  DMA&apos;s List
                                 </Link>
                               </>
                             )}
@@ -129,44 +125,45 @@ const Breadcrumb = () => {
                       </div>
                     </Col>
 
-                    <section className="seconde-section">
-                      <div className="days-date-picker">
-                        <div>
-                          {[
-                            { day: '1D', add: 1 },
-                            { day: '7D', add: 7 },
-                            { day: '14D', add: 14 },
-                            { day: '30D', add: 30 }
-                          ].map((obj) => {
-                            return (
-                              <button
-                                className={`days ${selectedDate === obj.day ? 'active' : ''}`}
-                                onClick={() => {
-                                  setSelectedDate(obj.day);
-                                  onDateChange(obj.add);
-                                }}
-                                key={obj.day}
-                              >
-                                {obj.day}
-                              </button>
-                            );
-                          })}
+                    {['/app/client', '/app/dashboard/default'].includes(location.pathname) && (
+                      <section className="seconde-section">
+                        <div className="days-date-picker">
+                          <div>
+                            {[
+                              { day: '1D', add: 1 },
+                              { day: '7D', add: 7 },
+                              { day: '14D', add: 14 },
+                              { day: '30D', add: 30 }
+                            ].map((obj) => {
+                              return (
+                                <button
+                                  className={`days ${selectedDate === obj.day ? 'active' : ''}`}
+                                  onClick={() => {
+                                    setSelectedDate(obj.day);
+                                    onDateChange(obj.add);
+                                  }}
+                                  key={obj.day}
+                                >
+                                  {obj.day}
+                                </button>
+                              );
+                            })}
 
-                          {isDatePickerOpen && (
-                            <div className="date-picker">
-                              <NewDatePicker />
-                            </div>
-                          )}
+                            {isDatePickerOpen && (
+                              <div className="date-picker">
+                                <NewDatePicker />
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="">
+                            <button className="icon-button" onClick={toggleDatePicker}>
+                              <DateRangeIcon />
+                            </button>
+                          </div>
                         </div>
 
-                        <div className="">
-                          <button className="icon-button" onClick={toggleDatePicker}>
-                            <DateRangeIcon />
-                          </button>
-                        </div>
-                      </div>
-
-                      {location.pathname !== '/app/GatewayList' && (
+                        {/* {location.pathname !== '/app/GatewayList' && ( */}
                         <div>
                           <div className="form-group selectcustom">
                             <select className="form-control" value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)}>
@@ -180,8 +177,9 @@ const Breadcrumb = () => {
                             </select>
                           </div>
                         </div>
-                      )}
-                    </section>
+                        {/* )} */}
+                      </section>
+                    )}
                   </Col>
                 </Row>
               </div>

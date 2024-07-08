@@ -28,6 +28,8 @@ const GatewayTable = () => {
   const [basicDetails, setBasicDetails] = useState({});
   const [lastFrameData, setLastFrameData] = useState({});
 
+
+
   useEffect(() => {
     getAllGateways();
   }, []);

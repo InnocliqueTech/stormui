@@ -4,18 +4,28 @@ import { Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Link } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
-import Paginations from '../../components/Paginatons';
+// import Paginations from '../../components/Paginatons';
 import { ThreeDots } from 'react-loader-spinner';
 import { ClientsContext } from '../dashboard/context';
 import { BASE_API_URL1 } from '../../config/constant';
+import Paginations from '../../components/Paginatons';
+
 
 export default function DmaList() {
   const { clients } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
+  //for Pagination
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const lastIndex = currentPage * itemsPerPage 
+  const firstIndex = lastIndex - itemsPerPage
+  const filteredItems = zonesList.slice(firstIndex,lastIndex)
+
   useEffect(() => {
-    if (clients && clients.length > 0) {
+    if (clients && clients?.length > 0) {
       getDashboardData(clients[0].clientId);
     }
   }, [clients]);
@@ -72,7 +82,7 @@ export default function DmaList() {
                 </tr>
               </thead>
               <tbody>
-                {zonesList.slice(0, 5).map((dma, index) => (
+                {filteredItems?.map((dma, index) => (
                   <tr key={index}>
                     <td className='tablecontent'>
                       <Link href="/app/meterlist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}>#{dma.dmaId} </Link>
@@ -93,7 +103,7 @@ export default function DmaList() {
                     </td>
                   </tr>
                 ))}
-                {zonesList.length === 0 && (
+                {zonesList?.length === 0 && (
                   <tr>
                     <td colSpan="8" className='tablecontent' style={{ textAlign: 'center' }}>No data available</td>
                   </tr>
@@ -102,7 +112,14 @@ export default function DmaList() {
             </Table>
           )}
         </div>
-          <Paginations />
+        <Paginations
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          zonesList={zonesList}
+          setZonesList={setZonesList}
+        />
       </div>
     </>
   );

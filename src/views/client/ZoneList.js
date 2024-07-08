@@ -27,7 +27,7 @@ export default function ZoneList() {
   const filteredItems = zonesList.slice(firstIndex,lastIndex)
 
 
-  console.log(firstIndex,lastIndex,"indexz")
+  console.log(firstIndex,lastIndex,filteredItems.length,itemsPerPage,"indexz")
 
   useEffect(() => {
     if (clients && clients.length > 0) {
@@ -76,7 +76,6 @@ export default function ZoneList() {
 
   return (
     <div className="col-md-12">
-      <h2>Hello world</h2>
       <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, paddingBottom: 100 }}>
         <Row style={{ marginBottom: '24px' }}>
           <Col md={9} sm={7} xs={7}></Col>
@@ -102,8 +101,8 @@ export default function ZoneList() {
               </tr>
             </thead>
             <tbody>
-              {filteredItems?.map((zone) => (
-                <React.Fragment key={zone.zoneId}>
+              {filteredItems?.map((zone,index) => (
+                <React.Fragment key={index}>
                   <tr>
                     <td className="tablecontent">
                       <Accordion

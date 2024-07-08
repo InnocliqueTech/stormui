@@ -16,11 +16,11 @@ export default function Paginations({zonesList,itemsPerPage,currentPage,setCurre
         <Pagination>
           {paginateItems.map((item, index) => {
             return (
-              <Pagination.Item key={index} active={item === currentPage}>
-                <button
-                onClick={()=>setCurrentPage(item)}
-                
-                >{item}</button>
+              <Pagination.Item key={index} active={item === currentPage}
+              
+              onClick={()=>setCurrentPage(item)}
+              >
+              {item}
               </Pagination.Item>
             );
           })}

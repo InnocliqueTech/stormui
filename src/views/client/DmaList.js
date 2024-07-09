@@ -4,28 +4,20 @@ import { Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Link } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
-// import Paginations from '../../components/Paginatons';
+import Paginations from '../../components/Paginatons';
 import { ThreeDots } from 'react-loader-spinner';
 import { ClientsContext } from '../dashboard/context';
 import { BASE_API_URL1 } from '../../config/constant';
-import Paginations from '../../components/Paginatons';
-
 
 export default function DmaList() {
   const { clients } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
   const [loading, setLoading] = useState(true);
-
-
-  //for Pagination
-  const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
-  const lastIndex = currentPage * itemsPerPage 
-  const firstIndex = lastIndex - itemsPerPage
-  const filteredItems = zonesList.slice(firstIndex,lastIndex)
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   useEffect(() => {
-    if (clients && clients?.length > 0) {
+    if (clients && clients.length > 0) {
       getDashboardData(clients[0].clientId);
     }
   }, [clients]);
@@ -44,7 +36,19 @@ export default function DmaList() {
       setLoading(false);
     }
   };
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(Number(e.target.value));
+    setCurrentPage(1); // Reset to the first page
+  };
+
+  // Calculate pagination
+  const offset = (currentPage - 1) * itemsPerPage;
+  const currentPageData = zonesList.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(zonesList.length / itemsPerPage);
   return (
     <>
       <div className="d-flex justify-content-around row">
@@ -67,9 +71,19 @@ export default function DmaList() {
                 ariaLabel="three-dots-loading"
                 visible={true}
               />
+                <div className='pagination-controls' style={{ marginTop: '30px', marginLeft: '30PX' }}>
+        <label htmlFor='itemsPerPage'  style={{ fontWeight: '500', color:'black', fontSize: '18px' }}>Items per page:</label><nsbp/><nsbp/>
+        <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={20}>20</option>
+        </select>
+      </div>
             </div>
           ) : (
+            
             <Table style={{ borderRadius: 8 }}>
+      
               <thead style={{ backgroundColor: '#F4F5F5' }}>
                 <tr>
                   <th className='tablehead'>DMA ID</th>
@@ -82,7 +96,7 @@ export default function DmaList() {
                 </tr>
               </thead>
               <tbody>
-                {filteredItems?.map((dma, index) => (
+              {currentPageData.map((dma, index) => (
                   <tr key={index}>
                     <td className='tablecontent'>
                       <Link href="/app/meterlist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}>#{dma.dmaId} </Link>
@@ -103,7 +117,7 @@ export default function DmaList() {
                     </td>
                   </tr>
                 ))}
-                {zonesList?.length === 0 && (
+                {zonesList.length === 0 && (
                   <tr>
                     <td colSpan="8" className='tablecontent' style={{ textAlign: 'center' }}>No data available</td>
                   </tr>
@@ -112,15 +126,17 @@ export default function DmaList() {
             </Table>
           )}
         </div>
-        <Paginations
-          itemsPerPage={itemsPerPage}
-          setItemsPerPage={setItemsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          zonesList={zonesList}
-          setZonesList={setZonesList}
-        />
+        <div style={{ textAlign: 'center', marginTop:'100PX' }}>
+
+<Paginations
+currentPage={currentPage}
+totalPages={pageCount}
+onPageChange={handlePageChange} // Ensure onPageChange is correctly passed
+/>
+</div>
       </div>
+      
     </>
+    
   );
 }

@@ -11,6 +11,7 @@ import {ClientsContext} from '../../views/dashboard/context/index'
 import { Link } from 'react-router-dom';
 export default function Location() {
   const { clients } = useContext(ClientsContext);
+  
   return (
       <>
       <h2 style={{fontSize:32,fontWeight:700, color:'#212121', marginTop:0, marginBottom:'24px'}} className="">Welcome to Storm Energy</h2>

@@ -126,7 +126,7 @@ export default function DmaList() {
             </Table>
           )}
         </div>
-        <div style={{ textAlign: 'center', marginTop:'100PX' }}>
+        <div style={{ textAlign: 'center', marginTop:'40PX' }}>
 
 <Paginations
 currentPage={currentPage}

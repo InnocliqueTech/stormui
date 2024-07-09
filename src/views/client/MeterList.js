@@ -214,11 +214,13 @@ const MeterList = () => {
             </tbody>
           </Table>
         </div>
+        <div style={{ textAlign: 'center', marginTop:'40PX' }}>
         <Paginations
   currentPage={currentPage}
   totalPages={pageCount}
   onPageChange={handlePageChange} 
 />
+</div>
       </div>
 
       {/* Meter Details Dialog */}

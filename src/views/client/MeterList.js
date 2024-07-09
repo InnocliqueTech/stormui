@@ -37,7 +37,8 @@ const MeterList = () => {
   const [selectedClient, setSelectedClient] = useState('');
   const [selectedZone, setSelectedZone] = useState(0);
   const [selectedDma, setSelectedDma] = useState(0);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5)
   useEffect(() => {
     if (clients && clients.length > 0) {
       getDashboardData(clients[0].clientId); // Fetch data for initial client
@@ -79,6 +80,17 @@ const MeterList = () => {
   const handleDmaChange = (event) => {
     setSelectedDma(event.target.value);
   };
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(Number(e.target.value));
+    setCurrentPage(1); 
+  };
+
+  const offset = (currentPage - 1) * itemsPerPage;
+  const currentPageData = zonesList.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(zonesList.length / itemsPerPage);
 
   return (
     <div className='col-md-12'>
@@ -145,6 +157,14 @@ const MeterList = () => {
         </Row>
 
         <div className='customer-table mt-0'>
+        <div className='pagination-controls' style={{ marginTop: '20px', marginLeft: '10PX' }}>
+        <label htmlFor='itemsPerPage'  style={{ fontWeight: '500', color:'black' , fontSize: '18px' }}>Items per page:</label><nsbp/><nsbp/>
+        <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={20}>20</option>
+        </select>
+      </div>
           <Table style={{ borderRadius: 8 }}>
             <thead>
               <tr>
@@ -163,7 +183,7 @@ const MeterList = () => {
               </tr>
             </thead>
             <tbody>
-              {zonesList.slice(0, 5).map((meter) => (
+              {currentPageData.map((meter) => (
                 <tr key={meter.meterId}>
                   <td className='tablecontent'>
                     <Link onClick={handleClickOpen} style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}>
@@ -194,7 +214,11 @@ const MeterList = () => {
             </tbody>
           </Table>
         </div>
-        <Paginations /> {/* Assuming this is a reusable pagination component */}
+        <Paginations
+  currentPage={currentPage}
+  totalPages={pageCount}
+  onPageChange={handlePageChange} 
+/>
       </div>
 
       {/* Meter Details Dialog */}

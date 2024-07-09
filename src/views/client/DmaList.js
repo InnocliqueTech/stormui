@@ -71,7 +71,7 @@ export default function DmaList() {
                 ariaLabel="three-dots-loading"
                 visible={true}
               />
-                <div className='pagination-controls' style={{ marginTop: '30px', marginLeft: '30PX' }}>
+                <div className='pagination-controls' style={{ marginTop: '20px', marginLeft: '10PX' }}>
         <label htmlFor='itemsPerPage'  style={{ fontWeight: '500', color:'black', fontSize: '18px' }}>Items per page:</label><nsbp/><nsbp/>
         <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
           <option value={5}>5</option>

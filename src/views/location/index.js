@@ -8,10 +8,15 @@ import { Col } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import image from './image2835.png';
 import {ClientsContext} from '../../views/dashboard/context/index'
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 export default function Location() {
   const { clients } = useContext(ClientsContext);
-  
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/app/dashboard/default', { replace: true });
+    window.location.reload();
+   
+  };
   return (
       <>
       <h2 style={{fontSize:32,fontWeight:700, color:'#212121', marginTop:0, marginBottom:'24px'}} className="">Welcome to Storm Energy</h2>
@@ -20,13 +25,13 @@ export default function Location() {
           {clients.map((project, index) => (
             <Col md={4} className="mb-4" key={index}>
               <div className="card border-0" style={{borderRadius:16}}>
-              <Link to="/app/dashboard/default">
-                <img className="card-img-top" src={image} alt={project.title} />
+              <Link to="#" onClick={handleClick}>
+                <img className="card-img-top" src={image} alt={project.title}  />
                 </Link>
                 <div className="">
                   <Row className='row p-0 m-0'>
                     <Col className='p-0' md={10} sm={1} xs={1}>
-                      <Link to="/app/dashboard/default" style={{textDecoration: 'none' }}>
+                      <Link to="#" style={{textDecoration: 'none' }} onClick={handleClick}>
                         <a style={{ color: "black", textDecoration: 'none' }}>
                           <h5 className="card-title m-0 p-0">{project.clientName}</h5>
                         </a>

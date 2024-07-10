@@ -7,6 +7,7 @@ import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { Accordion, AccordionSummary, AccordionDetails, Link } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
+import Spinner from 'react-bootstrap/Spinner';
 import Paginations from '../../components/Paginatons'; // Make sure this path is correct
 //import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -20,6 +21,7 @@ export default function ZoneList() {
   const [data, setZoneData] = useState({});
   const [currentPage, setCurrentPage] = useState(1); // 1-based index for pages
   const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (clients && clients.length > 0) {
       getDashboardData(clients[0].clientId); // Assuming each client has an id field
@@ -28,17 +30,21 @@ export default function ZoneList() {
 
   const getDashboardData = async (clientId) => {
     try {
+      setLoading(true);
       const response = await axios.post(BASE_API_URL1 + 'zones/getAllZoneDetailsWithClientId', {
         clientId: clientId
       });
       setZonesList(response.data.zonesList);
+      setLoading(false);
     } catch (e) {
       console.log(e);
+      setLoading(false);
     }
   };
 
   const getZoneBasedOnData = async (clientId, zoneId) => {
     try {
+      setLoading(true);
       const response = await axios.post(BASE_API_URL1 + 'dma/getAllDMAsWithClientIdAndZoneId', {
         clientId: clientId,
         zoneId: zoneId,
@@ -47,8 +53,10 @@ export default function ZoneList() {
         ...prevData,
         [zoneId]: response.data.dmasList,
       }));
+      setLoading(false);
     } catch (e) {
       console.log(e);
+      setLoading(false);
     }
   };
 
@@ -91,6 +99,11 @@ export default function ZoneList() {
           <option value={20}>20</option>
         </select>
       </div>
+      {loading ? ( // Display spinner if loading is true
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : ( 
           <Table style={{ borderRadius: 8 }}>
             <thead>
               <tr>
@@ -200,6 +213,7 @@ export default function ZoneList() {
               ))}
             </tbody>
           </Table>
+      )}
         </div>
         <div style={{ textAlign: 'center', marginTop:'100PX' }}>
 

@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { MoreVert } from '@mui/icons-material';
 import Table from 'react-bootstrap/Table';
+import Spinner from 'react-bootstrap/Spinner';
 import Paginations from '../../components/Paginatons';
 const  ZoneSegmenation =() =>{
   const [customers, setCustomers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 1-based index for pages
   const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
+    setLoading(true);
     axios.post('http://49.207.11.223:3307/zones/getTotalZoneWiseSegementation', {
       clientId: 1,
       zoneId: 0,
@@ -15,9 +18,11 @@ const  ZoneSegmenation =() =>{
     })
     .then(response => {
       setCustomers(response.data.zoneDetails);
+      setLoading(false);
     })
     .catch(error => {
       console.error('There was an error fetching the customer data!', error);
+      setLoading(false);
     });
   }, []);
   const handlePageChange = (newPage) => {
@@ -43,6 +48,11 @@ const  ZoneSegmenation =() =>{
           <option value={20}>20</option>
         </select>
       </div>
+      {loading ? ( // Display spinner if loading is true
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : ( 
       <Table style={{ borderRadius: 8 }} >
         <thead style={{ backgroundColor: '#F4F5F5' }}>
         <tr>
@@ -83,6 +93,7 @@ const  ZoneSegmenation =() =>{
         ))}
       </tbody>
       </Table>
+      )}
       <div style={{ textAlign: 'center', marginTop:'100PX' }}>
 
         <Paginations

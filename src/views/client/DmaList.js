@@ -4,8 +4,8 @@ import { Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Link } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
-import Paginations from '../../components/Paginatons';
 import { ThreeDots } from 'react-loader-spinner';
+import Paginations from '../../components/Paginatons';
 import { ClientsContext } from '../dashboard/context';
 import { BASE_API_URL1 } from '../../config/constant';
 
@@ -36,19 +36,20 @@ export default function DmaList() {
       setLoading(false);
     }
   };
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(Number(e.target.value));
-    setCurrentPage(1); // Reset to the first page
+    setCurrentPage(1);
   };
 
-  // Calculate pagination
   const offset = (currentPage - 1) * itemsPerPage;
   const currentPageData = zonesList.slice(offset, offset + itemsPerPage);
   const pageCount = Math.ceil(zonesList.length / itemsPerPage);
+
   return (
     <>
       <div className="d-flex justify-content-around row">
@@ -71,72 +72,69 @@ export default function DmaList() {
                 ariaLabel="three-dots-loading"
                 visible={true}
               />
-                <div className='pagination-controls' style={{ marginTop: '20px', marginLeft: '10PX' }}>
-        <label htmlFor='itemsPerPage'  style={{ fontWeight: '500', color:'black', fontSize: '18px' }}>Items per page:</label><nsbp/><nsbp/>
-        <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
-          <option value={5}>5</option>
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-        </select>
-      </div>
             </div>
           ) : (
-            
-            <Table style={{ borderRadius: 8 }}>
-      
-              <thead style={{ backgroundColor: '#F4F5F5' }}>
-                <tr>
-                  <th className='tablehead'>DMA ID</th>
-                  <th className='tablehead'>Gateway ID</th>
-                  <th className='tablehead'>Last Communication Time</th>
-                  <th className='tablehead'>Reading</th>
-                  <th className='tablehead'>Meters</th>
-                  <th className='tablehead'>Status</th>
-                  <th className='tablehead'>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-              {currentPageData.map((dma, index) => (
-                  <tr key={index}>
-                    <td className='tablecontent'>
-                      <Link href="/app/meterlist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}>#{dma.dmaId} </Link>
-                    </td>
-                    <td className='tablecontent'>{dma.gatewayId}</td>
-                    <td className='tablecontent'>{new Date(dma.lastCommunicationTime).toLocaleString()}</td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>{dma.reading}</span>
-                    </td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>{dma.meters}</span>
-                    </td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: 'white' }}>{dma.status}</span>
-                    </td>
-                    <td className='tablecontent'>
-                      <MoreVert />
-                    </td>
-                  </tr>
-                ))}
-                {zonesList.length === 0 && (
+            <>
+              <div className='pagination-controls' style={{ marginTop: '20px', marginLeft: '10px' }}>
+                <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label>
+                <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                </select>
+              </div>
+              <Table style={{ borderRadius: 8 }}>
+                <thead style={{ backgroundColor: '#F4F5F5' }}>
                   <tr>
-                    <td colSpan="8" className='tablecontent' style={{ textAlign: 'center' }}>No data available</td>
+                    <th className='tablehead'>DMA ID</th>
+                    <th className='tablehead'>Gateway ID</th>
+                    <th className='tablehead'>Last Communication Time</th>
+                    <th className='tablehead'>Reading</th>
+                    <th className='tablehead'>Meters</th>
+                    <th className='tablehead'>Status</th>
+                    <th className='tablehead'>Action</th>
                   </tr>
-                )}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {currentPageData.map((dma, index) => (
+                    <tr key={index}>
+                      <td className='tablecontent'>
+                        <Link href="/app/meterlist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}>#{dma.dmaId}</Link>
+                      </td>
+                      <td className='tablecontent'>{dma.gatewayId}</td>
+                      <td className='tablecontent'>{new Date(dma.lastCommunicationTime).toLocaleString()}</td>
+                      <td className='tablecontent'>
+                        <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>{dma.reading}</span>
+                      </td>
+                      <td className='tablecontent'>
+                        <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>{dma.meters}</span>
+                      </td>
+                      <td className='tablecontent'>
+                        <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: 'white' }}>{dma.status}</span>
+                      </td>
+                      <td className='tablecontent'>
+                        <MoreVert />
+                      </td>
+                    </tr>
+                  ))}
+                  {zonesList.length === 0 && (
+                    <tr>
+                      <td colSpan="8" className='tablecontent' style={{ textAlign: 'center' }}>No data available</td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            </>
           )}
         </div>
-        <div style={{ textAlign: 'center', marginTop:'40PX' }}>
-
-<Paginations
-currentPage={currentPage}
-totalPages={pageCount}
-onPageChange={handlePageChange} // Ensure onPageChange is correctly passed
-/>
-</div>
+        <div style={{ textAlign: 'center', marginTop: '40px' }}>
+          <Paginations
+            currentPage={currentPage}
+            totalPages={pageCount}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </div>
-      
     </>
-    
   );
 }

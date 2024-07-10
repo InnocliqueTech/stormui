@@ -16,6 +16,7 @@ import Meter from './Meter'; // Ensure to import Meter component correctly
 import axios from 'axios';
 import { BASE_API_URL1 } from '../../config/constant';
 import { ClientsContext } from '../dashboard/context';
+import Spinner from 'react-bootstrap/Spinner';
 import Paginations from '../../components/Paginatons';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -32,7 +33,7 @@ const MeterList = () => {
   const [fullWidth] = useState(true);
   const { clients } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   // Assuming these are your filters' state variables
   const [selectedClient, setSelectedClient] = useState('');
   const [selectedZone, setSelectedZone] = useState(0);
@@ -47,6 +48,7 @@ const MeterList = () => {
 
   const getDashboardData = async (clientId) => {
     try {
+      setLoading(true);
       const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, {
         clientId: clientId,
         zoneId: selectedZone,
@@ -55,9 +57,11 @@ const MeterList = () => {
         rowCount: 10
       });
       setZonesList(response.data.meters || []);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
-      // Handle error state or show error message to the user
+      setLoading(false);
+      
     }
   };
 
@@ -165,6 +169,11 @@ const MeterList = () => {
           <option value={20}>20</option>
         </select>
       </div>
+      {loading ? ( // Display spinner if loading is true
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : ( 
           <Table style={{ borderRadius: 8 }}>
             <thead>
               <tr>
@@ -213,6 +222,7 @@ const MeterList = () => {
               ))}
             </tbody>
           </Table>
+      )}
         </div>
         <div style={{ textAlign: 'center', marginTop:'40PX' }}>
         <Paginations

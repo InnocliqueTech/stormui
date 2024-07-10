@@ -112,7 +112,7 @@ const Breadcrumb = () => {
                                   className={location.pathname.toLowerCase().includes('clientlist') ? 'tab active' : 'tab'}
                                   to="/app/clientlist"
                                 >
-                                  Zones&apos;s List
+                                  Zone&apos;s List
                                 </Link>
                                 <Link
                                   className={location.pathname.toLowerCase().includes('dmalist') ? 'tab active' : 'tab'}
@@ -127,8 +127,9 @@ const Breadcrumb = () => {
                       </div>
                     </Col>
 
-                    {['/app/client', '/app/dashboard/default'].includes(location.pathname) && (
+                    {['/app/client', '/app/dashboard/default',"/app/dmalist" ].includes(location.pathname) && (
                       <section className="seconde-section">
+                        {location.pathname !== '/app/dmalist' && (
                         <div className="days-date-picker">
                           <div>
                             {[
@@ -150,22 +151,23 @@ const Breadcrumb = () => {
                                 </button>
                               );
                             })}
-
+                            
                             {isDatePickerOpen && (
                               <div className="date-picker">
                                 <NewDatePicker />
                               </div>
                             )}
                           </div>
-
+                           
                           <div className="">
                             <button className="icon-button" onClick={toggleDatePicker}>
                               <DateRangeIcon />
                             </button>
                           </div>
                         </div>
-
+                     )} 
                         {/* {location.pathname !== '/app/GatewayList' && ( */}
+                        
                         <div>
                           <div className="form-group selectcustom">
                             <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
@@ -179,6 +181,7 @@ const Breadcrumb = () => {
                             </select>
                           </div>
                         </div>
+                        
                         {/* )} */}
                       </section>
                     )}

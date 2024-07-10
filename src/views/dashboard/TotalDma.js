@@ -22,7 +22,7 @@ const options = {
   fill: {
     opacity: 1
   },
-  labels: ['Active 88%', 'Inactive 88%', 'Faulty 88%'],
+  // labels: ['Active 88%', 'Inactive 88%', 'Faulty 88%'],
   plotOptions: {
     pie: {
       donut: {
@@ -53,6 +53,7 @@ const options = {
       }
     },
   },
+  labels: ['Active', 'Inactive', 'Faulty'],
   dataLabels: {
     enabled: false
   },
@@ -89,10 +90,15 @@ const TotalDma = (props) => {
       ]);
       setOpt({
         ...options,
+        // labels: [
+        //   `Active ${((props.data.activeDma / props.data.totalCount) * 100).toFixed(0)}%`, 
+        //   `Inactive ${((props.data.inactiveDma / props.data.totalCount) * 100).toFixed(0)}%`, 
+        //   `Faulty ${((props.data.faultyDma / props.data.totalCount) * 100).toFixed(0)}%`
+        // ],
         labels: [
-          `Active ${((props.data.activeDma / props.data.totalCount) * 100).toFixed(0)}%`, 
-          `Inactive ${((props.data.inactiveDma / props.data.totalCount) * 100).toFixed(0)}%`, 
-          `Faulty ${((props.data.faultyDma / props.data.totalCount) * 100).toFixed(0)}%`
+          `Active(${props.data.activeDma})`, 
+          `Inactive(${props.data.inactiveDma})`, 
+          `Faulty(${props.data.faultyDma})`
         ]
       });
     }

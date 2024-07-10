@@ -11,6 +11,7 @@ import { format, isValid, parseISO } from 'date-fns';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import NewDatePicker from './NewDatePicker';
 
+
 const handleChange = (e, setValue) => {
   const { value } = e.target;
   setValue(value);
@@ -20,11 +21,11 @@ const Breadcrumb = () => {
   const location = useLocation();
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
-  const [zones, setZones] = useState([]);
-
-  const { selectedClient, setSelectedClient } = useContext(ClientsContext);
+  const { selectedClient,  zones, selectedZone, setSelectedZone } = useContext(ClientsContext);
+  // const { selectedClient, setSelectedClient } = useContext(ClientsContext);
   const { onDateChange, selectedDate, setSelectedDate, isDatePickerOpen, toggleDatePicker } = useStateContext();
- 
+  // const [zones, setZones] = useState([]);
+
   useEffect(() => {
     const fetchZones = async (clientId) => {
       try {
@@ -169,12 +170,12 @@ const Breadcrumb = () => {
                         
                         <div>
                           <div className="form-group selectcustom">
-                            <select className="form-control" value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)}>
+                            <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
                               <option>Select Zone</option>
-                              <option value="all">All</option>
+                              <option value={0}>All</option>
                               {zones.map((zone) => (
-                                <option key={zone.zoneId} value={zone.gatewayId}>
-                                  {zone.zoneId}
+                                <option key={zone.zoneId} value={zone.zoneId}>
+                                  {zone.displayName}
                                 </option>
                               ))}
                             </select>

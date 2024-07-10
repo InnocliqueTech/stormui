@@ -23,7 +23,7 @@ const options = {
   fill: {
     opacity: 1
   },
-  labels: ['Active 88%', 'Inactive 88%', 'Faulty 88%'],
+
   plotOptions: {
     pie: {
       donut: {
@@ -54,6 +54,7 @@ const options = {
       }
     }
   },
+  labels: ['Active', 'Inactive', 'Faulty'],
   dataLabels: {
     enabled: false
   },
@@ -91,9 +92,9 @@ const TotalMeters = (props) => {
       setOpt({
         ...options,
         labels: [
-          `Active ${((props.data.activeMeters / props.data.totalCount) * 100).toFixed(0)}%`, 
-          `Inactive ${((props.data.inactiveMeters / props.data.totalCount) * 100).toFixed(0)}%`, 
-          `Faulty ${((props.data.faultyMeters / props.data.totalCount) * 100).toFixed(0)}%`
+          `Active(${props.data.activeMeters})`, 
+          `Inactive(${props.data.inactiveMeters})`, 
+          `Faulty(${props.data.faultyMeters})`
         ]
       });
     }

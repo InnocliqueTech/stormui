@@ -21,12 +21,12 @@ const Gateway = () => {
   const [outFlowData, setOutFlowData] = useState({});
   const { clients, selectedClient } = useContext(ClientsContext);
   console.log(clients, "ssssssssssssssssssssssssssssssssssssssssssssss")
-  useEffect(()=>{
+  useEffect(() => {
     if (selectedClient) {
-    getDashboardData();
+      getDashboardData();
     }
   }, [selectedClient]);
-  const getDashboardData = async() => {
+  const getDashboardData = async () => {
     try {
       const response = await axios.post(BASE_API_URL1 + "dashboard/getAllDashboardValues", {
         clientId: selectedClient
@@ -38,10 +38,12 @@ const Gateway = () => {
       setOutFlowData(flowData.data);
       console.log(flowData);
     }
-    catch(e){
+    catch (e) {
       console.log(e)
     }
   }
+  console.log('outflowdata', outFlowData)
+  console.log('dashboard data', dashboardData)
   return (
     <React.Fragment>
       <Row>
@@ -68,7 +70,7 @@ const Gateway = () => {
         </Col>
         <Col md={6} xl={5}>
           <Alert data={alertData} />
-          
+
         </Col>
         <Col md={6} xl={7}>
           <Card className="card-social">
@@ -83,23 +85,23 @@ const Gateway = () => {
         </Col>
       </Row>
       <Card className='client-customer'>
-      <Row>
-            <Col md={9} sm={7} xs={7} className='d-flex'>
-                <span style={{ fontSize: 20, fontWeight: 'bold', color:'rgba(33, 33, 33, 1)' }} className='d-flex align-items-center'>
-                    <span className='iconContainer  p-0 d-flex align-items-center justify-content-center me-2' style={{width:"48px", height:'48px'}}> 
-                    <Image src={fluent} alt="fluent" className='icon' style={{ color: '#95ACFF' }} />
-                    </span> Gateway List </span>
-                    <span style={{ textAlign: 'end' }}></span>
-            </Col>
-            <Col md={3} sm={5} xs={5} className='d-flex align-items-center justify-content-end' style={{ textAlign:'end' }}>
-            <Refresh style={{marginRight:10, color:'#000'}} />
-          <Download  style={{marginRight:5, color:'#000'}}/>
-          <span style={{backgroundColor:'#FEF0F4', color:'#DE315E', padding:'10px 15px',borderRadius:'8px',alignItems:'center',display:'flex'}}>5 &nbsp; <ReportProblemOutlined  style={{height:20, width:20}}/></span>
-            </Col>
+        <Row>
+          <Col md={9} sm={7} xs={7} className='d-flex'>
+            <span style={{ fontSize: 20, fontWeight: 'bold', color: 'rgba(33, 33, 33, 1)' }} className='d-flex align-items-center'>
+              <span className='iconContainer  p-0 d-flex align-items-center justify-content-center me-2' style={{ width: "48px", height: '48px' }}>
+                <Image src={fluent} alt="fluent" className='icon' style={{ color: '#95ACFF' }} />
+              </span> Gateway List </span>
+            <span style={{ textAlign: 'end' }}></span>
+          </Col>
+          <Col md={3} sm={5} xs={5} className='d-flex align-items-center justify-content-end' style={{ textAlign: 'end' }}>
+            <Refresh style={{ marginRight: 10, color: '#000' }} />
+            <Download style={{ marginRight: 5, color: '#000' }} />
+            <span style={{ backgroundColor: '#FEF0F4', color: '#DE315E', padding: '10px 15px', borderRadius: '8px', alignItems: 'center', display: 'flex' }}>5 &nbsp; <ReportProblemOutlined style={{ height: 20, width: 20 }} /></span>
+          </Col>
         </Row>
-      <GatewayTable />
+        <GatewayTable />
       </Card>
-      
+
     </React.Fragment>
   );
 };

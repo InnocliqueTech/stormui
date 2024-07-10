@@ -85,7 +85,7 @@ const CustomPieChart = (props) => {
       setData([parseInt(props.data.activeZones), parseInt(props.data.inactiveZones)]);
       setOpt({
         ...options,
-        labels: [`Active ${props.data.activeZones}`, `Inactive ${props.data.inactiveZones}`]
+        labels: [`Active(${props.data.activeZones})`, `Inactive(${props.data.inactiveZones})`]
       });
     }
   }, [props]);

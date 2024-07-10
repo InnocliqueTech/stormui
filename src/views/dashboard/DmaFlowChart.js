@@ -1,95 +1,212 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import over from '../../assets/images/symbols_water.svg';
 import { Col, Image, Row } from 'react-bootstrap';
 import info from '../../assets/images/i_icons.svg';
+import axios from 'axios';
+import { ClientsContext } from './context';
+import { useStateContext } from '../../contexts/MainContext';
 
-const options = {
-  colors: ['#2196F3', '#80CAEE'],
-  chart: {
-    fontFamily: 'inter',
-    type: 'bar',
-    height: 500,
-    stacked: true,
-    toolbar: {
-      show: false
-    },
-    zoom: {
-      enabled: false
-    }
-  },
 
-  responsive: [
-    {
-      breakpoint: 1536,
-      options: {
-        plotOptions: {
-          bar: {
-            borderRadius: 0,
-            columnWidth: 10
-          }
-        }
-      }
-    }
-  ],
-  plotOptions: {
-    bar: {
-      horizontal: false,
-      borderRadius: 0,
-      columnWidth: 40,
-      borderRadiusApplication: 'end',
-      borderRadiusWhenStacked: 'last'
-    }
-  },
-  dataLabels: {
-    enabled: false
-  },
 
-  xaxis: {
-    categories: ['Dma-1', 'Dma-2', '', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-  legend: {
-    position: 'bottom',
-    horizontalAlign: 'center',
-    fontFamily: 'inter',
-    fontWeight: 600,
-    fontSize: '14px',
-    showForSingleSeries: true,
-    markers: {
-      radius: 0
-    }
-  },
-  fill: {
-    opacity: 1
-  }
-};
+
 
 const DMAFlowChart = (props) => {
   const [data, setData] = useState([])
+  const {  selectedClient,  selectedZone } = useContext(ClientsContext);
+  // const { clients, zones } = useContext(ClientsContext);
+  // const { zoneId } = useStateContext
+  const { presentDate, toDate } = useStateContext();
+  const [categories, setCategories] = useState([]);
 
-  useEffect(()=>{
-    console.log(props.data.totalOutFlow)
-    if(props.data && props.data.totalOutFlow) {
-      let d = [];
-      props.data.totalOutFlow.forEach((flow) => {
-        d.push(flow.count)
-      });
-      setData([{
-        name: "In flow",
-        data: d
-      }, {
-        name: "Outflow",
-        data: d
-      }]);
+  const minRange = props.data.minRange 
+  const maxRange = props.data.maxRang
+  console.log('min', minRange)
+  console.log('max', maxRange)
+ 
+ 
+  const options = {
+    colors: ['#2196F3', '#80CAEE'],
+  
+    chart: {
+      fontFamily: 'inter',
+      type: 'bar',
+      height: 500,
+      stacked: true,
+      toolbar: {
+        show: false
+      },
+      zoom: {
+        enabled: false
+      }
+    },
+  
+    responsive: [
+      {
+        breakpoint: 1536,
+        options: {
+          plotOptions: {
+            bar: {
+              borderRadius: 0,
+              columnWidth: 10
+            }
+          }
+        }
+      }
+    ],
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        borderRadius: 0,
+        columnWidth: 40,
+        borderRadiusApplication: 'end',
+        borderRadiusWhenStacked: 'last'
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+  
+    xaxis: {
+      categories: categories,
+    },
+    yaxis: {
+      tickAmount: 4,  // Four intervals between five values
+      min: minRange,
+      max: maxRange,
+      labels: {
+        formatter: (value) => Math.round(value)
+      }
+    },
+    legend: {
+      position: 'bottom',
+      horizontalAlign: 'center',
+      fontFamily: 'inter',
+      fontWeight: 600,
+      fontSize: '14px',
+      showForSingleSeries: true,
+      markers: {
+        radius: 0
+      }
+    },
+    fill: {
+      opacity: 1
     }
-  }, [props])
+  };
 
-  //   const handleReset = () => {
-  //     setState(prevState => ({
-  //       ...prevState
-  //     }))
+
+  useEffect(() => {
+    if (props.data && props.data.totalDmaOutFlow) {
+      let totalFlowData = [];
+      let totalOutFlowData = [];
+      let dmaNames = [];
+      
+      props.data.totalDmaOutFlow.forEach((flow) => {
+        dmaNames.push(flow.displayName);
+        totalFlowData.push(flow.totalFlow);
+        totalOutFlowData.push(flow.totalOutFlow);
+      });
+
+      setData([
+        {
+          name: "Total Flow",
+          data: totalFlowData
+        },
+        {
+          name: "Total OutFlow",
+          data: totalOutFlowData
+        }
+      ]);
+      setCategories(dmaNames);
+    }
+  }, [props.data]);
+
+  // useEffect(() => {
+  //   getDmaOutFlow();
+  // }, [clients, presentDate, toDate, zones]);
+
+  // const getDmaOutFlow = async () => {
+  //   try {
+  //     const requestbody = {
+  //       clientId: clients[0]?.clientId,
+  //       zoneId: 0,
+  //       fromDate: presentDate,
+  //       toDate: toDate
+  //     }
+  //     const response = await axios.post('http://49.207.11.223:3307/dma/getDMAOutFlowInGateWayDashBoard', requestbody)
+  //     console.log('getDmaOutFlowresponse', response)
+  //     console.log('requestbody', requestbody)
+
+  //     if(response.data && response.data.totalDmaOutFlow) {
+  //       let totalFlowData = [];
+  //       let totalOutFlowData = [];
+  //       let dmaNames = [];
+  //       response.data.totalDmaOutFlow.forEach((flow) => {
+  //         dmaNames.push(flow.displayName)
+  //         totalFlowData.push(flow.totalFlow);
+  //         totalOutFlowData.push(flow.totalOutFlow);
+  //       });
+  //       setData([
+  //         {
+  //           name: "Total Flow",
+  //           data: totalFlowData
+  //         },
+  //         {
+  //           name: "Total OutFlow",
+  //           data: totalOutFlowData
+  //         }
+  //       ]);
+  //       setCategories(dmaNames)
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
   //   }
-  //   handleReset
+
+  // }
+  useEffect(() => {
+    if (selectedClient && presentDate && toDate) {
+      getDmaOutFlow();
+    }
+  }, [selectedClient, presentDate, toDate, selectedZone]);
+
+  const getDmaOutFlow = async () => {
+    try {
+      const requestbody = {
+        clientId: selectedClient,
+        zoneId: selectedZone || 0, // If selectedZone is not available, default to 0
+        fromDate: presentDate,
+        toDate: toDate
+      };
+      const response = await axios.post('http://49.207.11.223:3307/dma/getDMAOutFlowInGateWayDashBoard', requestbody);
+      console.log('getDmaOutFlowresponse', response);
+      console.log('requestbody', requestbody);
+
+      if (response.data && response.data.totalDmaOutFlow) {
+        let totalFlowData = [];
+        let totalOutFlowData = [];
+        let dmaNames = [];
+        response.data.totalDmaOutFlow.forEach((flow) => {
+          dmaNames.push(flow.displayName);
+          totalFlowData.push(flow.totalFlow);
+          totalOutFlowData.push(flow.totalOutFlow);
+        });
+        setData([
+          {
+            name: "Total Flow",
+            data: totalFlowData
+          },
+          {
+            name: "Total OutFlow",
+            data: totalOutFlowData
+          }
+        ]);
+        setCategories(dmaNames);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+console.log('categories', categories)
 
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 shadow-default sm:px-2 xl:col-span-6">
@@ -99,7 +216,7 @@ const DMAFlowChart = (props) => {
         </Col>
         <Col md={8} sm={8} xs={8}>
           <div className="alerttext">
-          DMA Flow Chart{' '}
+            DMA Outflow{' '}
             <span>
               <Image src={info} alt="gateway" />
             </span>{' '}

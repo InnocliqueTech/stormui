@@ -66,7 +66,7 @@ const options = {
 
 const Overflow = (props) => {
   const [data, setData] = useState([])
-
+console.log('data', data)
   useEffect(()=>{
     console.log(props.data.totalOutFlow)
     if(props.data && props.data.totalOutFlow) {

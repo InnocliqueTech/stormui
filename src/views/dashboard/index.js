@@ -5,26 +5,30 @@ import TotalDma from './TotalDma';
 import TotalMeters from './TotalMeters';
 import Overflow from './Overflow';
 import axios from 'axios';
-import {  BASE_API_URL1 } from '../../config/constant';
+import { BASE_API_URL1 } from '../../config/constant';
 import "./dashboard.scss";
 // import Alert from './Alert';
 import { ClientsContext } from './context';
+import { useStateContext } from '../../contexts/MainContext';
 import DMAFlowChart from './DmaFlowChart';
 // import DMAFlowChart from './DmaFlowChart';
 
 const DashDefault = () => {
+  const { presentDate, toDate } = useStateContext();
   const [dashboardData, setDashboardData] = useState({});
   // const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
-  const { clients, selectedClient } = useContext(ClientsContext);
-console.log(clients, "the check")
+  // const { clients, selectedClient } = useContext(ClientsContext);
+  const { clients, selectedClient, selectedZone} = useContext(ClientsContext);
+
+  console.log(clients, "the check")
   useEffect(() => {
     if (selectedClient) {
       getDashboardData();
     }
-  }, [selectedClient]);
+  }, [selectedClient, selectedZone]);
 
-  
+
   const getDashboardData = async () => {
     try {
       const response = await axios.post(BASE_API_URL1 + 'dashboard/getAllDashboardValues', {
@@ -36,13 +40,18 @@ console.log(clients, "the check")
       // const aData = await axios.post(BASE_API_URL + "/getAlerts");
       // setAlertData(aData.data);
 
-      const flowData = await axios.post(BASE_API_URL + "/getTotalOutFlow");
+      const flowData = await axios.post(BASE_API_URL1 + 'dma/getDMAOutFlowInGateWayDashBoard', {
+        clientId: selectedClient,
+        zoneId: selectedZone,
+        fromDate: presentDate,
+        toDate: toDate
+      });
       setOutFlowData(flowData.data);
     } catch (e) {
       console.log(e);
     }
   }
-
+  console.log('dashboard data', dashboardData)
   const parseNumber = (value) => {
     const number = Number(value);
     return isNaN(number) ? 0 : number;
@@ -68,13 +77,13 @@ console.log(clients, "the check")
         totalCount: parseNumber(data.totalMeters?.totalCount),
       },
       totalGateway: {
-        activeGateways: parseNumber(data.totalGateway?.activeGateways), 
+        activeGateways: parseNumber(data.totalGateway?.activeGateways),
         inactiveGateways: parseNumber(data.totalGateway?.inactiveGateways),
         totalCount: parseNumber(data.totalGateway?.totalCount),
       }
     };
   }
-
+  console.log('dashboard.totaldma', dashboardData.totalDma)
   return (
     <React.Fragment>
       <Row>
@@ -112,15 +121,15 @@ console.log(clients, "the check")
           </Card>
         </Col>
         <Col md={6} xl={5}>
-        <Card className="card-social">
+          <Card className="card-social">
             <Card.Body className="p-0">
               <Row>
                 <Col md={12}>
-              <DMAFlowChart data={outFlowData} />
+                  <DMAFlowChart data={outFlowData} />
                 </Col>
-                </Row>
-                </Card.Body>
-                </Card>
+              </Row>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </React.Fragment>

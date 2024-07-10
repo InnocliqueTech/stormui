@@ -8,6 +8,9 @@ export const ClientsContext = createContext();
 export const ClientsProvider = ({ children }) => {
   const [clients, setClients] = useState([]);
   const [selectedClient, setSelectedClient] = useState('');
+  const [zones, setZones] = useState([]);
+  const [selectedZone, setSelectedZone] = useState(0)
+  
 
   useEffect(() => {
     const getSelectClient = async () => {
@@ -15,6 +18,7 @@ export const ClientsProvider = ({ children }) => {
         const response = await axios.post(BASE_API_URL1 + 'clients/getAllClients', {
           userId: 1
         });
+        console.log(response)
         if (Array.isArray(response.data.clients)) {
           setClients(response.data.clients);
           if (response.data.clients.length > 0) {
@@ -30,10 +34,33 @@ export const ClientsProvider = ({ children }) => {
       }
     };
     getSelectClient();
-  }, []);
 
+  }, []);
+  console.log('clients', clients)
+
+  useEffect(() => {
+    const getSelectZone = async () => {
+      try {
+        const response = await axios.post(BASE_API_URL1 + 'zones/getAllZoneDetailsWithClientId', {
+          clientId: selectedClient
+        });
+        if (Array.isArray(response.data.zonesList)) {
+          setZones(response.data.zonesList);
+        } else {
+          setZones([]);
+        }
+      } catch (error) {
+        setZones([]);
+      }
+    }
+    if (selectedClient) {
+      getSelectZone();
+    }
+  }, [selectedClient]);
+ 
+console.log('clients', clients)
   return (
-    <ClientsContext.Provider value={{ clients, selectedClient, setSelectedClient }}>
+    <ClientsContext.Provider value={{ clients, selectedClient, setSelectedClient, zones, selectedZone, setSelectedZone }}>
       {children}
     </ClientsContext.Provider>
   );

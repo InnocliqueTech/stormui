@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import axios from 'axios';
 import { MoreVert } from '@mui/icons-material';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import Paginations from '../../components/Paginatons';
+import { ClientsContext } from '../dashboard/context/index';
 function CustomerTable() {
   const [customers, setCustomers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [loading, setLoading] = useState(true); 
+  const {  selectedClient,  selectedZone } = useContext(ClientsContext);
   useEffect(() => {
      
     fetchData(); // Initial data fetch
@@ -17,8 +19,8 @@ function CustomerTable() {
   const fetchData = () => {
     setLoading(true);
     axios.post('http://49.207.11.223:3307/clients/getTotalCustomerWiseSegementation', {
-      clientId: 1,
-      zoneId: 0,
+      clientId: selectedClient,
+      zoneId: selectedZone,
       dmaId: 0
     })
     .then(response => {

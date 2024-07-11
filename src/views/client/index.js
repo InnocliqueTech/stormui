@@ -60,7 +60,7 @@ const Client = () => {
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
   const { presentDate, toDate } = useStateContext();
-  const { clients } = useContext(ClientsContext);
+  const { clients,selectedClient,  selectedZone } = useContext(ClientsContext);
   const [dara, setDmaData] = useState({});
   const [supplyByZoneData, setSupplyByZoneData] = useState([]);
 
@@ -72,8 +72,8 @@ const Client = () => {
     const fetchDashboardData = async () => {
       try {
         const response = await axios.post(`${BASE_API_URL1}zones/getZoneWiseConsumptionInClientDashboard`, {
-          clientId: clients[0]?.clientId,
-          zoneId: 0,
+          clientId: selectedClient,
+          zoneId:selectedZone|| 0,
           fromDate: presentDate,
           toDate: toDate
         });

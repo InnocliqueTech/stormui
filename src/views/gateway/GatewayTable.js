@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -11,7 +11,7 @@ import { Col, Row } from 'react-bootstrap';
 import { CachedOutlined, FileUploadOutlined } from '@mui/icons-material';
 import Table from 'react-bootstrap/Table';
 import { BASE_API_URL1 } from '../../config/constant';
-
+import {ClientsContext} from '../dashboard/context/index';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -27,7 +27,7 @@ const GatewayTable = () => {
   const [gateways, setGateways] = useState([]);
   const [basicDetails, setBasicDetails] = useState({});
   const [lastFrameData, setLastFrameData] = useState({});
-
+  const {selectedClient} = useContext(ClientsContext);
 
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const GatewayTable = () => {
 
   const getAllGateways = async () => {
     try {
-      const clientId = sessionStorage.getItem('clientId') || 1;
+      const clientId = selectedClient;
       const response = await axios.post(`${BASE_API_URL1}gateways/getAllGatewaysWithClientId`, { clientId });
       if (response.data && response.data.gatewayDetails) {
         setGateways(response.data.gatewayDetails);
@@ -48,7 +48,7 @@ const GatewayTable = () => {
 
   const handleClickOpen = async (Id) => {
     try {
-      const clientId = sessionStorage.getItem('clientId');
+      const clientId = selectedClient;
       const response = await axios.post(`${BASE_API_URL1}gateways/getGatewayDetailsWithClientIdAndGatewayId`, {
         clientId,
         gatewayId: Id

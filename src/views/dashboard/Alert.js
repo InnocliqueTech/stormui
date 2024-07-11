@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
 import alert from '../../assets/images/alert.svg';
 import meter from '../../assets/images/Meter.svg';
 import info from '../../assets/images/i_icons.svg';
 import { FaPlus } from 'react-icons/fa';
 import './dashboard.scss';
-
+import { ClientsContext } from '../dashboard/context';
 const Alert = ({ data }) => {
+  const { selectedClient } = useContext(ClientsContext);
+  const [expandedIndex, setExpandedIndex] = useState(null);
+  const [alertData, setAlertData] = useState(null);
+  const [loadingIndex, setLoadingIndex] = useState(null);
+  const [error, setError] = useState('');
   useEffect(() => {
     if (data && data.totalOutFlow) {
       let d = [];
@@ -42,10 +47,7 @@ const Alert = ({ data }) => {
       });
   }
 
-  const [expandedIndex, setExpandedIndex] = useState(null);
-  const [alertData, setAlertData] = useState(null);
-  const [loadingIndex, setLoadingIndex] = useState(null);
-  const [error, setError] = useState('');
+  
 
   const handleIconClick = async (index) => {
     if (expandedIndex === index) {
@@ -61,7 +63,7 @@ const Alert = ({ data }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ clientId: 1 }),
+          body: JSON.stringify({ clientId: selectedClient }),
         });
 
         if (!response.ok) {

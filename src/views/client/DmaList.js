@@ -10,7 +10,7 @@ import { ClientsContext } from '../dashboard/context';
 import { BASE_API_URL1 } from '../../config/constant';
 
 export default function DmaList() {
-  const { clients } = useContext(ClientsContext);
+  const { clients,selectedZone } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,7 +27,7 @@ export default function DmaList() {
     try {
       const response = await axios.post(BASE_API_URL1 + 'dma/getAllDMAsWithClientIdAndZoneId', {
         clientId: clientId,
-        zoneId: "0"
+        zoneId: selectedZone,
       });
       setZonesList(response.data.dmasList || []);
     } catch (e) {

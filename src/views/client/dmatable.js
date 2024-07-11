@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { Image, Col, Row } from 'react-bootstrap';
 import { MoreVert } from '@mui/icons-material';
 import Table from 'react-bootstrap/Table';
@@ -7,21 +7,21 @@ import refresh from '../../assets/images/refresh.svg';
 import download from '../../assets/images/download.svg';
 import info from '../../assets/images/info.svg';
 import axios from 'axios'; // Import Axios for making HTTP requests
-
+import { ClientsContext } from '../dashboard/context/index';
 function DmaTable() {
   const [dmaData, setDmaData] = useState({
     totalConsumption: 0,
     dmaWiseConsumption: [],
     dmaDetails: [],
   });
-
+  const {  selectedClient,  selectedZone } = useContext(ClientsContext);
   useEffect(() => {
     // Function to fetch DMA data from API
     const fetchData = async () => {
       try {
         const response = await axios.post('http://49.207.11.223:3307/dma/getDMAWiseConsumptionInClientDashboard', {
-          clientId: 1,
-          zoneId: 0,
+          clientId: selectedClient,
+          zoneId:  selectedZone||0,
           fromDate: '2024-06-01',
           toDate: '2024-06-27'
         });

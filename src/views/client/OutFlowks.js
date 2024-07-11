@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState ,useContext} from 'react';
 import ReactApexChart from 'react-apexcharts';
 import axios from 'axios';
 import over from '../../assets/images/symbols_water.svg';
 import { Col, Image, Row } from 'react-bootstrap';
 import info from '../../assets/images/i_icons.svg';
 import { useStateContext } from '../../contexts/MainContext';
-
+import { ClientsContext } from '../dashboard/context/index';
 const Overflowks = (props) => {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
   const { presentDate, toDate } = useStateContext();
-
+  const {  selectedClient,  selectedZone } = useContext(ClientsContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.post('http://49.207.11.223:3307/dashboard/getTotalOutflowInDashboard', {
-          clientId: 1,
-          zoneId: 0,
+          clientId: selectedClient,
+          zoneId: selectedZone || 0,
           fromDate: presentDate,
           toDate: toDate
         });

@@ -1,69 +1,78 @@
 import React, { useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './indexLanding.css';
-import './location.css';  // Import the CSS file
- 
-//import HomeEdit from '../../assets/images/HomeEdit.png'
-import { Col } from 'react-bootstrap';
-import { Row } from 'react-bootstrap';
-import image from './image2835.png';
-import {ClientsContext} from '../../views/dashboard/context/index'
-import { Link,useNavigate } from 'react-router-dom';
+import './indexLanding.scss';
+import './location.css';
+import { useNavigate } from 'react-router-dom';
+import map from '../../assets/images/map.png';
+import { ClientsContext } from '../dashboard/context';
+
+const dummyData = {
+  Population: '3,23,412',
+  'no.of Households': '61840',
+  source: 'Lower Manair dam',
+  'No. of Wards': '60',
+  'Distribution length': '315 KMS',
+  'Installed Capacity': '58 MD',
+  'Tap water connections': '60',
+  'Storage Capacity': '315 KMS',
+  'Present Supply': '58 MD'
+};
+
 export default function Location() {
-  const { clients } = useContext(ClientsContext);
   const navigate = useNavigate();
+  const { clients } = useContext(ClientsContext);
+
   const handleClick = () => {
     navigate('/app/dashboard/default', { replace: true });
     window.location.reload();
-   
   };
+
+  console.log(clients, 'clients');
+
   return (
-      <>
-      <h2 style={{fontSize:32,fontWeight:700, color:'#212121', marginTop:0, marginBottom:'24px'}} className="">Welcome to Storm Energy</h2>
-      <div className="">
-        <Row className="justify-content-start">
-          {clients.map((project, index) => (
-            <Col md={4} className="mb-4" key={index}>
-              <div className="card border-0" style={{borderRadius:16}}>
-              <Link to="#" onClick={handleClick}>
-                <img className="card-img-top" src={image} alt={project.title}  />
-                </Link>
-                <div className="">
-                  <Row className='row p-0 m-0'>
-                    <Col className='p-0' md={10} sm={1} xs={1}>
-                      <Link to="#" style={{textDecoration: 'none' }} onClick={handleClick}>
-                        <a style={{ color: "black", textDecoration: 'none' }}>
-                          <h5 className="card-title m-0 p-0">{project.clientName}</h5>
-                        </a>
-                      </Link>
-                    </Col>
-                    
-                    {/* <Col md={2} sm={1} xs={1} className='p-0 text-end' >
-                      <img src={HomeEdit} style={{background:'#F4F5F5', width:24, height:24, borderRadius:6, padding:4}}  alt="uparrow" /> 
-                    </Col>  */}
-                  </Row>
-                  
-                  <p className="card-text">{project.description}</p>
-                  <div className="d-flex justify-content-between">
-                    <div className="custom-zones">
-                      <small>Zones:</small>
-                      <strong> {project.totalZonesCount}</strong>
-                    </div>
-                    <div className='custom-zones'>
-                      <small>DMAs:</small>
-                      <strong>{project.totalDMACount}</strong> 
-                    </div>
-                    <div className='custom-zones'>
-                      <small>Meters:</small>
-                      <strong>{project.meters}</strong> 
-                    </div>
-                  </div>
+    <div
+      className="home-section"
+      onClick={handleClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handleClick(e);
+        }
+      }}
+      role="button"
+      tabIndex="0"
+    >
+      <section>
+        <h3 className="welcome"> Welcome...</h3>
+      </section>
+      <section className="flex-section">
+        <div className="map-img">
+          <img src={map} alt="bhopal" />
+        </div>
+        <div className="about-section">
+          <div className="info">
+            <h3>About</h3>
+            <p className="first-para">
+              I am a passionate and detail-oriented UX designer with 3+ years of experience creating user-centered interfaces for web and
+              mobile applications. I am highly skilled in user research, wireframing, prototyping, and usability testing. I am a strong
+              believer in the power of design to solve problems and create a positive user experience.
+            </p>
+            <p className="second-para">
+              “The primary objective of the Karimnagar Smart City Project is to improve the quality of life of even poorest of poor and
+              improve happiness index of all its citizens.”
+            </p>
+          </div>
+          <div className="area-data">
+            {Object.keys(dummyData).map((item) => {
+              return (
+                <div key={item} className="data-card">
+                  <p>{item}</p>
+                  <h2>{dummyData[item]}</h2>
                 </div>
-              </div>
-            </Col>
-          ))}
-        </Row>
-      </div>
-  </>
-);
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }

@@ -7,7 +7,7 @@ import Card from '../../../components/Card/MainCard';
 const BasicBreadcrumbPagination = () => {
   let active = 3;
   let disabled = 4;
-  let items = [];
+  let items = []; 
   let activeItems = [];
   let disabledItems = [];
 

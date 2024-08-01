@@ -1,7 +1,9 @@
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
+import { format, parseISO } from 'date-fns';
 import alert from '../../assets/images/alert.svg';
 import meter from '../../assets/images/Meter.svg';
+import gateway from '../../assets/images/Gateway.svg';
 import info from '../../assets/images/i_icons.svg';
 import { FaPlus } from 'react-icons/fa';
 import './dashboard.scss';
@@ -12,6 +14,8 @@ const Alert = ({ data }) => {
   const [alertData, setAlertData] = useState(null);
   const [loadingIndex, setLoadingIndex] = useState(null);
   const [error, setError] = useState('');
+  let filteredAlertData = [];
+
   useEffect(() => {
     if (data && data.totalOutFlow) {
       let d = [];
@@ -27,11 +31,10 @@ const Alert = ({ data }) => {
     }
   }, [data]);
 
-  let filteredAlertData = [];
   if (data.alerts) {
     filteredAlertData = data.alerts
-      .filter(item => item.alertName !== "Line Leakage")
-      .map(item => {
+      .filter((item) => item.alertName !== 'Line Leakage')
+      .map((item) => {
         let newAlertName = item.alertName; // Default to the current alertName
 
         // Add your conditional logic here to assign new alert names
@@ -42,14 +45,23 @@ const Alert = ({ data }) => {
         }
         return {
           ...item,
-          alertName: newAlertName,
+          alertName: newAlertName
         };
       });
   }
 
-  
+  function formatTimestamp(timestamp) {
+    // Parse the ISO string into a Date object
+    const date = parseISO(timestamp);
+
+    // Format the date into the desired format
+    const formattedDate = format(date, 'yyyy-MM-dd HH:mm:ss');
+
+    return formattedDate;
+  }
 
   const handleIconClick = async (index) => {
+    // debugger;
     if (expandedIndex === index) {
       setExpandedIndex(null); // Close the currently open alert
       setAlertData(null); // Clear the alert data when closing
@@ -61,9 +73,9 @@ const Alert = ({ data }) => {
         const response = await fetch('http://49.207.11.223:3307/clients/getClientAlerts', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ clientId: selectedClient }),
+          body: JSON.stringify({ clientId: selectedClient })
         });
 
         if (!response.ok) {
@@ -86,7 +98,7 @@ const Alert = ({ data }) => {
     }
   };
 
-  console.log(alertData);
+  console.log(alertData, filteredAlertData, 'alerts data');
   return (
     <Card className="card-social" style={{ minHeight: '320px', borderRadius: 5 }}>
       <Card.Body style={{ padding: '15px !important' }}>
@@ -110,44 +122,57 @@ const Alert = ({ data }) => {
               return (
                 <Row key={index} style={{ borderBottom: '1px solid #ccc', paddingBottom: 5, marginTop: 10 }}>
                   <Col md={1} sm={1} xs={1}>
-                    <Image src={meter} alt="gateway" className="align-items-center float-start mt-2" />
+                    {index === 1 ? (
+                      <Image src={meter} alt="gateway" className="align-items-center float-start mt-2" />
+                    ) : (
+                      <Image src={gateway} alt="gateway" className="align-items-center float-start mt-2" />
+                    )}
                   </Col>
-                  <Col className='alertTitle' md={6} xs={6} sm={6}>
+                  <Col className="alertTitle" md={6} xs={6} sm={6}>
                     <div className="alertheading">
                       {alert.alertName}
                       <FaPlus onClick={() => handleIconClick(index)} style={{ cursor: 'pointer', marginLeft: '10px' }} />
                     </div>
-                   
-                      {isExpanded && (
-                        <>
-                          {loadingIndex === index && <div>Loading...</div>}
-                          {loadingIndex !== index && error && <div className="error-message">{error}</div>}
-                          {loadingIndex !== index && !error && alertData && (
-                            <>
-                              {alert.alertName === 'Gateway Communication Failure' && alertData.Gateway && alertData.Gateway.length > 0 && (
-                                <ul>
-                                  {alertData.Gateway.map((gateway) => (
-                                    <li key={gateway.id}>{gateway.CreatedAt}</li>
-                                  ))}
-                                </ul>
-                              )}
 
-                              {alert.alertName === 'Meter Communication Failure' && alertData.Meter && alertData.Meter.length > 0 && (
-                                <ul>
-                                  {alertData.Meter.map((meter) => (
-                                    <li key={meter.id}>{meter.CreatedAt}</li>
-                                  ))}
-                                </ul>
-                              )}
+                    {isExpanded && (
+                      <>
+                        {loadingIndex === index && <div>Loading...</div>}
+                        {loadingIndex !== index && error && <div className="error-message">{error}</div>}
+                        {loadingIndex !== index && !error && alertData && (
+                          <>
+                            {alert.alertName === 'Gateway Communication Failure' && alertData.Gateway && alertData.Gateway.length > 0 && (
+                              <div style={{ width: '100%' }}>
+                                {alertData.Gateway.map((gateway) => {
+                                  let { gwid, CreatedAt } = gateway;
+                                  return (
+                                    <div key={gwid} className="alert-card">
+                                      <span>{gwid}</span>
+                                      <span>{formatTimestamp(CreatedAt)}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
 
-                              {!alertData.Gateway && !alertData.Meter && (
-                                <div>No alerts available.</div>
-                              )}
-                            </>
-                          )}
-                        </>
-                      )}
-                   
+                            {alert.alertName === 'Meter Communication Failure' && alertData.Meter && alertData.Meter.length > 0 && (
+                              <div>
+                                {alertData.Meter.map((gateway) => {
+                                  let { gwid, CreatedAt } = gateway;
+                                  return (
+                                    <div key={gwid} className="alert-card">
+                                      <span>{gwid}</span>
+                                      <span>{formatTimestamp(CreatedAt)}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+
+                            {!alertData.Gateway && !alertData.Meter && <div>No alerts available.</div>}
+                          </>
+                        )}
+                      </>
+                    )}
                   </Col>
                   <Col md={4} sm={4} xs={4}>
                     <h6 className="align-items-center float-end alertsubheading mt-3">{alert.alertTime}</h6>

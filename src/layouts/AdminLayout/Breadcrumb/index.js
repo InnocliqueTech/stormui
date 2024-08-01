@@ -11,7 +11,6 @@ import { format, isValid, parseISO } from 'date-fns';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import NewDatePicker from './NewDatePicker';
 
-
 const handleChange = (e, setValue) => {
   const { value } = e.target;
   setValue(value);
@@ -21,7 +20,7 @@ const Breadcrumb = () => {
   const location = useLocation();
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
-  const { selectedClient,  zones, selectedZone, setSelectedZone } = useContext(ClientsContext);
+  const { selectedClient, zones, selectedZone, setSelectedZone } = useContext(ClientsContext);
   // const { selectedClient, setSelectedClient } = useContext(ClientsContext);
   const { onDateChange, selectedDate, setSelectedDate, isDatePickerOpen, toggleDatePicker } = useStateContext();
   // const [zones, setZones] = useState([]);
@@ -103,7 +102,7 @@ const Breadcrumb = () => {
                       <div className="dashheading">
                         {title !== 'Dashboard' && (
                           <span>
-                            {location.pathname.startsWith('/app/client') && (
+                            {(location.pathname.startsWith('/app/client') || location.pathname.startsWith('/app/dmalist')) && (
                               <>
                                 <Link className={location.pathname === '/app/client' ? 'tab active' : 'tab'} to="/app/client">
                                   Dashboard
@@ -127,47 +126,47 @@ const Breadcrumb = () => {
                       </div>
                     </Col>
 
-                    {['/app/client', '/app/dashboard/default',"/app/dmalist" ].includes(location.pathname) && (
+                    {['/app/client', '/app/dashboard/default', '/app/dmalist'].includes(location.pathname) && (
                       <section className="seconde-section">
                         {location.pathname !== '/app/dmalist' && (
-                        <div className="days-date-picker">
-                          <div>
-                            {[
-                              { day: '1D', add: 1 },
-                              { day: '7D', add: 7 },
-                              { day: '14D', add: 14 },
-                              { day: '30D', add: 30 }
-                            ].map((obj) => {
-                              return (
-                                <button
-                                  className={`days ${selectedDate === obj.day ? 'active' : ''}`}
-                                  onClick={() => {
-                                    setSelectedDate(obj.day);
-                                    onDateChange(obj.add);
-                                  }}
-                                  key={obj.day}
-                                >
-                                  {obj.day}
-                                </button>
-                              );
-                            })}
-                            
-                            {isDatePickerOpen && (
-                              <div className="date-picker">
-                                <NewDatePicker />
-                              </div>
-                            )}
+                          <div className="days-date-picker">
+                            <div>
+                              {[
+                                { day: '1D', add: 1 },
+                                { day: '7D', add: 7 },
+                                { day: '14D', add: 14 },
+                                { day: '30D', add: 30 }
+                              ].map((obj) => {
+                                return (
+                                  <button
+                                    className={`days ${selectedDate === obj.day ? 'active' : ''}`}
+                                    onClick={() => {
+                                      setSelectedDate(obj.day);
+                                      onDateChange(obj.add);
+                                    }}
+                                    key={obj.day}
+                                  >
+                                    {obj.day}
+                                  </button>
+                                );
+                              })}
+
+                              {isDatePickerOpen && (
+                                <div className="date-picker">
+                                  <NewDatePicker />
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="">
+                              <button className="icon-button" onClick={toggleDatePicker}>
+                                <DateRangeIcon />
+                              </button>
+                            </div>
                           </div>
-                           
-                          <div className="">
-                            <button className="icon-button" onClick={toggleDatePicker}>
-                              <DateRangeIcon />
-                            </button>
-                          </div>
-                        </div>
-                     )} 
+                        )}
                         {/* {location.pathname !== '/app/GatewayList' && ( */}
-                        
+
                         <div>
                           <div className="form-group selectcustom">
                             <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
@@ -181,7 +180,7 @@ const Breadcrumb = () => {
                             </select>
                           </div>
                         </div>
-                        
+
                         {/* )} */}
                       </section>
                     )}

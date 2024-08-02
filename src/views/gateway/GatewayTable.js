@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -6,12 +6,19 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Card, Link } from '@mui/material';
+import { Card } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { CachedOutlined, FileUploadOutlined } from '@mui/icons-material';
 import Table from 'react-bootstrap/Table';
 import { BASE_API_URL1 } from '../../config/constant';
-import {ClientsContext} from '../dashboard/context/index';
+import { ClientsContext } from '../dashboard/context/index';
+import { useLocation } from 'react-router-dom';
+import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
+import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+import { Link } from 'react-router-dom';
+// import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -27,17 +34,27 @@ const GatewayTable = () => {
   const [gateways, setGateways] = useState([]);
   const [basicDetails, setBasicDetails] = useState({});
   const [lastFrameData, setLastFrameData] = useState({});
-  const {selectedClient} = useContext(ClientsContext);
-
-
+  const { selectedClient, selectedZone } = useContext(ClientsContext);
+  const location = useLocation();
+  const { zoneId, dmaId } = location.state || { zoneId: selectedZone, dmaId: 0 };
+  console.log('location.state:', location.state); 
+  console.log('zoneId:', zoneId); 
+  console.log('dmaId:', dmaId);  
   useEffect(() => {
     getAllGateways();
   }, []);
 
   const getAllGateways = async () => {
+    const clientId = selectedClient;
+    const requestBody = {
+      clientId,
+      zoneId: zoneId,
+      dmaId: dmaId
+    }
+    console.log(requestBody)
     try {
-      const clientId = selectedClient;
-      const response = await axios.post(`${BASE_API_URL1}gateways/getAllGatewaysWithClientId`, { clientId });
+
+      const response = await axios.post(`${BASE_API_URL1}gateways/getAllGatewaysWithClientId`, requestBody);
       if (response.data && response.data.gatewayDetails) {
         setGateways(response.data.gatewayDetails);
       }
@@ -54,7 +71,7 @@ const GatewayTable = () => {
         gatewayId: Id
       });
       if (response.data) {
-        setLastFrameData(response.data); 
+        setLastFrameData(response.data);
         setBasicDetails({
           id: response.data.id,
           type: response.data.type,
@@ -81,17 +98,32 @@ const GatewayTable = () => {
   };
 
   return (
-    <>
+    <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, marginTop: 10 }}>
+        <Row>
+          <Col md={9} sm={7} xs={7}>
+            <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Gateway List</span>{' '}
+            {/* <span style={{ textAlign: 'end' }}>
+              <InfoOutlinedIcon style={{ height: 20, width: 20, justifyContent: 'center', color: '#D6D9DC', marginLeft: 5 }} />
+            </span> */}
+          </Col>
+          <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+            <CachedOutlinedIcon style={{ color: '#6C757D' }} />{' '}
+            <span>
+              {' '}
+              <FilterAltOutlinedIcon style={{ color: '#6C757D', marginLeft: 20, marginRight: 20 }} />
+            </span>
+            <span>
+              {' '}
+              <FileUploadOutlinedIcon style={{ color: '#6C757D' }} />
+            </span>
+          </Col>
+        </Row>
       <div className='customer-table'>
         <Table style={{ borderRadius: 8 }}>
           <thead style={{ backgroundColor: '#F4F5F5' }}>
             <tr>
               {/* <th className='tablehead'><Checkbox /></th> */}
               <th className='tablehead'>Gateway ID</th>
-              {/* <th className='tablehead'>Gateway Name</th> */}
-              {/* <th className='tablehead'>Region</th>
-              <th className='tablehead'>Subnet</th>
-              <th className='tablehead'>Gateway</th> */}
               <th className='tablehead'>Time</th>
               <th className='tablehead'>ETH State</th>
               <th className='tablehead'>LTE State</th>
@@ -105,12 +137,14 @@ const GatewayTable = () => {
           </thead>
           <tbody>
             {gateways.map(gateway => (
-              <tr key={gateway.gatewayId}>
+              <tr key={gateway.id}>
                 {/* <td className='tablecontent'><Checkbox /></td> */}
                 <td className='tablecontent'>
                   <Link
                     style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}
-                    onClick={() => handleClickOpen(gateway.gatewayId)}
+                    to="/app/meterlist"
+                    state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gateway.id}}
+                    onClick={() => console.log('Link clicked for dmaId:', zoneId, dmaId, gateway.gatewayId,  )}
                   >
                     {gateway.gatewayId}
                   </Link>
@@ -124,7 +158,7 @@ const GatewayTable = () => {
                 </td> */}
                 {/* <td className='tablecontent'>{gateway.gateway}</td> */}
                 <td className='tablecontent'>
-                {new Date(gateway.time).toISOString().replace('T', ' ').split('.')[0]}
+                  {new Date(gateway.time).toISOString().replace('T', ' ').split('.')[0]}
                 </td>
 
                 <td className='tablecontent text-end'>{gateway.ethState}</td>
@@ -135,7 +169,7 @@ const GatewayTable = () => {
                 <td className='tablecontent text-end'>{gateway.batteryLevel}</td>
                 <td className='tablecontent text-end'>{gateway.batteryVoltage}</td>
                 <td className='tablecontent'>{gateway.status}</td>
-                
+
               </tr>
             ))}
           </tbody>
@@ -215,7 +249,7 @@ const GatewayTable = () => {
                         <div className='meterdetails-list'>HTTP:</div>
                         <div className='meterdetails-list'>Remarks:</div>
                       </Col>
-                      <Col md={6}xs={6} sm={6}>
+                      <Col md={6} xs={6} sm={6}>
                         <div className='meterdetails-list1'>{basicDetails.name}</div>
                         <div className='meterdetails-list1'>{basicDetails.region}</div>
                         <div className='inter400red meterdetails-list1'>{basicDetails.beacon}</div>
@@ -270,7 +304,7 @@ const GatewayTable = () => {
           </Row>
         </BootstrapDialog>
       </div>
-    </>
+    </div>
   );
 };
 

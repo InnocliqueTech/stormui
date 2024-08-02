@@ -20,7 +20,7 @@ function Device() {
                   <div className='meterdetails-list'>ADR:</div>
                 </Col>
                 <Col md={6} xs={6} sm={6}>
-                  <div className='meterdetails-list1'>56456747</div>
+                  <div className='meterdetails-list1'>56456747 dcdc</div>
                   <div className='meterdetails-list1'>OTAA</div>
                   <div className='inter600red meterdetails-list1'>False</div>                  
                   <div className='meterdetails-list1'>2024-05-02 16:40:28.427</div>

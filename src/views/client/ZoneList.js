@@ -5,12 +5,13 @@ import Table from 'react-bootstrap/Table';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import { Accordion, AccordionSummary, AccordionDetails, Link } from '@mui/material';
+import { Link } from 'react-router-dom';
+// import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
 import Spinner from 'react-bootstrap/Spinner';
 import Paginations from '../../components/Paginatons'; // Make sure this path is correct
 //import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+// import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { ClientsContext } from '../dashboard/context';
 import { BASE_API_URL1 } from '../../config/constant';
 
@@ -34,7 +35,9 @@ export default function ZoneList() {
       const response = await axios.post(BASE_API_URL1 + 'zones/getAllZoneDetailsWithClientId', {
         clientId: clientId
       });
+      console.log(response)
       setZonesList(response.data.zonesList);
+      console.log(zonesList)
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -77,7 +80,7 @@ export default function ZoneList() {
   const offset = (currentPage - 1) * itemsPerPage;
   const currentPageData = zonesList.slice(offset, offset + itemsPerPage);
   const pageCount = Math.ceil(zonesList.length / itemsPerPage);
-
+  console.log(zonesList)
   return (
     <div className='col-md-12'>
       <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, paddingBottom: 100 }}>
@@ -91,37 +94,38 @@ export default function ZoneList() {
         </Row>
 
         <div className='customer-table mt-0'>
-        <div className='pagination-controls' style={{ marginTop: '20px', marginLeft: '10PX' }}>
-        <label htmlFor='itemsPerPage'  style={{ fontWeight: '500', color:'black', fontSize: '18px' }}>Items per page:</label><nsbp/><nsbp/>
-        <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
-          <option value={5}>5</option>
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-        </select>
-      </div>
-      {loading ? ( // Display spinner if loading is true
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-          <Spinner animation="border" variant="primary" />
-        </div>
-      ) : ( 
-          <Table style={{ borderRadius: 8 }}>
-            <thead>
-              <tr>
-                <th className='tablehead'></th>
-                <th className='tablehead'>Zone/DMA ID</th>
-                <th className='tablehead'>Gateway ID</th>
-                <th className='tablehead'>Last Communication Time</th>
-                <th className='tablehead'>Reading</th>
-                <th className='tablehead'>Meters</th>
-                <th className='tablehead'>Status</th>
-                <th className='tablehead'>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-            {currentPageData.map((zone) => (
-                <React.Fragment key={zone.zoneId}>
-                  <tr>
-                    <td className='tablecontent'>
+          <div className='pagination-controls' style={{ marginTop: '20px', marginLeft: '10PX' }}>
+            <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
+            <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+            </select>
+          </div>
+          {loading ? ( // Display spinner if loading is true
+            <div style={{ textAlign: 'center', marginTop: '50px' }}>
+              <Spinner animation="border" variant="primary" />
+            </div>
+          ) : (
+            <Table style={{ borderRadius: 8 }}>
+              <thead>
+                <tr>
+                  {/* <th className='tablehead'></th> */}
+                  <th className='tablehead'>Zone ID</th>
+                  <th className='tablehead'>Gateway ID</th>
+                  <th className='tablehead'>Last Communication Time</th>
+                  <th className='tablehead'>Reading</th>
+                  <th className='tablehead'>Meters</th>
+                  <th className='tablehead'>Status</th>
+                  <th className='tablehead'>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {currentPageData.map((zone) => (
+                  <React.Fragment key={zone.zoneId}>
+                    <tr>
+                      {/* <td className='tablecontent'>
                       <Accordion expanded={expandedZone === zone.zoneId} onChange={() => handleAccordionChange(zone.zoneId)} style={{ boxShadow: 'none' }}>
                         <AccordionSummary
                           expandIcon={<NavigateNextIcon />}
@@ -134,95 +138,106 @@ export default function ZoneList() {
                          
                         </AccordionDetails>
                       </Accordion>
-                    </td>
-                    <td className='tablecontent'>
-                      <Link to="/app/dmalist" style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}>
-                        {zone.zoneId}
-                      </Link>
-                    </td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>
-                        {zone.gatewayId}
-                      </span>
-                    </td>
-                    <td className='tablecontent'>{zone.lastCommunicationTime}</td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
-                        {zone.reading || 'N/A'}
-                      </span>
-                    </td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
-                        {zone.meters}
-                      </span>
-                    </td>
-                    <td className='tablecontent'>
-                      <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>
-                        {zone.status}
-                      </span>
-                    </td>
-                    <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td>
-                  </tr>
-                  {expandedZone === zone.zoneId && data[zone.zoneId] && data[zone.zoneId].map((dma) => (
-                    <tr key={dma.dmaId}>
-                      <td className='tablecontent tabelexpand-bg'>
+                    </td> */}
+                      <td className='tablecontent-link'>
+                        <Link
+                          to="/app/dmalist"
+                          state={{ zoneId: zone.zoneId }}
+                          // to={{
+                          //   pathname: "/app/dmalist",
+                          //   state: { zoneId: zone.zoneId }
+                          // }}
+                          onClick={() => console.log('Link clicked for zoneId:', zone.zoneId)}  // Debugging line
+                          style={{ textDecoration: 'none', cursor: 'pointer' }}>
+                         
+                          {zone.displayName}
 
-                      <tr></tr>
-                      {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
-                        {/* {dma.dmaId} */}
-                      {/* </span> */}
+                        </Link>
                       </td>
-                      <td className='tablecontent tabelexpand-bg'>
-                        
-                      {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
-                        {dma.dmaId}
-                      {/* </span> */}
-                      </td>
-                      <td className='tablecontent tabelexpand-bg'>
-                      <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>
-                        {dma.gatewayId}
-                      </span>
-                      </td>
-                      <td className='tablecontent tabelexpand-bg'>
 
-                        
-                      {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
-                        {dma.lastCommunicationTime}
-                      {/* </span> */}
+                      <td className='tablecontent'>
+                        <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>
+                          {zone.gatewayId}
+                        </span>
                       </td>
-                      <td className='tablecontent tabelexpand-bg'>
-                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
-                        {dma.reading || 'N/A'}
-                      </span>
-                    </td>
-                    <td className='tablecontent tabelexpand-bg'>
-                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
-                        {dma.meters}
-                      </span>
-                    </td>
-                    <td className='tablecontent tabelexpand-bg'>
-                      <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>
-                        {dma.status}
-                      </span>
-                    </td>
-                    <td className='tablecontent tabelexpand-bg'> </td>
-                   
+                      <td className='tablecontent'>{zone.lastCommunicationTime}</td>
+                      <td className='tablecontent'>
+                        <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
+                          {zone.reading || 'N/A'}
+                        </span>
+                      </td>
+                      <td className='tablecontent'>
+                        <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
+                          {zone.meters}
+                        </span>
+                      </td>
+                      <td className='tablecontent'>
+                        <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>
+                          {zone.status}
+                        </span>
+                      </td>
+                      <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td>
                     </tr>
-                  ))}
-                </React.Fragment>
-              ))}
-            </tbody>
-          </Table>
-      )}
-        </div>
-        <div style={{ textAlign: 'center', marginTop:'100PX' }}>
+                    {expandedZone === zone.zoneId && data[zone.zoneId] && data[zone.zoneId].map((dma) => (
+                      <tr key={dma.dmaId}>
+                        <td className='tablecontent tabelexpand-bg'>
 
-      <Paginations
-  currentPage={currentPage}
-  totalPages={pageCount}
-  onPageChange={handlePageChange} // Ensure onPageChange is correctly passed
-/>
-</div>
+                          <tr></tr>
+                          {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
+                          {/* {dma.dmaId} */}
+                          {/* </span> */}
+                        </td>
+                        <td className='tablecontent tabelexpand-bg'>
+
+                          {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
+                          {dma.dmaId}
+                          {/* </span> */}
+                        </td>
+                        <td className='tablecontent tabelexpand-bg'>
+                          <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>
+                            {dma.gatewayId}
+                          </span>
+                        </td>
+                        <td className='tablecontent tabelexpand-bg'>
+
+
+                          {/* <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}> */}
+                          {dma.lastCommunicationTime}
+                          {/* </span> */}
+                        </td>
+                        <td className='tablecontent tabelexpand-bg'>
+                          <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
+                            {dma.reading || 'N/A'}
+                          </span>
+                        </td>
+                        <td className='tablecontent tabelexpand-bg'>
+                          <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
+                            {dma.meters}
+                          </span>
+                        </td>
+                        <td className='tablecontent tabelexpand-bg'>
+                          <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>
+                            {dma.status}
+                          </span>
+                        </td>
+                        <td className='tablecontent tabelexpand-bg'> </td>
+
+                      </tr>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </Table>
+          )}
+        </div>
+        <div style={{ textAlign: 'center', marginTop: '40PX' }}>
+
+          <Paginations
+            currentPage={currentPage}
+            totalPages={pageCount}
+            onPageChange={handlePageChange} // Ensure onPageChange is correctly passed
+          />
+        </div>
       </div>
     </div>
   );

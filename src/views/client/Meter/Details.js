@@ -135,7 +135,7 @@ function Device() {
                     <Col md={6} xs={12} sm={12}>
                         <Row>
                             <Col md={6} xs={6} sm={6}>
-                                <div className='meterdetails-list'>Devadd: </div>
+                                <div className='meterdetails-list'>Devadd 453: </div>
                                 <div className='meterdetails-list'>GPS: </div>
                                 <div className='meterdetails-list'>Remarks:</div>
                             </Col>

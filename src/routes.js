@@ -61,11 +61,11 @@ const routes = [
       },
       {
         path: '/app/gateway',
-        element: lazy(() => import('./views/gateway/GatewayList'))
+        element: lazy(() => import('./views/gateway/GatewayPage'))
       },
       {
         path: '/app/gatewaylist',
-        element: lazy(() => import('./views/gateway/GatewayList'))
+        element: lazy(() => import('./views/gateway/GatewayTable'))
       },
       {
         path: '/app/client',
@@ -82,6 +82,10 @@ const routes = [
       {
         path: '/app/dmalist',
         element: lazy(() => import('./views/client/DmaList'))
+      },
+      {
+        path: '/app/gatewaylist',
+        element: lazy(() => import('./views/client/GatewayData'))
       },
       {
         path: '/app/meterlist',

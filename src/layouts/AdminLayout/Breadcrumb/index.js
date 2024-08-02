@@ -98,11 +98,11 @@ const Breadcrumb = () => {
                       padding: '0px 15px'
                     }}
                   >
-                    <Col md={6} sm={12} xs={12}>
+                    <Col md={7} sm={12} xs={12}>
                       <div className="dashheading">
                         {title !== 'Dashboard' && (
                           <span>
-                            {(location.pathname.startsWith('/app/client') || location.pathname.startsWith('/app/dmalist')) && (
+                            {(location.pathname.startsWith('/app/client') || location.pathname.startsWith('/app/dmalist') || location.pathname.startsWith('/app/gatewaylist') || location.pathname.startsWith('/app/meterlist')) && (
                               <>
                                 <Link className={location.pathname === '/app/client' ? 'tab active' : 'tab'} to="/app/client">
                                   Dashboard
@@ -113,11 +113,23 @@ const Breadcrumb = () => {
                                 >
                                   Zone&apos;s List
                                 </Link>
-                                <Link
+                                 <Link
                                   className={location.pathname.toLowerCase().includes('dmalist') ? 'tab active' : 'tab'}
                                   to="/app/dmalist"
                                 >
                                   DMA&apos;s List
+                                </Link> 
+                                <Link
+                                  className={location.pathname.toLowerCase().includes('gatewaylist') ? 'tab active' : 'tab'}
+                                  to="app/gatewaylist"
+                                >
+                                  Gateway&apos;s List
+                                </Link>
+                                <Link
+                                  className={location.pathname.toLowerCase().includes('meterlist') ? 'tab active' : 'tab'}
+                                  to="app/meterlist"
+                                >
+                                  Meter&apos;s List
                                 </Link>
                               </>
                             )}
@@ -126,7 +138,7 @@ const Breadcrumb = () => {
                       </div>
                     </Col>
 
-                    {['/app/client', '/app/dashboard/default', '/app/dmalist'].includes(location.pathname) && (
+                    {['/app/client', '/app/dashboard/default', "app/gatewaylist"].includes(location.pathname) && (
                       <section className="seconde-section">
                         {location.pathname !== '/app/dmalist' && (
                           <div className="days-date-picker">

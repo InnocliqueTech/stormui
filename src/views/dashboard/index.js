@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router';
 // import DMAFlowChart from './DmaFlowChart';
 
 const DashDefault = () => {
-const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const { presentDate, toDate } = useStateContext();
   const [dashboardData, setDashboardData] = useState({});
@@ -93,9 +93,9 @@ const navigate = useNavigate()
           <Card className="card-social">
             <Card.Body
               onClick={() => navigate("/app/clientlist")}
-              style={{cursor:"pointer"}}
-             
-        
+              style={{ cursor: "pointer" }}
+
+
             >
               <CustomPieChart name="Zones" data={dashboardData.totalZone} />
             </Card.Body>
@@ -106,22 +106,26 @@ const navigate = useNavigate()
           <Card className="card-social">
             <Card.Body
 
-onClick={() => navigate("/app/clientlist")}
-style={{cursor:"pointer"}}
-            
+              onClick={() => navigate("/app/dmalist")}
+              style={{ cursor: "pointer" }}
+
             >
+           
               <TotalDma data={dashboardData.totalDma} />
             </Card.Body>
           </Card>
         </Col>
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
-            <Card.Body>
+            <Card.Body
+             onClick={() => navigate("/app/meterlist")}
+             style={{ cursor: "pointer" }}
+            >
               <TotalMeters data={dashboardData.totalMeters} />
             </Card.Body>
           </Card>
         </Col>
-        <Col md={6} xl={7}>
+        <Col md={6} xl={6}>
           <Card className="card-social">
             <Card.Body className="p-0">
               <Row>
@@ -132,7 +136,7 @@ style={{cursor:"pointer"}}
             </Card.Body>
           </Card>
         </Col>
-        <Col md={6} xl={5}>
+        <Col md={6} xl={6}>
           <Card className="card-social">
             <Card.Body className="p-0">
               <Row>

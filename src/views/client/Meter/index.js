@@ -8,12 +8,13 @@ import deleteimg from '../../../assets/images/delete.svg';
 import Device from './Device';
 import Details from './Details';
 import Photos from './Photos';
-import Overflow from '../../dashboard/Overflow';
+// import Overflow from '../../dashboard/Overflow';
+import Analytics from './Analaytics';
 import { useState } from 'react';
 
 
 function Meter() {
-    const [outFlowData] = useState('1');
+    const [analytics] = useState('1');
 
     return (
         <>
@@ -25,11 +26,12 @@ function Meter() {
                         fill
                     >
                         <Tab eventKey="home" title="Analytics">
-                            <Overflow data={outFlowData} />
+                            {/* <Overflow data={outFlowData} /> */}
+                            <Analytics  data = {analytics}/>
 
                         </Tab>
                         <Tab eventKey="details" title="Details">
-                            <Details />
+                            <Details/>
                         </Tab>
                         <Tab eventKey="device" title="Device">
                             <Device/>

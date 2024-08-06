@@ -107,7 +107,7 @@ export default function GatewayData() {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentPageData.map((dma, index) => (
+                  {currentPageData.map((dma) => (
                     <tr key={dma.dmaId}>
                       <td className='tablecontent-link'>
                         <Link
@@ -116,6 +116,7 @@ export default function GatewayData() {
                           state={{ zoneId: zoneId, dmaId: dma.dmaId}}
                           onClick={() => console.log('Link clicked for dmaId:', dma.dmaId, zoneId )}
                           style={{ textDecoration: 'none', cursor: 'pointer' }}>{dma.displayName}</Link>
+                          
                       </td>
                       <td className='tablecontent'>{dma.gatewayId}</td>
                       <td className='tablecontent'>{new Date(dma.lastCommunicationTime).toLocaleString()}</td>

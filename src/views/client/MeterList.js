@@ -34,6 +34,8 @@ const MeterList = () => {
   const location = useLocation();
   const { selectedClient, selectedZone } = useContext(ClientsContext);
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState("");
+
   // const [fullWidth] = useState(true);
   // const { clients } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
@@ -73,7 +75,7 @@ const MeterList = () => {
         startIndex: startIndex,
         rowCount: itemsPerPage
       }
-
+    
       console.log(requestBody)
       const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
       console.log(response)
@@ -87,8 +89,9 @@ const MeterList = () => {
     }
   };
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (e, data) => {
     setOpen(true);
+    setData(data)
   };
 
   const handleClose = () => {
@@ -199,6 +202,7 @@ const MeterList = () => {
             <Table style={{ borderRadius: 8 }}>
               <thead>
                 <tr>
+                <th className='tablehead'>CAN No</th>
                   <th className='tablehead'>Meter Id</th>
                   <th className='tablehead'>Gateway Id</th>
                   <th className='tablehead'>DEVEUI</th>
@@ -218,11 +222,15 @@ const MeterList = () => {
                   <tr key={meter.meterId}>
                     <td className='tablecontent'>
                       <Link
-                       state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gatewayId, meterId:meter.meterId}}
-                       onClick={handleClickOpen} style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}>
-                        {meter.meterId}
+                        key={meter.meterId}
+                        state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gatewayId, meterId: meter.meterId }}
+
+                        onClick={(e) => handleClickOpen(e, meter)}
+                        style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121 !important' }}>
+                        {meter.canNo}
                       </Link>
                     </td>
+                    <td className='tablecontent'>  {meter.meterId}</td>
                     <td className='tablecontent'>{meter.gatewayId}</td>
                     <td className='tablecontent'>{meter.deveui}</td>
                     <td className='tablecontent'>
@@ -264,8 +272,8 @@ const MeterList = () => {
 
       {/* Meter Details Dialog */}
       <BootstrapDialog
-       maxWidth="md" // Options: 'xs', 'sm', 'md', 'lg', 'xl'
-       fullWidth
+        maxWidth="md" // Options: 'xs', 'sm', 'md', 'lg', 'xl'
+        fullWidth
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
@@ -293,7 +301,7 @@ const MeterList = () => {
             </IconButton>
           </Col>
         </Row>
-        <Meter />
+        <Meter data={data} />
       </BootstrapDialog>
     </div>
   );

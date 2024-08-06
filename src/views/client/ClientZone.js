@@ -80,6 +80,7 @@ const options = {
 };
 
 const ClientZone = (props) => {
+  console.log(props.data)
   const [data, setData] = useState([]);
   const [opt, setOpt] = useState(options);
   useEffect(()=>{

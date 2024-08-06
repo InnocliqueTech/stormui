@@ -55,6 +55,7 @@ const GatewayTable = () => {
     try {
 
       const response = await axios.post(`${BASE_API_URL1}gateways/getAllGatewaysWithClientId`, requestBody);
+      console.log(response)
       if (response.data && response.data.gatewayDetails) {
         setGateways(response.data.gatewayDetails);
       }
@@ -144,7 +145,7 @@ const GatewayTable = () => {
                     style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}
                     to="/app/meterlist"
                     state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gateway.id}}
-                    onClick={() => console.log('Link clicked for dmaId:', zoneId, dmaId, gateway.gatewayId,  )}
+                    onClick={() => console.log('Link clicked for dmaId:', zoneId, dmaId, gateway.id,  )}
                   >
                     {gateway.gatewayId}
                   </Link>

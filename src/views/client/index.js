@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Row, Col, Card, Image } from 'react-bootstrap';
+import { Row, Col, Card, Image, Table, OverlayTrigger, Spinner } from 'react-bootstrap';
 // import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_API_URL, BASE_API_URL1 } from '../../config/constant';
@@ -26,7 +26,7 @@ import Totalcounsumption from '../../src/views/dashboard/Totalcounsumption';
 import over from '../../assets/images/symbols_water.svg';
 import UpArrow from '../../assets/images/UpArrow.png';
 import DownArrow from '../../assets/images/DownArrow.png';
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import ZoneSegmenation from './zoneSegmenation';
 import { useStateContext } from '../../contexts/MainContext';
@@ -42,83 +42,245 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }
 }));
 
-const HtmlTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(() => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: '#fff',
-    color: '#212121',
-    maxWidth: 220,
-    borderRadius: 8,
-    border: '1px solid #dadde9',
-    height: 'auto',
-    width: '220px',
-    padding: 12
-  }
-}));
+// const HtmlTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(() => ({
+//   [`& .${tooltipClasses.tooltip}`]: {
+//     backgroundColor: '#fff',
+//     color: '#212121',
+//     maxWidth: 220,
+//     borderRadius: 8,
+//     border: '1px solid #dadde9',
+//     height: 'auto',
+//     width: '220px',
+//     padding: 12
+//   }
+// }));
 
 const Client = () => {
   const [dashboardData, setDashboardData] = useState({});
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
   const { presentDate, toDate } = useStateContext();
-  const { clients,selectedClient,  selectedZone } = useContext(ClientsContext);
-  const [dara, setDmaData] = useState({});
-  const [supplyByZoneData, setSupplyByZoneData] = useState([]);
+  // const { clients } = useContext(ClientsContext);
+  const { selectedClient, selectedZone } = useContext(ClientsContext);
+  const [dmaData, setDmaData] = useState({});
+  const [dayDashBoardData, setDayDashBoardData] = useState({});
+  const [loading, setLoading] = useState(true);
+  // const [supplyByZoneData, setSupplyByZoneData] = useState([]);
 
   //For Supply By zone Graph
-  const [zoneNames, setZoneNames] = useState([]);
-  const [dates, setDates] = useState([]);
+  // const [zoneNames, setZoneNames] = useState([]);
+  // const [dates, setDates] = useState([]);
+
+
+  // zone wise supply
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      // const requestBody = {
+      //   clientId: 1,
+      //   zoneId: 0,
+      //   fromDate: "2024-06-01",
+      //   toDate: "2024-06-27"
+      // }
+      const requestBody = {
+        clientId: selectedClient,
+        zoneId: selectedZone || 0,
+        fromDate: presentDate,
+        toDate: toDate
+      }
+      console.log(requestBody)
+      try {
+        const response = await axios.post(`${BASE_API_URL1}zones/getZoneWiseConsumptionInClientDashboard`, requestBody);
+        setDashboardData(response.data);
+        console.log(dashboardData)
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchDashboardData();
+  }, [presentDate, toDate]);
+
+
+
+  // getDayWiseZoneConsumptionInClientDashboard
 
   useEffect(() => {
     const fetchDashboardData = async () => {
+      setLoading(true);
       try {
-        const response = await axios.post(`${BASE_API_URL1}zones/getZoneWiseConsumptionInClientDashboard`, {
+        const requestBody = {
           clientId: selectedClient,
-          zoneId:selectedZone|| 0,
+          zoneId: selectedZone || 0,
           fromDate: presentDate,
           toDate: toDate
-        });
-        setDashboardData(response.data);
+        }
+        // const requestBody = {
+        //   clientId: 1,
+        //   zoneId: 0,
+        //   fromDate: "2024-06-01",
+        //   toDate: "2024-06-30"
+        // }
+
+        console.log(requestBody)
+        const response = await axios.post(`${BASE_API_URL1}zones/getDayWiseZoneConsumptionInClientDashboard`, requestBody);
+        console.log(response)
+        setDayDashBoardData(response.data);
+        // setSupplyByZoneData(response.data);
+        // let dates = Object.keys(response.data);
+        // setDates(dates);
+        // console.log(Object.values(response.data), 'values');
+        // let filteredData = Object.values(response.data).map((item) => {
+        //   return item.zoneDetails.map((item) => {
+        //     return item.zoneName;
+        //   });
+        // });
+        // setZoneNames(filteredData);
       } catch (e) {
         console.log(e);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchDashboardData();
   }, [presentDate, toDate]);
 
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        // debugger;
-        const response = await axios.post(
-          `${BASE_API_URL1}zones/getDayWiseZoneConsumptionInClientDashboard
-        `,
-          {
-            clientId: clients[0]?.clientId,
-            zoneId: 0,
-            fromDate: '2024-06-10',
-            toDate: '2024-06-15'
-          }
-        );
-        setSupplyByZoneData(response.data);
-        let dates = Object.keys(response.data);
-        setDates(dates);
-        console.log(Object.values(response.data), 'values');
-        let filteredData = Object.values(response.data).map((item) => {
-          return item.zoneDetails.map((item) => {
-            return item.zoneName;
-          });
-        });
-        setZoneNames(filteredData);
-      } catch (e) {
-        console.log(e);
-      }
-    };
+  // console.log(supplyByZoneData, { zoneNames }, { dates });
 
-    fetchDashboardData();
-  }, [presentDate, toDate]);
+  const renderTooltip = (props, inflow, consumption, total, date) => (
+    <Tooltip className='card bg-white p-3' id="button-tooltip" {...props} >
+      <div className="d-flex pb-1 mb-2" style={{ borderBottom: '1px solid #ddd' }}>
+        <span className="col-md-6" style={{ fontSize: 14, color: '#212121' }}>
+          {date}
+        </span>
+        <b style={{ fontSize: 14, color: '#0D47A1' }} className="col-md-6 text-end">
+          {total}%
+        </b>
+      </div>
+      <div className="d-flex pb-1 mb-2">
+        <span className="col-md-6" style={{ fontSize: 14, color: '#717171' }}>
+          In Flow
+        </span>
+        <b style={{ fontSize: 14, color: '#212121' }} className="col-md-6 text-end">
+          {inflow ? inflow : '-'}
+        </b>
+      </div>
+      <div className="d-flex pb-1 mb-2">
+        <span className="col-md-6" style={{ fontSize: 14, color: '#717171' }}>
+          Consumption
+        </span>
+        <b style={{ fontSize: 14, color: '#212121' }} className="col-md-6 text-end">
+          {consumption ? consumption : '-'}
+        </b>
+      </div>
+    </Tooltip>
+  );
+  const getBackgroundColor = (total) => {
+    if (total < 30) {
+      return '#e3f2fd';
+    } else if (total >= 30 && total <= 50) {
+      return '#bbdefb';
+    } else if (total > 50 && total <= 75) {
+      return '#90e0ef';
+    } else if (total > 75 && total < 100) {
+      return '#00b4eb';
+    } else if (total === 100) {
+      return '#0d47a1';
+    }
+  };
 
-  console.log(supplyByZoneData, { zoneNames }, { dates });
+  const getTextColor = (total) => {
+    if (total > 50 || total === 100) {
+      return 'white';
+    } else {
+      return 'black';
+    }
+  };
+  const renderTableHeader = () => {
+    const dates = Object.keys(dayDashBoardData);
+    return (
+      <thead>
+        <tr>
+          <td style={{ textAlign: 'left', color: "#adb5bd" }}>Zones</td>
+          {dates.map((date, index) => (
+            <td style={{ color: "#adb5bd" }} key={index}>{date}</td>
+          ))}
+        </tr>
+      </thead>
+    );
+  };
+
+  const renderTableBody = () => {
+    const dates = Object.keys(dayDashBoardData);
+    const zones = dates.length > 0 ? dayDashBoardData[dates[0]].zoneDetails : [];
+
+    return (
+      <tbody>
+        {zones.map((zone, zoneIndex) => (
+          <tr key={zone.zoneId}>
+            <th>{zone.zoneName}</th>
+            {dates.map((date, dateIndex) => {
+              const zoneDetails = dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zone.zoneId);
+              const backgroundColor = getBackgroundColor(zoneDetails.total);
+              const color = getTextColor(zoneDetails.total);
+              return (
+                <td key={dateIndex} style={{ backgroundColor, color: color }}>
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
+                  >
+                    <Button variant="link">
+                      {zoneDetails.total}%
+                    </Button>
+                  </OverlayTrigger>
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+        <tr>
+          <th>Average</th>
+          {dates.map((date, dateIndex) => {
+            const average = dayDashBoardData[date].average;
+            const backgroundColor = getBackgroundColor(average);
+            const textColor = getTextColor(average);
+            return (
+              <td key={dateIndex} style={{ backgroundColor, color: textColor }}>
+                {average}%
+              </td>
+            );
+          })}
+        </tr>
+      </tbody>
+    );
+  };
+  const renderLegend = () => {
+    return (
+      <div style={{ marginTop: '40px', display: "flex", justifyContent: "center" }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
+          <div style={{ backgroundColor: '#e3f2fd', width: '20px', height: '20px', marginRight: '10px' }}></div>
+          <span>{'<30%'}</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
+          <div style={{ backgroundColor: '#bbdefb', width: '20px', height: '20px', marginRight: '10px' }}></div>
+          <span>{'30%-50%'}</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
+          <div style={{ backgroundColor: '#90e0ef', width: '20px', height: '20px', marginRight: '10px' }}></div>
+          <span>{'50%-75%'}</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
+          <div style={{ backgroundColor: '#00b4eb', width: '20px', height: '20px', marginRight: '10px' }}></div>
+          <span>{'75%-100%'}</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ backgroundColor: '#0d47a1', width: '20px', height: '20px', marginRight: '10px' }}></div>
+          <span>{'100%'}</span>
+        </div>
+      </div>
+    );
+  };
 
   useEffect(() => {
     const fetchAlertData = async () => {
@@ -137,15 +299,19 @@ const Client = () => {
     fetchAlertData();
   }, []);
 
+  // out flow data
   useEffect(() => {
     const fetchOutFlowData = async () => {
+      
       try {
-        const response = await axios.post(`${BASE_API_URL1}dashboard/getTotalConsumptionInClientDashboard`, {
-          clientId: clients[0]?.clientId,
-          zoneId: 0,
-          fromDate: presentDate,
-          toDate: toDate
-        });
+       
+          const requestBody = {
+            clientId: selectedClient,
+            zoneId: selectedZone || 0,
+            fromDate: presentDate,
+            toDate: toDate
+          }
+        const response = await axios.post(`${BASE_API_URL1}dashboard/getTotalConsumptionInClientDashboard`, requestBody);
         setOutFlowData(response.data);
       } catch (e) {
         console.log(e);
@@ -155,16 +321,31 @@ const Client = () => {
     fetchOutFlowData();
   }, [presentDate, toDate]);
 
+
+  // getDMAWiseConsumptionInClientDashboard
+
   useEffect(() => {
     const fetchDmaData = async () => {
+      const requestBody = {
+        clientId: selectedClient,
+        zoneId: selectedZone,
+        fromDate: presentDate,
+        toDate: toDate
+      }
+
+      // const requestBody = {
+      //   clientId: selectedClient,
+      //   zoneId: 0,
+      //   fromDate: "2024-06-01",
+      //   toDate: "2024-06-27"
+      // }
+      console.log(requestBody)
       try {
-        const response = await axios.post(`${BASE_API_URL1}dma/getDMAWiseConsumptionInClientDashboard`, {
-          clientId: clients[0]?.clientId,
-          zoneId: 0,
-          fromDate: presentDate,
-          toDate: toDate
-        });
+        const response = await axios.post(`${BASE_API_URL1}dma/getDMAWiseConsumptionInClientDashboard`, requestBody);
+        console.log(response)
         setDmaData(response.data);
+        console.log(response.data);
+        console.log(dmaData)
       } catch (e) {
         console.log(e);
       }
@@ -172,6 +353,7 @@ const Client = () => {
 
     fetchDmaData();
   }, [presentDate, toDate]);
+ 
   const [open, setOpen] = React.useState(false);
   const [opendma, setOpendma] = React.useState(false);
   const [fullWidth] = React.useState(true);
@@ -290,7 +472,7 @@ const Client = () => {
           <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handleClickOpen}>
             <Card className="card-social">
               <Card.Body className="">
-                <ClientDma data={dara.dmaWiseConsumption?.consumption} />
+                <ClientDma data={dmaData.dmaWiseConsumption?.consumption}/>
               </Card.Body>
             </Card>
           </Link>
@@ -339,7 +521,7 @@ const Client = () => {
         </Row>
 
         <div className="client-zone-table mt-4">
-          <table className="table">
+          {/* <table className="table">
             <thead>
               <tr>
                 <td style={{ textAlign: 'left' }}>Zones</td>
@@ -484,7 +666,20 @@ const Client = () => {
                 <td className="bg-blue4">123%</td>
               </tr>
             </tbody>
-          </table>
+          </table> */}
+          {loading ? ( // Show spinner if loading
+            <div style={{ textAlign: 'center', marginTop: '50px' }}>
+              <Spinner animation="border" variant="primary" />
+            </div>
+          ) : (
+            <div>
+              <Table>
+                {renderTableHeader()}
+                {renderTableBody()}
+              </Table>
+              {renderLegend()}
+            </div>
+          )}
         </div>
       </Card>
 
@@ -552,8 +747,8 @@ const Client = () => {
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
-        fullWidth={fullWidth}
-        className="clientpopup"
+        maxWidth="md" // Options: 'xs', 'sm', 'md', 'lg', 'xl'
+        fullWidth
       >
         <Card>
           <Row container style={{ backgroundColor: '#000' }}>
@@ -577,12 +772,18 @@ const Client = () => {
               </IconButton>
             </Col>
           </Row>
-          <DmaTable />
+          <DmaTable dmaData = {dmaData}/>
         </Card>
       </BootstrapDialog>
 
       {/* ------------------------zone--------------------------------------- */}
-      <BootstrapDialog onClose={handledmaClose} aria-labelledby="customized-dialog-title" open={opendma} fullWidth={fullWidth}>
+      <BootstrapDialog
+        onClose={handledmaClose}
+        aria-labelledby="customized-dialog-title"
+        open={opendma}
+        maxWidth="md" // Options: 'xs', 'sm', 'md', 'lg', 'xl'
+        fullWidth
+      >
         <Card>
           <Row container style={{ backgroundColor: '#000' }}>
             <Col md={10} sm={12} xs={10}>
@@ -605,7 +806,7 @@ const Client = () => {
               </IconButton>
             </Col>
           </Row>
-          <ZoneTable />
+          <ZoneTable dashboardData={dashboardData} />
         </Card>
       </BootstrapDialog>
     </React.Fragment>

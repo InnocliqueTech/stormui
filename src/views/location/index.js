@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './indexLanding.scss';
 import './location.css';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import map from '../../assets/images/map.png';
-import { ClientsContext } from '../dashboard/context';
+// import { ClientsContext } from '../dashboard/context';
 
 const dummyData = {
   Population: '3,23,412',
@@ -19,27 +19,27 @@ const dummyData = {
 };
 
 export default function Location() {
-  const navigate = useNavigate();
-  const { clients } = useContext(ClientsContext);
+  // const navigate = useNavigate();
+  // const { clients } = useContext(ClientsContext);
 
-  const handleClick = () => {
-    navigate('/app/dashboard/default', { replace: true });
-    window.location.reload();
-  };
+  // const handleClick = () => {
+  //   navigate('/app/dashboard/default', { replace: true });
+  //   window.location.reload();
+  // };
 
-  console.log(clients, 'clients');
+  // console.log(clients, 'clients');
 
   return (
     <div
       className="home-section"
-      onClick={handleClick}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          handleClick(e);
-        }
-      }}
-      role="button"
-      tabIndex="0"
+      // onClick={handleClick}
+      // onKeyDown={(e) => {
+      //   if (e.key === 'Enter' || e.key === ' ') {
+      //     handleClick(e);
+      //   }
+      // }}
+      // role="button"
+      // tabIndex="0"
     >
       <section>
         <h3 className="welcome"> Welcome...</h3>

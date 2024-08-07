@@ -220,13 +220,13 @@ const MeterList = () => {
               <tbody>
                 {zonesList.map((meter) => (
                   <tr key={meter.meterId}>
-                    <td className='tablecontent'>
+                    <td className='tablecontent-link'>
                       <Link
                         key={meter.meterId}
                         state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gatewayId, meterId: meter.meterId }}
 
                         onClick={(e) => handleClickOpen(e, meter)}
-                        style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121 !important' }}>
+                        style={{ textDecoration: 'none', cursor: 'pointer'}}>
                         {meter.canNo}
                       </Link>
                     </td>

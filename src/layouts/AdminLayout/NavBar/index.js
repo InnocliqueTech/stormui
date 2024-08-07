@@ -45,16 +45,16 @@ const NavBar = () => {
   return (
     <header className={headerClass.join(' ')}>
       <div className="m-header">
-        <Link to="#" className={toggleClass.join(' ')}  onClick={navToggleHandler}>
+        <Link to="#" className={toggleClass.join(' ')} onClick={navToggleHandler}>
           <span />
         </Link>
-          {/* Original logo */}
-          <span className="b-title"></span>
-      
+        {/* Original logo */}
+        <span className="b-title"></span>
+
         <Image src={logo} style={{ height: 50, width: 100 }} alt="First logo" />
         {showSecondLogo && showLogos && (
           <Link to="#" className="b-brand">
- <Image src={secondLogo} style={{ height: 50, width: 100 }} alt="logo" />
+            <Image src={secondLogo} style={{ height: 50, width: 100 }} alt="logo" />
             {/* Second logo */}
 
             <span className="b-title"></span>

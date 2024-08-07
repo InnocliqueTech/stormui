@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Card, Image, Table, OverlayTrigger, Spinner } from 'react-bootstrap';
 // import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { BASE_API_URL, BASE_API_URL1 } from '../../config/constant';
+import { BASE_API_URL1 } from '../../config/constant';
 import '../dashboard/dashboard.scss';
 import Alert from '../dashboard/Alert';
 import { styled } from '@mui/material/styles';
@@ -24,8 +24,8 @@ import DmaTable from './dmatable';
 import ZoneTable from './Zonetable';
 import Totalcounsumption from '../../src/views/dashboard/Totalcounsumption';
 import over from '../../assets/images/symbols_water.svg';
-import UpArrow from '../../assets/images/UpArrow.png';
-import DownArrow from '../../assets/images/DownArrow.png';
+// import UpArrow from '../../assets/images/UpArrow.png';
+// import DownArrow from '../../assets/images/DownArrow.png';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import ZoneSegmenation from './zoneSegmenation';
@@ -75,21 +75,22 @@ const Client = () => {
   // zone wise supply
   useEffect(() => {
     const fetchDashboardData = async () => {
-      // const requestBody = {
-      //   clientId: 1,
-      //   zoneId: 0,
-      //   fromDate: "2024-06-01",
-      //   toDate: "2024-06-27"
-      // }
       const requestBody = {
-        clientId: selectedClient,
-        zoneId: selectedZone || 0,
-        fromDate: presentDate,
-        toDate: toDate
+        clientId: 1,
+        zoneId: 0,
+        fromDate: "2024-06-01",
+        toDate: "2024-06-27"
       }
+      // const requestBody = {
+      //   clientId: selectedClient,
+      //   zoneId: selectedZone || 0,
+      //   fromDate: presentDate,
+      //   toDate: toDate
+      // }
       console.log(requestBody)
       try {
         const response = await axios.post(`${BASE_API_URL1}zones/getZoneWiseConsumptionInClientDashboard`, requestBody);
+        console.log(response)
         setDashboardData(response.data);
         console.log(dashboardData)
       } catch (e) {
@@ -289,8 +290,17 @@ const Client = () => {
         //   clientId: clients[0]?.clientId
         // });
 
-        const aData = await axios.post(BASE_API_URL + '/getAlerts');
-        setAlertData(aData.data);
+        // const aData = await axios.post(BASE_API_URL + '/getAlerts');
+        // setAlertData(aData.data);
+
+        const requestBody = {
+          clientId: selectedClient
+        }
+        console.log(requestBody);
+        const response = await axios.post('http://49.207.11.223:3307/clients/getClientAlerts', requestBody);
+        console.log(response)
+        setAlertData(response.data)
+        console.log(alertData)
       } catch (e) {
         console.log(e);
       }
@@ -302,15 +312,15 @@ const Client = () => {
   // out flow data
   useEffect(() => {
     const fetchOutFlowData = async () => {
-      
+
       try {
-       
-          const requestBody = {
-            clientId: selectedClient,
-            zoneId: selectedZone || 0,
-            fromDate: presentDate,
-            toDate: toDate
-          }
+
+        const requestBody = {
+          clientId: selectedClient,
+          zoneId: selectedZone || 0,
+          fromDate: presentDate,
+          toDate: toDate
+        }
         const response = await axios.post(`${BASE_API_URL1}dashboard/getTotalConsumptionInClientDashboard`, requestBody);
         setOutFlowData(response.data);
       } catch (e) {
@@ -326,19 +336,19 @@ const Client = () => {
 
   useEffect(() => {
     const fetchDmaData = async () => {
-      const requestBody = {
-        clientId: selectedClient,
-        zoneId: selectedZone,
-        fromDate: presentDate,
-        toDate: toDate
-      }
-
       // const requestBody = {
       //   clientId: selectedClient,
-      //   zoneId: 0,
-      //   fromDate: "2024-06-01",
-      //   toDate: "2024-06-27"
+      //   zoneId: selectedZone,
+      //   fromDate: presentDate,
+      //   toDate: toDate
       // }
+
+      const requestBody = {
+        clientId: selectedClient,
+        zoneId: 0,
+        fromDate: "2024-06-01",
+        toDate: "2024-06-27"
+      }
       console.log(requestBody)
       try {
         const response = await axios.post(`${BASE_API_URL1}dma/getDMAWiseConsumptionInClientDashboard`, requestBody);
@@ -353,7 +363,7 @@ const Client = () => {
 
     fetchDmaData();
   }, [presentDate, toDate]);
- 
+
   const [open, setOpen] = React.useState(false);
   const [opendma, setOpendma] = React.useState(false);
   const [fullWidth] = React.useState(true);
@@ -384,13 +394,16 @@ const Client = () => {
         <Col md={6} xl={6} sm={12}>
           <Card className="card-social">
             <Card.Body>
-              <Col md={8} sm={8} xs={8} className="d-flex">
-                <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574' }}>
-                  <Image src={over} alt="over" className="icon" />
+              <Col md={8} sm={8} xs={8} style={{display: 'inline-flex', }}>
+                <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574'}}>
+                  <Image src={over} alt="over" className="icon"/>
                 </Col>
                 <div className="alerttext ms-2">
                   Total Out flow <span></span>{' '}
                 </div>
+                <span style={{marginTop:"10px"}}>
+                  <Image src={info} alt="info" />
+                </span>
               </Col>
               <Row>
                 <Col md={4} sm={1} xs={1}>
@@ -402,9 +415,11 @@ const Client = () => {
                       </div>
                       <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>
                         {' '}
-                        <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>{outFlowData?.inFlowDetails?.count}</h2>
+                        <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: '16px' }}>
+                          {outFlowData && outFlowData.inFlowDetails && outFlowData.inFlowDetails.count}
+                        </h2>
                       </h2>
-                      <div className="client-flow-stock d-flex">
+                      {/* <div className="client-flow-stock d-flex">
                         <div
                           style={{
                             width: 32,
@@ -420,15 +435,17 @@ const Client = () => {
                         </div>
                         <img src={UpArrow} style={{ width: '12px', height: '15px', marginRight: '10px', marginTop: '3px' }} alt="uparrow" />
                         <span style={{ fontSize: 12, paddingTop: '3px' }}>last week</span>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="client-flow-box">
                       <div className="d-flex mb-3">
                         <div className="client-flow-orange client-flow-blue me-2"></div>
                         <h4 style={{ fontSize: 14, color: '#495057', fontWeight: '600' }}>Consumption</h4>
                       </div>
-                      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>{outFlowData?.consumptionDetails?.count}</h2>
-                      <div className="client-flow-stock d-flex">
+                      <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: '16px' }}>
+                        {outFlowData && outFlowData.consumptionDetails && outFlowData.consumptionDetails.count}
+                      </h2>
+                      {/* <div className="client-flow-stock d-flex">
                         <div
                           style={{
                             width: 32,
@@ -448,7 +465,7 @@ const Client = () => {
                           alt="uparrow"
                         />
                         <span style={{ fontSize: 12, paddingTop: '3px' }}>last week</span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </Col>
@@ -463,7 +480,8 @@ const Client = () => {
           <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handledmaClickOpen}>
             <Card className="card-social">
               <Card.Body>
-                <ClientZone data={dashboardData.totalConsumption} />
+                {/* <ClientZone data={dashboardData.totalConsumption} /> */}
+                <ClientZone data={dashboardData} />
               </Card.Body>
             </Card>
           </Link>
@@ -472,7 +490,7 @@ const Client = () => {
           <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handleClickOpen}>
             <Card className="card-social">
               <Card.Body className="">
-                <ClientDma data={dmaData.dmaWiseConsumption?.consumption}/>
+                <ClientDma dmaData={dmaData} />
               </Card.Body>
             </Card>
           </Link>
@@ -772,7 +790,7 @@ const Client = () => {
               </IconButton>
             </Col>
           </Row>
-          <DmaTable dmaData = {dmaData}/>
+          <DmaTable dmaData={dmaData} />
         </Card>
       </BootstrapDialog>
 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
+// import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 
 import Navigation from './Navigation';
 import NavBar from './NavBar';
@@ -15,8 +15,8 @@ const AdminLayout = ({ children }) => {
   const windowSize = useWindowSize();
   const ref = useRef();
   const configContext = useContext(ConfigContext);
-  const location = useLocation(); // Get the current location
-
+  // const location = useLocation(); // Get the current location
+console.log(children)
   const { collapseMenu, headerFixedLayout } = configContext.state;
   const { dispatch } = configContext;
 
@@ -44,13 +44,14 @@ const AdminLayout = ({ children }) => {
 
   let mainClass = ['pcoded-wrapper'];
 
+
+  // Unconditionally render Navigation
   let common = (
     <React.Fragment>
-      {location.pathname !== '/app/dashboard/location' && <Navigation />} {/* Conditionally render Navigation */}
+      <Navigation /> {/* Always render Navigation */}
       <NavBar />
     </React.Fragment>
   );
-
   let mainContainer = (
     <React.Fragment>
       <div className="pcoded-main-container">

@@ -210,13 +210,13 @@ console.log('categories', categories)
 
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 shadow-default sm:px-2 xl:col-span-6">
-      <Row>
+      <Row style={{padding:"10px 0px 0px 18px"}}>
         <Col md={1} sm={1} xs={1} className='iconContainer' style={{ backgroundColor: '#F6C574' }}>
           <Image src={over} alt="over" className='icon' />
         </Col>
         <Col md={8} sm={8} xs={8}>
           <div className="alerttext">
-            DMA Outflow{' '}
+            DMA Outflow {' '}
             <span>
               <Image src={info} alt="gateway" />
             </span>{' '}

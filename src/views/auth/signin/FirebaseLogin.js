@@ -1,50 +1,95 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Col, Button, Alert } from 'react-bootstrap';
+import logo from '../../../assets/images/logo.png';
+import { useNavigate } from 'react-router-dom';
+
 
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 const FirebaseLogin = ({ className, ...rest }) => {
+  const navigate = useNavigate();
+  const handleLogin = async (values, { setErrors, setSubmitting }) => {
+    try {
+      const response = await fetch('http://49.207.11.223:3307/dashboard/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password
+        })
+      });
+      
+      const result = await response.json();
+
+      if (response.ok) {
+        sessionStorage.setItem('email', values.email);
+        // alert(result.message);
+        navigate('/app/dashboard/location');
+      } else {
+        setErrors({ submit: result.message || 'Something went wrong' });
+      }
+    } catch (error) {
+      setErrors({ submit: 'Failed to login. Please try again later.' });
+    } finally {
+      setSubmitting(false);
+    }
+  };
   return (
     <React.Fragment>
+      <div style={{padding:"20px"}}>
+        <img src={logo} width={100} style={{ height: "70px" }} alt="logo" />
+      </div>
+      <h6 style={{ textAlign: "left", padding: "10px 20px", fontWeight: "600" }}>Login</h6>
       <Formik
         initialValues={{
-          email: 'info@codedthemes.com',
-          password: '123456',
+          email: '',
+          password: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
+        onSubmit={handleLogin}
+
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit} className={className} {...rest}>
-            <div className="form-group mb-3">
-              <input
-                className="form-control"
-                label="Email Address / Username"
-                name="email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                type="email"
-                value={values.email}
-              />
-              {touched.email && errors.email && <small className="text-danger form-text">{errors.email}</small>}
+            <div style={{ padding: "0px 20px" }}>
+              <div className="form-group mb-3">
+                <h6 style={{ textAlign: "left", fontSize:"12px", color:"rgb(137 130 130)" }}>User Id</h6>
+                <input
+                  className="form-control"
+                  label="Email Address / Username"
+                  name="email"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="email"
+                  value={values.email}
+                  placeholder='Enter User Id'
+                />
+                {touched.email && errors.email && <small className="text-danger form-text">{errors.email}</small>}
+              </div>
+              <div className="form-group mb-4">
+              <h6 style={{ textAlign: "left", fontSize:"12px", color:"rgb(137 130 130)" }}>Enter password</h6>
+                <input
+                  className="form-control"
+                  label="Password"
+                  name="password"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="password"
+                  value={values.password}
+                  placeholder='Enter Password'
+                />
+                {touched.password && errors.password && <small className="text-danger form-text">{errors.password}</small>}
+              </div>
             </div>
-            <div className="form-group mb-4">
-              <input
-                className="form-control"
-                label="Password"
-                name="password"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                type="password"
-                value={values.password}
-              />
-              {touched.password && errors.password && <small className="text-danger form-text">{errors.password}</small>}
-            </div>
+
 
             {errors.submit && (
               <Col sm={12}>
@@ -52,17 +97,17 @@ const FirebaseLogin = ({ className, ...rest }) => {
               </Col>
             )}
 
-            <div className="custom-control custom-checkbox  text-start mb-4 mt-2">
+            {/* <div className="custom-control custom-checkbox  text-start mb-4 mt-2">
               <input type="checkbox" className="custom-control-input" id="customCheck1" />
               <label className="custom-control-label" htmlFor="customCheck1">
                 Save credentials.
               </label>
-            </div>
+            </div> */}
 
-            <Row>
-              <Col mt={2}>
-                <Button className="btn-block" color="primary" disabled={isSubmitting} size="large" type="submit" variant="primary">
-                  Signin
+            <Row style={{paddingBottom:"50px"}}>
+              <Col mt={2} md={12} style={{padding:"0px 30px"}}>
+                <Button className="btn-block" color="primary" disabled={isSubmitting} size="large" type="submit" variant="primary" style={{width:"100%"}}>
+                 Log in
                 </Button>
               </Col>
             </Row>
@@ -70,7 +115,7 @@ const FirebaseLogin = ({ className, ...rest }) => {
         )}
       </Formik>
 
-      <Row>
+      {/* <Row>
         <Col sm={12}>
           <h5 className="my-3"> OR </h5>
         </Col>
@@ -82,9 +127,9 @@ const FirebaseLogin = ({ className, ...rest }) => {
             <i className="fa fa-lock" /> Sign in with Google
           </Button>
         </Col>
-      </Row>
+      </Row> */}
 
-      <hr />
+  
     </React.Fragment>
   );
 };

@@ -140,9 +140,9 @@ const GatewayTable = () => {
             {gateways.map(gateway => (
               <tr key={gateway.id}>
                 {/* <td className='tablecontent'><Checkbox /></td> */}
-                <td className='tablecontent'>
+                <td className='tablecontent-link'>
                   <Link
-                    style={{ textDecoration: 'none', cursor: 'pointer', color: '#212121' }}
+                    style={{ textDecoration: 'none', cursor: 'pointer' }}
                     to="/app/meterlist"
                     state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gateway.id}}
                     onClick={() => console.log('Link clicked for dmaId:', zoneId, dmaId, gateway.id,  )}

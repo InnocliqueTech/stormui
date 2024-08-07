@@ -122,6 +122,7 @@ function MeterPhoto({ data1 }) {
             }
         } catch (error) {
             console.log('error in fecth images', error)
+            setGetImages([])
         }
     }
     const chunkArray = (array, chunkSize) => {
@@ -200,6 +201,7 @@ function MeterPhoto({ data1 }) {
             }
             setSnackbarMessage('Images deleted successfully');
             setSnackbarSeverity('success');
+            // setGetImages([])
             fetchImages()
             // Refresh the images list here
             // For example, if you have a function to fetch images, call it here
@@ -233,9 +235,9 @@ function MeterPhoto({ data1 }) {
                                     id="file-input"
                                 />
                                 <label htmlFor="file-input" >
-                                    <span style={{ marginRight: 20 }}>
+                                    <IconButton style={{ marginRight: 20 }}>
                                         <Image src={upload} alt="upload" />
-                                    </span>
+                                    </IconButton>
                                 </label>
 
                                 <span style={{ marginRight: 20 }}>

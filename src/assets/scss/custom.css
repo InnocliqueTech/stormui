@@ -94,7 +94,7 @@ header {
 
 .selectcustom {
     position: relative;
-    width: 200px; /* Adjust width as needed */
+    width: 110px; /* Adjust width as needed */
   }
   
   .selectcustom select {
@@ -149,7 +149,8 @@ header {
     background: #555; 
   }
   .card .card-block, .card .card-body {
-    padding: 40px 10px !important;
+    /* padding: 40px 10px !important; */
+    padding: 15px 10px !important;
   }
 
   .client-customer {
@@ -237,7 +238,7 @@ Use media queries to only use on mobile */
 
 
 .client-flow-orange { width: 18px; height: 18px; background-color: #FFA400; border-radius: 100%;}
-.client-flow-blue{background-color: #2196F3;}
+.client-flow-blue{background-color: #4cc9f0}
 .bg-blue1 { background-color: #E3F2FD !important;}
 .bg-blue2 { background-color: #BBDEFB !important; color: #fff !important;}
 .bg-blue3 { background-color: #1976D2 !important; color: #fff !important;}

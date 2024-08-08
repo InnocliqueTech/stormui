@@ -108,7 +108,7 @@ const Alert = ({ data }) => {
 
   return (
     <Card className='p-4' style={{ borderRadius: "10px" }}>
-      <Row className="mb-2 justify-content-start">
+      <Row className="mb-2 justify-content-start" >
         <Col md={1} sm={1} xs={1} className="alertContainer">
           <Image src={alert} alt="alert" className="alertIcon" />
         </Col>

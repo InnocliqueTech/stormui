@@ -18,6 +18,8 @@ const dummyData = {
   'Present Supply': '58 MD'
 };
 
+
+
 export default function Location() {
   // const navigate = useNavigate();
   // const { clients } = useContext(ClientsContext);
@@ -28,6 +30,17 @@ export default function Location() {
   // };
 
   // console.log(clients, 'clients');
+
+// useEffect(() => {
+// // Check if the page has already been reloaded
+// if (!sessionStorage.getItem('reloaded')) {
+//   // Set the flag to indicate the page has been reloaded
+//   sessionStorage.setItem('reloaded', 'true');
+
+//   // Reload the page
+//   window.location.reload();
+// }
+// }, [])
 
   return (
     <div

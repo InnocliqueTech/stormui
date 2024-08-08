@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+// import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+// import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
+// import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
+// import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { Col, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Link } from '@mui/material';
-import { MoreVert } from '@mui/icons-material';
+// import { MoreVert } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -32,7 +32,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const MeterList = () => {
   const location = useLocation();
-  const { selectedClient, selectedZone } = useContext(ClientsContext);
+  const { selectedClient, selectedZone, selectedDma, selectedGateway, selectedStatus } = useContext(ClientsContext);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState("");
 
@@ -47,7 +47,7 @@ const MeterList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [totalItems, setTotalItems] = useState(0);
-  const { zoneId, dmaId, gatewayId } = location.state || { zoneId: selectedZone, dmaId: 0, gatewayId: 0 };
+  const { zoneId, dmaId, gatewayId } = location.state || { zoneId: selectedZone, dmaId: selectedDma, gatewayId: selectedGateway, status: selectedStatus };
   console.log('location.state:', location.state);
   console.log('zoneId:', zoneId);
   console.log('dmaId:', dmaId);
@@ -60,7 +60,7 @@ const MeterList = () => {
 
   useEffect(() => {
     getDashboardData()
-  }, [currentPage, itemsPerPage])
+  }, [currentPage, itemsPerPage, selectedClient, selectedZone, selectedDma, selectedGateway])
 
   const getDashboardData = async () => {
     const clientId = selectedClient
@@ -68,6 +68,7 @@ const MeterList = () => {
     try {
       setLoading(true);
       const requestBody = {
+        status: selectedStatus,
         clientId: clientId,
         zoneId: zoneId,
         dmaId: dmaId,
@@ -75,7 +76,7 @@ const MeterList = () => {
         startIndex: startIndex,
         rowCount: itemsPerPage
       }
-    
+
       console.log(requestBody)
       const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
       console.log(response)
@@ -120,6 +121,18 @@ const MeterList = () => {
   const offset = (currentPage - 1) * itemsPerPage;
   const currentPageData = zonesList.slice(offset, offset + itemsPerPage);
   const pageCount = Math.ceil(zonesList.length / itemsPerPage);
+  
+
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case 'Active':
+        return { backgroundColor: 'rgba(47, 182, 23, 1)', color: '#fff' };
+      case 'Inactive':
+        return { backgroundColor: 'rgba(255, 0, 0, 1)', color: '#fff' };
+      default:
+        return { backgroundColor: 'rgba(128, 128, 128, 1)', color: '#fff' }; // Default color for other statuses
+    }
+  };
 
   return (
     <div className='col-md-12'>
@@ -172,17 +185,17 @@ const MeterList = () => {
             <Row>
               <Col md={9} sm={7} xs={7}>
                 <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Meter List</span>
-                <span style={{ textAlign: 'end' }}>
+                {/* <span style={{ textAlign: 'end' }}>
                   <InfoOutlinedIcon style={{ height: 20, width: 20, justifyContent: 'center', color: '#D6D9DC', marginLeft: 5 }} />
-                </span>
+                </span> */}
               </Col>
             </Row>
           </Col>
-          <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+          {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
             <CachedOutlinedIcon style={{ color: '#6C757D' }} />
             <FilterAltOutlinedIcon style={{ color: '#6C757D', marginLeft: 20, marginRight: 20 }} />
             <FileUploadOutlinedIcon style={{ color: '#6C757D' }} />
-          </Col>
+          </Col> */}
         </Row>
 
         <div className='customer-table mt-0'>
@@ -202,7 +215,7 @@ const MeterList = () => {
             <Table style={{ borderRadius: 8 }}>
               <thead>
                 <tr>
-                <th className='tablehead'>CAN No</th>
+                  <th className='tablehead'>CAN No 1</th>
                   <th className='tablehead'>Meter Id</th>
                   <th className='tablehead'>Gateway Id</th>
                   <th className='tablehead'>DEVEUI</th>
@@ -214,7 +227,7 @@ const MeterList = () => {
                   <th className='tablehead'>Status</th>
                   <th className='tablehead'>Battery Life</th>
                   <th className='tablehead'>Remarks</th>
-                  <th className='tablehead'>Action</th>
+                  {/* <th className='tablehead'>Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -226,7 +239,7 @@ const MeterList = () => {
                         state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gatewayId, meterId: meter.meterId }}
 
                         onClick={(e) => handleClickOpen(e, meter)}
-                        style={{ textDecoration: 'none', cursor: 'pointer'}}>
+                        style={{ textDecoration: 'none', cursor: 'pointer' }}>
                         {meter.canNo}
                       </Link>
                     </td>
@@ -245,11 +258,13 @@ const MeterList = () => {
                     </td>
                     <td className='tablecontent'>{meter.consumed}</td>
                     <td className='tablecontent'>
-                      <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>{meter.status}</span>
+                      <span style={{ ...getStatusStyle(meter.status), padding: '8px 20px' }}>
+                        {meter.status}
+                      </span>
                     </td>
                     <td className='tablecontent'>{meter.batteryLife}</td>
                     <td className='tablecontent'>{meter.remarks}</td>
-                    <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td>
+                    {/* <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td> */}
                   </tr>
                 ))}
               </tbody>

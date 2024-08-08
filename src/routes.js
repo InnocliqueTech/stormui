@@ -119,7 +119,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Loader from './components/Loader/Loader';
 import AdminLayout from './layouts/AdminLayout';
-import { BASE_URL } from './config/constant';
+// import { BASE_URL } from './config/constant';
 import AuthGuard from './views/auth/AuthGuard';
 
 // Lazy load components
@@ -166,6 +166,10 @@ export const renderRoutes = (routes = []) => (
 
 // Define routes
 const routes = [
+  {
+    path: '/',
+    element: <Navigate to="/login" replace /> // Redirect root to login
+  },
   {
     path: '/login',
     element: <Suspense fallback={<Loader />}><SignIn1 /></Suspense> // Ensure you import SignIn1
@@ -244,7 +248,7 @@ const routes = [
       },
       {
         path: '*',
-        element: () => <Navigate to={BASE_URL} />
+        element: <Navigate to="/login" replace /> 
       }
     ]
   }

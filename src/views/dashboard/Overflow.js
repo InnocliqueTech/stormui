@@ -15,7 +15,7 @@
 //   const [categories, setCategories] = useState([]);
 //   const [selectedDate, setSelectedDate] = useState(dayjs());
 //   const { selectedClient, selectedZone } = useContext(ClientsContext);
- 
+
 
 //   useEffect(() => {
 //     fetchData();
@@ -221,15 +221,15 @@
 //         </Col>
 //       </Row>
 //       <ReactApexChart options={options} series={data} type="bar" width="100%" height={250} />
-     
+
 //     </div>
 //     <div className="col-span-12 rounded-sm px-1 shadow-default sm:px-2 xl:col-span-6">
 //     <Row className='mt-3'>
 //         <Col md={7} sm={7} xs={7}>
-         
+
 //           <span className="alerttext">
 //             Extended Summary{' '}
-            
+
 //           </span>
 //         </Col>
 //       </Row>
@@ -241,7 +241,7 @@
 // export default Overflow;
 
 
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import axios from 'axios';
 import over from '../../assets/images/symbols_water.svg';
@@ -250,22 +250,26 @@ import info from '../../assets/images/i_icons.svg';
 import { useStateContext } from '../../contexts/MainContext';
 import { ClientsContext } from '../dashboard/context/index';
 
-const Overflow = (props) => {
+const Overflow = () => {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
   const { presentDate, toDate } = useStateContext();
-  const {  selectedClient,  selectedZone } = useContext(ClientsContext);
-  
+  const { selectedClient, selectedZone } = useContext(ClientsContext);
+  const [min, setMin] = useState()
+  const [max, setMax] = useState()
+
+ 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.post('http://49.207.11.223:3307/dashboard/getTotalOutflowInDashboard', {
           clientId: selectedClient,
-          zoneId: selectedZone||0,
+          zoneId: selectedZone || 0,
           fromDate: presentDate,
           toDate: toDate
         });
-
+        console.log(response)
         if (response.data && response.data.totalOutFlow) {
           let counts = [];
           let dates = [];
@@ -280,17 +284,26 @@ const Overflow = (props) => {
             }
           ]);
           setCategories(dates);
+
+         
+        }
+
+        if(response && response.data) {
+          setMin(response.data.minRange)
+          setMax(response.data.maxRange)
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
+    console.log(categories, min, max)
+
     fetchData();
-  }, [props, presentDate, toDate]);
+  }, [ presentDate, toDate]);
 
   const options = {
-    colors: ['#2196F3', '#80CAEE'],
+    colors: ['#4cc9f0', '#80CAEE'],
     chart: {
       fontFamily: 'inter',
       type: 'bar',
@@ -330,37 +343,48 @@ const Overflow = (props) => {
     },
     xaxis: {
       categories: categories,
-      tickPlacement: 'on',
+    },
+    yaxis: {
+      tickAmount: 4,  // Four intervals between five values
+      min: min,
+      max: max,
       labels: {
-        show: true,
-        rotate: -45,
-        rotateAlways: true,
-        hideOverlappingLabels: true,
-        showDuplicates: false,
-        trim: true,
-        maxHeight: 120,
-        style: {
-          fontSize: '12px',
-          fontWeight: 400
-        }
-      },
-      title: {
-        offsetY: -10,
-        style: {
-          fontSize: '14px',
-          fontWeight: 600
-        }
-      },
-      scrollbar: {
-        enabled: true, // Enable the scrollbar
-        height: 20,
-        borderRadius: 2,
-        barBackgroundColor: '#90CAF9',
-        barHeight: 2,
-        barBorderRadius: 2,
-        barBorderColor: '#2196F3'
+        formatter: (value) => Math.round(value)
       }
     },
+    // xaxis: {
+    //   categories: categories,
+    //   tickPlacement: 'on',
+    //   labels: {
+    //     show: true,
+    //     rotate: -45,
+    //     rotateAlways: true,
+    //     hideOverlappingLabels: true,
+    //     showDuplicates: false,
+    //     trim: true,
+    //     maxHeight: 120,
+    //     style: {
+    //       fontSize: '12px',
+    //       fontWeight: 400
+    //     }
+    //   },
+    //   title: {
+    //     offsetY: -10,
+    //     style: {
+    //       fontSize: '14px',
+    //       fontWeight: 600
+    //     }
+    //   },
+    //   scrollbar: {
+    //     enabled: true, // Enable the scrollbar
+    //     height: 20,
+    //     borderRadius: 2,
+    //     barBackgroundColor: '#90CAF9',
+    //     barHeight: 2,
+    //     barBorderRadius: 2,
+    //     barBorderColor: '#2196F3'
+    //   }
+    // },
     legend: {
       position: 'bottom',
       horizontalAlign: 'center',
@@ -379,16 +403,16 @@ const Overflow = (props) => {
 
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 shadow-default sm:px-2 xl:col-span-6">
-      <Row style={{padding:"10px 0px 0px 18px"}}>
+      <Row style={{ padding: "10px 0px 0px 18px" }}>
         <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574' }}>
           <Image src={over} alt="over" className="icon" />
         </Col>
         <Col md={8} sm={8} xs={8}>
-        <div>
+          <div>
 
-        </div>
+          </div>
           <div className="alerttext">
-            Total Out flow {' '}
+            Total Outflow {' '}
             <span>
               <Image src={info} alt="gateway" />
             </span>{' '}

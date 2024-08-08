@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Col, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+// import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
+// import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
+// import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { Link } from 'react-router-dom';
 // import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
-import { MoreVert } from '@mui/icons-material';
+// import { MoreVert } from '@mui/icons-material';
 import Spinner from 'react-bootstrap/Spinner';
 import Paginations from '../../components/Paginatons'; // Make sure this path is correct
 //import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -23,6 +23,8 @@ export default function ZoneList() {
   const [currentPage, setCurrentPage] = useState(1); // 1-based index for pages
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
+
+  
   useEffect(() => {
     if (clients && clients.length > 0) {
       getDashboardData(clients[0].clientId); // Assuming each client has an id field
@@ -81,16 +83,30 @@ export default function ZoneList() {
   const currentPageData = zonesList.slice(offset, offset + itemsPerPage);
   const pageCount = Math.ceil(zonesList.length / itemsPerPage);
   console.log(zonesList)
+
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case 'Active':
+        return { backgroundColor: 'rgba(47, 182, 23, 1)', color: '#fff' };
+      case 'Inactive':
+        return { backgroundColor: 'rgba(255, 0, 0, 1)', color: '#fff' };
+      default:
+        return { backgroundColor: 'rgba(128, 128, 128, 1)', color: '#fff' }; // Default color for other statuses
+    }
+  };
+  
   return (
     <div className='col-md-12'>
       <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, paddingBottom: 100 }}>
         <Row style={{ marginBottom: '24px' }}>
-          <Col md={9} sm={7} xs={7}></Col>
-          <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+          <Col md={9} sm={7} xs={7}>
+          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Zone List</span>{' '}
+          </Col>
+          {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
             <CachedOutlinedIcon style={{ color: '#6C757D' }} />
             <FilterAltOutlinedIcon style={{ color: '#6C757D', marginLeft: 20, marginRight: 20 }} />
             <FileUploadOutlinedIcon style={{ color: '#6C757D' }} />
-          </Col>
+          </Col> */}
         </Row>
 
         <div className='customer-table mt-0'>
@@ -111,13 +127,13 @@ export default function ZoneList() {
               <thead>
                 <tr>
                   {/* <th className='tablehead'></th> */}
-                  <th className='tablehead'>Zone ID</th>
+                  <th className='tablehead'>Zone ID 1</th>
                   <th className='tablehead'>Gateway ID</th>
                   <th className='tablehead'>Last Communication Time</th>
                   <th className='tablehead'>Reading</th>
                   <th className='tablehead'>Meters</th>
                   <th className='tablehead'>Status</th>
-                  <th className='tablehead'>Action</th>
+                  {/* <th className='tablehead'>Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -125,20 +141,6 @@ export default function ZoneList() {
                 {currentPageData.map((zone) => (
                   <React.Fragment key={zone.zoneId}>
                     <tr>
-                      {/* <td className='tablecontent'>
-                      <Accordion expanded={expandedZone === zone.zoneId} onChange={() => handleAccordionChange(zone.zoneId)} style={{ boxShadow: 'none' }}>
-                        <AccordionSummary
-                          expandIcon={<NavigateNextIcon />}
-                          aria-controls="panel1-content"
-                          id="panel1-header"
-                        >
-                    
-                        </AccordionSummary>
-                        <AccordionDetails>
-                         
-                        </AccordionDetails>
-                      </Accordion>
-                    </td> */}
                       <td className='tablecontent-link'>
                         <Link
                           to="/app/dmalist"
@@ -171,12 +173,17 @@ export default function ZoneList() {
                           {zone.meters}
                         </span>
                       </td>
-                      <td className='tablecontent'>
+                      {/* <td className='tablecontent'>
                         <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, color: '#fff' }}>
                           {zone.status}
                         </span>
-                      </td>
-                      <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td>
+                      </td> */}
+                      <td className='tablecontent'>
+                      <span style={{ ...getStatusStyle(zone.status), padding: '8px 20px' }}>
+                        {zone.status}
+                      </span>
+                    </td>
+                      {/* <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td> */}
                     </tr>
                     {expandedZone === zone.zoneId && data[zone.zoneId] && data[zone.zoneId].map((dma) => (
                       <tr key={dma.dmaId}>

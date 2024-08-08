@@ -336,19 +336,19 @@ const Client = () => {
 
   useEffect(() => {
     const fetchDmaData = async () => {
-      // const requestBody = {
-      //   clientId: selectedClient,
-      //   zoneId: selectedZone,
-      //   fromDate: presentDate,
-      //   toDate: toDate
-      // }
-
       const requestBody = {
         clientId: selectedClient,
-        zoneId: 0,
-        fromDate: "2024-06-01",
-        toDate: "2024-06-27"
+        zoneId: selectedZone,
+        fromDate: presentDate,
+        toDate: toDate
       }
+
+      // const requestBody = {
+      //   clientId: selectedClient,
+      //   zoneId: 0,
+      //   fromDate: "2024-06-01",
+      //   toDate: "2024-06-27"
+      // }
       console.log(requestBody)
       try {
         const response = await axios.post(`${BASE_API_URL1}dma/getDMAWiseConsumptionInClientDashboard`, requestBody);
@@ -399,7 +399,7 @@ const Client = () => {
                   <Image src={over} alt="over" className="icon"/>
                 </Col>
                 <div className="alerttext ms-2">
-                  Total Out flow <span></span>{' '}
+                  Total Out flow 1<span></span>{' '}
                 </div>
                 <span style={{marginTop:"10px"}}>
                   <Image src={info} alt="info" />

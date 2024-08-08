@@ -27,9 +27,24 @@ const DashDefault = () => {
   console.log(clients, 'the check');
   useEffect(() => {
     if (selectedClient) {
+
+      // // Check if the page has already been reloaded
+      // if (!sessionStorage.getItem('dashboardReloaded')) {
+      //   // Set the flag to indicate the page has been reloaded
+      //   sessionStorage.setItem('dashboardReloaded', 'true');
+
+      //   // Reload the page
+      //   window.location.reload();
+      // }
       getDashboardData();
+
     }
-  }, [selectedClient, selectedZone]);
+
+
+
+  }, [selectedClient, selectedZone, presentDate, toDate]);
+
+
 
   const getDashboardData = async () => {
     try {
@@ -110,7 +125,7 @@ const DashDefault = () => {
               style={{ cursor: "pointer" }}
 
             >
-           
+
               <TotalDma data={dashboardData.totalDma} />
             </Card.Body>
           </Card>
@@ -118,8 +133,8 @@ const DashDefault = () => {
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
             <Card.Body
-             onClick={() => navigate("/app/meterlist")}
-             style={{ cursor: "pointer" }}
+              onClick={() => navigate("/app/meterlist")}
+              style={{ cursor: "pointer" }}
             >
               <TotalMeters data={dashboardData.totalMeters} />
             </Card.Body>

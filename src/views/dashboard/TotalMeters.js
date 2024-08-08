@@ -8,7 +8,7 @@ const options = {
     fontFamily: 'inter',
     type: 'donut'
   },
-  colors: ['#2196F3', '#01A9D8', '#1DD0BB'],
+  colors: ['#4cc9f0', '#caf0f8', '#90e0ef'],
   legend: {
     position: 'bottom',
     horizontalAlign: 'center',
@@ -102,7 +102,7 @@ const TotalMeters = (props) => {
 
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5">
-      <Row>
+      <Row style={{padding:"0px 0px 0px 18px"}}>
         <Col md={1} sm={1} xs={1} className='iconContainer'>
           <Image src={meter} alt="meter" className='icon' style={{ color: '#95ACFF' }} />
         </Col>

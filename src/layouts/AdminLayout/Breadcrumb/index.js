@@ -10,6 +10,14 @@ import { useStateContext } from '../../../contexts/MainContext';
 import { format, isValid, parseISO } from 'date-fns';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import NewDatePicker from './NewDatePicker';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
+import { useNavigate } from 'react-router-dom';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
 
 const handleChange = (e, setValue) => {
   const { value } = e.target;
@@ -18,12 +26,37 @@ const handleChange = (e, setValue) => {
 
 const Breadcrumb = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [main, setMain] = useState([]);
   const [item, setItem] = useState([]);
-  const { selectedClient, zones, selectedZone, setSelectedZone } = useContext(ClientsContext);
+  const { selectedClient, zones, selectedZone, setSelectedZone, dmas, selectedDma, setSelectedDma, gateways, selectedGateway, setSelectedGateway, status, selectedStatus, setSelectedStatus } = useContext(ClientsContext);
   // const { selectedClient, setSelectedClient } = useContext(ClientsContext);
   const { onDateChange, selectedDate, setSelectedDate, isDatePickerOpen, toggleDatePicker } = useStateContext();
   // const [zones, setZones] = useState([]);
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  // const [status, setStatus] = useState(0);
+
+  const handleFilterIconClick = () => {
+    navigate('/app/meterlist');
+    setIsDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setIsDialogOpen(false);
+  };
+  // const handleApplyFilters = () => {
+  //   // Redirect to meterlist with filters as query parameters
+  //   const queryParams = new URLSearchParams({
+  //     status: status.toString(),
+  //     zone: selectedZone.toString(),
+  //     dma: selectedDma.toString(),
+  //     gateway: selectedGateway.toString()
+  //   }).toString();
+
+  //   navigate(`/app/meterlist?${queryParams}`);
+  //   setIsDialogOpen(false);
+  // };
 
   useEffect(() => {
     const fetchZones = async (clientId) => {
@@ -41,6 +74,8 @@ const Breadcrumb = () => {
       fetchZones(selectedClient);
     }
   }, [selectedClient]);
+
+
 
   useEffect(() => {
     navigation.items.forEach((item, index) => {
@@ -100,12 +135,14 @@ const Breadcrumb = () => {
                   >
                     <Col md={7} sm={12} xs={12}>
                       <div className="dashheading">
-                        {title !== 'Dashboard' && (
+                        {location.pathname == '/app/dashboard/default' && (<h3 style={{ fontWeight: "600" }}>Dashboard</h3>)}
+                        {location.pathname == '/app/gateway' && (<h3 style={{ fontWeight: "600" }}>Gateways</h3>)}
+                        {title == 'Dashboard' && (
                           <span>
                             {(location.pathname.startsWith('/app/client') || location.pathname.startsWith('/app/dmalist') || location.pathname.startsWith('/app/gatewaylist') || location.pathname.startsWith('/app/meterlist')) && (
                               <>
-                                <Link className={location.pathname === '/app/client' ? 'tab active' : 'tab'} to="/app/client">
-                                  Dashboard
+                                <Link className={location.pathname === '/app/client' ? 'tab active' : 'tab'} to="/app/dashboard/default">
+                                  <ArrowBackIcon />
                                 </Link>
                                 <Link
                                   className={location.pathname.toLowerCase().includes('clientlist') ? 'tab active' : 'tab'}
@@ -113,12 +150,12 @@ const Breadcrumb = () => {
                                 >
                                   Zone&apos;s List
                                 </Link>
-                                 <Link
+                                <Link
                                   className={location.pathname.toLowerCase().includes('dmalist') ? 'tab active' : 'tab'}
                                   to="/app/dmalist"
                                 >
                                   DMA&apos;s List
-                                </Link> 
+                                </Link>
                                 <Link
                                   className={location.pathname.toLowerCase().includes('gatewaylist') ? 'tab active' : 'tab'}
                                   to="app/gatewaylist"
@@ -135,51 +172,140 @@ const Breadcrumb = () => {
                             )}
                           </span>
                         )}
+                        {title !== 'Dashboard' && (
+                          <span>
+                            {(location.pathname.startsWith('/app/client') || location.pathname.startsWith('/app/dmalist') || location.pathname.startsWith('/app/gatewaylist') || location.pathname.startsWith('/app/meterlist')) && (
+                              <>
+                                <Link className={location.pathname === '/app/client' ? 'tab active' : 'tab'} to="/app/client">
+                                  Dashboard
+                                </Link>
+                                <Link
+                                  className={location.pathname.toLowerCase().includes('clientlist') ? 'tab active' : 'tab'}
+                                  to="/app/clientlist"
+                                >
+                                  Zone&apos;s List
+                                </Link>
+                                <Link
+                                  className={location.pathname.toLowerCase().includes('dmalist') ? 'tab active' : 'tab'}
+                                  to="/app/dmalist"
+                                >
+                                  DMA&apos;s List
+                                </Link>
+                                <Link
+                                  className={location.pathname.toLowerCase().includes('gatewaylist') ? 'tab active' : 'tab'}
+                                  to="app/gatewaylist"
+                                >
+                                  Gateway&apos;s List
+                                </Link>
+                                <Link
+                                  className={location.pathname.toLowerCase().includes('meterlist') ? 'tab active' : 'tab'}
+                                  to="app/meterlist"
+                                >
+                                  Meter&apos;s List
+                                </Link>
+                              </>
+                            )}
+                          </span>
+                        )}
+
                       </div>
                     </Col>
 
-                    {['/app/client', '/app/dashboard/default', "app/gatewaylist"].includes(location.pathname) && (
-                      <section className="seconde-section">
-                        {location.pathname !== '/app/dmalist' && (
-                          <div className="days-date-picker">
+                    <Col md={4}>
+                      {['/app/client', '/app/dashboard/default', "app/gatewaylist", "/app/clientlist", "/app/dmalist", "/app/gatewaylist", "/app/meterlist"].includes(location.pathname) && (
+
+                        <section className="seconde-section">
+                          {location.pathname !== '/app/dmalist' && location.pathname !== '/app/clientlist' && location.pathname !== '/app/dmalist' && location.pathname !== '/app/gatewaylist' && location.pathname !== '/app/meterlist' && (
+                            <div className="days-date-picker">
+                              <div>
+                                {[
+                                  { day: '1D', add: 1 },
+                                  { day: '7D', add: 7 },
+                                  { day: '14D', add: 14 },
+                                  { day: '30D', add: 30 }
+                                ].map((obj) => {
+                                  return (
+                                    <button
+                                      className={`days ${selectedDate === obj.day ? 'active' : ''}`}
+                                      onClick={() => {
+                                        setSelectedDate(obj.day);
+                                        onDateChange(obj.add);
+                                      }}
+                                      key={obj.day}
+                                    >
+                                      {obj.day}
+                                    </button>
+                                  );
+                                })}
+
+                                {isDatePickerOpen && (
+                                  <div className="date-picker">
+                                    <NewDatePicker />
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="">
+                                <button className="icon-button" onClick={toggleDatePicker}>
+                                  <DateRangeIcon />
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                          {/* {location.pathname !== '/app/GatewayList' && ( */}
+
+                          {location.pathname !== '/app/dashboard/default' && location.pathname !== '/app/client' && location.pathname !== '/app/clientlist' && (
                             <div>
-                              {[
-                                { day: '1D', add: 1 },
-                                { day: '7D', add: 7 },
-                                { day: '14D', add: 14 },
-                                { day: '30D', add: 30 }
-                              ].map((obj) => {
-                                return (
-                                  <button
-                                    className={`days ${selectedDate === obj.day ? 'active' : ''}`}
-                                    onClick={() => {
-                                      setSelectedDate(obj.day);
-                                      onDateChange(obj.add);
-                                    }}
-                                    key={obj.day}
-                                  >
-                                    {obj.day}
-                                  </button>
-                                );
-                              })}
-
-                              {isDatePickerOpen && (
-                                <div className="date-picker">
-                                  <NewDatePicker />
-                                </div>
-                              )}
+                              <div className="form-group selectcustom">
+                                <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
+                                  {/* <option>Select Zone</option> */}
+                                  <option value={0}>All</option>
+                                  {zones.map((zone) => (
+                                    <option key={zone.zoneId} value={zone.zoneId}>
+                                      {zone.displayName}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
                             </div>
-
-                            <div className="">
-                              <button className="icon-button" onClick={toggleDatePicker}>
-                                <DateRangeIcon />
-                              </button>
+                          )}
+                          {location.pathname !== '/app/dashboard/default' && location.pathname !== '/app/client' && location.pathname !== '/app/clientlist' && location.pathname !== '/app/dmalist' && (
+                            <div style={{ marginLeft: "5px" }}>
+                              <div className="form-group selectcustom">
+                                <select className="form-control" value={selectedDma} onChange={(e) => setSelectedDma(Number(e.target.value))}>
+                                  {/* <option>Dma List</option> */}
+                                  <option value={0}>All</option>
+                                  {dmas.map((dma) => (
+                                    <option key={dma.dmaId} value={dma.dmaId}>
+                                      {dma.displayName}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
                             </div>
-                          </div>
-                        )}
-                        {/* {location.pathname !== '/app/GatewayList' && ( */}
+                          )}
+                          {location.pathname !== '/app/dashboard/default' && location.pathname !== '/app/client' && location.pathname !== '/app/clientlist' && location.pathname !== '/app/dmalist' && location.pathname !== '/app/gatewaylist' && (
+                            <div style={{ marginLeft: "5px" }}>
+                              <div className="form-group selectcustom">
+                                <select className="form-control" value={selectedGateway} onChange={(e) => setSelectedGateway(Number(e.target.value))}>
+                                  {/* <option>Gateway List</option> */}
+                                  <option value={0}>All</option>
+                                  {gateways.map((gateway) => (
+                                    <option key={gateway.id} value={gateway.id}>
+                                      {gateway.displayName}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                          )}
 
-                        <div>
+                          {/* {location.pathname !== '/app/client' && ( */}
+
+                          {/* // )} */}
+
+
+                          {/* <div>
                           <div className="form-group selectcustom">
                             <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
                               <option>Select Zone</option>
@@ -191,11 +317,106 @@ const Breadcrumb = () => {
                               ))}
                             </select>
                           </div>
-                        </div>
+                        </div> */}
 
-                        {/* )} */}
-                      </section>
-                    )}
+                          {/* )} */}
+                        </section>
+
+                      )}
+                    </Col>
+                    <Col md={1}>
+                    <div style={{ float: "right" }}>
+                      <div className="form-group selectcustom"
+                        style={{ height: "47px", width: "47px", backgroundColor: "#eaeaeb", borderRadius: "8px" }}>
+                        <FilterAltOutlinedIcon
+                          style={{
+                            color: '#6C757D',
+                            position: "relative",
+                            marginTop: "12px",
+                            marginLeft: "12px"
+                          }}
+                          onClick={handleFilterIconClick} />
+                      </div>
+
+                      <Dialog open={isDialogOpen} onClose={handleDialogClose}>
+                        <DialogTitle>Filters</DialogTitle>
+                        <DialogContent>
+                          <div className='row'>
+                            <div className='col-md-4'>
+                              <div className="form-group selectcustom" style={{width:"100%"}}>
+                                <label>Select Status</label>
+                                <select className="form-control" value={selectedStatus ? selectedStatus : 0}
+                                  onChange={(e) => setSelectedStatus(Number(e.target.value))}>
+
+                                  {status.map((st) => (
+                                    <option key={st.id} value={st.id}>
+                                      {st.displayName}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                            <div className='col-md-4'>
+                              <div className="form-group selectcustom" style={{width:"100%"}}>
+                                <label>Select Zone</label>
+                                <select className="form-control" value={selectedZone ? selectedZone : 0}
+                                  onChange={(e) => setSelectedZone(Number(e.target.value))}>
+                                  {/* <option>Select Zone</option> */}
+                                  <option value={0}>All</option>
+                                  {zones.map((zone) => (
+                                    <option key={zone.zoneId} value={zone.zoneId}>
+                                      {zone.displayName}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                            <div className='col-md-4'>
+                              <div className="form-group selectcustom" style={{width:"100%"}}>
+                                <label>Select Dma</label>
+                                <select className="form-control" value={selectedDma ? selectedDma : 0}
+                                  onChange={(e) => setSelectedDma(Number(e.target.value))}>
+                                  {/* <option>Dma List</option> */}
+                                  <option value={0}>All</option>
+                                  {dmas.map((dma) => (
+                                    <option key={dma.dmaId} value={dma.dmaId}>
+                                      {dma.displayName}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                            <div className='col-md-4 mt-3'>
+                              <div className="form-group selectcustom" style={{width:"100%"}}>
+                                <label>Select Gateway</label>
+                                <select className="form-control" value={selectedGateway ? selectedGateway : 0}
+                                  onChange={(e) => setSelectedGateway(Number(e.target.value))}>
+                                  {/* <option>Gateway List</option> */}
+                                  <option value={0}>All</option>
+                                  {gateways.map((gateway) => (
+                                    <option key={gateway.id} value={gateway.id}>
+                                      {gateway.displayName}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </DialogContent>
+                        <DialogActions>
+                          {/* <Button onClick={handleApplyFilters} color="primary" >
+                                  Apply
+                                </Button> */}
+                          <Button onClick={handleDialogClose} color="primary" variant='contained'>
+                            Close
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+
+                    </div>
+                    </Col>
+               
+
                   </Col>
                 </Row>
               </div>

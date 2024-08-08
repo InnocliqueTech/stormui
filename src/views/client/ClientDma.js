@@ -176,15 +176,15 @@ const ClientDma = (props) => {
   console.log(opt);
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5">
-      <Row>
+      <Row style={{padding : "10px 0px 0px 18px"}}>
         <Col md={1} sm={1} xs={1} className='iconContainer'>
           <Image src={water} alt="water" className='icon' />
         </Col>
         <Col md={9} sm={8} xs={8} style={{ marginBottom: "40px" }}>
-          <div className="cardhead">DMA-wise Supply </div>
+          <div className="cardhead">DMA-wise Supply</div>
         </Col>
       </Row>
-      <ReactApexChart options={opt} series={data} type="donut" height={260} />
+      <ReactApexChart options={opt} series={data} type="donut" height={270} />
       {/* <div className="row">
         <div className="col-md-1">
          <div style={{backgroundColor:'#3C50E0', height:15, width:15}}></div>

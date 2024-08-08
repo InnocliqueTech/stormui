@@ -8,7 +8,7 @@ const options = {
     fontFamily: 'Inter',
     type: 'donut'
   },
-  colors: ['#2196F3', '#01A9D8', '#1DD0BB'],
+  colors: ['#4cc9f0', '#caf0f8', '#90e0ef'],
   legend: {
     position: 'bottom',
     horizontalAlign: 'center',
@@ -106,12 +106,12 @@ const TotalDma = (props) => {
 
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5">
-      <Row>
+      <Row style={{padding:"0px 0px 0px 18px"}}>
         <Col md={1} sm={1} xs={1} className='iconContainer'>
           <Image src={water} alt="water" className='icon' />
         </Col>
         <Col md={8} sm={8} xs={8}>
-          <div className="cardhead">Total DMA</div>
+          <div className="cardhead">Total DMA </div>
         </Col>
       </Row>
       <ReactApexChart options={opt} series={data} type="donut" height={255} />

@@ -13,9 +13,9 @@ import Table from 'react-bootstrap/Table';
 import { BASE_API_URL1 } from '../../config/constant';
 import { ClientsContext } from '../dashboard/context/index';
 import { useLocation } from 'react-router-dom';
-import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+// import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
+// import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
+// import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { Link } from 'react-router-dom';
 // import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
@@ -34,15 +34,15 @@ const GatewayTable = () => {
   const [gateways, setGateways] = useState([]);
   const [basicDetails, setBasicDetails] = useState({});
   const [lastFrameData, setLastFrameData] = useState({});
-  const { selectedClient, selectedZone } = useContext(ClientsContext);
+  const { selectedClient, selectedZone, selectedDma } = useContext(ClientsContext);
   const location = useLocation();
-  const { zoneId, dmaId } = location.state || { zoneId: selectedZone, dmaId: 0 };
-  console.log('location.state:', location.state); 
-  console.log('zoneId:', zoneId); 
-  console.log('dmaId:', dmaId);  
+  const { zoneId, dmaId } = location.state || { zoneId: selectedZone, dmaId: selectedDma };
+  console.log('location.state:', location.state);
+  console.log('zoneId:', zoneId);
+  console.log('dmaId:', dmaId);
   useEffect(() => {
     getAllGateways();
-  }, []);
+  }, [selectedClient, selectedZone, selectedDma]);
 
   const getAllGateways = async () => {
     const clientId = selectedClient;
@@ -98,14 +98,27 @@ const GatewayTable = () => {
     setOpen(false);
   };
 
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case 'Active':
+        return { backgroundColor: 'rgba(47, 182, 23, 1)', color: '#fff' };
+      case 'Inactive':
+        return { backgroundColor: 'rgba(255, 0, 0, 1)', color: '#fff' };
+        case 'Not Working':
+        return { backgroundColor: 'rgba(255, 0, 0, 1)', color: '#fff' };
+      default:
+        return { backgroundColor: 'transparent', color: '#fff' }; // Default color for other statuses
+    }
+  };
+
   return (
     <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, marginTop: 10 }}>
-        <Row>
-          <Col md={9} sm={7} xs={7}>
-            <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Gateway List</span>{' '}
-            {/* <span style={{ textAlign: 'end' }}>
+      <Row>
+        <Col md={9} sm={7} xs={7}>
+          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Gateway List</span>{' '}
+          {/* <span style={{ textAlign: 'end' }}>
               <InfoOutlinedIcon style={{ height: 20, width: 20, justifyContent: 'center', color: '#D6D9DC', marginLeft: 5 }} />
-            </span> */}
+            </span>
           </Col>
           <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
             <CachedOutlinedIcon style={{ color: '#6C757D' }} />{' '}
@@ -116,15 +129,15 @@ const GatewayTable = () => {
             <span>
               {' '}
               <FileUploadOutlinedIcon style={{ color: '#6C757D' }} />
-            </span>
-          </Col>
-        </Row>
+            </span> */}
+        </Col>
+      </Row>
       <div className='customer-table'>
         <Table style={{ borderRadius: 8 }}>
           <thead style={{ backgroundColor: '#F4F5F5' }}>
             <tr>
               {/* <th className='tablehead'><Checkbox /></th> */}
-              <th className='tablehead'>Gateway ID</th>
+              <th className='tablehead'>Gateway ID 1</th>
               <th className='tablehead'>Time</th>
               <th className='tablehead'>ETH State</th>
               <th className='tablehead'>LTE State</th>
@@ -144,8 +157,8 @@ const GatewayTable = () => {
                   <Link
                     style={{ textDecoration: 'none', cursor: 'pointer' }}
                     to="/app/meterlist"
-                    state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gateway.id}}
-                    onClick={() => console.log('Link clicked for dmaId:', zoneId, dmaId, gateway.id,  )}
+                    state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gateway.id }}
+                    onClick={() => console.log('Link clicked for dmaId:', zoneId, dmaId, gateway.id,)}
                   >
                     {gateway.gatewayId}
                   </Link>
@@ -169,7 +182,12 @@ const GatewayTable = () => {
                 <td className='tablecontent text-end'>{gateway.batteryState}</td>
                 <td className='tablecontent text-end'>{gateway.batteryLevel}</td>
                 <td className='tablecontent text-end'>{gateway.batteryVoltage}</td>
-                <td className='tablecontent'>{gateway.status}</td>
+                {/* <td className='tablecontent'>{gateway.status}</td> */}
+                <td className='tablecontent'>
+                  <span style={{ ...getStatusStyle(gateway.status), padding: '8px 20px' }}>
+                    {gateway.status}
+                  </span>
+                </td>
 
               </tr>
             ))}

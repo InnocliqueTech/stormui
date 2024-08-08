@@ -1,3 +1,4 @@
+
 import React, { useContext, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import over from '../../assets/images/symbols_water.svg';
@@ -20,19 +21,19 @@ const DMAFlowChart = (props) => {
   const [categories, setCategories] = useState([]);
 
   const minRange = props.data.minRange 
-  const maxRange = props.data.maxRang
+  const maxRange = props.data.maxRange
   console.log('min', minRange)
   console.log('max', maxRange)
  
  
   const options = {
-    colors: ['#2196F3', '#80CAEE'],
+    colors: ['#4cc9f0', '#caf0f8'],
   
     chart: {
       fontFamily: 'inter',
       type: 'bar',
       height: 500,
-      stacked: true,
+      stacked: false,
       toolbar: {
         show: false
       },
@@ -40,7 +41,6 @@ const DMAFlowChart = (props) => {
         enabled: false
       }
     },
-  
     responsive: [
       {
         breakpoint: 1536,
@@ -48,12 +48,13 @@ const DMAFlowChart = (props) => {
           plotOptions: {
             bar: {
               borderRadius: 0,
-              columnWidth: 10
+              columnWidth: 20 // Adjust this value to increase space between bars
             }
           }
         }
       }
     ],
+   
     plotOptions: {
       bar: {
         horizontal: false,
@@ -229,3 +230,4 @@ console.log('categories', categories)
 };
 
 export default DMAFlowChart;
+

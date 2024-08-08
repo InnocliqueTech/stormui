@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Row, Col, Button, Alert } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import logo from '../../../assets/images/logo.png';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,13 +22,15 @@ const FirebaseLogin = ({ className, ...rest }) => {
           password: values.password
         })
       });
-      
+
       const result = await response.json();
 
       if (response.ok) {
         sessionStorage.setItem('email', values.email);
+        
         // alert(result.message);
         navigate('/app/dashboard/location');
+        
       } else {
         setErrors({ submit: result.message || 'Something went wrong' });
       }
@@ -40,7 +42,7 @@ const FirebaseLogin = ({ className, ...rest }) => {
   };
   return (
     <React.Fragment>
-      <div style={{padding:"20px"}}>
+      <div style={{ padding: "20px" }}>
         <img src={logo} width={100} style={{ height: "70px" }} alt="logo" />
       </div>
       <h6 style={{ textAlign: "left", padding: "10px 20px", fontWeight: "600" }}>Login</h6>
@@ -61,7 +63,7 @@ const FirebaseLogin = ({ className, ...rest }) => {
           <form noValidate onSubmit={handleSubmit} className={className} {...rest}>
             <div style={{ padding: "0px 20px" }}>
               <div className="form-group mb-3">
-                <h6 style={{ textAlign: "left", fontSize:"12px", color:"rgb(137 130 130)" }}>User Id</h6>
+                <h6 style={{ textAlign: "left", fontSize: "12px", color: "rgb(137 130 130)" }}>User Id</h6>
                 <input
                   className="form-control"
                   label="Email Address / Username"
@@ -72,12 +74,18 @@ const FirebaseLogin = ({ className, ...rest }) => {
                   value={values.email}
                   placeholder='Enter User Id'
                 />
-                {touched.email && errors.email && <small className="text-danger form-text">{errors.email}</small>}
+                {touched.email && errors.email && (
+                  <div style={{ textAlign: 'left', color: 'red', marginTop: '5px' }}>
+                    <small>{errors.email}</small>
+                  </div>
+                )}
+                {/* {touched.email && errors.email && <small className="text-danger " >{errors.email}</small>} */}
               </div>
               <div className="form-group mb-4">
-              <h6 style={{ textAlign: "left", fontSize:"12px", color:"rgb(137 130 130)" }}>Enter password</h6>
+                <h6 style={{ textAlign: "left", fontSize: "12px", color: "rgb(137 130 130)" }}>Enter password</h6>
                 <input
                   className="form-control"
+
                   label="Password"
                   name="password"
                   onBlur={handleBlur}
@@ -86,16 +94,20 @@ const FirebaseLogin = ({ className, ...rest }) => {
                   value={values.password}
                   placeholder='Enter Password'
                 />
-                {touched.password && errors.password && <small className="text-danger form-text">{errors.password}</small>}
+                {touched.password && errors.password && (
+                  <div style={{ textAlign: 'left', color: 'red', marginTop: '5px' }}>
+                    <small>{errors.password}</small>
+                  </div>
+                )}
               </div>
             </div>
 
 
-            {errors.submit && (
+            {/* {errors.submit && (
               <Col sm={12}>
                 <Alert variant="danger">{errors.submit}</Alert>
               </Col>
-            )}
+            )} */}
 
             {/* <div className="custom-control custom-checkbox  text-start mb-4 mt-2">
               <input type="checkbox" className="custom-control-input" id="customCheck1" />
@@ -104,11 +116,16 @@ const FirebaseLogin = ({ className, ...rest }) => {
               </label>
             </div> */}
 
-            <Row style={{paddingBottom:"50px"}}>
-              <Col mt={2} md={12} style={{padding:"0px 30px"}}>
-                <Button className="btn-block" color="primary" disabled={isSubmitting} size="large" type="submit" variant="primary" style={{width:"100%"}}>
-                 Log in
+            <Row style={{ paddingBottom: "50px" }}>
+              <Col mt={2} md={12} style={{ padding: "0px 30px" }}>
+                <Button className="btn-block" color="primary" disabled={isSubmitting} size="large" type="submit" variant="primary" style={{ width: "100%" }}>
+                  Log in
                 </Button>
+                {errors.submit && (
+                  <div style={{ textAlign: 'left', color: 'red', marginTop: '5px' }}>
+                    <small>{errors.submit}</small>
+                  </div>
+                )}
               </Col>
             </Row>
           </form>
@@ -129,7 +146,7 @@ const FirebaseLogin = ({ className, ...rest }) => {
         </Col>
       </Row> */}
 
-  
+
     </React.Fragment>
   );
 };

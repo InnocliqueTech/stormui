@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useContext} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import axios from 'axios';
 import over from '../../assets/images/symbols_water.svg';
@@ -10,7 +10,7 @@ const Overflowks = (props) => {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
   const { presentDate, toDate } = useStateContext();
-  const {  selectedClient,  selectedZone } = useContext(ClientsContext);
+  const { selectedClient, selectedZone } = useContext(ClientsContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -134,13 +134,13 @@ const Overflowks = (props) => {
 
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 shadow-default sm:px-2 xl:col-span-6">
-      <Row>
+      <Row style={{ padding: "10px 0px 0px 18px" }}>
         <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574' }}>
           <Image src={over} alt="over" className="icon" />
         </Col>
         <Col md={8} sm={8} xs={8}>
           <div className="alerttext">
-        Out Flow Trend{' '}
+            Out Flow Trend1{' '}
             <span>
               <Image src={info} alt="gateway" />
             </span>{' '}

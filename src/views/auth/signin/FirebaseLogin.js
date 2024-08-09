@@ -27,10 +27,14 @@ const FirebaseLogin = ({ className, ...rest }) => {
 
       if (response.ok) {
         sessionStorage.setItem('email', values.email);
-        
+        sessionStorage.removeItem('dashboardReloaded');
+        sessionStorage.removeItem('gatewayReloaded');
+        sessionStorage.removeItem('zoneReloaded');
+        sessionStorage.removeItem('reloaded')
+
         // alert(result.message);
         navigate('/app/dashboard/location');
-        
+
       } else {
         setErrors({ submit: result.message || 'Something went wrong' });
       }
@@ -118,9 +122,27 @@ const FirebaseLogin = ({ className, ...rest }) => {
 
             <Row style={{ paddingBottom: "50px" }}>
               <Col mt={2} md={12} style={{ padding: "0px 30px" }}>
-                <Button className="btn-block" color="primary" disabled={isSubmitting} size="large" type="submit" variant="primary" style={{ width: "100%" }}>
-                  Log in
+                <Button
+                  className="btn-block"
+                  color="primary"
+                  disabled={isSubmitting}
+                  size="large"
+                  type="submit"
+                  variant="primary"
+                  style={{ width: '100%' }}
+                >
+                  {isSubmitting ? (
+                    <>
+                     
+                      Processing...
+                    </>
+                  ) : (
+                    'Log in'
+                  )}
                 </Button>
+                {/* <Button className="btn-block" color="primary" disabled={isSubmitting} size="large" type="submit" variant="primary" style={{ width: "100%" }}>
+                  Log in
+                </Button> */}
                 {errors.submit && (
                   <div style={{ textAlign: 'left', color: 'red', marginTop: '5px' }}>
                     <small>{errors.submit}</small>

@@ -100,7 +100,7 @@ function CustomerTable() {
           </tbody>
         </Table>
       )}
-      <div style={{ textAlign: 'center', marginTop: '100PX' }}>
+      <div style={{ textAlign: 'center'}}>
 
         <Paginations
           currentPage={currentPage}

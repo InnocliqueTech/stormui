@@ -8,7 +8,7 @@ import './setting.css';
 // import ClientNotification from '../../src/assets/images/ClientNotification.png';
 // import Mail from '../../src/assets/images/Mail.png';
 // import UpdateSystem from '../../src/assets/images/UpdateSystem.png';
-import Logout from '../../src/assets/images/Logout.png';
+// import Logout from '../../src/assets/images/Logout.png';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -171,7 +171,7 @@ function Settings() {
             <Divider component="li" style={{ borderBottom: '1px solid #F4F5F5' }} />
             <ListItem sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', padding: '16px' }}>
-                <img src={Logout} alt="Logout" width={20} height={20} />
+                {/* <img src={Logout} alt="Logout" width={20} height={20} /> */}
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', ml: 2 }}>
                   <Typography gutterBottom style={{ color: '#D81B60', fontWeight: '700', fontSize: 20, }}>LogOut</Typography>
                   <Typography variant="body2" color="#ADB5BD">

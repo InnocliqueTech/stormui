@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import NavLeft from './NavLeft';
 import NavRight from './NavRight';
+import NavMiddle from './NavMiddle'
 
 import { ConfigContext } from '../../../contexts/ConfigContext';
 import * as actionType from '../../../store/actions';
@@ -66,6 +67,7 @@ const NavBar = () => {
       </div>
       <div style={{ justifyContent: 'space-between' }} className={collapseClass.join(' ')}>
         <NavLeft />
+        <NavMiddle/>
         <NavRight />
       </div>
     </header>

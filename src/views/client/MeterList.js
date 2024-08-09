@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 // import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-// import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
+import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 // import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 // import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+// import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { Col, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Link } from '@mui/material';
@@ -32,13 +33,23 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const MeterList = () => {
   const location = useLocation();
-  const { selectedClient, selectedZone, selectedDma, selectedGateway, selectedStatus } = useContext(ClientsContext);
+  const { selectedClient, 
+    selectedZone,
+     selectedDma, 
+     selectedGateway, 
+     selectedStatus ,
+     setSelectedZone,
+     setSelectedDma,
+     setSelectedGateway,
+     setSelectedStatus,
+     setSelectedClient
+    } = useContext(ClientsContext);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState("");
 
   // const [fullWidth] = useState(true);
   // const { clients } = useContext(ClientsContext);
-  const [zonesList, setZonesList] = useState([]);
+  const [meterList, setMeterList] = useState([]);
   const [loading, setLoading] = useState(true);
   // Assuming these are your filters' state variables
   // const [selectedClient, setSelectedClient] = useState('');
@@ -52,23 +63,54 @@ const MeterList = () => {
   console.log('zoneId:', zoneId);
   console.log('dmaId:', dmaId);
   console.log('gatewayId:', gatewayId);
-  // useEffect(() => {
-  //   if (clients && clients.length > 0) {
-  //     getDashboardData(clients[0].clientId); // Fetch data for initial client
-  //   }
-  // }, [clients]);
+
 
   useEffect(() => {
     getDashboardData()
-  }, [currentPage, itemsPerPage, selectedClient, selectedZone, selectedDma, selectedGateway])
+  }, [currentPage, itemsPerPage, selectedClient, selectedZone, selectedDma, selectedGateway, selectedStatus])
+
+  // const getDashboardData = async () => {
+  //   const clientId = selectedClient
+  //   const startIndex = (currentPage - 1) * itemsPerPage;
+  //   try {
+  //     setLoading(true);
+  //     const requestBody = {
+  //       status: selectedStatus || 0,
+  //       clientId: clientId || 0,
+  //       zoneId: zoneId || 0,
+  //       dmaId: dmaId || 0,
+  //       gatewayId: gatewayId || 0,
+  //       startIndex: startIndex,
+  //       rowCount: itemsPerPage
+  //     }
+
+  //     console.log(requestBody)
+  //     const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
+  //     console.log(response)
+  //     setMeterList(response.data.meters || []);
+  //     setTotalItems(response.data.totalCount);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //     setLoading(false);
+
+  //   }
+  // };
+
 
   const getDashboardData = async () => {
-    const clientId = selectedClient
+    const clientId = selectedClient || 0; // Default to 0 if selectedClient is null or undefined
+    const status = selectedStatus || 0;   // Default to 0 if selectedStatus is null or undefined
+    const zoneId = selectedZone || 0;     // Default to 0 if selectedZone is null or undefined
+    const dmaId = selectedDma || 0;       // Default to 0 if selectedDma is null or undefined
+    const gatewayId = selectedGateway || 0; // Default to 0 if selectedGateway is null or undefined
+
     const startIndex = (currentPage - 1) * itemsPerPage;
+
     try {
       setLoading(true);
       const requestBody = {
-        status: selectedStatus,
+        status: status,
         clientId: clientId,
         zoneId: zoneId,
         dmaId: dmaId,
@@ -77,19 +119,17 @@ const MeterList = () => {
         rowCount: itemsPerPage
       }
 
-      console.log(requestBody)
+      console.log(requestBody);
       const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
-      console.log(response)
-      setZonesList(response.data.meters || []);
+      console.log(response);
+      setMeterList(response.data.meters || []);
       setTotalItems(response.data.totalCount);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
       setLoading(false);
-
     }
   };
-
   const handleClickOpen = (e, data) => {
     setOpen(true);
     setData(data)
@@ -99,17 +139,7 @@ const MeterList = () => {
     setOpen(false);
   };
 
-  // const handleClientChange = (event) => {
-  //   setSelectedClient(event.target.value);
-  // };
 
-  // const handleZoneChange = (event) => {
-  //   setSelectedZone(event.target.value);
-  // };
-
-  // const handleDmaChange = (event) => {
-  //   setSelectedDma(event.target.value);
-  // };
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -118,10 +148,19 @@ const MeterList = () => {
     setCurrentPage(1);
   };
 
-  const offset = (currentPage - 1) * itemsPerPage;
-  const currentPageData = zonesList.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(zonesList.length / itemsPerPage);
-  
+  // const [refreshData, setRefrehData] = useState([]);
+
+  const handleClickRefresh =() => {
+    setSelectedClient(1);
+    setSelectedZone(0);
+    setSelectedDma(0);
+    setSelectedGateway(0);
+    setSelectedStatus(0);
+    
+    // Call getDashboardData to fetch updated data with reset values
+    getDashboardData();
+  }
+
 
   const getStatusStyle = (status) => {
     switch (status) {
@@ -138,46 +177,10 @@ const MeterList = () => {
     <div className='col-md-12'>
       <div className="d-flex justify-content-around row">
         <div className="col-md-6 col-sm-12 col-12">
-          <nav className='d-flex' style={{ width: 'auto' }}>
-            {/* <ol className="breadcrumb zone-breadcrum"> */}
-            {/* <li className="breadcrumb-item"><a href="#">Clients</a></li>
-              <li className="breadcrumb-item"><a href="#">Zones</a></li>
-              <li className="breadcrumb-item"><a href="#">DMA’s</a></li>
-              <li className="breadcrumb-item"><a href="#">Meters</a></li> */}
-            {/* </ol> */}
+          <nav className='d-flex' style={{ width: 'auto' }}>           
           </nav>
 
         </div>
-        {/* <div className="d-flex justify-content-end col-md-6 col-sm-12 col-12" style={{ marginTop: '12px' }}>
-          <div className="row days-filter float-end">
-            <div className="col-md-12 d-flex">
-              <div className="form-group selectcustom me-2" style={{ width: '160px' }}>
-                <select className="form-control" value={selectedClient} onChange={handleClientChange}>
-                  <option value="">Select Client</option>
-                  <option value="All">All</option>
-                  <option value="KSCCL-WATER">KSCCL-WATER</option>
-                  <option value="TEST_ABP_01">TEST_ABP_01</option>
-                </select>
-              </div>
-              <div className="form-group selectcustom me-2" style={{ width: '160px' }}>
-                <select className="form-control" value={selectedZone} onChange={handleZoneChange}>
-                  <option value="">Select Zone</option>
-                  <option value="All">All</option>
-                  <option value="KSCCL-WATER">KSCCL-WATER</option>
-                  <option value="TEST_ABP_01">TEST_ABP_01</option>
-                </select>
-              </div>
-              <div className="form-group selectcustom me-2" style={{ width: '160px' }}>
-                <select className="form-control" value={selectedDma} onChange={handleDmaChange}>
-                  <option value="">Select DMA</option>
-                  <option value="All">All</option>
-                  <option value="KSCCL-WATER">KSCCL-WATER</option>
-                  <option value="TEST_ABP_01">TEST_ABP_01</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
       <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, paddingBottom: 100 }}>
         <Row style={{ marginBottom: '24px' }}>
@@ -185,29 +188,30 @@ const MeterList = () => {
             <Row>
               <Col md={9} sm={7} xs={7}>
                 <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Meter List</span>
-                {/* <span style={{ textAlign: 'end' }}>
-                  <InfoOutlinedIcon style={{ height: 20, width: 20, justifyContent: 'center', color: '#D6D9DC', marginLeft: 5 }} />
-                </span> */}
               </Col>
             </Row>
           </Col>
-          {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
-            <CachedOutlinedIcon style={{ color: '#6C757D' }} />
-            <FilterAltOutlinedIcon style={{ color: '#6C757D', marginLeft: 20, marginRight: 20 }} />
-            <FileUploadOutlinedIcon style={{ color: '#6C757D' }} />
-          </Col> */}
+
         </Row>
 
         <div className='customer-table mt-0'>
-          <div className='pagination-controls' style={{ marginTop: '20px', marginLeft: '10PX' }}>
-            <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
-            <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-            </select>
-          </div>
-          {loading ? ( // Display spinner if loading is true
+            <Row style={{ marginBottom: '24px' }}>
+              <Col md={9} sm={7} xs={7}>
+                <div className='pagination-controls' style={{marginLeft:"10px", marginTop:"10px"}}>
+                  <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
+                  <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                  </select>
+                </div>
+              </Col>
+              <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+                <CachedOutlinedIcon style={{ color: '#6C757D', marginTop:"10px", marginRight:"10px" }} onClick={handleClickRefresh}/>               
+              </Col>
+            </Row>
+       
+          {loading ? (
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
               <Spinner animation="border" variant="primary" />
             </div>
@@ -215,7 +219,7 @@ const MeterList = () => {
             <Table style={{ borderRadius: 8 }}>
               <thead>
                 <tr>
-                  <th className='tablehead'>CAN No 1</th>
+                  <th className='tablehead'>CAN No</th>
                   <th className='tablehead'>Meter Id</th>
                   <th className='tablehead'>Gateway Id</th>
                   <th className='tablehead'>DEVEUI</th>
@@ -231,7 +235,7 @@ const MeterList = () => {
                 </tr>
               </thead>
               <tbody>
-                {zonesList.map((meter) => (
+                {meterList.map((meter) => (
                   <tr key={meter.meterId}>
                     <td className='tablecontent-link'>
                       <Link

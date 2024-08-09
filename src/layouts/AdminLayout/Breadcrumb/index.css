@@ -10,7 +10,7 @@
 
 .days.active {
   font-weight: bold;
-  color: #007bff;
+  /* color: #007bff; */
 }
 
 .days:hover {
@@ -31,6 +31,7 @@
   margin-right: 10px;
   position: relative;
 }
+
 .days-date-picker button {
   border: none;
   outline: none;
@@ -50,9 +51,10 @@
   padding: 2px;
   /* background: rgb(105, 105, 105); */
   border: 1px solid rgb(105, 105, 105);
- 
+
 }
-.date-picker div{
+
+.date-picker div {
   border-radius: 10px;
 }
 
@@ -72,6 +74,13 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+.dashheading {
+  background-color: white;
+  padding: 0px 7px 10px 7px;
+  border-radius: 8px;
+}
+
 /* 
 .date-picker > div:nth-child(2) {
   display: none;

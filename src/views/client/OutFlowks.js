@@ -6,11 +6,17 @@ import { Col, Image, Row } from 'react-bootstrap';
 import info from '../../assets/images/i_icons.svg';
 import { useStateContext } from '../../contexts/MainContext';
 import { ClientsContext } from '../dashboard/context/index';
+import Spinner from 'react-bootstrap/Spinner';
+
+
 const Overflowks = (props) => {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
   const { presentDate, toDate } = useStateContext();
   const { selectedClient, selectedZone } = useContext(ClientsContext);
+  const [loading, setLoading] = useState(true);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,6 +41,7 @@ const Overflowks = (props) => {
             }
           ]);
           setCategories(dates);
+          setLoading(false);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -134,20 +141,27 @@ const Overflowks = (props) => {
 
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 shadow-default sm:px-2 xl:col-span-6">
-      <Row style={{ padding: "10px 0px 0px 18px" }}>
+      <Row style={{ padding: "0px 0px 0px 18px" }}>
         <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574' }}>
           <Image src={over} alt="over" className="icon" />
         </Col>
         <Col md={8} sm={8} xs={8}>
           <div className="alerttext">
-            Out Flow Trend1{' '}
+            Out Flow Trend{' '}
             <span>
               <Image src={info} alt="gateway" />
             </span>{' '}
           </div>
         </Col>
       </Row>
+      {loading ? ( // Display spinner if loading is true
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
       <ReactApexChart options={options} series={data} type="bar" width="100%" height={250} />
+      )
+    }
     </div>
   );
 };

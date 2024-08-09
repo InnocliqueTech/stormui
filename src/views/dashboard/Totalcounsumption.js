@@ -3,6 +3,7 @@ import ReactApexChart from 'react-apexcharts';
 import over from '../../assets/images/symbols_water.svg';
 import { Col, Image, Row } from 'react-bootstrap';
 import info from '../../assets/images/i_icons.svg';
+import Spinner from 'react-bootstrap/Spinner';
 
 const options = {
   colors: ['#2196F3', '#80CAEE'],
@@ -66,6 +67,7 @@ const options = {
 
 const Totalcounsumption = (props) => {
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
     console.log(props.data.totalOutFlow)
@@ -75,9 +77,10 @@ const Totalcounsumption = (props) => {
         d.push(flow.count)
       });
       setData([{
-        name: "Total Outflow",
+        name: "Total Outflow ",
         data: d
       }]);
+      setLoading(false);
     }
   }, [props])
 
@@ -103,7 +106,14 @@ const Totalcounsumption = (props) => {
           </div>
         </Col>
       </Row>
+      {loading ? ( // Display spinner if loading is true
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
       <ReactApexChart options={options} series={data} type="bar" width="100%" height={250} />
+      )
+    }
     </div>
   );
 };

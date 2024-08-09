@@ -108,7 +108,7 @@ export default function DmaList() {
             <Table style={{ borderRadius: 8 }}>
             <thead style={{ backgroundColor: '#F4F5F5' }}>
               <tr>
-                <th className='tablehead'>DMA ID 1</th>
+                <th className='tablehead'>DMA ID</th>
                 <th className='tablehead'>Gateway ID</th>
                 <th className='tablehead'>Last Communication Time</th>
                 <th className='tablehead'>Reading</th>

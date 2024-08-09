@@ -28,14 +28,14 @@ const DashDefault = () => {
   useEffect(() => {
     if (selectedClient) {
 
-      // // Check if the page has already been reloaded
-      // if (!sessionStorage.getItem('dashboardReloaded')) {
-      //   // Set the flag to indicate the page has been reloaded
-      //   sessionStorage.setItem('dashboardReloaded', 'true');
+      // Check if the page has already been reloaded
+      if (!sessionStorage.getItem('dashboardReloaded')) {
+        // Set the flag to indicate the page has been reloaded
+        sessionStorage.setItem('dashboardReloaded', 'true');
 
-      //   // Reload the page
-      //   window.location.reload();
-      // }
+        // Reload the page
+        window.location.reload();
+      }
       getDashboardData();
 
     }

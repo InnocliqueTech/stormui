@@ -114,9 +114,9 @@ export const ClientsProvider = ({ children }) => {
 
   useEffect(() => {
     const dummyData = [
-      { id: 0, displayName: 'All' },
-      { id: 1, displayName: 'Active' },
-      { id: 2, displayName: 'Inactive' }
+      { statusId: 0, displayName: 'All' },
+      { statusId: 1, displayName: 'Active' },
+      { statusId: 2, displayName: 'Inactive' }
     ]
     setStatus(dummyData);
     console.log(status)

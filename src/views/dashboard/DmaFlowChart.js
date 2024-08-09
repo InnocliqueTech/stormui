@@ -7,6 +7,7 @@ import info from '../../assets/images/i_icons.svg';
 import axios from 'axios';
 import { ClientsContext } from './context';
 import { useStateContext } from '../../contexts/MainContext';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 
@@ -19,6 +20,8 @@ const DMAFlowChart = (props) => {
   // const { zoneId } = useStateContext
   const { presentDate, toDate } = useStateContext();
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
 
   const minRange = props.data.minRange 
   const maxRange = props.data.maxRange
@@ -119,6 +122,7 @@ const DMAFlowChart = (props) => {
         }
       ]);
       setCategories(dmaNames);
+      setLoading(false);
     }
   }, [props.data]);
 
@@ -202,6 +206,7 @@ const DMAFlowChart = (props) => {
           }
         ]);
         setCategories(dmaNames);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -224,7 +229,14 @@ console.log('categories', categories)
           </div>
         </Col>
       </Row>
+      {loading ? ( // Display spinner if loading is true
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
       <ReactApexChart options={options} series={data} type="bar" width="100%" height={250} />
+      )
+    }
     </div>
   );
 };

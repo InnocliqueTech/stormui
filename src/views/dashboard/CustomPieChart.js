@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import fluent from '../../assets/images/fluent_water.svg';
 import { Col, Image, Row } from 'react-bootstrap';
+import Spinner from 'react-bootstrap/Spinner';
 
 const options = {
   chart: {
@@ -79,6 +80,7 @@ const options = {
 const CustomPieChart = (props) => {
   const [data, setData] = useState([]);
   const [opt, setOpt] = useState(options);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (props && props.data) {
@@ -87,12 +89,13 @@ const CustomPieChart = (props) => {
         ...options,
         labels: [`Active(${props.data.activeZones})`, `Inactive(${props.data.inactiveZones})`]
       });
+      setLoading(false);
     }
   }, [props]);
 
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5">
-      <Row style={{padding:"0px 0px 0px 18px"}}>
+      <Row style={{ padding: "0px 0px 0px 18px" }}>
         <Col md={1} sm={1} xs={1} className='iconContainer' >
           <Image src={fluent} alt="fluent" className='icon' style={{ color: '#95ACFF' }} />
         </Col>
@@ -100,7 +103,14 @@ const CustomPieChart = (props) => {
           <div className="cardhead">Total {props.name}</div>
         </Col>
       </Row>
-      <ReactApexChart options={opt} series={data} type="donut" height={255} />
+      {loading ? ( // Display spinner if loading is true
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
+        <ReactApexChart options={opt} series={data} type="donut" height={255} />
+      )
+    }
     </div>
   );
 };

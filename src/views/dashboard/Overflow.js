@@ -249,6 +249,7 @@ import { Col, Image, Row } from 'react-bootstrap';
 import info from '../../assets/images/i_icons.svg';
 import { useStateContext } from '../../contexts/MainContext';
 import { ClientsContext } from '../dashboard/context/index';
+import Spinner from 'react-bootstrap/Spinner';
 
 const Overflow = () => {
   const [data, setData] = useState([]);
@@ -257,6 +258,7 @@ const Overflow = () => {
   const { selectedClient, selectedZone } = useContext(ClientsContext);
   const [min, setMin] = useState()
   const [max, setMax] = useState()
+  const [loading, setLoading] = useState(true);
 
  
 
@@ -284,6 +286,7 @@ const Overflow = () => {
             }
           ]);
           setCategories(dates);
+            setLoading(false);
 
          
         }
@@ -292,6 +295,7 @@ const Overflow = () => {
           setMin(response.data.minRange)
           setMax(response.data.maxRange)
         }
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -419,7 +423,14 @@ const Overflow = () => {
           </div>
         </Col>
       </Row>
+      {loading ? ( // Display spinner if loading is true
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
       <ReactApexChart options={options} series={data} type="bar" width="100%" height={250} />
+      )
+    }
     </div>
   );
 };

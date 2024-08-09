@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import water from '../../assets/images/water-loss.svg';
 import { Col, Image, Row } from 'react-bootstrap';
+import Spinner from 'react-bootstrap/Spinner';
 
 const options = {
   chart: {
@@ -80,6 +81,7 @@ const options = {
 const TotalDma = (props) => {
   const [data, setData] = useState([]);
   const [opt, setOpt] = useState(options);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (props && props.data) {
@@ -101,6 +103,7 @@ const TotalDma = (props) => {
           `Faulty(${props.data.faultyDma})`
         ]
       });
+      setLoading(false);
     }
   }, [props]);
 
@@ -114,7 +117,13 @@ const TotalDma = (props) => {
           <div className="cardhead">Total DMA </div>
         </Col>
       </Row>
+      {loading ? ( // Display spinner if loading is true
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
       <ReactApexChart options={opt} series={data} type="donut" height={255} />
+      )}
     </div>
   );
 };

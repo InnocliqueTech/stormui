@@ -13,8 +13,8 @@ import CloseIcon from '@mui/icons-material/Close';
 // import CustomPieChart from '../dashboard/CustomPieChart';
 import customer from '../../assets/images/customer.svg';
 import zone from '../../assets/images/zone.svg';
-import refresh from '../../assets/images/refresh.svg';
-import download from '../../assets/images/download.svg';
+// import refresh from '../../assets/images/refresh.svg';
+// import download from '../../assets/images/download.svg';
 import info from '../../assets/images/info.svg';
 import CustomerTable from './CustomerTable';
 import ClientZone from './ClientZone';
@@ -22,7 +22,8 @@ import ClientDma from './ClientDma';
 import { Link } from '@mui/material';
 import DmaTable from './dmatable';
 import ZoneTable from './Zonetable';
-import Totalcounsumption from '../../src/views/dashboard/Totalcounsumption';
+// import Totalcounsumption from '../../src/views/dashboard/Totalcounsumption';
+import TotalOtFloow from './TotalOtFloow';
 import over from '../../assets/images/symbols_water.svg';
 // import UpArrow from '../../assets/images/UpArrow.png';
 // import DownArrow from '../../assets/images/DownArrow.png';
@@ -32,6 +33,8 @@ import ZoneSegmenation from './zoneSegmenation';
 import { useStateContext } from '../../contexts/MainContext';
 import Overflowks from './OutFlowks';
 import { ClientsContext } from '../dashboard/context';
+import { format, subDays } from 'date-fns';
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -70,6 +73,18 @@ const Client = () => {
   //For Supply By zone Graph
   // const [zoneNames, setZoneNames] = useState([]);
   // const [dates, setDates] = useState([]);
+
+
+  useEffect(() => {
+    // Check if the page has already been reloaded
+    if (!sessionStorage.getItem('zoneReloaded')) {
+      // Set the flag to indicate the page has been reloaded
+      sessionStorage.setItem('zoneReloaded', 'true');
+
+      // Reload the page
+      window.location.reload();
+    }
+  }, [])
 
 
   // zone wise supply
@@ -309,6 +324,13 @@ const Client = () => {
     fetchAlertData();
   }, []);
 
+
+  // const today = format(new Date(), 'yyyy-MM-dd');
+  // const [presentDate, setPresentDate] = useState(format(subDays(new Date(today), 7), 'yyyy-MM-dd'));
+  // const [toDate, setToDate] = useState(today);
+  const today = format(new Date(), 'yyyy-MM-dd');
+  const fromdate = format(subDays(new Date(today), 6), 'yyyy-MM-dd')
+  const todayDate = today
   // out flow data
   useEffect(() => {
     const fetchOutFlowData = async () => {
@@ -318,10 +340,11 @@ const Client = () => {
         const requestBody = {
           clientId: selectedClient,
           zoneId: selectedZone || 0,
-          fromDate: presentDate,
-          toDate: toDate
+          fromDate: fromdate,
+          toDate: todayDate
         }
         const response = await axios.post(`${BASE_API_URL1}dashboard/getTotalConsumptionInClientDashboard`, requestBody);
+        console.log(requestBody)
         setOutFlowData(response.data);
       } catch (e) {
         console.log(e);
@@ -394,19 +417,19 @@ const Client = () => {
         <Col md={6} xl={6} sm={12}>
           <Card className="card-social">
             <Card.Body>
-              <Col md={8} sm={8} xs={8} style={{display: 'inline-flex', }}>
-                <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574'}}>
-                  <Image src={over} alt="over" className="icon"/>
+              <Col md={8} sm={8} xs={8} style={{ display: 'inline-flex', }}>
+                <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574' }}>
+                  <Image src={over} alt="over" className="icon" />
                 </Col>
                 <div className="alerttext ms-2">
-                  Total Out flow 1<span></span>{' '}
+                  Total Outflow<span></span>{' '}
                 </div>
-                <span style={{marginTop:"10px"}}>
+                <span style={{ marginTop: "10px" }}>
                   <Image src={info} alt="info" />
                 </span>
               </Col>
               <Row>
-                <Col md={4} sm={1} xs={1}>
+                <Col md={3} sm={1} xs={1} style={{ paddingLeft: "17px" }}>
                   <div className="client-flow" style={{ marginTop: '40px' }}>
                     <div className="client-flow-box" style={{ marginBottom: '32px' }}>
                       <div className="d-flex mb-3">
@@ -469,8 +492,8 @@ const Client = () => {
                     </div>
                   </div>
                 </Col>
-                <Col md={8} sm={8} xs={1}>
-                  <Totalcounsumption data={outFlowData} />
+                <Col md={9} sm={8} xs={1}>
+                  <TotalOtFloow data={outFlowData} />
                 </Col>
               </Row>
             </Card.Body>
@@ -528,163 +551,17 @@ const Client = () => {
             </span>
             <span className="d-flex" style={{ textAlign: 'end' }}></span>
           </Col>
-          <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+          {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
             <span style={{ marginRight: 20 }}>
               <Image src={refresh} alt="refresh" className="icon" />
             </span>
             <span>
               <Image src={download} alt="download" className="icon" />
             </span>
-          </Col>
+          </Col> */}
         </Row>
 
         <div className="client-zone-table mt-4">
-          {/* <table className="table">
-            <thead>
-              <tr>
-                <td style={{ textAlign: 'left' }}>Zones</td>
-                <td>Day1</td>
-                <td>Day2</td>
-                <td>Day3</td>
-                <td>Day4</td>
-                <td>Day5</td>
-                <td>Day6</td>
-                <td>Day7</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Zone 1</th>
-                <td className="bg-blue3">
-                  <HtmlTooltip
-                    title={
-                      <React.Fragment>
-                        <div className="d-flex pb-1 mb-2" style={{ borderBottom: '1px solid #ddd' }}>
-                          <span className="col-md-6" style={{ fontSize: 14, color: '#212121' }}>
-                            Day1
-                          </span>
-                          <b style={{ fontSize: 14, color: '#0D47A1' }} className="col-md-6 text-end">
-                            100%
-                          </b>
-                        </div>
-                        <div className="d-flex pb-1 mb-2">
-                          <span className="col-md-6" style={{ fontSize: 14, color: '#717171' }}>
-                            In Flow
-                          </span>
-                          <b style={{ fontSize: 14, color: '#212121' }} className="col-md-6 text-end">
-                            5603.4
-                          </b>
-                        </div>
-                        <div className="d-flex pb-1 mb-2">
-                          <span className="col-md-6" style={{ fontSize: 14, color: '#717171' }}>
-                            Consumption
-                          </span>
-                          <b style={{ fontSize: 14, color: '#212121' }} className="col-md-6 text-end">
-                            5603.4
-                          </b>
-                        </div>
-                      </React.Fragment>
-                    }
-                  >
-                    <Button style={{ color: 'white', padding: 0 }}>100%</Button>
-                  </HtmlTooltip>
-                </td>
-                <td className="bg-blue1">27%</td>
-                <td className="bg-blue1">18%</td>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue2">69%</td>
-                <td className="bg-blue2">73%</td>
-              </tr>
-              <tr>
-                <th>Zone 2</th>
-                <td className="bg-blue3">58%</td>
-                <td className="bg-blue3">68%</td>
-                <td className="bg-blue2">34%</td>
-                <td className="bg-blue4">123%</td>
-                <td className="bg-blue3">88%</td>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue1">29%</td>
-              </tr>
-              <tr>
-                <th>Zone 3</th>
-                <td className="bg-blue4">123%</td>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue5">54%</td>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue3">77%</td>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue5">64%</td>
-              </tr>
-              <tr>
-                <th>Zone 4</th>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue1">25%</td>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue5">100%</td>
-                <td className="bg-blue2">38%</td>
-                <td className="bg-blue3">100%</td>
-              </tr>
-              <tr>
-                <th>Zone 5</th>
-                <td className="bg-blue1">48%</td>
-                <td className="bg-blue2">20%</td>
-                <td className="bg-blue5">100%</td>
-                <td className="bg-blue5">56%</td>
-                <td className="bg-blue5">89%</td>
-                <td className="bg-blue5">100%</td>
-                <td className="bg-blue5">100%</td>
-              </tr>
-              <tr>
-                <th>Zone 6</th>
-                <td className="bg-blue1">42%</td>
-                <td className="bg-blue4">123%</td>
-                <td className="bg-blue1">38%</td>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue1">43%</td>
-                <td className="bg-blue5">100%</td>
-                <td className="bg-blue5">100%</td>
-              </tr>
-              <tr>
-                <th>Zone 7</th>
-                <td className="bg-blue1">28%</td>
-                <td className="bg-blue1">38%</td>
-                <td className="bg-blue1">38%</td>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue5">87%</td>
-                <td className="bg-blue4">123%</td>
-                <td className="bg-blue1">43%</td>
-              </tr>
-              <tr>
-                <th>Zone 8</th>
-                <td className="bg-blue1">38%</td>
-                <td className="bg-blue1">24%</td>
-                <td className="bg-blue5">100%</td>
-                <td className="bg-blue3">100%</td>
-                <td className="bg-blue5">72%</td>
-                <td className="bg-blue1">46%</td>
-                <td className="bg-blue4">123%</td>
-              </tr>
-
-              <tr>
-                <td colSpan={7} style={{ textAlign: 'left' }}>
-                  Show more
-                </td>
-              </tr>
-
-              <tr>
-                <th>Average/Total</th>
-                <td className="bg-blue1">38%</td>
-                <td className="bg-blue1">24%</td>
-                <td className="bg-blue5">100%</td>
-                <td className="bg-blue5">100%</td>
-                <td className="bg-blue5">72%</td>
-                <td className="bg-blue1">46%</td>
-                <td className="bg-blue4">123%</td>
-              </tr>
-            </tbody>
-          </table> */}
           {loading ? ( // Show spinner if loading
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
               <Spinner animation="border" variant="primary" />
@@ -719,14 +596,14 @@ const Client = () => {
 
             <span className="d-flex" style={{ textAlign: 'end' }}></span>
           </Col>
-          <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+          {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
             <span style={{ marginRight: 20 }}>
               <Image src={refresh} alt="refresh" className="icon" />
             </span>
             <span>
               <Image src={download} alt="download" className="icon" />
             </span>
-          </Col>
+          </Col> */}
         </Row>
         <CustomerTable />
       </Card>
@@ -748,14 +625,14 @@ const Client = () => {
             </span>
             <span style={{ textAlign: 'end' }}></span>
           </Col>
-          <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+          {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
             <span style={{ marginRight: 20 }}>
               <Image src={refresh} alt="refresh" className="icon" />
             </span>
             <span>
               <Image src={download} alt="download" className="icon" />
             </span>
-          </Col>
+          </Col> */}
         </Row>
         <ZoneSegmenation />
       </Card>

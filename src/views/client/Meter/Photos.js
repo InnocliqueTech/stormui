@@ -71,8 +71,9 @@ import { Card, Row, Col, Image, Button } from 'react-bootstrap';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, Alert, Checkbox, IconButton } from '@mui/material';
 import axios from 'axios';
 import CloseIcon from '@mui/icons-material/Close';
-import upload from '../../../assets/images/upload.svg';
+// import upload from '../../../assets/images/upload.svg';
 import deleteimg from '../../../assets/images/delete.svg';
+import UploadIcon from '@mui/icons-material/Upload';
 
 
 function MeterPhoto({ data1 }) {
@@ -234,13 +235,24 @@ function MeterPhoto({ data1 }) {
                                     style={{ display: 'none' }}
                                     id="file-input"
                                 />
-                                <label htmlFor="file-input" >
+
+                                <label htmlFor="file-input">
+                                    <UploadIcon
+                                        style={{
+                                            cursor: 'pointer',
+                                            fontSize: '30px', // Adjust the size of the icon
+                                            color: '#6C757D' // Adjust the color as needed
+                                        }}
+                                    />
+                                </label>
+
+                                {/* <label htmlFor="file-input" >
                                     <IconButton style={{ marginRight: 20 }}>
                                         <Image src={upload} alt="upload" />
                                     </IconButton>
-                                </label>
+                                </label> */}
 
-                                <span style={{ marginRight: 20 }}>
+                                <span>
                                     <IconButton onClick={handleDeleteClick}>
                                         <Image src={deleteimg} alt="delete" />
                                     </IconButton>
@@ -292,9 +304,9 @@ function MeterPhoto({ data1 }) {
             <Dialog
                 open={openDialog}
                 onClose={handleDialogClose}
-                fullWidth 
+                fullWidth
                 maxWidth="md"
-               >
+            >
                 <Row container style={{ backgroundColor: '#000' }}>
                     <Col md={10} sm={12} xs={10}>
                         <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} >

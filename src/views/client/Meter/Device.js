@@ -22,14 +22,14 @@ function Device({ devicedt }) {
             <Row>
               <Col md={6} xs={6} sm={6}>
                 <div className='meterdetails-list'>Gateway ID:</div>
-                <div className='meterdetails-list'>SNR(dB):</div>
+                {/* <div className='meterdetails-list'>SNR(dB):</div> */}
                 <div className='meterdetails-list'>Freq(MHz):</div>
                 <div className='meterdetails-list'>Status:</div>
               </Col>
               {devicedt && devicedt.deviceDetails && devicedt.deviceDetails.latestFrameData ? (
                 <Col md={6} xs={6} sm={6}>
                   <div className='meterdetails-list1'>{devicedt.deviceDetails.latestFrameData.gatewayId || '-'}</div>
-                  <div className='meterdetails-list1'> {devicedt.deviceDetails.latestFrameData.snr || '-'}</div>
+                  {/* <div className='meterdetails-list1'> {devicedt.deviceDetails.latestFrameData.snr || '-'}</div> */}
                   <div className='meterdetails-list1'>{devicedt.deviceDetails.latestFrameData.freq || '-'}</div>
                   <div className='meterdetails-list1'>{devicedt.deviceDetails.latestFrameData.status || '-'}</div>
                 </Col>

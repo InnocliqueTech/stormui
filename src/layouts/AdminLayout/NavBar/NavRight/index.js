@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import {  Image,ListGroup } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { Image, ListGroup } from 'react-bootstrap';
+// import { useLocation } from 'react-router-dom';
 
 import ChatList from './ChatList';
 
 //import NavSearch from '../NavLeft/NavSearch';
 //import useWindowSize from '../../../../hooks/useWindowSize';
-import avatar2 from '../../../../assets/images/user/Ramesh.png';
+// import avatar2 from '../../../../assets/images/user/Ramesh.png';
 // import avatar3 from '../../../../assets/images/user/avatar-3.jpg';
 // import avatar4 from '../../../../assets/images/user/avatar-4.jpg';
+import logo from '../../../../assets/images/logo.png';
+import logo2 from '../../../../layouts/AdminLayout/NavBar/krmmck1r (1).png'
 
 const NavRight = () => {
   const [listOpen, setListOpen] = useState(false);
-  const location = useLocation();
-  const hideSearchPaths = ['/app/dashboard/location', '/app/dashboard/default'];
+  // const location = useLocation();
+  // const hideSearchPaths = ['/app/dashboard/location', '/app/dashboard/default'];
   //const windowSize = useWindowSize();
 
   // let navItemClass = ['nav-item'];
@@ -85,31 +87,16 @@ const NavRight = () => {
 
   return (
     <React.Fragment>
-    <ListGroup as="ul" bsPrefix=" " className="navbar-nav ml-auto" id="navbar-right">
-      {!hideSearchPaths.includes(location.pathname) && (
-        <ListGroup.Item as="li" bsPrefix=" " className="nav-item" style={{ lineHeight: '0px', padding: '0', paddingRight: '24px' }}>
-          <div className='head-right-search'>
-            <i className="fas fa-search me-2"></i>
-            <input type='text' placeholder='Search'></input>
-          </div>
+      <ListGroup as="ul" bsPrefix=" " className="navbar-nav ml-auto" id="navbar-right">
+        <ListGroup.Item as="li" bsPrefix=" " className="nav-item" style={{ lineHeight: '0px', padding: '0', paddingRight: '24px'}}>
+          <Image src={logo2} alt="logo2" style={{ height: 80, width: 80}} />
         </ListGroup.Item>
-      )}
-      <ListGroup.Item as="li" bsPrefix=" " className="nav-item p-0" style={{ lineHeight: '0px' }}>
-        <Image src={avatar2} alt="avatar" style={{ height: 38, width: 38, marginTop: '-3px' }} />
-      </ListGroup.Item>
-      <ListGroup.Item as="li" bsPrefix=" " className="nav-item" style={{ lineHeight: '0px' }}>
-        <div className='head-right-user'>
-          <div className="">
-            <div className="col-md-12">
-              <h3>Ramesh Vemula</h3>
-              <small>Senior Operator</small>
-            </div>
-          </div>
-        </div>
-      </ListGroup.Item>
-    </ListGroup>
-    <ChatList listOpen={listOpen} closed={() => setListOpen(false)} />
-  </React.Fragment>
+        <ListGroup.Item as="li" bsPrefix=" " className="nav-item p-0" style={{ lineHeight: '0px' }}>
+          <Image src={logo} alt="avatar" style={{ height: 60, width: 56 }} />
+        </ListGroup.Item>
+      </ListGroup>
+      <ChatList listOpen={listOpen} closed={() => setListOpen(false)} />
+    </React.Fragment>
   );
 };
 

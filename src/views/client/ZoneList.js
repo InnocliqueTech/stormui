@@ -127,7 +127,7 @@ export default function ZoneList() {
               <thead>
                 <tr>
                   {/* <th className='tablehead'></th> */}
-                  <th className='tablehead'>Zone ID 1</th>
+                  <th className='tablehead'>Zone ID</th>
                   <th className='tablehead'>Gateway ID</th>
                   <th className='tablehead'>Last Communication Time</th>
                   <th className='tablehead'>Reading</th>

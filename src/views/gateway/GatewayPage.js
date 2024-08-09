@@ -12,18 +12,28 @@ import cans from '../../assets/images/cansCommunicated.svg';
 import axios from 'axios';
 import { useEffect, useContext, useState } from 'react';
 import { ClientsContext } from '../dashboard/context';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 export default function GatewayList() {
   const [gatewayCardData, setGatewayCardData] = useState('')
   const { selectedClient } = useContext(ClientsContext);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
 
-  
-  
     fetchCardData()
+
+    
+      // Check if the page has already been reloaded
+      if (!sessionStorage.getItem('gatewayReloaded')) {
+        // Set the flag to indicate the page has been reloaded
+        sessionStorage.setItem('gatewayReloaded', 'true');
+
+        // Reload the page
+        window.location.reload();
+      }
   }, [selectedClient])
 
   const fetchCardData = async () => {
@@ -55,12 +65,13 @@ export default function GatewayList() {
           bg: '#FEF0F4'
         },
         {
-          type: "Can's communicated today",
+          type: "Can's Communicated",
           count: data.gatewayCount.totalCansCommunicatedToday || '0',
           icon: cans,
           bg: '#E3F2FD'
         }
       ]);
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -98,43 +109,31 @@ export default function GatewayList() {
   return (
     <section className='gateway-component'>
       {/* <h2 className="heading">Gateways</h2> */}
-      <div className='gateway-list'>
-        {gatewayCardData && gatewayCardData.map((item) => {
-          return (
-            <div key={item.type} className='gateway-card'>
-              <div className='type-icon'>
-                <img src={item.icon} alt={item.type} style={{ background: item.bg }} />
-                <span>{item.type}</span>
-              </div>
-              <div className='count' style={{ marginLeft: "10px" }}>
-                <span>{item.count}</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {loading ? ( // Display spinner if loading is true
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
+        <div className='gateway-list'>
 
-      <div >
-        {/* <Row>
-          <Col md={9} sm={7} xs={7}>
-            <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Gateway Lists</span>{' '}
-            <span style={{ textAlign: 'end' }}>
-              <InfoOutlinedIcon style={{ height: 20, width: 20, justifyContent: 'center', color: '#D6D9DC', marginLeft: 5 }} />
-            </span>
-          </Col>
-          <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
-            <CachedOutlinedIcon style={{ color: '#6C757D' }} />{' '}
-            <span>
-              {' '}
-              <FilterAltOutlinedIcon style={{ color: '#6C757D', marginLeft: 20, marginRight: 20 }} />
-            </span>
-            <span>
-              {' '}
-              <FileUploadOutlinedIcon style={{ color: '#6C757D' }} />
-            </span>
-          </Col>
-        </Row> */}
-        <GatewayTable />
+          {gatewayCardData && gatewayCardData.map((item) => {
+            return (
+              <div key={item.type} className='gateway-card'>
+                <div className='type-icon'>
+                  <img src={item.icon} alt={item.type} style={{ background: item.bg }} />
+                  <span>{item.type}</span>
+                </div>
+                <div className='count' style={{ marginLeft: "10px" }}>
+                  <span>{item.count}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      <div style={{marginTop:"20px"}}>
+        <GatewayTable/>
       </div>
     </section>
   );

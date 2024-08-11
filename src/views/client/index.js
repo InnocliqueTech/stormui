@@ -34,6 +34,17 @@ import { useStateContext } from '../../contexts/MainContext';
 import Overflowks from './OutFlowks';
 import { ClientsContext } from '../dashboard/context';
 import { format, subDays } from 'date-fns';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import ZoneList from './ZoneList';
+import DmaList from './DmaList';
+import MeterList from './MeterList';
+import GatewayList from '../gateway/GatewayPage';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -62,13 +73,19 @@ const Client = () => {
   const [dashboardData, setDashboardData] = useState({});
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
-  const { presentDate, toDate } = useStateContext();
+  const { presentDate, toDate, onDateChange, selectedDate, setSelectedDate, isDatePickerOpen, toggleDatePicker }
+    = useStateContext();
+
+
   // const { clients } = useContext(ClientsContext);
-  const { selectedClient, selectedZone } = useContext(ClientsContext);
+  const { selectedClient, zones, selectedZone, setSelectedZone, dmas, selectedDma, setSelectedDma, gateways, selectedGateway, setSelectedGateway, status, selectedStatus } = useContext(ClientsContext);
   const [dmaData, setDmaData] = useState({});
   const [dayDashBoardData, setDayDashBoardData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const [loading, setLoading] = useState(true); // setSelectedStatuselectedZone
   // const [supplyByZoneData, setSupplyByZoneData] = useState([]);
+  // const { onDateChange, selectedDate, setSelectedDate, isDatePickerOpen, toggleDatePicker } = useStateContext();
 
   //For Supply By zone Graph
   // const [zoneNames, setZoneNames] = useState([]);
@@ -82,10 +99,15 @@ const Client = () => {
       sessionStorage.setItem('zoneReloaded', 'true');
 
       // Reload the page
-      window.location.reload();
+      // window.location.reload();
     }
   }, [])
 
+  const handleFilterIconClick = () => {
+    navigate('/app/meterlist');
+    setIsDialogOpen(true);
+
+  };
 
   // zone wise supply
   useEffect(() => {
@@ -390,6 +412,12 @@ const Client = () => {
   const [open, setOpen] = React.useState(false);
   const [opendma, setOpendma] = React.useState(false);
   const [fullWidth] = React.useState(true);
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    console.log('NEW', newValue)
+    setValue(newValue);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -404,6 +432,31 @@ const Client = () => {
   const handledmaClose = () => {
     setOpendma(false);
   };
+  function CustomTabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      </div>
+    );
+  }
+  const handleDialogClose = () => {
+    setIsDialogOpen(false);
+  };
+
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
   // const formatNumber = (number) => {
   //   return new Intl.NumberFormat('en-US', {
   //     notation: "compact",
@@ -413,36 +466,252 @@ const Client = () => {
 
   return (
     <React.Fragment>
-      <Row>
-        <Col md={6} xl={6} sm={12}>
-          <Card className="card-social">
-            <Card.Body>
-              <Col md={8} sm={8} xs={8} style={{ display: 'inline-flex', }}>
-                <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574' }}>
-                  <Image src={over} alt="over" className="icon" />
-                </Col>
-                <div className="alerttext ms-2">
-                  Total Outflow<span></span>{' '}
+
+      <Box sx={{ width: '100%', marginTop: '-20px' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example"
+            sx={{
+
+              '& .MuiTab-root': {
+                backgroundColor: '#ffffff',
+                padding: "10px",
+                borderRadius: "8px",
+                color: '#212121',
+                fontSize: '14px',
+                fontWeight: 400,
+              },
+              '& .Mui-selected': {
+                backgroundColor: '#eaeaeb',
+                fontWeight: 600,
+                color: 'black !important',
+              },
+              '& .MuiTabs-indicator': {
+                backgroundColor: '#eaeaeb'
+              },
+            }}
+          >
+            <Tab label="Dashboard" {...a11yProps(0)} />
+            <Tab label="Zone's List" {...a11yProps(1)} />
+            <Tab label="DMA's List" {...a11yProps(2)} />
+            <Tab label="Gateway's List" {...a11yProps(3)} />
+            <Tab label="Meter's List" {...a11yProps(4)} />
+          </Tabs>
+
+          <div style={{ marginTop: '-55px' }}>
+            {console.log('VALUE', value)}
+            <div className="days-date-picker-outer-cls">
+              {value == 0 ?
+
+                <div className='days-date-picker-inner-cls'>
+                  {[
+                    { day: '1D', add: 1 },
+                    { day: '7D', add: 7 },
+                    { day: '14D', add: 14 },
+                    { day: '30D', add: 30 }
+                  ].map((obj) => {
+                    return (
+                      <button
+                        className={`days ${selectedDate === obj.day ? 'active' : ''}`}
+                        onClick={() => {
+                          setSelectedDate(obj.day);
+                          onDateChange(obj.add);
+                        }}
+                        key={obj.day}
+                      >
+                        {obj.day}
+                      </button>
+                    );
+                  })}
+
+                  {isDatePickerOpen && (
+                    <div className="date-picker">
+                      <NewDatePicker />
+                    </div>
+                  )}
+                  <button className="icon-button" onClick={toggleDatePicker}>
+                    <DateRangeIcon />
+                  </button>
                 </div>
-                <span style={{ marginTop: "10px" }}>
-                  <Image src={info} alt="info" />
-                </span>
-              </Col>
-              <Row>
-                <Col md={3} sm={1} xs={1} style={{ paddingLeft: "17px" }}>
-                  <div className="client-flow" style={{ marginTop: '40px' }}>
-                    <div className="client-flow-box" style={{ marginBottom: '32px' }}>
-                      <div className="d-flex mb-3">
-                        <div className="client-flow-orange me-2"></div>
-                        <h4 style={{ fontSize: 14, color: '#495057', fontWeight: '600' }}>In Flow</h4>
+                : ""}
+
+
+
+
+
+              {value == 2 || value == 3 || value == 4 ?
+                <div>
+                  <div className="form-group selectcustom">
+                    <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
+                      <option value={0}>All</option>
+                      {zones.map((zone) => (
+                        <option key={zone.zoneId} value={zone.zoneId}>
+                          {zone.displayName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                : ""}
+
+              {value == 3 || value == 4 ? <div style={{ marginLeft: "5px" }}>
+                <div className="form-group selectcustom">
+                  <select className="form-control" value={selectedDma} onChange={(e) => setSelectedDma(Number(e.target.value))}>
+                    {/* <option>Dma List</option> */}
+                    <option value={0}>All</option>
+                    {dmas.map((dma) => (
+                      <option key={dma.dmaId} value={dma.dmaId}>
+                        {dma.displayName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div> : ""}
+
+
+              {value == 4 ? <div style={{ marginLeft: "5px" }}>
+                <div className="form-group selectcustom">
+                  <select className="form-control" value={selectedGateway} onChange={(e) => setSelectedGateway(Number(e.target.value))}>
+                    {/* <option>Gateway List</option> */}
+                    <option value={0}>All</option>
+                    {gateways.map((gateway) => (
+                      <option key={gateway.id} value={gateway.id}>
+                        {gateway.displayName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+                : ""}
+
+              <div style={{ marginLeft: "10px" }}>
+                <div className="form-group selectcustom"
+                  style={{ height: "47px", width: "47px", backgroundColor: "#eaeaeb", borderRadius: "8px" }}>
+                  <FilterAltOutlinedIcon
+                    style={{
+                      color: '#6C757D',
+                      position: "relative",
+                      marginTop: "12px",
+                      marginLeft: "12px",
+                      cursor: "pointer"
+                    }}
+                    onClick={handleFilterIconClick} />
+                </div>
+
+                <Dialog open={isDialogOpen} onClose={handleDialogClose}>
+                  <DialogTitle>
+                    <h4 style={{ fontWeight: "600" }}>Filters</h4>
+                  </DialogTitle>
+                  <DialogContent>
+                    <div className='row'>
+                      <div className='col-md-4'>
+                        <div className="form-group selectcustom" style={{ width: "100%" }}>
+                          <label>Select Status</label>
+                          <select className="form-control" value={selectedStatus ? selectedStatus : 0}
+                            onChange={(e) => setSelectedStatus(Number(e.target.value))}>
+
+                            {status.map((st) => (
+                              <option key={st.statusId} value={st.statusId}>
+                                {st.displayName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                       </div>
-                      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>
-                        {' '}
-                        <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: '16px' }}>
-                          {outFlowData && outFlowData.inFlowDetails && outFlowData.inFlowDetails.count}
-                        </h2>
-                      </h2>
-                      {/* <div className="client-flow-stock d-flex">
+                      <div className='col-md-4'>
+                        <div className="form-group selectcustom" style={{ width: "100%" }}>
+                          <label>Select Zone</label>
+                          <select className="form-control" value={selectedZone ? selectedZone : 0}
+                            onChange={(e) => setSelectedZone(Number(e.target.value))}>
+                            <option>Select Zone</option>
+                            <option value={0}>All</option>
+                            {zones.map((zone) => (
+                              <option key={zone.zoneId} value={zone.zoneId}>
+                                {zone.displayName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      <div className='col-md-4'>
+                        <div className="form-group selectcustom" style={{ width: "100%" }}>
+                          <label>Select Dma</label>
+                          <select className="form-control" value={selectedDma ? selectedDma : 0}
+                            onChange={(e) => setSelectedDma(Number(e.target.value))}>
+                            <option>Dma List</option>
+                            <option value={0}>All</option>
+                            {dmas.map((dma) => (
+                              <option key={dma.dmaId} value={dma.dmaId}>
+                                {dma.displayName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      <div className='col-md-4 mt-3'>
+                        <div className="form-group selectcustom" style={{ width: "100%" }}>
+                          <label>Select Gateway</label>
+                          <select className="form-control" value={selectedGateway ? selectedGateway : 0}
+                            onChange={(e) => setSelectedGateway(Number(e.target.value))}>
+                            <option>Gateway List</option>
+                            <option value={0}>All</option>
+                            {gateways.map((gateway) => (
+                              <option key={gateway.id} value={gateway.id}>
+                                {gateway.displayName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleDialogClose} color="primary" variant='contained'>
+                      Apply
+                    </Button>
+                    <Button onClick={handleDialogClose} color="primary" variant='outlined'>
+                      Close
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
+
+            </div>
+
+
+          </div>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          <Row>
+            <Col md={6} xl={6} sm={12}>
+              <Card className="card-social">
+                <Card.Body>
+                  <Col md={8} sm={8} xs={8} style={{ display: 'inline-flex', }}>
+                    <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574' }}>
+                      <Image src={over} alt="over" className="icon" />
+                    </Col>
+                    <div className="alerttext ms-2">
+                      Total Outflow<span></span>{' '}
+                    </div>
+                    <span style={{ marginTop: "10px" }}>
+                      <Image src={info} alt="info" />
+                    </span>
+                  </Col>
+                  <Row>
+                    <Col md={3} sm={1} xs={1} style={{ paddingLeft: "17px" }}>
+                      <div className="client-flow" style={{ marginTop: '40px' }}>
+                        <div className="client-flow-box" style={{ marginBottom: '32px' }}>
+                          <div className="d-flex mb-3">
+                            <div className="client-flow-orange me-2"></div>
+                            <h4 style={{ fontSize: 14, color: '#495057', fontWeight: '600' }}>In Flow</h4>
+                          </div>
+                          <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>
+                            {' '}
+                            <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: '16px' }}>
+                              {outFlowData && outFlowData.inFlowDetails && outFlowData.inFlowDetails.count}
+                            </h2>
+                          </h2>
+                          {/* <div className="client-flow-stock d-flex">
                         <div
                           style={{
                             width: 32,
@@ -459,16 +728,16 @@ const Client = () => {
                         <img src={UpArrow} style={{ width: '12px', height: '15px', marginRight: '10px', marginTop: '3px' }} alt="uparrow" />
                         <span style={{ fontSize: 12, paddingTop: '3px' }}>last week</span>
                       </div> */}
-                    </div>
-                    <div className="client-flow-box">
-                      <div className="d-flex mb-3">
-                        <div className="client-flow-orange client-flow-blue me-2"></div>
-                        <h4 style={{ fontSize: 14, color: '#495057', fontWeight: '600' }}>Consumption</h4>
-                      </div>
-                      <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: '16px' }}>
-                        {outFlowData && outFlowData.consumptionDetails && outFlowData.consumptionDetails.count}
-                      </h2>
-                      {/* <div className="client-flow-stock d-flex">
+                        </div>
+                        <div className="client-flow-box">
+                          <div className="d-flex mb-3">
+                            <div className="client-flow-orange client-flow-blue me-2"></div>
+                            <h4 style={{ fontSize: 14, color: '#495057', fontWeight: '600' }}>Consumption</h4>
+                          </div>
+                          <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: '16px' }}>
+                            {outFlowData && outFlowData.consumptionDetails && outFlowData.consumptionDetails.count}
+                          </h2>
+                          {/* <div className="client-flow-stock d-flex">
                         <div
                           style={{
                             width: 32,
@@ -489,221 +758,238 @@ const Client = () => {
                         />
                         <span style={{ fontSize: 12, paddingTop: '3px' }}>last week</span>
                       </div> */}
+                        </div>
+                      </div>
+                    </Col>
+                    <Col md={9} sm={8} xs={1}>
+                      <TotalOtFloow data={outFlowData} />
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={6} xl={3} sm={12}>
+              <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handledmaClickOpen}>
+                <Card className="card-social">
+                  <Card.Body>
+                    {/* <ClientZone data={dashboardData.totalConsumption} /> */}
+                    <ClientZone data={dashboardData} />
+                  </Card.Body>
+                </Card>
+              </Link>
+            </Col>
+            <Col md={6} xl={3} sm={12}>
+              <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handleClickOpen}>
+                <Card className="card-social">
+                  <Card.Body className="">
+                    <ClientDma dmaData={dmaData} />
+                  </Card.Body>
+                </Card>
+              </Link>
+            </Col>
+            <Col md={6} xl={5}>
+              <Alert data={alertData} />
+            </Col>
+            <Col md={6} xl={7}>
+              <Card className="card-social">
+                <Card.Body className="p-0">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <Overflowks data={outFlowData} />
                     </div>
                   </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+
+          <Card className="client-customer">
+            <Row>
+              <Col md={9} sm={7} xs={7} className="d-flex">
+                <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className="d-flex align-items-center">
+                  <span
+                    className="iconContainergreen p-0 d-flex align-items-center justify-content-center me-2"
+                    style={{ width: '48px', height: '48px' }}
+                  >
+                    <Image src={customer} alt="customer" className="icon" />
+                  </span>{' '}
+                  Supply By Zone
+                </span>
+                <span style={{ padding: '13px' }}>
+                  <Image src={info} alt="info" className="icon" />
+                </span>
+                <span className="d-flex" style={{ textAlign: 'end' }}></span>
+              </Col>
+              {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+            <span style={{ marginRight: 20 }}>
+              <Image src={refresh} alt="refresh" className="icon" />
+            </span>
+            <span>
+              <Image src={download} alt="download" className="icon" />
+            </span>
+          </Col> */}
+            </Row>
+
+            <div className="client-zone-table mt-4">
+              {loading ? ( // Show spinner if loading
+                <div style={{ textAlign: 'center', marginTop: '50px' }}>
+                  <Spinner animation="border" variant="primary" />
+                </div>
+              ) : (
+                <div>
+                  <Table>
+                    {renderTableHeader()}
+                    {renderTableBody()}
+                  </Table>
+                  {renderLegend()}
+                </div>
+              )}
+            </div>
+          </Card>
+
+          <Card className="client-customer">
+            <Row>
+              <Col md={9} sm={7} xs={7} className="d-flex">
+                <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className="d-flex align-items-center">
+                  <span
+                    className="iconContainergreen p-0 d-flex align-items-center justify-content-center me-2"
+                    style={{ width: '48px', height: '48px' }}
+                  >
+                    <Image src={customer} alt="customer" className="icon" />
+                  </span>{' '}
+                  Customer Segmentation{' '}
+                </span>
+                <span style={{ padding: '13px' }}>
+                  <Image src={info} alt="info" className="icon" />
+                </span>
+
+                <span className="d-flex" style={{ textAlign: 'end' }}></span>
+              </Col>
+              {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+            <span style={{ marginRight: 20 }}>
+              <Image src={refresh} alt="refresh" className="icon" />
+            </span>
+            <span>
+              <Image src={download} alt="download" className="icon" />
+            </span>
+          </Col> */}
+            </Row>
+            <CustomerTable />
+          </Card>
+
+          <Card className="client-customer">
+            <Row>
+              <Col md={9} sm={7} xs={7} className="d-flex">
+                <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className="d-flex align-items-center">
+                  <span
+                    className="iconContainer p-0 d-flex align-items-center justify-content-center me-2"
+                    style={{ width: '48px', height: '48px' }}
+                  >
+                    <Image src={zone} alt="zone" className="icon" />
+                  </span>{' '}
+                  Zone Segmentation{' '}
+                </span>
+                <span style={{ padding: '13px' }}>
+                  <Image src={info} alt="gateway" />
+                </span>
+                <span style={{ textAlign: 'end' }}></span>
+              </Col>
+              {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+            <span style={{ marginRight: 20 }}>
+              <Image src={refresh} alt="refresh" className="icon" />
+            </span>
+            <span>
+              <Image src={download} alt="download" className="icon" />
+            </span>
+          </Col> */}
+            </Row>
+            <ZoneSegmenation />
+          </Card>
+
+          {/* ------------------------Dma--------------------------------------- */}
+          <BootstrapDialog
+            onClose={handleClose}
+            aria-labelledby="customized-dialog-title"
+            open={open}
+            maxWidth="md" // Options: 'xs', 'sm', 'md', 'lg', 'xl'
+            fullWidth
+          >
+            <Card>
+              <Row container style={{ backgroundColor: '#000' }}>
+                <Col md={10} sm={12} xs={10}>
+                  <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                    Supply Details
+                  </DialogTitle>
                 </Col>
-                <Col md={9} sm={8} xs={1}>
-                  <TotalOtFloow data={outFlowData} />
+                <Col md={1} sm={1} xs={1}>
+                  <IconButton
+                    aria-label="close"
+                    onClick={handleClose}
+                    sx={{
+                      position: 'absolute',
+                      right: 8,
+                      top: 8,
+                      color: (theme) => theme.palette.grey[500]
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
                 </Col>
               </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={6} xl={3} sm={12}>
-          <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handledmaClickOpen}>
-            <Card className="card-social">
-              <Card.Body>
-                {/* <ClientZone data={dashboardData.totalConsumption} /> */}
-                <ClientZone data={dashboardData} />
-              </Card.Body>
+              <DmaTable dmaData={dmaData} />
             </Card>
-          </Link>
-        </Col>
-        <Col md={6} xl={3} sm={12}>
-          <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handleClickOpen}>
-            <Card className="card-social">
-              <Card.Body className="">
-                <ClientDma dmaData={dmaData} />
-              </Card.Body>
+          </BootstrapDialog>
+
+          {/* ------------------------zone--------------------------------------- */}
+          <BootstrapDialog
+            onClose={handledmaClose}
+            aria-labelledby="customized-dialog-title"
+            open={opendma}
+            maxWidth="md" // Options: 'xs', 'sm', 'md', 'lg', 'xl'
+            fullWidth
+          >
+            <Card>
+              <Row container style={{ backgroundColor: '#000' }}>
+                <Col md={10} sm={12} xs={10}>
+                  <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                    Supply Details
+                  </DialogTitle>
+                </Col>
+                <Col md={1} sm={1} xs={1}>
+                  <IconButton
+                    aria-label="close"
+                    onClick={handledmaClose}
+                    sx={{
+                      position: 'absolute',
+                      right: 8,
+                      top: 8,
+                      color: (theme) => theme.palette.grey[500]
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Col>
+              </Row>
+              <ZoneTable dashboardData={dashboardData} />
             </Card>
-          </Link>
-        </Col>
-        <Col md={6} xl={5}>
-          <Alert data={alertData} />
-        </Col>
-        <Col md={6} xl={7}>
-          <Card className="card-social">
-            <Card.Body className="p-0">
-              <div className="row">
-                <div className="col-md-12">
-                  <Overflowks data={outFlowData} />
-                </div>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+          </BootstrapDialog>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <ZoneList />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
+          <DmaList />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={3}>
+          <GatewayList isTab={true} />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={4}>
+          {/* <DmaList /> */}
+          <MeterList />
+        </CustomTabPanel>
+      </Box>
 
-      <Card className="client-customer">
-        <Row>
-          <Col md={9} sm={7} xs={7} className="d-flex">
-            <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className="d-flex align-items-center">
-              <span
-                className="iconContainergreen p-0 d-flex align-items-center justify-content-center me-2"
-                style={{ width: '48px', height: '48px' }}
-              >
-                <Image src={customer} alt="customer" className="icon" />
-              </span>{' '}
-              Supply By Zone
-            </span>
-            <span style={{ padding: '13px' }}>
-              <Image src={info} alt="info" className="icon" />
-            </span>
-            <span className="d-flex" style={{ textAlign: 'end' }}></span>
-          </Col>
-          {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
-            <span style={{ marginRight: 20 }}>
-              <Image src={refresh} alt="refresh" className="icon" />
-            </span>
-            <span>
-              <Image src={download} alt="download" className="icon" />
-            </span>
-          </Col> */}
-        </Row>
 
-        <div className="client-zone-table mt-4">
-          {loading ? ( // Show spinner if loading
-            <div style={{ textAlign: 'center', marginTop: '50px' }}>
-              <Spinner animation="border" variant="primary" />
-            </div>
-          ) : (
-            <div>
-              <Table>
-                {renderTableHeader()}
-                {renderTableBody()}
-              </Table>
-              {renderLegend()}
-            </div>
-          )}
-        </div>
-      </Card>
-
-      <Card className="client-customer">
-        <Row>
-          <Col md={9} sm={7} xs={7} className="d-flex">
-            <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className="d-flex align-items-center">
-              <span
-                className="iconContainergreen p-0 d-flex align-items-center justify-content-center me-2"
-                style={{ width: '48px', height: '48px' }}
-              >
-                <Image src={customer} alt="customer" className="icon" />
-              </span>{' '}
-              Customer Segmentation{' '}
-            </span>
-            <span style={{ padding: '13px' }}>
-              <Image src={info} alt="info" className="icon" />
-            </span>
-
-            <span className="d-flex" style={{ textAlign: 'end' }}></span>
-          </Col>
-          {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
-            <span style={{ marginRight: 20 }}>
-              <Image src={refresh} alt="refresh" className="icon" />
-            </span>
-            <span>
-              <Image src={download} alt="download" className="icon" />
-            </span>
-          </Col> */}
-        </Row>
-        <CustomerTable />
-      </Card>
-
-      <Card className="client-customer">
-        <Row>
-          <Col md={9} sm={7} xs={7} className="d-flex">
-            <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className="d-flex align-items-center">
-              <span
-                className="iconContainer p-0 d-flex align-items-center justify-content-center me-2"
-                style={{ width: '48px', height: '48px' }}
-              >
-                <Image src={zone} alt="zone" className="icon" />
-              </span>{' '}
-              Zone Segmentation{' '}
-            </span>
-            <span style={{ padding: '13px' }}>
-              <Image src={info} alt="gateway" />
-            </span>
-            <span style={{ textAlign: 'end' }}></span>
-          </Col>
-          {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
-            <span style={{ marginRight: 20 }}>
-              <Image src={refresh} alt="refresh" className="icon" />
-            </span>
-            <span>
-              <Image src={download} alt="download" className="icon" />
-            </span>
-          </Col> */}
-        </Row>
-        <ZoneSegmenation />
-      </Card>
-
-      {/* ------------------------Dma--------------------------------------- */}
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-        maxWidth="md" // Options: 'xs', 'sm', 'md', 'lg', 'xl'
-        fullWidth
-      >
-        <Card>
-          <Row container style={{ backgroundColor: '#000' }}>
-            <Col md={10} sm={12} xs={10}>
-              <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                Supply Details
-              </DialogTitle>
-            </Col>
-            <Col md={1} sm={1} xs={1}>
-              <IconButton
-                aria-label="close"
-                onClick={handleClose}
-                sx={{
-                  position: 'absolute',
-                  right: 8,
-                  top: 8,
-                  color: (theme) => theme.palette.grey[500]
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-            </Col>
-          </Row>
-          <DmaTable dmaData={dmaData} />
-        </Card>
-      </BootstrapDialog>
-
-      {/* ------------------------zone--------------------------------------- */}
-      <BootstrapDialog
-        onClose={handledmaClose}
-        aria-labelledby="customized-dialog-title"
-        open={opendma}
-        maxWidth="md" // Options: 'xs', 'sm', 'md', 'lg', 'xl'
-        fullWidth
-      >
-        <Card>
-          <Row container style={{ backgroundColor: '#000' }}>
-            <Col md={10} sm={12} xs={10}>
-              <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                Supply Details
-              </DialogTitle>
-            </Col>
-            <Col md={1} sm={1} xs={1}>
-              <IconButton
-                aria-label="close"
-                onClick={handledmaClose}
-                sx={{
-                  position: 'absolute',
-                  right: 8,
-                  top: 8,
-                  color: (theme) => theme.palette.grey[500]
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-            </Col>
-          </Row>
-          <ZoneTable dashboardData={dashboardData} />
-        </Card>
-      </BootstrapDialog>
     </React.Fragment>
   );
 };

@@ -27,12 +27,36 @@
   border-radius: 10px;
   background: #eaeaeb;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
   margin-right: 10px;
   position: relative;
 }
 
+.days-date-picker-outer-cls {
+  display: flex;
+  padding: 8px !important;
+  /* border-radius: 10px; */
+  /* background: #eaeaeb; */
+  align-items: center;
+  justify-content: end;
+  margin-right: 10px;
+  /* position: relative; */
+}
+
+.days-date-picker-inner-cls {
+  padding: 8px !important;
+  border-radius: 10px;
+  background: #eaeaeb;
+}
+
 .days-date-picker button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.days-date-picker-outer-cls button {
   border: none;
   outline: none;
   cursor: pointer;

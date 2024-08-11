@@ -15,25 +15,32 @@ import { ClientsContext } from '../dashboard/context';
 import Spinner from 'react-bootstrap/Spinner';
 
 
-export default function GatewayList() {
+export default function GatewayList(props) {
   const [gatewayCardData, setGatewayCardData] = useState('')
   const { selectedClient } = useContext(ClientsContext);
   const [loading, setLoading] = useState(true);
+  const [isTab, setIsTab] = useState(false);
+
+
+
+  useEffect(() => {
+    if (props && props.isTab == true) setIsTab(true)
+  }, [])
 
 
   useEffect(() => {
 
     fetchCardData()
 
-    
-      // Check if the page has already been reloaded
-      if (!sessionStorage.getItem('gatewayReloaded')) {
-        // Set the flag to indicate the page has been reloaded
-        sessionStorage.setItem('gatewayReloaded', 'true');
 
-        // Reload the page
-        window.location.reload();
-      }
+    // Check if the page has already been reloaded
+    if (!sessionStorage.getItem('gatewayReloaded')) {
+      // Set the flag to indicate the page has been reloaded
+      sessionStorage.setItem('gatewayReloaded', 'true');
+
+      // Reload the page
+      // window.location.reload();
+    }
   }, [selectedClient])
 
   const fetchCardData = async () => {
@@ -109,31 +116,36 @@ export default function GatewayList() {
   return (
     <section className='gateway-component'>
       {/* <h2 className="heading">Gateways</h2> */}
-      {loading ? ( // Display spinner if loading is true
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-          <Spinner animation="border" variant="primary" />
-        </div>
-      ) : (
-        <div className='gateway-list'>
 
-          {gatewayCardData && gatewayCardData.map((item) => {
-            return (
-              <div key={item.type} className='gateway-card'>
-                <div className='type-icon'>
-                  <img src={item.icon} alt={item.type} style={{ background: item.bg }} />
-                  <span>{item.type}</span>
-                </div>
-                <div className='count' style={{ marginLeft: "10px" }}>
-                  <span>{item.count}</span>
-                </div>
+      {
+        !isTab ?
+          <div>
+            {loading ? ( // Display spinner if loading is true
+              <div style={{ textAlign: 'center', marginTop: '50px' }}>
+                <Spinner animation="border" variant="primary" />
               </div>
-            );
-          })}
-        </div>
-      )}
+            ) : (
+              <div className='gateway-list'>
+                {gatewayCardData && gatewayCardData.map((item) => {
+                  return (
+                    <div key={item.type} className='gateway-card'>
+                      <div className='type-icon'>
+                        <img src={item.icon} alt={item.type} style={{ background: item.bg }} />
+                        <span>{item.type}</span>
+                      </div>
+                      <div className='count' style={{ marginLeft: "10px" }}>
+                        <span>{item.count}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+          : ""}
 
-      <div style={{marginTop:"20px"}}>
-        <GatewayTable/>
+      <div style={{ marginTop: "20px" }}>
+        <GatewayTable />
       </div>
     </section>
   );

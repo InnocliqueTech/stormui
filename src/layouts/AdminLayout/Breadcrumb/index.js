@@ -181,7 +181,7 @@ const Breadcrumb = () => {
                           <h3 style={{ fontWeight: '600' }}>Gateways</h3>
                         )}
                         {title !== 'Dashboard' && title !== 'Gateway' && (
-                          <span style={{ background: "white", padding: "18px 6px 16px 6px", borderRadius: "8px" }}>
+                          <span style={{ background: "white", padding: "18px 6px 16px 6px", borderRadius: "8px", display: 'none' }}>
                             {(
                               location.pathname.startsWith('/app/client') ||
                               location.pathname.startsWith('/app/dmalist') ||
@@ -260,13 +260,12 @@ const Breadcrumb = () => {
                       </div>
                     </Col>
 
-                    <Col md={5}>
+                    <Col md={5} >
                       <div style={{ display: "flex", float: "right" }}>
                         <div>
-                          {['/app/client', '/app/dashboard/default', "app/gatewaylist", "/app/clientlist", "/app/dmalist", "/app/gatewaylist", "/app/meterlist"].includes(location.pathname) && (
-
+                          {['/app/client', '/app/dashboard/default', "app/gatewaylist", "/app/clientlist", "/app/dmalist", "/app/gatewaylist", "/app/meterlist", "/app/gateway"].includes(location.pathname) && (
                             <section className="seconde-section">
-                              {location.pathname !== '/app/dmalist' && location.pathname !== '/app/clientlist' && location.pathname !== '/app/dmalist' && location.pathname !== '/app/gatewaylist' && location.pathname !== '/app/meterlist' && (
+                              {location.pathname !== '/app/dmalist' && location.pathname !== '/app/clientlist' && location.pathname !== '/app/dmalist' && location.pathname !== '/app/gatewaylist' && location.pathname !== '/app/meterlist' && location.pathname !== '/app/client' && (
                                 <div className="days-date-picker">
                                   <div>
                                     {[
@@ -303,13 +302,11 @@ const Breadcrumb = () => {
                                   </div>
                                 </div>
                               )}
-                              {/* {location.pathname !== '/app/GatewayList' && ( */}
 
-                              {location.pathname !== '/app/dashboard/default' && location.pathname !== '/app/client' && location.pathname !== '/app/clientlist' && (
+                              {location.pathname !== '/app/gateway' && location.pathname !== '/app/dashboard/default' && location.pathname !== '/app/client' && location.pathname !== '/app/clientlist' && (
                                 <div>
                                   <div className="form-group selectcustom">
                                     <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
-                                      {/* <option>Select Zone</option> */}
                                       <option value={0}>All</option>
                                       {zones.map((zone) => (
                                         <option key={zone.zoneId} value={zone.zoneId}>
@@ -320,11 +317,10 @@ const Breadcrumb = () => {
                                   </div>
                                 </div>
                               )}
-                              {location.pathname !== '/app/dashboard/default' && location.pathname !== '/app/client' && location.pathname !== '/app/clientlist' && location.pathname !== '/app/dmalist' && (
+                              {location.pathname !== '/app/gateway' && location.pathname !== '/app/dashboard/default' && location.pathname !== '/app/client' && location.pathname !== '/app/clientlist' && location.pathname !== '/app/dmalist' && (
                                 <div style={{ marginLeft: "5px" }}>
                                   <div className="form-group selectcustom">
                                     <select className="form-control" value={selectedDma} onChange={(e) => setSelectedDma(Number(e.target.value))}>
-                                      {/* <option>Dma List</option> */}
                                       <option value={0}>All</option>
                                       {dmas.map((dma) => (
                                         <option key={dma.dmaId} value={dma.dmaId}>
@@ -335,11 +331,10 @@ const Breadcrumb = () => {
                                   </div>
                                 </div>
                               )}
-                              {location.pathname !== '/app/dashboard/default' && location.pathname !== '/app/client' && location.pathname !== '/app/clientlist' && location.pathname !== '/app/dmalist' && location.pathname !== '/app/gatewaylist' && (
+                              {location.pathname !== '/app/gateway' && location.pathname !== '/app/dashboard/default' && location.pathname !== '/app/client' && location.pathname !== '/app/clientlist' && location.pathname !== '/app/dmalist' && location.pathname !== '/app/gatewaylist' && (
                                 <div style={{ marginLeft: "5px" }}>
                                   <div className="form-group selectcustom">
                                     <select className="form-control" value={selectedGateway} onChange={(e) => setSelectedGateway(Number(e.target.value))}>
-                                      {/* <option>Gateway List</option> */}
                                       <option value={0}>All</option>
                                       {gateways.map((gateway) => (
                                         <option key={gateway.id} value={gateway.id}>
@@ -352,30 +347,12 @@ const Breadcrumb = () => {
                               )}
 
 
-                              {/* {location.pathname !== '/app/client' && ( */}
-
-                              {/* // )} */}
-
-
-                              {/* <div>
-                          <div className="form-group selectcustom">
-                            <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
-                              <option>Select Zone</option>
-                              <option value={0}>All</option>
-                              {zones.map((zone) => (
-                                <option key={zone.zoneId} value={zone.zoneId}>
-                                  {zone.displayName}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div> */}
-
-                              {/* )} */}
+                              
                             </section>
 
                           )}
                         </div>
+                        {location.pathname !== '/app/client' && 
                         <div style={{ marginLeft: "10px" }}>
                           <div className="form-group selectcustom"
                             style={{ height: "47px", width: "47px", backgroundColor: "#eaeaeb", borderRadius: "8px" }}>
@@ -467,12 +444,11 @@ const Breadcrumb = () => {
                             </DialogActions>
                           </Dialog>
                         </div>
+        }
                       </div>
                     </Col>
 
-                    {/* <Col md={1}>
-                     
-                    </Col> */}
+                   
 
 
                   </Col>

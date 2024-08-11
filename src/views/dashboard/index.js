@@ -34,7 +34,7 @@ const DashDefault = () => {
         sessionStorage.setItem('dashboardReloaded', 'true');
 
         // Reload the page
-        window.location.reload();
+       // window.location.reload();
       }
       getDashboardData();
 

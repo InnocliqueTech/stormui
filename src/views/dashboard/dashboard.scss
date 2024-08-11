@@ -123,10 +123,10 @@
   }
 
   @media screen and (min-width: 625px) {
-    width: 40px;
-    height: 40px;
-    padding: 8px;
-    padding-left: 10px;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 8px !important;
+    padding-left: 10px !important;
     .icon {
       width: 20px;
       height: 20px;

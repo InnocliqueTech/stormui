@@ -110,9 +110,9 @@ const TotalDma = (props) => {
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5">
       <Row style={{padding:"0px 0px 0px 18px"}}>
-        <Col md={1} sm={1} xs={1} className='iconContainer'>
+        <div className='iconContainer'>
           <Image src={water} alt="water" className='icon' />
-        </Col>
+        </div>
         <Col md={8} sm={8} xs={8}>
           <div className="cardhead">Total DMA </div>
         </Col>

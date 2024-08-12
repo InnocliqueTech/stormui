@@ -20,6 +20,7 @@ import CustomerTable from './CustomerTable';
 import ClientZone from './ClientZone';
 import ClientDma from './ClientDma';
 import { Link } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import DmaTable from './dmatable';
 import ZoneTable from './Zonetable';
 // import Totalcounsumption from '../../src/views/dashboard/Totalcounsumption';
@@ -29,6 +30,7 @@ import over from '../../assets/images/symbols_water.svg';
 // import DownArrow from '../../assets/images/DownArrow.png';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
+import NewDatePicker from '../../layouts/AdminLayout/Breadcrumb/NewDatePicker';
 import ZoneSegmenation from './zoneSegmenation';
 import { useStateContext } from '../../contexts/MainContext';
 import Overflowks from './OutFlowks';
@@ -82,7 +84,7 @@ const Client = () => {
   const [dmaData, setDmaData] = useState({});
   const [dayDashBoardData, setDayDashBoardData] = useState({});
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true); // setSelectedStatuselectedZone
   // const [supplyByZoneData, setSupplyByZoneData] = useState([]);
   // const { onDateChange, selectedDate, setSelectedDate, isDatePickerOpen, toggleDatePicker } = useStateContext();
@@ -104,7 +106,7 @@ const Client = () => {
   }, [])
 
   const handleFilterIconClick = () => {
-    navigate('/app/meterlist');
+    // navigate('/app/meterlist');
     setIsDialogOpen(true);
 
   };
@@ -254,7 +256,7 @@ const Client = () => {
 
     return (
       <tbody>
-        {zones.map((zone, zoneIndex) => (
+        {zones.map((zone) => (
           <tr key={zone.zoneId}>
             <th>{zone.zoneName}</th>
             {dates.map((date, dateIndex) => {
@@ -411,7 +413,7 @@ const Client = () => {
 
   const [open, setOpen] = React.useState(false);
   const [opendma, setOpendma] = React.useState(false);
-  const [fullWidth] = React.useState(true);
+  // const [fullWidth] = React.useState(true);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -443,12 +445,14 @@ const Client = () => {
         aria-labelledby={`simple-tab-${index}`}
         {...other}
       >
-        {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+        {value === index && <Box sx={{ p: 0, mt: 2 }}>{children}</Box>}
       </div>
     );
   }
   const handleDialogClose = () => {
     setIsDialogOpen(false);
+    navigate('/app/meterlist');
+
   };
 
   function a11yProps(index) {
@@ -681,7 +685,11 @@ const Client = () => {
 
           </div>
         </Box>
-        <CustomTabPanel value={value} index={0}>
+        <CustomTabPanel value={value} index={0}
+        
+        
+  
+        >
           <Row>
             <Col md={6} xl={6} sm={12}>
               <Card className="card-social">

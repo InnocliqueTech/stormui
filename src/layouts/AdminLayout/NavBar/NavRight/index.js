@@ -92,7 +92,7 @@ const NavRight = () => {
           <Image src={logo2} alt="logo2" style={{ height: 80, width: 80}} />
         </ListGroup.Item>
         <ListGroup.Item as="li" bsPrefix=" " className="nav-item p-0" style={{ lineHeight: '0px' }}>
-          <Image src={logo} alt="avatar" style={{ height: 60, width: 56 }} />
+          <Image src={logo} alt="avatar" style={{ height: 60, width: 100 }} />
         </ListGroup.Item>
       </ListGroup>
       <ChatList listOpen={listOpen} closed={() => setListOpen(false)} />

@@ -38,13 +38,14 @@ const Breadcrumb = () => {
   // const [status, setStatus] = useState(0);
 
   const handleFilterIconClick = () => {
-    navigate('/app/meterlist');
+    // navigate('/app/meterlist');
     setIsDialogOpen(true);
 
   };
 
   const handleDialogClose = () => {
     setIsDialogOpen(false);
+    navigate('/app/meterlist');
   };
   // const handleApplyFilters = () => {
   //   // Redirect to meterlist with filters as query parameters

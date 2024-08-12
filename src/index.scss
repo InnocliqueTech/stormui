@@ -485,7 +485,7 @@ td {
 .nav-fill > .nav-link, .nav-fill .nav-item {
   flex: 0 !important;
 }
-.table td, .table th { padding: 18px;}
+.table td, .table th { padding: 18px !important;}
 .tabelexpand-bg { background-color: #F4F5F5 !important;}
 .tablecontent .css-1f773le-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded {
   min-height: 0;

@@ -123,6 +123,14 @@ const Overflowks = (props) => {
         barBorderColor: '#2196F3'
       }
     },
+    yaxis: {
+      tickAmount: 4, // Limit to 5 values
+      labels: {
+        formatter: function (val) {
+          return Math.round(val); // Optional: format values as integers
+        }
+      }
+    },
     legend: {
       position: 'bottom',
       horizontalAlign: 'center',

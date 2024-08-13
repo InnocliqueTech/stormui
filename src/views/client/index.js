@@ -101,7 +101,7 @@ const Client = () => {
       sessionStorage.setItem('zoneReloaded', 'true');
 
       // Reload the page
-      // window.location.reload();
+      window.location.reload();
     }
   }, [])
 
@@ -665,7 +665,7 @@ const Client = () => {
                           <label>Select Dma</label>
                           <select className="form-control" value={selectedDma ? selectedDma : 0}
                             onChange={(e) => setSelectedDma(Number(e.target.value))}>
-                            <option>Dma List</option>
+                            <option>DMA</option>
                             <option value={0}>All</option>
                             {dmas.map((dma) => (
                               <option key={dma.dmaId} value={dma.dmaId}>
@@ -680,7 +680,7 @@ const Client = () => {
                           <label>Select Gateway</label>
                           <select className="form-control" value={selectedGateway ? selectedGateway : 0}
                             onChange={(e) => setSelectedGateway(Number(e.target.value))}>
-                            <option>Gateway List</option>
+                            <option>Gateways</option>
                             <option value={0}>All</option>
                             {gateways.map((gateway) => (
                               <option key={gateway.id} value={gateway.id}>

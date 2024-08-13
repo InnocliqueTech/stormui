@@ -56,7 +56,7 @@ const MeterList = () => {
   // const [selectedZone, setSelectedZone] = useState(0);
   // const [selectedDma, setSelectedDma] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [itemsPerPage, setItemsPerPage] = useState(5)
   const [totalItems, setTotalItems] = useState(0);
   const { zoneId, dmaId, gatewayId } = location.state || { zoneId: selectedZone, dmaId: selectedDma, gatewayId: selectedGateway, status: selectedStatus };
   console.log('location.state:', location.state);
@@ -123,6 +123,7 @@ const MeterList = () => {
       const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
       console.log(response);
       setMeterList(response.data.meters || []);
+      console.log(response.data.totalCount);
       setTotalItems(response.data.totalCount);
       setLoading(false);
     } catch (error) {
@@ -147,6 +148,7 @@ const MeterList = () => {
     setItemsPerPage(Number(e.target.value));
     setCurrentPage(1);
   };
+  const totalPagesCount = Math.ceil(totalItems / itemsPerPage);
 
   // const [refreshData, setRefrehData] = useState([]);
 
@@ -195,7 +197,7 @@ const MeterList = () => {
         </Row>
 
         <div className='customer-table mt-0'>
-            <Row style={{ marginBottom: '24px' }}>
+            {/* <Row style={{ marginBottom: '24px' }}>
               <Col md={9} sm={7} xs={7}>
                 <div className='pagination-controls' style={{marginLeft:"10px", marginTop:"10px"}}>
                   <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
@@ -209,7 +211,7 @@ const MeterList = () => {
               <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
                 <CachedOutlinedIcon style={{ color: '#6C757D', marginTop:"10px", marginRight:"10px" }} onClick={handleClickRefresh}/>               
               </Col>
-            </Row>
+            </Row> */}
        
           {loading ? (
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
@@ -274,14 +276,42 @@ const MeterList = () => {
               </tbody>
             </Table>
           )}
-        </div>
-        <div style={{ textAlign: 'center', marginTop: '40PX' }}>
+          {/* Pagination controls, items per page selector, and refresh icon */}
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '24px' }}>
+    <div className='pagination-controls' style={{ marginLeft: '10px' }}>
+      <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>
+        Items per page:
+      </label>
+      <select
+        id='itemsPerPage'
+        value={itemsPerPage}
+        onChange={handleItemsPerPageChange}
+        style={{ marginLeft: '8px' }}>
+        <option value={5}>5</option>
+        <option value={10}>10</option>
+        <option value={20}>20</option>
+      </select>
+    </div>
+    <CachedOutlinedIcon
+      style={{ color: '#6C757D', marginBottom: '5px', marginRight: '400px', cursor: 'pointer' }}
+      onClick={handleClickRefresh}
+    />
+    <div style={{ textAlign: 'center' }}>
+      <Paginations
+        currentPage={currentPage}
+        totalPages={totalPagesCount}
+        onPageChange={handlePageChange}
+      />
+    </div>
+  </div>
+</div>
+        {/* <div style={{ textAlign: 'center', marginTop: '40PX' }}>
           <Paginations
             currentPage={currentPage}
             totalPages={Math.ceil(totalItems / itemsPerPage)}
             onPageChange={handlePageChange}
           />
-        </div>
+        </div> */}
       </div>
       {/* <BootstrapDialog  onClose={handleClose}   aria-labelledby="customized-dialog-title"
         open={open}>

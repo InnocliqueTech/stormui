@@ -90,7 +90,7 @@ const Gateway = () => {
             <span style={{ fontSize: 20, fontWeight: 'bold', color: 'rgba(33, 33, 33, 1)' }} className='d-flex align-items-center'>
               <span className='iconContainer  p-0 d-flex align-items-center justify-content-center me-2' style={{ width: "48px", height: '48px' }}>
                 <Image src={fluent} alt="fluent" className='icon' style={{ color: '#95ACFF' }} />
-              </span> Gateway List </span>
+              </span> Gateways</span>
             <span style={{ textAlign: 'end' }}></span>
           </Col>
           <Col md={3} sm={5} xs={5} className='d-flex align-items-center justify-content-end' style={{ textAlign: 'end' }}>

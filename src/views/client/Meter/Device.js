@@ -60,7 +60,7 @@ function Device({ devicedt }) {
        
       </Card>
       <Card style={{ margin: 0, padding: '16px', borderRadius: 8, marginBottom: 24 }}>
-        <div style={{ fontFamily: 'inter', fontWeight: 600, fontSize: '18px', color: '#212121' }}>Communication Gateway List</div>
+        <div style={{ fontFamily: 'inter', fontWeight: 600, fontSize: '18px', color: '#212121' }}>Communication Gateways</div>
         <Table className="meter-gatewaytable" responsive style={{ marginTop: 10, borderRadius: 10, border: '1px solid #F4F5F5' }}>
           <thead style={{ backgroundColor: '#EFF8FF' }}>
             <tr>
@@ -72,14 +72,27 @@ function Device({ devicedt }) {
           </thead>
           <tbody>
 
-            {devicedt && devicedt.deviceDetails && devicedt.deviceDetails.gatewayList ? devicedt.deviceDetails.gatewayList.map((data) => (
+            {/* {devicedt && devicedt.deviceDetails && devicedt.deviceDetails.gatewayList ? devicedt.deviceDetails.gatewayList.map((data) => (
               <tr>
                 <td className='tablecontent'>{data.gatewayId}</td>
                 <td className='tablecontent'>{data.rssi}</td>
                 <td className='tablecontent'>{data.snr}</td>
                 <td className='tablecontent'>{data.temperature}</td>
               </tr>
-            )) : <tr><td>No data found</td></tr>}
+            )) : <tr><td>No data found</td></tr>} */}
+            {devicedt && devicedt.deviceDetails && devicedt.deviceDetails.gatewayList ? (
+  devicedt.deviceDetails.gatewayList.map((data) => (
+    <tr key={data.gatewayId}>
+      <td className='tablecontent'>{data.gatewayId}</td>
+      <td className='tablecontent'>{data.rssi}</td>
+      <td className='tablecontent'>{data.snr}</td>
+      <td className='tablecontent'>{data.temperature}</td>
+    </tr>
+  ))
+) : (
+  <tr><td>No data found</td></tr>
+)}
+
 
 
           </tbody>

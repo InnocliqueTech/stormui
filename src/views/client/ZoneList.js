@@ -18,8 +18,8 @@ import { BASE_API_URL1 } from '../../config/constant';
 export default function ZoneList() {
   const { clients } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
-  const [expandedZone, setExpandedZone] = useState(null);
-  const [data, setZoneData] = useState({});
+  const [expandedZone] = useState(null);
+  const [data] = useState({});
   const [currentPage, setCurrentPage] = useState(1); // 1-based index for pages
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
@@ -47,30 +47,30 @@ export default function ZoneList() {
     }
   };
 
-  const getZoneBasedOnData = async (clientId, zoneId) => {
-    try {
-      setLoading(true);
-      const response = await axios.post(BASE_API_URL1 + 'dma/getAllDMAsWithClientIdAndZoneId', {
-        clientId: clientId,
-        zoneId: zoneId,
-      });
-      setZoneData((prevData) => ({
-        ...prevData,
-        [zoneId]: response.data.dmasList,
-      }));
-      setLoading(false);
-    } catch (e) {
-      console.log(e);
-      setLoading(false);
-    }
-  };
+  // const getZoneBasedOnData = async (clientId, zoneId) => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.post(BASE_API_URL1 + 'dma/getAllDMAsWithClientIdAndZoneId', {
+  //       clientId: clientId,
+  //       zoneId: zoneId,
+  //     });
+  //     setZoneData((prevData) => ({
+  //       ...prevData,
+  //       [zoneId]: response.data.dmasList,
+  //     }));
+  //     setLoading(false);
+  //   } catch (e) {
+  //     console.log(e);
+  //     setLoading(false);
+  //   }
+  // };
 
-  const handleAccordionChange = (zoneId) => {
-    setExpandedZone((prevExpandedZone) => (prevExpandedZone === zoneId ? null : zoneId));
-    if (!data[zoneId]) {
-      getZoneBasedOnData(clients[0].clientId, zoneId);
-    }
-  };
+  // const handleAccordionChange = (zoneId) => {
+  //   setExpandedZone((prevExpandedZone) => (prevExpandedZone === zoneId ? null : zoneId));
+  //   if (!data[zoneId]) {
+  //     getZoneBasedOnData(clients[0].clientId, zoneId);
+  //   }
+  // };
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -100,7 +100,7 @@ export default function ZoneList() {
       <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, paddingBottom: 100 }}>
         <Row style={{ marginBottom: '24px' }}>
           <Col md={9} sm={7} xs={7}>
-          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Zone List</span>{' '}
+          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Zones</span>{' '}
           </Col>
           {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
             <CachedOutlinedIcon style={{ color: '#6C757D' }} />

@@ -35,8 +35,8 @@ const GatewayTable = () => {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [gateways, setGateways] = useState([]);
-  const [basicDetails, setBasicDetails] = useState({});
-  const [lastFrameData, setLastFrameData] = useState({});
+  const [basicDetails] = useState({});
+  const [lastFrameData] = useState({});
   const { selectedClient, selectedZone, selectedDma } = useContext(ClientsContext);
   const location = useLocation();
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -72,35 +72,35 @@ const GatewayTable = () => {
     }
   };
 
-  const handleClickOpen = async (Id) => {
-    try {
-      const clientId = selectedClient;
-      const response = await axios.post(`${BASE_API_URL1}gateways/getGatewayDetailsWithClientIdAndGatewayId`, {
-        clientId,
-        gatewayId: Id
-      });
-      if (response.data) {
-        setLastFrameData(response.data);
-        setBasicDetails({
-          id: response.data.id,
-          type: response.data.type,
-          subnet: response.data.subnet,
-          ceacon: response.data.ceacon,
-          transmittingPower: response.data.transmittingPower,
-          createdTime: response.data.createdTime,
-          name: response.data.name,
-          region: response.data.region,
-          beacon: response.data.beacon,
-          gdtp: response.data.gdtp,
-          http: response.data.http,
-          remarks: response.data.remarks,
-        });
-        setOpen(true);
-      }
-    } catch (e) {
-      console.error('Error fetching gateway details:', e);
-    }
-  };
+  // const handleClickOpen = async (Id) => {
+  //   try {
+  //     const clientId = selectedClient;
+  //     const response = await axios.post(`${BASE_API_URL1}gateways/getGatewayDetailsWithClientIdAndGatewayId`, {
+  //       clientId,
+  //       gatewayId: Id
+  //     });
+  //     if (response.data) {
+  //       setLastFrameData(response.data);
+  //       setBasicDetails({
+  //         id: response.data.id,
+  //         type: response.data.type,
+  //         subnet: response.data.subnet,
+  //         ceacon: response.data.ceacon,
+  //         transmittingPower: response.data.transmittingPower,
+  //         createdTime: response.data.createdTime,
+  //         name: response.data.name,
+  //         region: response.data.region,
+  //         beacon: response.data.beacon,
+  //         gdtp: response.data.gdtp,
+  //         http: response.data.http,
+  //         remarks: response.data.remarks,
+  //       });
+  //       setOpen(true);
+  //     }
+  //   } catch (e) {
+  //     console.error('Error fetching gateway details:', e);
+  //   }
+  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -135,7 +135,7 @@ const GatewayTable = () => {
     <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, marginTop: 10 }}>
       <Row>
         <Col md={9} sm={7} xs={7}>
-          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Gateway List</span>{' '}
+          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Gateways</span>{' '}
           {/* <span style={{ textAlign: 'end' }}>
               <InfoOutlinedIcon style={{ height: 20, width: 20, justifyContent: 'center', color: '#D6D9DC', marginLeft: 5 }} />
             </span>

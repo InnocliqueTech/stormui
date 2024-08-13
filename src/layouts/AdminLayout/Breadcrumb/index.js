@@ -166,25 +166,25 @@ const Breadcrumb = () => {
                                     className={location.pathname.toLowerCase().includes('clientlist') ? 'tab active' : 'tab'}
                                     to="/app/clientlist"
                                   >
-                                    Zone&apos;s List
+                                    Zone&apos;s
                                   </Link>
                                   <Link
                                     className={location.pathname.toLowerCase().includes('dmalist') ? 'tab active' : 'tab'}
                                     to="/app/dmalist"
                                   >
-                                    DMA&apos;s List
+                                    DMA&apos;s
                                   </Link>
                                   <Link
                                     className={location.pathname.toLowerCase().includes('gatewaylist') ? 'tab active' : 'tab'}
                                     to="app/gatewaylist"
                                   >
-                                    Gateway&apos;s List
+                                    Gateway&apos;s
                                   </Link>
                                   <Link
                                     className={location.pathname.toLowerCase().includes('meterlist') ? 'tab active' : 'tab'}
                                     to="app/meterlist"
                                   >
-                                    Meter&apos;s List
+                                    Meter&apos;s
                                   </Link>
                                 </span>
                               </>
@@ -213,25 +213,25 @@ const Breadcrumb = () => {
                                     className={location.pathname.toLowerCase().includes('clientlist') ? 'tab active' : 'tab'}
                                     to="/app/clientlist"
                                   >
-                                    Zone&apos;s List
+                                    Zone&apos;s
                                   </Link>
                                   <Link
                                     className={location.pathname.toLowerCase().includes('dmalist') ? 'tab active' : 'tab'}
                                     to="/app/dmalist"
                                   >
-                                    DMA&apos;s List
+                                    DMA&apos;s
                                   </Link>
                                   <Link
                                     className={location.pathname.toLowerCase().includes('gatewaylist') ? 'tab active' : 'tab'}
                                     to="app/gatewaylist"
                                   >
-                                    Gateway&apos;s List
+                                    Gateway&apos;s
                                   </Link>
                                   <Link
                                     className={location.pathname.toLowerCase().includes('meterlist') ? 'tab active' : 'tab'}
                                     to="app/meterlist"
                                   >
-                                    Meter&apos;s List
+                                    Meter&apos;s
                                   </Link>
                                 </>
                               )}
@@ -250,25 +250,25 @@ const Breadcrumb = () => {
                                     className={location.pathname.toLowerCase().includes('clientlist') ? 'tab active' : 'tab'}
                                     to="/app/clientlist"
                                   >
-                                    Zone&apos;s List
+                                    Zone&apos;s
                                   </Link>
                                   <Link
                                     className={location.pathname.toLowerCase().includes('dmalist') ? 'tab active' : 'tab'}
                                     to="/app/dmalist"
                                   >
-                                    DMA&apos;s List
+                                    DMA&apos;s
                                   </Link>
                                   <Link
                                     className={location.pathname.toLowerCase().includes('gatewaylist') ? 'tab active' : 'tab'}
                                     to="app/gatewaylist"
                                   >
-                                    Gateway&apos;s List
+                                    Gateway&apos;s
                                   </Link>
                                   <Link
                                     className={location.pathname.toLowerCase().includes('meterlist') ? 'tab active' : 'tab'}
                                     to="app/meterlist"
                                   >
-                                    Meter&apos;s List
+                                    Meter&apos;s
                                   </Link>
                                 </span>
                               </>
@@ -281,7 +281,7 @@ const Breadcrumb = () => {
                     <Col md={5} >
                       <div style={{ display: "flex", float: "right" }}>
                         <div>
-                          {['/app/client', '/app/dashboard/default', "app/gatewaylist", "/app/clientlist", "/app/dmalist", "/app/gatewaylist", "/app/meterlist", "/app/gateway"].includes(location.pathname) && (
+                          {['/app/client', '/app/dashboard/default', "app/gatewaylist", "/app/clientlist", "/app/dmalist", "/app/gatewaylist", "/app/meterlist"].includes(location.pathname) && (
                             <section className="seconde-section">
                               {location.pathname !== '/app/dmalist' && location.pathname !== '/app/clientlist' && location.pathname !== '/app/dmalist' && location.pathname !== '/app/gatewaylist' && location.pathname !== '/app/meterlist' && location.pathname !== '/app/client' && (
                                 <div className="days-date-picker">
@@ -431,7 +431,7 @@ const Breadcrumb = () => {
                                     <label>Select Dma</label>
                                     <select className="form-control" value={selectedDma ? selectedDma : 0}
                                       onChange={(e) => setSelectedDma(Number(e.target.value))}>
-                                      <option>Dma List</option>
+                                      <option>DMA</option>
                                       <option value={0}>All</option>
                                       {dmas.map((dma) => (
                                         <option key={dma.dmaId} value={dma.dmaId}>
@@ -446,7 +446,7 @@ const Breadcrumb = () => {
                                     <label>Select Gateway</label>
                                     <select className="form-control" value={selectedGateway ? selectedGateway : 0}
                                       onChange={(e) => setSelectedGateway(Number(e.target.value))}>
-                                      <option>Gateway List</option>
+                                      <option>Gateways</option>
                                       <option value={0}>All</option>
                                       {gateways.map((gateway) => (
                                         <option key={gateway.id} value={gateway.id}>

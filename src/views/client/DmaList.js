@@ -82,7 +82,7 @@ export default function DmaList() {
       <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, paddingBottom: 100 }}>
         <Row style={{ marginBottom: '24px' }}>
           <Col md={9} sm={7} xs={7}>
-          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>DMA's List</span>{' '}
+          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>DMA&apos;s List</span>{' '}
           </Col>
           {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
             <CachedOutlinedIcon style={{ color: '#6C757D' }} />
@@ -118,7 +118,7 @@ export default function DmaList() {
               </tr>
             </thead>
             <tbody>
-              {currentPageData.map((dma, index) => (
+              {currentPageData.map((dma) => (
                 <tr key={dma.dmaId}>
                   <td className='tablecontent-link'>
                     <Link

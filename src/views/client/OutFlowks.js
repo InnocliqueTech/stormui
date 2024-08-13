@@ -13,7 +13,7 @@ const Overflowks = (props) => {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
   const { presentDate, toDate } = useStateContext();
-  const { selectedClient, selectedZone } = useContext(ClientsContext);
+  const { selectedZone } = useContext(ClientsContext);
   const [loading, setLoading] = useState(true);
 
 
@@ -21,7 +21,7 @@ const Overflowks = (props) => {
     const fetchData = async () => {
       try {
         const response = await axios.post('http://49.207.11.223:3307/dashboard/getTotalOutflowInDashboard', {
-          clientId: selectedClient,
+          clientId: 1,
           zoneId: selectedZone || 0,
           fromDate: presentDate,
           toDate: toDate

@@ -18,6 +18,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const handleChange = (e, setValue) => {
   const { value } = e.target;
@@ -43,7 +45,22 @@ const Breadcrumb = () => {
 
   };
 
+  const handleDialogReset = () => {
+    // setIsDialogOpen(false);
+    setSelectedZone(0);
+    setSelectedDma(0);
+    setSelectedGateway(0);
+    setSelectedStatus(0);
+  };
+  
+
   const handleDialogClose = () => {
+    setIsDialogOpen(false);
+    // navigate('/app/meterlist');
+  };
+
+
+  const handleDialogApply = () => {
     setIsDialogOpen(false);
     navigate('/app/meterlist');
   };
@@ -370,7 +387,13 @@ const Breadcrumb = () => {
 
                           <Dialog open={isDialogOpen} onClose={handleDialogClose}>
                             <DialogTitle>
-                              <h4 style={{ fontWeight: "600" }}>Filters</h4>
+                              {/* <h4 style={{ fontWeight: "600" }}>Filters</h4> */}
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <h4 style={{ fontWeight: "600", margin: 0 }}>Filters</h4>
+      <IconButton onClick={handleDialogClose} style={{ padding: 0 }}>
+        <CloseIcon />
+      </IconButton>
+    </div>
                             </DialogTitle>
                             <DialogContent>
                               <div className='row'>
@@ -436,11 +459,11 @@ const Breadcrumb = () => {
                               </div>
                             </DialogContent>
                             <DialogActions>
-                              <Button onClick={handleDialogClose} color="primary" variant='contained'>
+                              <Button onClick={handleDialogApply} color="primary" variant='contained'>
                                 Apply
                               </Button>
-                              <Button onClick={handleDialogClose} color="primary" variant='outlined'>
-                                Close
+                              <Button onClick={handleDialogReset} color="primary" variant='outlined'>
+                                Reset
                               </Button>
                             </DialogActions>
                           </Dialog>

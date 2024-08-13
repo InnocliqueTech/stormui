@@ -46,7 +46,7 @@
   .about-section {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    // gap: 32px;
     width: 100%;
   }
 
@@ -71,7 +71,7 @@
     }
 
     .second-para {
-      margin-bottom: 32px;
+      // margin-bottom: 32px;
       color: #212121;
       font-size: 1.125rem; // 18px for larger screens
       font-style: normal;
@@ -83,16 +83,21 @@
 
 .home-section {
   .area-data {
-    display: flex;
-    width: 100%;
-    gap: 24px;
-    flex-wrap: wrap;
-    justify-content: space-around;
-
+    // display: flex;
+    // width: 100%;
+    // gap: 24px;
+    // flex-wrap: wrap;
+    // justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    // padding: 20px;
+    max-width: 100%; /* Ensure it doesn't exceed the container width */
+    box-sizing: border-box;
     .data-card {
       background-color: white;
       display: flex;
-      width: 220px;
+      width: 200px;
       padding: 16px;
       flex-direction: column;
       align-items: flex-start;

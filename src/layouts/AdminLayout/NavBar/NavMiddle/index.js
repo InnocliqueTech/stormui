@@ -6,8 +6,8 @@ const index = () => {
     <React.Fragment>
     <ListGroup as="ul" bsPrefix=" " className="navbar-nav ml-auto"id="navbar-right">
       <ListGroup.Item as="li" bsPrefix=" " className="nav-item" style={{ textAlign:"center"}}>
-        <h5 style={{fontWeight:"bold"}}>Karimnagar Smart City Corporation LTD</h5>
-        <h6>24/7 Water Supply Pilot Project</h6>
+        <h5 style={{ fontWeight: "bold", color: "black" }}>Karimnagar Smart City Corporation LTD</h5>
+        <h6 style={{ color: "black" }}>24/7 Water Supply Pilot Project</h6>
       </ListGroup.Item>
       
     </ListGroup>

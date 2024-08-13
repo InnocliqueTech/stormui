@@ -80,7 +80,7 @@ const Client = () => {
 
 
   // const { clients } = useContext(ClientsContext);
-  const { selectedClient, zones, selectedZone, setSelectedZone, dmas, selectedDma, setSelectedDma, gateways, selectedGateway, setSelectedGateway, status, selectedStatus } = useContext(ClientsContext);
+  const { selectedClient, zones, selectedZone, setSelectedZone, dmas, selectedDma, setSelectedDma, gateways, selectedGateway, setSelectedGateway, status, selectedStatus, setSelectedStatus } = useContext(ClientsContext);
   const [dmaData, setDmaData] = useState({});
   const [dayDashBoardData, setDayDashBoardData] = useState({});
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -449,10 +449,24 @@ const Client = () => {
       </div>
     );
   }
+  const handleDialogReset = () => {
+    // setIsDialogOpen(false);
+    setSelectedZone(0);
+    setSelectedDma(0);
+    setSelectedGateway(0);
+    setSelectedStatus(0);
+  };
+  
+
   const handleDialogClose = () => {
     setIsDialogOpen(false);
-    navigate('/app/meterlist');
+    // navigate('/app/meterlist');
+  };
 
+
+  const handleDialogApply = () => {
+    setIsDialogOpen(false);
+    navigate('/app/meterlist');
   };
 
   function a11yProps(index) {
@@ -603,9 +617,18 @@ const Client = () => {
                 </div>
 
                 <Dialog open={isDialogOpen} onClose={handleDialogClose}>
-                  <DialogTitle>
+                  {/* <DialogTitle>
                     <h4 style={{ fontWeight: "600" }}>Filters</h4>
-                  </DialogTitle>
+                  </DialogTitle> */}
+                  <DialogTitle>
+                              {/* <h4 style={{ fontWeight: "600" }}>Filters</h4> */}
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <h4 style={{ fontWeight: "600", margin: 0 }}>Filters</h4>
+      <IconButton onClick={handleDialogClose} style={{ padding: 0 }}>
+        <CloseIcon />
+      </IconButton>
+    </div>
+                            </DialogTitle>
                   <DialogContent>
                     <div className='row'>
                       <div className='col-md-4'>
@@ -670,11 +693,11 @@ const Client = () => {
                     </div>
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={handleDialogClose} color="primary" variant='contained'>
+                    <Button onClick={handleDialogApply} color="primary" variant='contained'>
                       Apply
                     </Button>
-                    <Button onClick={handleDialogClose} color="primary" variant='outlined'>
-                      Close
+                    <Button onClick={handleDialogReset} color="primary" variant='outlined'>
+                      Reset
                     </Button>
                   </DialogActions>
                 </Dialog>

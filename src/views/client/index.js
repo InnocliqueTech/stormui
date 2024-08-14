@@ -94,7 +94,17 @@ const Client = () => {
   // const [dates, setDates] = useState([]);
 
 
-
+  useEffect(() => {
+    // Check if the page has already been reloaded
+    if (!sessionStorage.getItem('zoneReloaded')) {
+      // Set the flag to indicate the page has been reloaded
+      sessionStorage.setItem('zoneReloaded', 'true');
+  
+      // Reload the page
+      window.location.reload();
+    }
+    }, [])
+  
 
   const handleFilterIconClick = () => {
     // navigate('/app/meterlist');

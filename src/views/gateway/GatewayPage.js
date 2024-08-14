@@ -118,7 +118,7 @@ export default function GatewayList(props) {
                 <Spinner animation="border" variant="primary" />
               </div>
             ) : (
-              <div className='gateway-list'>
+              <div className='gateway-list mt-3'>
                 {gatewayCardData && gatewayCardData.map((item) => {
                   return (
                     <div key={item.type} className='gateway-card'>

@@ -28,6 +28,7 @@ const Overflowks = (props) => {
         });
 
         if (response.data && response.data.totalOutFlow) {
+          console.log(response)
           let counts = [];
           let dates = [];
           response.data.totalOutFlow.forEach((flow) => {

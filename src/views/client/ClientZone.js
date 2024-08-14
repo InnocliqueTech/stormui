@@ -167,8 +167,12 @@ const ClientZone = (props) => {
         <div style={{ textAlign: 'center', marginTop: '50px' }}>
           <Spinner animation="border" variant="primary" />
         </div>
-      ) : (
+      ) :  data && data.length > 0 ? (
         <ReactApexChart options={opt} series={data} type="donut" height={255} />
+      ) : (
+        <div style={{ textAlign: 'center', marginTop: '50px', color: '#999' }}>
+          <h5>No data found</h5>
+        </div>
       )
       }
     </div>

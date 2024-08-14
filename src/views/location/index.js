@@ -31,28 +31,28 @@ export default function Location() {
 
   // console.log(clients, 'clients');
 
-// useEffect(() => {
-// // Check if the page has already been reloaded
-// if (!sessionStorage.getItem('reloaded')) {
-//   // Set the flag to indicate the page has been reloaded
-//   sessionStorage.setItem('reloaded', 'true');
+  // useEffect(() => {
+  // // Check if the page has already been reloaded
+  // if (!sessionStorage.getItem('reloaded')) {
+  //   // Set the flag to indicate the page has been reloaded
+  //   sessionStorage.setItem('reloaded', 'true');
 
-//   // Reload the page
-//   window.location.reload();
-// }
-// }, [])
+  //   // Reload the page
+  //   window.location.reload();
+  // }
+  // }, [])
 
   return (
     <div
       className="home-section"
-      // onClick={handleClick}
-      // onKeyDown={(e) => {
-      //   if (e.key === 'Enter' || e.key === ' ') {
-      //     handleClick(e);
-      //   }
-      // }}
-      // role="button"
-      // tabIndex="0"
+    // onClick={handleClick}
+    // onKeyDown={(e) => {
+    //   if (e.key === 'Enter' || e.key === ' ') {
+    //     handleClick(e);
+    //   }
+    // }}
+    // role="button"
+    // tabIndex="0"
     >
       <section>
         <h3 className="welcome"> Welcome...</h3>
@@ -74,7 +74,7 @@ export default function Location() {
               improve happiness index of all its citizens.”
             </p>
           </div>
-          <div className="area-data">
+          {/* <div className="area-data">
             {Object.keys(dummyData).map((item) => {
               return (
                 <div key={item} className="data-card">
@@ -83,7 +83,26 @@ export default function Location() {
                 </div>
               );
             })}
+          </div> */}
+
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
+            {Object.keys(dummyData).map((item, index) => (
+              <div key={index} style={{
+                flex: "0 0 calc(33.333% - 20px)",
+                boxSizing: "border-box",
+                backgroundColor: "white",
+                padding: "10px",
+                marginBottom: "20px",
+                borderRadius: "8px",
+                // textAlign: "center",
+                marginRight: index % 3 !== 2 ? "20px" : "0", // Add margin except for the last card in a row
+              }}>
+                <p style={{ margin: "0", fontWeight: "bold", fontSize:"14px", color:"#6c757d" }}>{item}</p>
+                <h2 style={{ marginTop: "10px", fontSize:"14px" }}>{dummyData[item]}</h2>
+              </div>
+            ))}
           </div>
+
         </div>
       </section>
     </div>

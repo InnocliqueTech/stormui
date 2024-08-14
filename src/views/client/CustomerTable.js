@@ -46,14 +46,14 @@ function CustomerTable() {
 
   return (
     <div className='customer-table'>
-      <div className='pagination-controls' style={{ marginTop: '20px', marginLeft: '10PX' }}>
+      {/* <div className='pagination-controls' style={{ marginTop: '20px', marginLeft: '10PX' }}>
         <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
         <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
           <option value={5}>5</option>
           <option value={10}>10</option>
           <option value={20}>20</option>
         </select>
-      </div>
+      </div> */}
       {loading ? ( // Display spinner if loading is true
         <div style={{ textAlign: 'center', marginTop: '50px' }}>
           <Spinner animation="border" variant="primary" />
@@ -100,14 +100,36 @@ function CustomerTable() {
           </tbody>
         </Table>
       )}
-      <div style={{ textAlign: 'center'}}>
+      <div className='row mt-5'>
+        <div className='col-md-5'>
+          <div className='pagination-controls' style={{ marginTop: '10px', marginLeft: '10PX' }}>
+            <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
+            <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+            </select>
+          </div>
+        </div>
+        <div className='col-md-7'>
+          <div >
+
+            <Paginations
+              currentPage={currentPage}
+              totalPages={pageCount}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        </div>
+      </div>
+      {/* <div style={{ textAlign: 'center' }}>
 
         <Paginations
           currentPage={currentPage}
           totalPages={pageCount}
           onPageChange={handlePageChange}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

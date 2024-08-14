@@ -153,14 +153,7 @@ const GatewayTable = () => {
         </Col>
       </Row>
       <div className='customer-table'>
-        <div className='pagination-controls' style={{ marginTop: '20px', marginLeft: '10PX' }}>
-          <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
-          <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-          </select>
-        </div>
+
         {loading ? ( // Display spinner if loading is true
           <div style={{ textAlign: 'center', marginTop: '50px' }}>
             <Spinner animation="border" variant="primary" />
@@ -234,13 +227,28 @@ const GatewayTable = () => {
         }
       </div>
 
-      <div style={{ textAlign: 'center', marginTop: '40PX' }}>
+      <div className='row mt-3'>
+        <div className='col-md-4'>
+          <div className='pagination-controls' style={{ marginTop: '10px', marginLeft: '10PX' }}>
+            <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
+            <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+            </select>
+          </div>
+        </div>
+        <div className='col-md-4'></div>
+        <div className='col-md-4'>
+          <div >
 
-        <Paginations
-          currentPage={currentPage}
-          totalPages={pageCount}
-          onPageChange={handlePageChange} // Ensure onPageChange is correctly passed
-        />
+            <Paginations
+              currentPage={currentPage}
+              totalPages={pageCount}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        </div>
       </div>
 
       <BootstrapDialog

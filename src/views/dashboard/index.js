@@ -26,22 +26,9 @@ const DashDefault = () => {
 
   console.log(clients, 'the check');
   useEffect(() => {
-    if (selectedClient) {
-
-      // Check if the page has already been reloaded
-      if (!sessionStorage.getItem('dashboardReloaded')) {
-        // Set the flag to indicate the page has been reloaded
-        sessionStorage.setItem('dashboardReloaded', 'true');
-
-        // Reload the page
-       // window.location.reload();
-      }
+    if (selectedClient) {  
       getDashboardData();
-
     }
-
-
-
   }, [selectedClient, selectedZone, presentDate, toDate]);
 
 
@@ -103,7 +90,7 @@ const DashDefault = () => {
   console.log('dashboard.totaldma', dashboardData.totalDma);
   return (
     <React.Fragment>
-      <Row>
+      <Row className='mt-4'>
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
             <Card.Body

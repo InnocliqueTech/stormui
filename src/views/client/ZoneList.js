@@ -24,7 +24,7 @@ export default function ZoneList() {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
 
-  
+
   useEffect(() => {
     if (clients && clients.length > 0) {
       getDashboardData(clients[0].clientId); // Assuming each client has an id field
@@ -94,13 +94,13 @@ export default function ZoneList() {
         return { backgroundColor: 'rgba(128, 128, 128, 1)', color: '#fff' }; // Default color for other statuses
     }
   };
-  
+
   return (
     <div className='col-md-12'>
       <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, paddingBottom: 100 }}>
         <Row style={{ marginBottom: '24px' }}>
           <Col md={9} sm={7} xs={7}>
-          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Zones</span>{' '}
+            <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Zones</span>{' '}
           </Col>
           {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
             <CachedOutlinedIcon style={{ color: '#6C757D' }} />
@@ -110,14 +110,7 @@ export default function ZoneList() {
         </Row>
 
         <div className='customer-table mt-0'>
-          <div className='pagination-controls' style={{ marginTop: '20px', marginLeft: '10PX' }}>
-            <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
-            <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-            </select>
-          </div>
+
           {loading ? ( // Display spinner if loading is true
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
               <Spinner animation="border" variant="primary" />
@@ -151,7 +144,7 @@ export default function ZoneList() {
                           // }}
                           onClick={() => console.log('Link clicked for zoneId:', zone.zoneId)}  // Debugging line
                           style={{ textDecoration: 'none', cursor: 'pointer' }}>
-                         
+
                           {zone.displayName}
 
                         </Link>
@@ -179,10 +172,10 @@ export default function ZoneList() {
                         </span>
                       </td> */}
                       <td className='tablecontent'>
-                      <span style={{ ...getStatusStyle(zone.status), padding: '8px 20px' }}>
-                        {zone.status}
-                      </span>
-                    </td>
+                        <span style={{ ...getStatusStyle(zone.status), padding: '8px 20px' }}>
+                          {zone.status}
+                        </span>
+                      </td>
                       {/* <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td> */}
                     </tr>
                     {expandedZone === zone.zoneId && data[zone.zoneId] && data[zone.zoneId].map((dma) => (
@@ -237,13 +230,27 @@ export default function ZoneList() {
             </Table>
           )}
         </div>
-        <div style={{ textAlign: 'center', marginTop: '40PX' }}>
-
-          <Paginations
-            currentPage={currentPage}
-            totalPages={pageCount}
-            onPageChange={handlePageChange} // Ensure onPageChange is correctly passed
-          />
+        <div className='row mt-3'>
+          <div className='col-md-5'>
+            <div className='pagination-controls' style={{ marginTop: '10px', marginLeft: '10PX' }}>
+              <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
+              <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+              </select>
+            </div>
+          </div>
+          <div className='col-md-1'></div>
+          <div className='col-md-6'>
+            <div >
+              <Paginations
+                currentPage={currentPage}
+                totalPages={pageCount}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -283,7 +283,14 @@ function MeterPhoto({ data1 }) {
                                     </div>
                                 ))
                             ) : (
-                                <div style={{ textAlign: 'center', margin: '20px 0' }}>
+                                <div  style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    textAlign: 'center',
+                                    minHeight: '240px',
+                                    margin: 'auto',
+                                  }}>
                                     <h5>No images to show</h5>
                                 </div>
                             )}

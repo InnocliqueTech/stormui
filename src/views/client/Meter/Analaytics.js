@@ -410,7 +410,7 @@ const Analytics = ({ data1, onAnalyticsData }) => {
         </div>
         <Row>
           <Col md={7} sm={7} xs={7}>
-            <Image style={{ backgroundColor: '#F6C574', marginRight: "10px" }} src={over} alt="over" className="icon" />
+            <Image style={{ backgroundColor: '#F6C574', marginRight: "10px", borderRadius:"50%", padding:"5px" }} src={over} alt="over" className="icon" />
             <span className="alerttext" style={{fontWeight:"600", fontSize:"16px"}}>
               Usage{' '}
               <span>

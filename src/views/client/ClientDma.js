@@ -211,7 +211,7 @@ const ClientDma = (props) => {
 
   console.log(opt);
   return (
-    <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5">
+    <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5" style={{maxHeight:"200px"}}>
       <Row style={{padding : "0px 0px 0px 18px"}}>
         <Col md={1} sm={1} xs={1} className='iconContainer'>
           <Image src={water} alt="water" className='icon' />
@@ -224,30 +224,15 @@ const ClientDma = (props) => {
         <div style={{ textAlign: 'center', marginTop: '50px' }}>
           <Spinner animation="border" variant="primary" />
         </div>
+      ) : data && data.length > 0 ? (
+        <ReactApexChart options={opt} series={data} type="donut" height={255} />
       ) : (
-      <ReactApexChart options={opt} series={data} type="donut" height={255} />
+        <div style={{ textAlign: 'center', marginTop: '50px', color: '#999' }}>
+          <h5>No data found</h5>
+        </div>
       )
     }
-      {/* <div className="row">
-        <div className="col-md-1">
-         <div style={{backgroundColor:'#3C50E0', height:15, width:15}}></div>
-        </div>
-        <div className="col-md-5">
-         Active 80%
-        </div>
-        <div className="col-md-1">
-         <div style={{backgroundColor:'#3C50E0', height:15, width:15}}></div>
-        </div>
-        <div className="col-md-5">
-         Inactive 80%
-        </div>
-        <div className="col-md-1">
-         <div style={{backgroundColor:'#3C50E0', height:15, width:15}}></div>
-        </div>
-        <div className="col-md-5">
-         Faculty 80%
-        </div>
-      </div> */}
+    
     </div>
   );
 };

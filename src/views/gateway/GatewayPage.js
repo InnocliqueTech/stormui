@@ -33,14 +33,7 @@ export default function GatewayList(props) {
     fetchCardData()
 
 
-    // Check if the page has already been reloaded
-    if (!sessionStorage.getItem('gatewayReloaded')) {
-      // Set the flag to indicate the page has been reloaded
-      sessionStorage.setItem('gatewayReloaded', 'true');
 
-      // Reload the page
-      // window.location.reload();
-    }
   }, [selectedClient])
 
   const fetchCardData = async () => {

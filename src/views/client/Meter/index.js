@@ -36,6 +36,7 @@ function Meter({ data }) {
                         defaultActiveKey="home"
                         id="fill-tab-example"
                         fill
+                        style={{backgroundColor:"white"}}
                     >
                         <Tab eventKey="home" title="Analytics">
                             {/* <Overflow data={outFlowData} /> */}

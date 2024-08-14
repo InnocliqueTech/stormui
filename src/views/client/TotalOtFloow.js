@@ -21,7 +21,7 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const TotalOtFloow = (props) => {
-    console.log(props.data.totalConsumption)
+    console.log(props)
     const [data, setData] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -62,7 +62,7 @@ const TotalOtFloow = (props) => {
      // Check if datasets is defined before using flatMap
      const maxDataValue = (chartData.datasets || []).flatMap((d) => d.data || []).reduce((max, val) => Math.max(max, val), 0);
   
-    
+     const maxRange = props.data?.maxValue || 100;
     useEffect(() => {
   
       if (props.data && props.data.totalConsumption) {
@@ -128,12 +128,20 @@ const TotalOtFloow = (props) => {
       xaxis: {
         categories: categories,
       },
+      // yaxis: {
+      //   tickAmount: 4,  // Limit the Y-axis to 5 intervals
+      //   labels: {
+      //     formatter: (value) => Math.round(value)
+      //   }
+      // },
       yaxis: {
-        tickAmount: 4,  // Limit the Y-axis to 5 intervals
+        min: 0,
+        max: maxRange,
+        tickAmount: 5, // This creates intervals like 0, 20, 40, 60, 80, 100
         labels: {
-          formatter: (value) => Math.round(value)
+            formatter: (value) => Math.round(value)
         }
-      },
+    },
       legend: {
         position: 'bottom',
         horizontalAlign: 'center',
@@ -169,11 +177,6 @@ const TotalOtFloow = (props) => {
         <ReactApexChart options={options} series={data} type="bar" width="100%" height={250} />
       )
     }
-        {/* {Array.isArray(chartData.labels) && chartData.labels.length > 0 ? (
-          <Bar data={chartData} options={options} height={250} />
-        ) : (
-          <p>No data available</p>
-        )} */}
       </div>
     );
 }

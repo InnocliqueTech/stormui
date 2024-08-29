@@ -145,7 +145,7 @@ const Breadcrumb = () => {
                 <div className="page-header-title">
                   <h5 className="m-b-10">{mainContent}</h5>
                 </div>
-                <Row className="d-flex" style={{marginTop:"15px"}}>
+                <Row className="d-flex" style={{marginTop:"15px", marginBottom:"10px"}}>
                   <Col
                     className="d-flex align-items-center"
                     style={{

@@ -155,11 +155,15 @@ const ClientZone = (props) => {
   console.log('Chart Data:', data);
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5">
-      <Row style={{ padding: "0px 0px 0px 18px" }}>
-        <Col md={1} sm={1} xs={1} className='iconContainergreen'>
+      <Row 
+      // style={{ padding: "0px 0px 0px 18px" }}
+      >
+        <Col md={1} sm={1} xs={1} className='iconContainer' style={{backgroundColor:"#3BEA96"}}>
           <Image src={water} alt="water" className='icon' />
         </Col>
-        <Col md={9} sm={8} xs={8} style={{ marginBottom: "40px" }}>
+        <Col md={9} sm={8} xs={8}
+        // style={{ marginBottom: "40px" }}
+        >
           <div className="cardhead">Zone Wise Supply</div>
         </Col>
       </Row>
@@ -167,7 +171,7 @@ const ClientZone = (props) => {
         <div style={{ textAlign: 'center', marginTop: '50px' }}>
           <Spinner animation="border" variant="primary" />
         </div>
-      ) :  data && data.length > 0 ? (
+      ) : data && data.length > 0 ? (
         <ReactApexChart options={opt} series={data} type="donut" height={255} />
       ) : (
         <div style={{ textAlign: 'center', marginTop: '50px', color: '#999' }}>

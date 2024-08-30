@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Typography, List, ListItem, useMediaQuery, useTheme, Divider, Button, Avatar, Paper } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import { Box, Typography, List, ListItem, useMediaQuery, useTheme, Divider, Avatar, Paper } from '@mui/material';
+// import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -34,21 +34,21 @@ function Settings() {
   return (
     <>
       <Row>
-        <Col md={8} sm={6} xs={12}>
+        <Col md={10} sm={6} xs={12}>
           <div className="dashheading">Profile</div>
         </Col>
-        <Col md={4} sm={5} xs={12}>
+        <Col md={2} sm={5} xs={12}>
           <div className='setting-nav'>
             <ul>
               <li><Link className='active' to='/app/setting'>Profile</Link></li>
               <li><Link to='/app/about'>About us</Link></li>
-              <li><Link to='/app/terms'>Terms & Conditions</Link></li>
+              {/* <li><Link to='/app/terms'>Terms & Conditions</Link></li> */}
 
             </ul>
           </div>
         </Col>
       </Row>
-      <Paper elevation={3} style={{ padding: '0px', marginTop: '20px', boxShadow: 'none' }}>
+      <Paper elevation={3} style={{ padding: '15px', marginTop: '20px', boxShadow: 'none' }}>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">
             <Avatar
@@ -61,7 +61,7 @@ function Settings() {
               <span className='fs-16 fw4' style={{ color: '#808E9D' }}>Project Manager</span>
             </Box>
           </Box>
-          <Button sx={{ borderRadius: "7px", borderWidth: "2px" }} startIcon={<EditIcon />} variant="outlined">Edit</Button>
+          {/* <Button sx={{ borderRadius: "7px", borderWidth: "2px" }} startIcon={<EditIcon />} variant="outlined">Edit</Button> */}
         </Box>
 
         <Box>
@@ -174,9 +174,9 @@ function Settings() {
                 {/* <img src={Logout} alt="Logout" width={20} height={20} /> */}
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', ml: 2 }}>
                   <Typography gutterBottom style={{ color: '#D81B60', fontWeight: '700', fontSize: 20, }}>LogOut</Typography>
-                  <Typography variant="body2" color="#ADB5BD">
+                  {/* <Typography variant="body2" color="#ADB5BD">
                     You will be notified when customers order any product
-                  </Typography>
+                  </Typography> */}
                 </Box>
               </Box>
               <button className='btn logoutbtn' onClick={onlLogOut}>Log Out</button>

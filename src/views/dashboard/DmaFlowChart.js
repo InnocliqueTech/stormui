@@ -99,18 +99,54 @@ const DMAFlowChart = (props) => {
   };
 
 
+  // useEffect(() => {
+  //   if (props.data && props.data.totalDmaOutFlow) {
+  //     let totalFlowData = [];
+  //     let totalOutFlowData = [];
+  //     let dmaNames = [];
+      
+  //     props.data.totalDmaOutFlow.forEach((flow) => {
+  //       dmaNames.push(flow.displayName);
+  //       totalFlowData.push(flow.totalFlow);
+  //       totalOutFlowData.push(flow.totalOutFlow);
+  //     });
+
+  //     setData([
+  //       {
+  //         name: "Total Flow",
+  //         data: totalFlowData
+  //       },
+  //       {
+  //         name: "Total OutFlow",
+  //         data: totalOutFlowData
+  //       }
+  //     ]);
+  //     setCategories(dmaNames);
+  //     setLoading(false);
+  //   }
+  // }, [props.data]);
+
+
   useEffect(() => {
     if (props.data && props.data.totalDmaOutFlow) {
       let totalFlowData = [];
       let totalOutFlowData = [];
       let dmaNames = [];
-      
-      props.data.totalDmaOutFlow.forEach((flow) => {
-        dmaNames.push(flow.displayName);
-        totalFlowData.push(flow.totalFlow);
-        totalOutFlowData.push(flow.totalOutFlow);
-      });
-
+  
+      if (props.data.totalDmaOutFlow.length === 0) {
+        // If totalDmaOutFlow is empty, set default DMA names
+        dmaNames = ["DMA-1", "DMA-2", "DMA-3", "DMA-4", "DMA-5"];
+        // Optionally, set default values for totalFlowData and totalOutFlowData
+        totalFlowData = [0, 0, 0, 0, 0];
+        totalOutFlowData = [0, 0, 0, 0, 0];
+      } else {
+        props.data.totalDmaOutFlow.forEach((flow) => {
+          dmaNames.push(flow.displayName);
+          totalFlowData.push(flow.totalFlow);
+          totalOutFlowData.push(flow.totalOutFlow);
+        });
+      }
+  
       setData([
         {
           name: "Total Flow",
@@ -125,6 +161,9 @@ const DMAFlowChart = (props) => {
       setLoading(false);
     }
   }, [props.data]);
+  
+
+
 
   // useEffect(() => {
   //   getDmaOutFlow();

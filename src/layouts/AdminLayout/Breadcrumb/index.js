@@ -52,7 +52,7 @@ const Breadcrumb = () => {
     setSelectedGateway(0);
     setSelectedStatus(0);
   };
-  
+
 
   const handleDialogClose = () => {
     setIsDialogOpen(false);
@@ -145,7 +145,7 @@ const Breadcrumb = () => {
                 <div className="page-header-title">
                   <h5 className="m-b-10">{mainContent}</h5>
                 </div>
-                <Row className="d-flex" style={{marginTop:"15px", marginBottom:"10px"}}>
+                <Row className="d-flex" style={{ marginTop: "15px", marginBottom: "10px" }}>
                   <Col
                     className="d-flex align-items-center"
                     style={{
@@ -365,114 +365,124 @@ const Breadcrumb = () => {
                               )}
 
 
-                              
+
                             </section>
 
                           )}
                         </div>
-                        {location.pathname !== '/app/client' && 
-                        <div style={{ marginLeft: "10px" }}>
-                          <div className="form-group selectcustom"
-                            style={{ height: "47px", width: "47px", backgroundColor: "#eaeaeb", borderRadius: "8px" }}>
-                            <FilterAltOutlinedIcon
-                              style={{
-                                color: '#6C757D',
-                                position: "relative",
-                                marginTop: "12px",
-                                marginLeft: "12px",
-                                cursor: "pointer"
-                              }}
-                              onClick={handleFilterIconClick} />
+                        {location.pathname !== '/app/client' &&
+                          <div style={{ marginLeft: "10px" }}>
+                            <div className="form-group selectcustom"
+                              style={{ height: "47px", width: "47px", backgroundColor: "#eaeaeb", borderRadius: "8px" }}>
+                              <FilterAltOutlinedIcon
+                                style={{
+                                  color: '#6C757D',
+                                  position: "relative",
+                                  marginTop: "12px",
+                                  marginLeft: "12px",
+                                  cursor: "pointer"
+                                }}
+                                onClick={handleFilterIconClick} />
+                            </div>
+
+                            <Dialog open={isDialogOpen} onClose={handleDialogClose}>
+                              <DialogTitle>
+                                {/* <h4 style={{ fontWeight: "600" }}>Filters</h4> */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <h4 style={{ fontWeight: "600", margin: 0 }}>Filters</h4>
+                                  <IconButton onClick={handleDialogClose} style={{ padding: 0 }}>
+                                    <CloseIcon />
+                                  </IconButton>
+                                </div>
+                              </DialogTitle>
+                              <DialogContent>
+                                <div className='row'>
+                                  <div className='col-md-4'>
+                                    <div className="form-group selectcustom" style={{ width: "100%" }}>
+                                      <label>Select Status</label>
+                                      <select className="form-control" value={selectedStatus ? selectedStatus : 0}
+                                        onChange={(e) => setSelectedStatus(Number(e.target.value))}>
+
+                                        {status.map((st) => (
+                                          <option key={st.statusId} value={st.statusId}>
+                                            {st.displayName}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className='col-md-4'>
+                                    <div className="form-group selectcustom" style={{ width: "100%" }}>
+                                      <label>Select Zone</label>
+                                      <select className="form-control" value={selectedZone ? selectedZone : 0}
+                                        onChange={(e) => setSelectedZone(Number(e.target.value))}>
+                                        {/* <option>Select Zone</option> */}
+                                        <option value={0}>All</option>
+                                        {zones.map((zone) => (
+                                          <option key={zone.zoneId} value={zone.zoneId}>
+                                            {zone.displayName}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className='col-md-4'>
+                                    <div className="form-group selectcustom" style={{ width: "100%" }}>
+                                      <label>Select Dma</label>
+                                      <select className="form-control" value={selectedDma ? selectedDma : 0}
+                                        onChange={(e) => setSelectedDma(Number(e.target.value))}>
+                                        {/* <option>DMA</option> */}
+                                        <option value={0}>All</option>
+                                        {dmas.map((dma) => (
+                                          <option key={dma.dmaId} value={dma.dmaId}>
+                                            {dma.displayName}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className='col-md-4 mt-3'>
+                                    <div className="form-group selectcustom" style={{ width: "100%" }}>
+                                      <label>Select Gateway</label>
+                                      <select className="form-control" value={selectedGateway ? selectedGateway : 0}
+                                        onChange={(e) => setSelectedGateway(Number(e.target.value))}>
+                                        {/* <option>Gateways</option> */}
+                                        <option value={0}>All</option>
+                                        {gateways.map((gateway) => (
+                                          <option key={gateway.id} value={gateway.id}>
+                                            {gateway.displayName}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </DialogContent>
+                              <DialogActions style={{ display: 'flex', justifyContent: 'space-between', width: '100%', padding: "20px" }}>
+                                <Button
+                                  onClick={handleDialogReset}
+                                  color="primary"
+                                  variant="outlined"
+                                  style={{ flex: 1, marginRight: '4px', borderColor: "#00b4eb" }}
+                                >
+                                  Reset
+                                </Button>
+                                <Button
+                                  onClick={handleDialogApply}
+                                  // color="primary"
+                                  variant="contained"
+                                  style={{ flex: 1, marginLeft: '4px', backgroundColor: "#00b4eb" }}
+                                >
+                                  Apply
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
                           </div>
-
-                          <Dialog open={isDialogOpen} onClose={handleDialogClose}>
-                            <DialogTitle>
-                              {/* <h4 style={{ fontWeight: "600" }}>Filters</h4> */}
-                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <h4 style={{ fontWeight: "600", margin: 0 }}>Filters</h4>
-      <IconButton onClick={handleDialogClose} style={{ padding: 0 }}>
-        <CloseIcon />
-      </IconButton>
-    </div>
-                            </DialogTitle>
-                            <DialogContent>
-                              <div className='row'>
-                                <div className='col-md-4'>
-                                  <div className="form-group selectcustom" style={{ width: "100%" }}>
-                                    <label>Select Status</label>
-                                    <select className="form-control" value={selectedStatus ? selectedStatus : 0}
-                                      onChange={(e) => setSelectedStatus(Number(e.target.value))}>
-
-                                      {status.map((st) => (
-                                        <option key={st.statusId} value={st.statusId}>
-                                          {st.displayName}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </div>
-                                </div>
-                                <div className='col-md-4'>
-                                  <div className="form-group selectcustom" style={{ width: "100%" }}>
-                                    <label>Select Zone</label>
-                                    <select className="form-control" value={selectedZone ? selectedZone : 0}
-                                      onChange={(e) => setSelectedZone(Number(e.target.value))}>
-                                      <option>Select Zone</option>
-                                      <option value={0}>All</option>
-                                      {zones.map((zone) => (
-                                        <option key={zone.zoneId} value={zone.zoneId}>
-                                          {zone.displayName}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </div>
-                                </div>
-                                <div className='col-md-4'>
-                                  <div className="form-group selectcustom" style={{ width: "100%" }}>
-                                    <label>Select Dma</label>
-                                    <select className="form-control" value={selectedDma ? selectedDma : 0}
-                                      onChange={(e) => setSelectedDma(Number(e.target.value))}>
-                                      <option>DMA</option>
-                                      <option value={0}>All</option>
-                                      {dmas.map((dma) => (
-                                        <option key={dma.dmaId} value={dma.dmaId}>
-                                          {dma.displayName}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </div>
-                                </div>
-                                <div className='col-md-4 mt-3'>
-                                  <div className="form-group selectcustom" style={{ width: "100%" }}>
-                                    <label>Select Gateway</label>
-                                    <select className="form-control" value={selectedGateway ? selectedGateway : 0}
-                                      onChange={(e) => setSelectedGateway(Number(e.target.value))}>
-                                      <option>Gateways</option>
-                                      <option value={0}>All</option>
-                                      {gateways.map((gateway) => (
-                                        <option key={gateway.id} value={gateway.id}>
-                                          {gateway.displayName}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                            </DialogContent>
-                            <DialogActions>
-                              <Button onClick={handleDialogApply} color="primary" variant='contained'>
-                                Apply
-                              </Button>
-                              <Button onClick={handleDialogReset} color="primary" variant='outlined'>
-                                Reset
-                              </Button>
-                            </DialogActions>
-                          </Dialog>
-                        </div>
-        }
+                        }
                       </div>
                     </Col>
 
-                   
+
 
 
                   </Col>

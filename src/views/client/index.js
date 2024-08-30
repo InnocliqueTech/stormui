@@ -94,17 +94,6 @@ const Client = () => {
   // const [dates, setDates] = useState([]);
 
 
-  useEffect(() => {
-    // Check if the page has already been reloaded
-    if (!sessionStorage.getItem('zoneReloaded')) {
-      // Set the flag to indicate the page has been reloaded
-      sessionStorage.setItem('zoneReloaded', 'true');
-  
-      // Reload the page
-      window.location.reload();
-    }
-    }, [])
-  
 
   const handleFilterIconClick = () => {
     // navigate('/app/meterlist');
@@ -657,7 +646,7 @@ const Client = () => {
                             <label>Select Zone</label>
                             <select className="form-control" value={selectedZone ? selectedZone : 0}
                               onChange={(e) => setSelectedZone(Number(e.target.value))}>
-                              <option>Select Zone</option>
+                              {/* <option>Select Zone</option> */}
                               <option value={0}>All</option>
                               {zones.map((zone) => (
                                 <option key={zone.zoneId} value={zone.zoneId}>
@@ -672,7 +661,7 @@ const Client = () => {
                             <label>Select Dma</label>
                             <select className="form-control" value={selectedDma ? selectedDma : 0}
                               onChange={(e) => setSelectedDma(Number(e.target.value))}>
-                              <option>DMA</option>
+                              {/* <option>DMA</option> */}
                               <option value={0}>All</option>
                               {dmas.map((dma) => (
                                 <option key={dma.dmaId} value={dma.dmaId}>
@@ -687,7 +676,7 @@ const Client = () => {
                             <label>Select Gateway</label>
                             <select className="form-control" value={selectedGateway ? selectedGateway : 0}
                               onChange={(e) => setSelectedGateway(Number(e.target.value))}>
-                              <option>Gateways</option>
+                              {/* <option>Gateways</option> */}
                               <option value={0}>All</option>
                               {gateways.map((gateway) => (
                                 <option key={gateway.id} value={gateway.id}>
@@ -699,12 +688,22 @@ const Client = () => {
                         </div>
                       </div>
                     </DialogContent>
-                    <DialogActions>
-                      <Button onClick={handleDialogApply} color="primary" variant='contained'>
-                        Apply
-                      </Button>
-                      <Button onClick={handleDialogReset} color="primary" variant='outlined'>
+                    <DialogActions style={{ display: 'flex', justifyContent: 'space-between', width: '100%', padding:"20px" }}>
+                      <Button
+                        onClick={handleDialogReset}
+                        color="primary"
+                        variant="outlined"
+                        style={{ flex: 1, marginRight: '4px', borderColor:"#00b4eb" }}
+                      >
                         Reset
+                      </Button>
+                      <Button
+                        onClick={handleDialogApply}
+                        // color="primary"
+                        variant="contained"
+                        style={{ flex: 1, marginLeft: '4px', backgroundColor:"#00b4eb" }}
+                      >
+                        Apply
                       </Button>
                     </DialogActions>
                   </Dialog>
@@ -719,7 +718,7 @@ const Client = () => {
         <CustomTabPanel value={value} index={0} >
           <Row>
             <Col md={6} xl={6} sm={12}>
-              <Card className="card-social" style={{minHeight:"333px", maxHeight:"333px"}}>
+              <Card className="card-social" style={{ minHeight: "333px", maxHeight: "333px" }}>
                 <Card.Body>
                   <Col md={8} sm={8} xs={8} style={{ display: 'inline-flex', }}>
                     <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574' }}>
@@ -733,7 +732,7 @@ const Client = () => {
                     </span>
                   </Col>
                   <Row>
-                    <Col md={3} sm={1} xs={1} style={{ paddingLeft: "17px" }}>
+                    <Col md={3} sm={1} xs={1} style={{ paddingLeft: "17px", paddingRight: "0px" }}>
                       <div className="client-flow" style={{ marginTop: '40px' }}>
                         <div className="client-flow-box" style={{ marginBottom: '32px' }}>
                           <div className="d-flex mb-3">
@@ -805,7 +804,7 @@ const Client = () => {
             </Col>
             <Col md={6} xl={3} sm={12}>
               <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handledmaClickOpen}>
-                <Card className="card-social" style={{minHeight:"333px", maxHeight:"333px"}}>
+                <Card className="card-social" style={{ minHeight: "333px", maxHeight: "333px" }}>
                   <Card.Body>
                     {/* <ClientZone data={dashboardData.totalConsumption} /> */}
                     <ClientZone data={dashboardData} />
@@ -815,7 +814,7 @@ const Client = () => {
             </Col>
             <Col md={6} xl={3} sm={12}>
               <Link style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={handleClickOpen}>
-                <Card className="card-social" style={{minHeight:"333px", maxHeight:"333px"}}>
+                <Card className="card-social" style={{ minHeight: "333px", maxHeight: "333px" }}>
                   <Card.Body className="">
                     <ClientDma dmaData={dmaData} />
                   </Card.Body>
@@ -826,7 +825,7 @@ const Client = () => {
               <Alert data={alertData} />
             </Col>
             <Col md={6} xl={7}>
-              <Card className="card-social" style={{minHeight:"333px", maxHeight:"333px"}}>
+              <Card className="card-social" style={{ minHeight: "333px", maxHeight: "333px" }}>
                 <Card.Body className="p-0">
                   <div className="row">
                     <div className="col-md-12">

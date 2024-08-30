@@ -158,7 +158,7 @@ const Alert = ({ data }) => {
               <span>
                 <Image src={meter} alt="gateway" className="meter" />
               </span>
-              <span style={{ marginLeft: "10px", fontWeight: "600" }}> Meter Communication</span>
+              <span style={{ marginLeft: "10px", fontWeight: "600" }}> Meter Communication Failure</span>
 
             </AccordionSummary>
             <AccordionDetails style={{ maxHeight: '100px', overflowY: 'auto', backgroundColor: "#f7f7f7" }}>

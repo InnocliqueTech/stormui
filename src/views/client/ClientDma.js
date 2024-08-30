@@ -212,7 +212,9 @@ const ClientDma = (props) => {
   console.log(opt);
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5" style={{maxHeight:"200px"}}>
-      <Row style={{padding : "0px 0px 0px 18px"}}>
+      <Row 
+      // style={{padding : "0px 0px 0px 18px"}}
+      >
         <Col md={1} sm={1} xs={1} className='iconContainer'>
           <Image src={water} alt="water" className='icon' />
         </Col>

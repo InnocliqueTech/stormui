@@ -9,15 +9,15 @@ function aboutUs() {
     <>
     <>
       <Row style={{marginBottom:'30px'}}>
-        <Col md={8} sm={6} xs={12}>
+        <Col md={10} sm={6} xs={12}>
           <div className="dashheading"><a className="title">About us</a></div>
         </Col>
-          <Col md={4} sm={5} xs={12}>
+          <Col md={2} sm={5} xs={12}>
             <div className='setting-nav'>
               <ul>
                 <li><Link to='/app/setting'>Profile</Link></li>
                 <li><Link className='active' to='/app/about'>About us</Link></li>
-                <li><Link to='/app/terms'>Terms & Conditions</Link></li>
+                {/* <li><Link to='/app/terms'>Terms & Conditions</Link></li> */}
               </ul>
             </div>
           </Col>

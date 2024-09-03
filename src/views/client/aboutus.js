@@ -22,7 +22,7 @@ function aboutUs() {
             </div>
           </Col>
       </Row> */}
-        <div style={{ marginBottom: '30px', display:"flex", justifyContent:"space-between" }}>
+        <div style={{ marginBottom: '20px', display:"flex", justifyContent:"space-between", marginTop:"10px" }}>
           <div>
             <div className="dashheading"><a className="title">About us</a></div>
           </div>

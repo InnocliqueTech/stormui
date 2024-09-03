@@ -48,7 +48,7 @@ function Settings() {
           </div>
         </Col>
       </Row> */}
-      <div style={{display:"flex", justifyContent:"space-between"}}>
+      <div style={{display:"flex", justifyContent:"space-between", marginTop:"10px"}}>
         <div>
           <h3 style={{ fontWeight: "700" }}>Profile</h3>
         </div>

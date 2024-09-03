@@ -499,10 +499,10 @@ const Client = () => {
 
       <Box sx={{ width: '100%' }}>
         <Box >
-          <div className='row' style={{ paddingLeft: "12px" }}>
-            <div className='col-md-6' style={{
-              backgroundColor: "white", padding: "5px", borderRadius: "8px", display: "flex",
-              justifyContent: "space-around !important",
+          <div className='row' style={{ paddingLeft: "12px", marginBottom:"25px" }}>
+            <div className='col-md-5' style={{
+              backgroundColor: "#eaeaeb", padding: "5px", borderRadius: "8px", display: "flex",
+              justifyContent: "center",
             }}>
 
 
@@ -510,18 +510,19 @@ const Client = () => {
                 sx={{
 
                   '& .MuiTab-root': {
-                    backgroundColor: '#ffffff',
+                    // backgroundColor: '#ffffff',
                     // padding: "5px",
                     borderRadius: "8px",
                     color: '#212121',
-                    fontSize: '17px',
+                    fontSize: '15px',
                     fontWeight: 500,
                     textTransform: 'none',
+                    fontFamily: "Inter !important"
 
                     // color:"#eaeaeb"
                   },
                   '& .Mui-selected': {
-                    backgroundColor: '#eaeaeb',
+                    backgroundColor: '#ffffff',
                     fontWeight: 600,
                     color: 'black !important',
                   },
@@ -537,9 +538,9 @@ const Client = () => {
                     label={
                       <Link
                         to="/app/dashboard/default"
-                        style={{ display: 'flex', alignItems: 'center' }}
+                        style={{ display: 'flex', alignItems: 'center', }}
                       >
-                        <ArrowBackIcon  style={{color:"black"}}/>
+                        <ArrowBackIcon style={{ color: "black" }} />
                       </Link>
                     }
                   />
@@ -551,7 +552,7 @@ const Client = () => {
                 <Tab label="Meters" {...a11yProps(4)} />
               </Tabs>
             </div>
-            <div className='col-md-1'></div>
+            <div className='col-md-2'></div>
             <div className='col-md-5'>
               {console.log('VALUE', value)}
               <div className="days-date-picker-outer-cls">

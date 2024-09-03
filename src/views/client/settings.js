@@ -35,7 +35,7 @@ function Settings() {
     <>
       <Row>
         <Col md={10} sm={6} xs={12}>
-          <div className="dashheading">Profile</div>
+          <h3 style={{fontWeight:"700"}}>Profile</h3>
         </Col>
         <Col md={2} sm={5} xs={12}>
           <div className='setting-nav'>

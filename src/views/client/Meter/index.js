@@ -31,7 +31,7 @@ function Meter({ data }) {
     return (
         <>
             <Row style={{ padding: '32px', background: '#F4F5F5' }}>
-                <Col md={12} sm={12} xs={12} className='meterlist'>
+                <Col md={12} sm={12} xs={12} className='meterlist meterlistTab'>
                     <Tabs
                         defaultActiveKey="home"
                         id="fill-tab-example"

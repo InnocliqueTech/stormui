@@ -143,7 +143,7 @@ export default function GatewayList(props) {
         <section className='gateway-component'>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div>
-              <h3 style={{ fontWeight: '600' }}>Gateways</h3>
+              <h3 style={{ fontWeight: '700' }}>Gateways</h3>
             </div>
             <div style={{ display: "flex" }}>
               {/* <div className="days-date-picker">
@@ -302,7 +302,7 @@ export default function GatewayList(props) {
                     <Spinner animation="border" variant="primary" />
                   </div>
                 ) : (
-                  <div className='gateway-list mt-3'>
+                  <div className='gateway-list mt-4'>
                     {gatewayCardData && gatewayCardData.map((item) => {
                       return (
                         <div key={item.type} className='gateway-card'>

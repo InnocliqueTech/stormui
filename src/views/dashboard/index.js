@@ -90,7 +90,7 @@ const DashDefault = () => {
   console.log('dashboard.totaldma', dashboardData.totalDma);
   return (
     <React.Fragment>
-      <Row className='mt-4'>
+      <Row style={{marginTop:"14px"}}>
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
             <Card.Body

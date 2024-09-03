@@ -192,13 +192,10 @@ const Breadcrumb = () => {
                           </span>
                         )}
                         {location.pathname === '/app/dashboard/default' && (
-                          <h3 style={{ fontWeight: '600' }}>Dashboard</h3>
+                          <h3 className='welcome' style={{fontWeight:"700"}}>Dashboard</h3>
                         )}
 
-                        {location.pathname === '/app/gateway' && (
-                          // <h3 style={{ fontWeight: '600' }}>Gateways</h3>
-                          <></>
-                        )}
+                       
                         {title !== 'Dashboard' && title !== 'Gateway' && (
                           <span style={{ background: "white", padding: "18px 6px 16px 6px", borderRadius: "8px", display: 'none' }}>
                             {(
@@ -239,7 +236,7 @@ const Breadcrumb = () => {
                           </span>
                         )}
 
-                        {title == 'Gateway' && location.pathname !== '/app/gateway' && (
+                        {/* {title == 'Gateway' && location.pathname !== '/app/gateway' && (
                           <span >
                             {(location.pathname.startsWith('/app/client') || location.pathname.startsWith('/app/dmalist') || location.pathname.startsWith('/app/gatewaylist') || location.pathname.startsWith('/app/meterlist')) && (
                               <>
@@ -275,7 +272,7 @@ const Breadcrumb = () => {
                               </>
                             )}
                           </span>
-                        )}
+                        )} */}
                       </div>
                     </Col>
 

@@ -746,10 +746,10 @@ const Client = () => {
             </div>
 
           </div> */}
-          <div style={{ paddingLeft: "12px", marginBottom: "25px", display:"flex" }}>
+          <div style={{ paddingLeft: "12px", marginBottom: "25px", display:"flex", justifyContent:"space-between" }}>
             <div style={{
               backgroundColor: "#eaeaeb", padding: "5px", borderRadius: "8px", display: "flex",
-              justifyContent: "center", width:"45%"
+              justifyContent: "center",
             }}>
 
 
@@ -795,9 +795,9 @@ const Client = () => {
                 <Tab label="Meters" {...a11yProps(4)} />
               </Tabs>
             </div>
-            <div style={{width:"15%"}}></div>
+            {/* <div style={{width:"15%"}}></div> */}
             {/* <div className='col-md-2'></div> */}
-            <div style={{width:"40%"}}>
+            <div >
               {console.log('VALUE', value)}
               <div className="days-date-picker-outer-cls">
                 {value == 0 ?

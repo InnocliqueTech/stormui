@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import logo from '../../../assets/images/logo.png';
 import { useNavigate } from 'react-router-dom';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import IconButton from '@mui/material/IconButton';
+
 
 
 import * as Yup from 'yup';
@@ -10,6 +14,11 @@ import { Formik } from 'formik';
 
 const FirebaseLogin = ({ className, ...rest }) => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = (event) => event.preventDefault();
+
   const handleLogin = async (values, { setErrors, setSubmitting }) => {
     try {
       const response = await fetch('http://49.207.11.223:3307/dashboard/login', {
@@ -87,17 +96,36 @@ const FirebaseLogin = ({ className, ...rest }) => {
               </div>
               <div className="form-group mb-4">
                 <h6 style={{ textAlign: "left", fontSize: "12px", color: "rgb(137 130 130)" }}>Enter password</h6>
-                <input
-                  className="form-control"
+                <div style={{ position: 'relative' }}>
+                  <input
+                    className="form-control"
 
-                  label="Password"
-                  name="password"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
-                  value={values.password}
-                  placeholder='Enter Password'
-                />
+                    label="Password"
+                    name="password"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    type={showPassword ? 'text' : 'password'}
+                    // type="password"
+                    value={values.password}
+                    placeholder='Enter Password'
+                    style={{ paddingRight: '40px' }}
+                  />
+                   <IconButton
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      top: 0,
+                      height: '100%',
+                      padding: '0 25px',
+                    }}
+                    edge="end"
+                  >
+                    {showPassword ? <RemoveRedEyeIcon /> : < VisibilityOffIcon/>}
+                  </IconButton>
+                </div>
+
                 {touched.password && errors.password && (
                   <div style={{ textAlign: 'left', color: 'red', marginTop: '5px' }}>
                     <small>{errors.password}</small>
@@ -133,7 +161,7 @@ const FirebaseLogin = ({ className, ...rest }) => {
                 >
                   {isSubmitting ? (
                     <>
-                     
+
                       Processing...
                     </>
                   ) : (

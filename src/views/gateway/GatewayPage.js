@@ -330,7 +330,7 @@ export default function GatewayList(props) {
         <section className='gateway-component'>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
             <div style={{ display: "flex", textAlign: "center" }}>
-              <ArrowBackIcon style={{ color: "black", marginRight: "20px" }} onClick={ArrowBack} />
+              <ArrowBackIcon style={{ color: "black", marginRight: "20px", cursor:"pointer" }} onClick={ArrowBack} />
               <h4 style={{ fontWeight: '600' }}>Meters</h4>
             </div>
             <div style={{ display: "flex" }}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, List, ListItem, useMediaQuery, useTheme, Divider, Avatar, Paper } from '@mui/material';
 // import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+// import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './setting.css';
 // import ClientNotification from '../../src/assets/images/ClientNotification.png';
@@ -33,7 +33,7 @@ function Settings() {
   }
   return (
     <>
-      <Row>
+      {/* <Row>
         <Col md={10} sm={6} xs={12}>
           <h3 style={{fontWeight:"700"}}>Profile</h3>
         </Col>
@@ -42,12 +42,27 @@ function Settings() {
             <ul>
               <li><Link className='active' to='/app/setting'>Profile</Link></li>
               <li><Link to='/app/about'>About us</Link></li>
-              {/* <li><Link to='/app/terms'>Terms & Conditions</Link></li> */}
+        
 
             </ul>
           </div>
         </Col>
-      </Row>
+      </Row> */}
+      <div style={{display:"flex", justifyContent:"space-between"}}>
+        <div>
+          <h3 style={{ fontWeight: "700" }}>Profile</h3>
+        </div>
+        <div>
+          <div className='setting-nav'>
+            <ul style={{gap:"10px"}}>
+              <li><Link className='active' to='/app/setting'>Profile</Link></li>
+              <li><Link to='/app/about'>About us</Link></li>
+              {/* <li><Link to='/app/terms'>Terms & Conditions</Link></li> */}
+
+            </ul>
+          </div>
+        </div>
+      </div>
       <Paper elevation={3} style={{ padding: '15px', marginTop: '20px', boxShadow: 'none' }}>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">

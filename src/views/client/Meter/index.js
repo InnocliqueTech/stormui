@@ -19,7 +19,7 @@ function Meter({ data }) {
     // const [detailsData, setDetailsData] = useState([])
    
     console.log(data)
-    const [analytics] = useState('1');
+    // const [analytics] = useState('1');
 
     const onAnalyticsData = (data) => {
         console.log(data)

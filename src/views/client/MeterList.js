@@ -189,7 +189,7 @@ const MeterList = () => {
           <Col md={9} sm={7} xs={7}>
             <Row>
               <Col md={9} sm={7} xs={7}>
-                <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Meter List</span>
+                <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Meters</span>
               </Col>
 
             </Row>

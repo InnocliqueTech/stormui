@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Card, Image, Table, OverlayTrigger, Spinner } from 'react-bootstrap';
-// import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_API_URL1 } from '../../config/constant';
 import '../dashboard/dashboard.scss';
@@ -19,8 +18,8 @@ import info from '../../assets/images/info.svg';
 import CustomerTable from './CustomerTable';
 import ClientZone from './ClientZone';
 import ClientDma from './ClientDma';
-import { Link } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+// import { Link } from '@mui/material';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import DmaTable from './dmatable';
 import ZoneTable from './Zonetable';
 // import Totalcounsumption from '../../src/views/dashboard/Totalcounsumption';
@@ -47,6 +46,7 @@ import ZoneList from './ZoneList';
 import DmaList from './DmaList';
 import MeterList from './MeterList';
 import GatewayList from '../gateway/GatewayPage';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -72,6 +72,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 // }));
 
 const Client = () => {
+
   const [dashboardData, setDashboardData] = useState({});
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
@@ -92,14 +93,33 @@ const Client = () => {
   //For Supply By zone Graph
   // const [zoneNames, setZoneNames] = useState([]);
   // const [dates, setDates] = useState([]);
+  const [isId, setIsId] = useState(false)
+  const [dashboardTab, setDashboardTab] = useState(false)
 
 
+
+  const location = useLocation();
+  const { id } = location.state || {};
 
   const handleFilterIconClick = () => {
     // navigate('/app/meterlist');
     setIsDialogOpen(true);
 
   };
+
+
+  useEffect(() => {
+    console.log(id)
+    if (id) {
+      setValue(id)
+      setIsId(true)
+      setDashboardTab(false)
+    } else {
+      setIsId(false)
+      setDashboardTab(true)
+      console.log(dashboardTab)
+    }
+  }, [id])
 
   // zone wise supply
   useEffect(() => {
@@ -406,11 +426,12 @@ const Client = () => {
   const [opendma, setOpendma] = React.useState(false);
   // const [fullWidth] = React.useState(true);
   const [value, setValue] = React.useState(0);
-
   const handleChange = (event, newValue) => {
     console.log('NEW', newValue)
     setValue(newValue);
   };
+
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -483,6 +504,8 @@ const Client = () => {
               backgroundColor: "white", padding: "5px", borderRadius: "8px", display: "flex",
               justifyContent: "space-around !important",
             }}>
+
+
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example"
                 sx={{
 
@@ -507,7 +530,21 @@ const Client = () => {
                   },
                 }}
               >
-                <Tab label="Dashboard" {...a11yProps(0)} />
+                {dashboardTab == true ? <Tab label="Dashboard" {...a11yProps(0)} /> : ''}
+                {isId && (
+                  <Tab
+                    {...a11yProps(0)}
+                    label={
+                      <Link
+                        to="/app/dashboard/default"
+                        style={{ display: 'flex', alignItems: 'center' }}
+                      >
+                        <ArrowBackIcon  style={{color:"black"}}/>
+                      </Link>
+                    }
+                  />
+                )}
+                {/* <Tab label="Dashboard" {...a11yProps(0)} /> */}
                 <Tab label="Zones" {...a11yProps(1)} />
                 <Tab label="DMAs" {...a11yProps(2)} />
                 <Tab label="Gateways" {...a11yProps(3)} />
@@ -688,12 +725,12 @@ const Client = () => {
                         </div>
                       </div>
                     </DialogContent>
-                    <DialogActions style={{ display: 'flex', justifyContent: 'space-between', width: '100%', padding:"20px" }}>
+                    <DialogActions style={{ display: 'flex', justifyContent: 'space-between', width: '100%', padding: "20px" }}>
                       <Button
                         onClick={handleDialogReset}
                         color="primary"
                         variant="outlined"
-                        style={{ flex: 1, marginRight: '4px', borderColor:"#00b4eb" }}
+                        style={{ flex: 1, marginRight: '4px', borderColor: "#00b4eb" }}
                       >
                         Reset
                       </Button>
@@ -701,7 +738,7 @@ const Client = () => {
                         onClick={handleDialogApply}
                         // color="primary"
                         variant="contained"
-                        style={{ flex: 1, marginLeft: '4px', backgroundColor:"#00b4eb" }}
+                        style={{ flex: 1, marginLeft: '4px', backgroundColor: "#00b4eb" }}
                       >
                         Apply
                       </Button>
@@ -1010,7 +1047,6 @@ const Client = () => {
           <GatewayList isTab={true} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={4}>
-          {/* <DmaList /> */}
           <MeterList />
         </CustomTabPanel>
       </Box>

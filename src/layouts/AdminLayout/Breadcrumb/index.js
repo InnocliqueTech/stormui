@@ -196,7 +196,8 @@ const Breadcrumb = () => {
                         )}
 
                         {location.pathname === '/app/gateway' && (
-                          <h3 style={{ fontWeight: '600' }}>Gateways</h3>
+                          // <h3 style={{ fontWeight: '600' }}>Gateways</h3>
+                          <></>
                         )}
                         {title !== 'Dashboard' && title !== 'Gateway' && (
                           <span style={{ background: "white", padding: "18px 6px 16px 6px", borderRadius: "8px", display: 'none' }}>
@@ -370,7 +371,7 @@ const Breadcrumb = () => {
 
                           )}
                         </div>
-                        {location.pathname !== '/app/client' &&
+                        {location.pathname !== '/app/client' && location.pathname !== '/app/gateway' &&
                           <div style={{ marginLeft: "10px" }}>
                             <div className="form-group selectcustom"
                               style={{ height: "47px", width: "47px", backgroundColor: "#eaeaeb", borderRadius: "8px" }}>

@@ -15,7 +15,7 @@ import Spinner from 'react-bootstrap/Spinner';
 // import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 
 
-export default function DmaList() {
+const DmaList = React.memo(() => {
   // const selectedZone = 0;
   const { clients, selectedZone } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
@@ -27,20 +27,23 @@ export default function DmaList() {
   const { zoneId } = location.state || { zoneId: selectedZone };
   console.log('location.state:', location.state);  // Debugging line
   console.log('zoneId:', zoneId);  // Debugging line
-
-
+  // const [apiCalled, setApiCalled] = useState(false)
+  console.log("DMALIST")
   useEffect(() => {
+    console.log("CLIENTS123",clients)
     if (clients && clients.length > 0) {
       getDashboardData(clients[0].clientId);
     }
-  }, [clients, selectedZone]);
+  }, []);
 
   const getDashboardData = async (clientId) => {
+    // if(!apiCalled) {
+    // setApiCalled(true)
     setLoading(true);
     try {
       const requestBody = {
         clientId: clientId,
-        zoneId: zoneId,
+        zoneId: zoneId ? zoneId : 0,
       }
       console.log(requestBody)
       const response = await axios.post(BASE_API_URL1 + 'dma/getAllDMAsWithClientIdAndZoneId', requestBody);
@@ -51,6 +54,7 @@ export default function DmaList() {
     } finally {
       setLoading(false);
     }
+  // }
   };
 
   const handlePageChange = (newPage) => {
@@ -176,5 +180,6 @@ export default function DmaList() {
       </div>
     </div>
   );
-}
+});
 
+export default DmaList;

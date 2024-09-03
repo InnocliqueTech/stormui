@@ -105,16 +105,16 @@ const MeterList = () => {
     const dmaId = selectedDma || 0;       // Default to 0 if selectedDma is null or undefined
     const gatewayId = selectedGateway || 0; // Default to 0 if selectedGateway is null or undefined
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
+    const startIndex = (currentPage - 1) / itemsPerPage;
 
     try {
       setLoading(true);
       const requestBody = {
         status: status,
         clientId: clientId,
-        zoneId: zoneId,
-        dmaId: dmaId,
-        gatewayId: gatewayId,
+        zoneId: zoneId ? zoneId : 0,
+        dmaId: dmaId ? dmaId : 0,
+        gatewayId: gatewayId ? gatewayId : 0,
         startIndex: startIndex,
         rowCount: itemsPerPage
       }

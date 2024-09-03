@@ -26,7 +26,7 @@ const DashDefault = () => {
 
   console.log(clients, 'the check');
   useEffect(() => {
-    if (selectedClient) {  
+    if (selectedClient) {
       getDashboardData();
     }
   }, [selectedClient, selectedZone, presentDate, toDate]);
@@ -94,7 +94,12 @@ const DashDefault = () => {
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
             <Card.Body
-              onClick={() => navigate("/app/clientlist")}
+              onClick={() => {
+
+                const dataToSend = { id: 1 };
+
+                navigate("/app/client", { state: dataToSend })
+              }}
               style={{ cursor: "pointer" }}
 
 
@@ -108,7 +113,12 @@ const DashDefault = () => {
           <Card className="card-social">
             <Card.Body
 
-              onClick={() => navigate("/app/dmalist")}
+              onClick={() => {
+
+                const dataToSend = { id: 2 };
+
+                navigate("/app/client", { state: dataToSend })
+              }}
               style={{ cursor: "pointer" }}
 
             >
@@ -120,7 +130,12 @@ const DashDefault = () => {
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
             <Card.Body
-              onClick={() => navigate("/app/meterlist")}
+               onClick={() => {
+
+                const dataToSend = { id: 4 };
+
+                navigate("/app/client", { state: dataToSend })
+              }}
               style={{ cursor: "pointer" }}
             >
               <TotalMeters data={dashboardData.totalMeters} />

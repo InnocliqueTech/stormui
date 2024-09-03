@@ -31,7 +31,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   fullWidth: true,
 }));
 
-const GatewayTable = () => {
+const GatewayTable = ({onClickGateWay, gatewayIdClick}) => {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [gateways, setGateways] = useState([]);
@@ -135,7 +135,8 @@ const GatewayTable = () => {
     <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10 }}>
       <Row>
         <Col md={9} sm={7} xs={7}>
-          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Gateways</span>{' '}
+        {gatewayIdClick == true ? 'click' : <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Gateways</span>}
+          
           {/* <span style={{ textAlign: 'end' }}>
               <InfoOutlinedIcon style={{ height: 20, width: 20, justifyContent: 'center', color: '#D6D9DC', marginLeft: 5 }} />
             </span>
@@ -183,9 +184,12 @@ const GatewayTable = () => {
                     <td className='tablecontent-link'>
                       <Link
                         style={{ textDecoration: 'none', cursor: 'pointer' }}
-                        to="/app/meterlist"
+                        // to="/app/meterlist"
                         state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gateway.id }}
-                        onClick={() => console.log('Link clicked for dmaId:', zoneId, dmaId, gateway.id,)}
+                        onClick={() => {
+                          console.log('Link clicked for dmaId:', zoneId, dmaId, gateway.id)
+                          onClickGateWay()
+                        }}
                       >
                         {gateway.gatewayId}
                       </Link>

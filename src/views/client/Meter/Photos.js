@@ -88,7 +88,7 @@ function MeterPhoto({ data1 }) {
     const [getImages, setGetImages] = useState([])
     const [selectedImages, setSelectedImages] = useState([]);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
 
     useEffect(() => {
         fetchImages();
@@ -104,9 +104,9 @@ function MeterPhoto({ data1 }) {
         setOpenDialog(true)
     };
 
-    const handleUploadClick = () => {
-        setOpenDialog(true);
-    };
+    // const handleUploadClick = () => {
+    //     setOpenDialog(true);
+    // };
 
     const handleDialogClose = () => {
         setOpenDialog(false);
@@ -138,7 +138,7 @@ function MeterPhoto({ data1 }) {
     const handleSubmit = async () => {
         setOpenDialog(false);
         const formData = new FormData();
-        selectedFiles.forEach((file, index) => {
+        selectedFiles.forEach((file) => {
             formData.append('images', file);
         });
         // formData.append('meterInfoID', '1');
@@ -181,9 +181,9 @@ function MeterPhoto({ data1 }) {
     const handleDeleteClose = () => {
         setShowDeleteDialog(true);
     }
-    const handleClose = () => {
-        setOpen(false);
-    };
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
 
 
     const handleDeleteConfirm = async () => {

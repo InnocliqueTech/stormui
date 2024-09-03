@@ -163,8 +163,8 @@ const Analytics = ({ data1, onAnalyticsData }) => {
   const [maxUsagePerDay, setMaxUsagePerDay] = useState(0);
   const [avgUsagePerDay, setAvgUsagePerDay] = useState(0);
   const [medianUsagePerDay, setMedianUsagePerDay] = useState(0);
-  const [meterDetails, setMeterDetails] = useState([])
-  const [deviceDetails, setDeviceDetails] = useState([])
+  // const [meterDetails, setMeterDetails] = useState([])
+  // const [deviceDetails, setDeviceDetails] = useState([])
   const[analyticsDetails, setAnalyticsDetails ] = useState({
     meterDetails:{},
     deviceDetails:{}

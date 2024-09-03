@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import { Row, Col, Card, Image } from 'react-bootstrap';
 // import { format, parseISO } from 'date-fns';
@@ -14,6 +14,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const Alert = ({ data }) => {
   console.log(data.clientAlerts)
+  const [expanded, setExpanded] = useState(false);
   // console.log(data.clientAlerts.Gateway)
   // const { selectedClient } = useContext(ClientsContext);
   // const [expandedIndex, setExpandedIndex] = useState(null);
@@ -105,6 +106,9 @@ const Alert = ({ data }) => {
   //   }
   // };
 
+  const handleAccordionChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+};
 
   return (
     <Card className='p-4' style={{ borderRadius: "10px", minHeight:"333px", maxHeight:"333px" }}>
@@ -121,7 +125,7 @@ const Alert = ({ data }) => {
           </div>
         </Col>
         <Col md={12} className='mt-4'>
-          <Accordion>
+          <Accordion expanded={expanded === 'panel1'} onChange={handleAccordionChange('panel1')}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1-content"
@@ -148,11 +152,11 @@ const Alert = ({ data }) => {
           </Accordion>
         </Col>
         <Col md={12} className='mt-3'>
-          <Accordion>
+          <Accordion expanded={expanded === 'panel2'} onChange={handleAccordionChange('panel2')}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1-content"
-              id="panel1-header"
+              aria-controls="panel2-content"
+              id="panel2-header"
               style={{ border: "transparent", backgroundColor: "#f7f7f7" }}
             >
               <span>

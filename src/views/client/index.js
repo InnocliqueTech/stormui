@@ -45,7 +45,7 @@ import Box from '@mui/material/Box';
 import ZoneList from './ZoneList';
 import DmaList from './DmaList';
 import MeterList from './MeterList';
-import GatewayList from '../gateway/GatewayPage';
+// import GatewayList from '../gateway/GatewayPage';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
@@ -94,7 +94,7 @@ const Client = () => {
   // const [zoneNames, setZoneNames] = useState([]);
   // const [dates, setDates] = useState([]);
   const [isId, setIsId] = useState(false)
-  const [dashboardTab, setDashboardTab] = useState(false)
+  const [dashboardTab, setDashboardTab] = useState(true)
 
 
 
@@ -115,27 +115,24 @@ const Client = () => {
       setIsId(true)
       setDashboardTab(false)
     } else {
-      setIsId(false)
-      setDashboardTab(true)
-      console.log(dashboardTab)
+      if(id != undefined) {
+        setIsId(false)
+        setDashboardTab(true)
+        console.log(dashboardTab)
+      }
     }
   }, [id])
 
   // zone wise supply
   useEffect(() => {
     const fetchDashboardData = async () => {
+
       const requestBody = {
-        clientId: 1,
-        zoneId: 0,
-        fromDate: "2024-06-01",
-        toDate: "2024-06-27"
+        clientId: selectedClient,
+        zoneId: selectedZone || 0,
+        fromDate: presentDate,
+        toDate: toDate
       }
-      // const requestBody = {
-      //   clientId: selectedClient,
-      //   zoneId: selectedZone || 0,
-      //   fromDate: presentDate,
-      //   toDate: toDate
-      // }
       console.log(requestBody)
       try {
         const response = await axios.post(`${BASE_API_URL1}zones/getZoneWiseConsumptionInClientDashboard`, requestBody);
@@ -159,7 +156,7 @@ const Client = () => {
       setLoading(true);
       try {
         const requestBody = {
-          clientId: selectedClient,
+          clientId: 1,
           zoneId: selectedZone || 0,
           fromDate: presentDate,
           toDate: toDate
@@ -261,6 +258,7 @@ const Client = () => {
   };
 
   const renderTableBody = () => {
+    console.log(dayDashBoardData)
     const dates = Object.keys(dayDashBoardData);
     const zones = dates.length > 0 ? dayDashBoardData[dates[0]].zoneDetails : [];
 
@@ -396,7 +394,7 @@ const Client = () => {
     const fetchDmaData = async () => {
       const requestBody = {
         clientId: selectedClient,
-        zoneId: selectedZone,
+        zoneId: selectedZone || 0,
         fromDate: presentDate,
         toDate: toDate
       }
@@ -478,7 +476,10 @@ const Client = () => {
 
   const handleDialogApply = () => {
     setIsDialogOpen(false);
-    navigate('/app/meterlist');
+   
+    const dataToSend = { id: 3 };
+
+    navigate("/app/client", { state: dataToSend })
   };
 
   function a11yProps(index) {
@@ -487,272 +488,26 @@ const Client = () => {
       'aria-controls': `simple-tabpanel-${index}`,
     };
   }
-  // const formatNumber = (number) => {
-  //   return new Intl.NumberFormat('en-US', {
-  //     notation: "compact",
-  //     compactDisplay: "short"
-  //   }).format(number);
-  // };
+
+  const shiftToDma = () => {
+    setValue(2)
+  }
+
+  const shiftToMeter = () => {
+    setValue(3)
+  }
+
 
   return (
     <React.Fragment>
 
       <Box sx={{ width: '100%' }}>
         <Box >
-          {/* <div className='row' style={{ paddingLeft: "12px", marginBottom:"25px" }}>
-            <div className='col-md-5' style={{
-              backgroundColor: "#eaeaeb", padding: "5px", borderRadius: "8px", display: "flex",
-              justifyContent: "center"
-            }}>
-
-
-              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example"
-                sx={{
-
-                  '& .MuiTab-root': {
-                    borderRadius: "8px",
-                    color: '#212121',
-                    fontSize: '15px',
-                    fontWeight: 500,
-                    textTransform: 'none',
-                    fontFamily: "Inter !important"
-                  },
-                  '& .Mui-selected': {
-                    backgroundColor: '#ffffff',
-                    fontWeight: 600,
-                    color: 'black !important',
-                  },
-                  '& .MuiTabs-indicator': {
-                    backgroundColor: '#eaeaeb'
-                  },
-                }}
-              >
-                {dashboardTab == true ? <Tab label="Dashboard" {...a11yProps(0)} /> : ''}
-                {isId && (
-                  <Tab
-                    {...a11yProps(0)}
-                    label={
-                      <Link
-                        to="/app/dashboard/default"
-                        style={{ display: 'flex', alignItems: 'center', }}
-                      >
-                        <ArrowBackIcon style={{ color: "black" }} />
-                      </Link>
-                    }
-                  />
-                )}
-                
-                <Tab label="Zones" {...a11yProps(1)} />
-                <Tab label="DMAs" {...a11yProps(2)} />
-                <Tab label="Gateways" {...a11yProps(3)} />
-                <Tab label="Meters" {...a11yProps(4)} />
-              </Tabs>
-            </div>
-            <div className='col-md-2'></div>
-            <div className='col-md-5'>
-              {console.log('VALUE', value)}
-              <div className="days-date-picker-outer-cls">
-                {value == 0 ?
-
-                  <div className='days-date-picker-inner-cls'>
-                    {[
-                      { day: '1D', add: 1 },
-                      { day: '7D', add: 7 },
-                      { day: '14D', add: 14 },
-                      { day: '30D', add: 30 }
-                    ].map((obj) => {
-                      return (
-                        <button
-                          className={`days ${selectedDate === obj.day ? 'active' : ''}`}
-                          onClick={() => {
-                            setSelectedDate(obj.day);
-                            onDateChange(obj.add);
-                          }}
-                          key={obj.day}
-                        >
-                          {obj.day}
-                        </button>
-                      );
-                    })}
-
-                    {isDatePickerOpen && (
-                      <div className="date-picker">
-                        <NewDatePicker />
-                      </div>
-                    )}
-                    <button className="icon-button" onClick={toggleDatePicker}>
-                      <DateRangeIcon />
-                    </button>
-                  </div>
-                  : ""}
-
-                {value == 2 || value == 3 || value == 4 ?
-                  <div>
-                    <div className="form-group selectcustom">
-                      <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
-                        <option value={0}>All</option>
-                        {zones.map((zone) => (
-                          <option key={zone.zoneId} value={zone.zoneId}>
-                            {zone.displayName}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  : ""}
-
-                {value == 3 || value == 4 ? <div style={{ marginLeft: "5px" }}>
-                  <div className="form-group selectcustom">
-                    <select className="form-control" value={selectedDma} onChange={(e) => setSelectedDma(Number(e.target.value))}>
-                     
-                      <option value={0}>All</option>
-                      {dmas.map((dma) => (
-                        <option key={dma.dmaId} value={dma.dmaId}>
-                          {dma.displayName}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div> : ""}
-
-
-                {value == 4 ? <div style={{ marginLeft: "5px" }}>
-                  <div className="form-group selectcustom">
-                    <select className="form-control" value={selectedGateway} onChange={(e) => setSelectedGateway(Number(e.target.value))}>
-            
-                      <option value={0}>All</option>
-                      {gateways.map((gateway) => (
-                        <option key={gateway.id} value={gateway.id}>
-                          {gateway.displayName}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                  : ""}
-
-                <div style={{ marginLeft: "10px" }}>
-                  <div className="form-group selectcustom"
-                    style={{ height: "47px", width: "47px", backgroundColor: "#eaeaeb", borderRadius: "8px" }}>
-                    <FilterAltOutlinedIcon
-                      style={{
-                        color: '#6C757D',
-                        position: "relative",
-                        marginTop: "12px",
-                        marginLeft: "12px",
-                        cursor: "pointer"
-                      }}
-                      onClick={handleFilterIconClick} />
-                  </div>
-
-                  <Dialog open={isDialogOpen} onClose={handleDialogClose}>
-                 
-                    <DialogTitle>
-                   
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <h4 style={{ fontWeight: "600", margin: 0 }}>Filters</h4>
-                        <IconButton onClick={handleDialogClose} style={{ padding: 0 }}>
-                          <CloseIcon />
-                        </IconButton>
-                      </div>
-                    </DialogTitle>
-                    <DialogContent>
-                      <div className='row'>
-                        <div className='col-md-4'>
-                          <div className="form-group selectcustom" style={{ width: "100%" }}>
-                            <label>Select Status</label>
-                            <select className="form-control" value={selectedStatus ? selectedStatus : 0}
-                              onChange={(e) => setSelectedStatus(Number(e.target.value))}>
-
-                              {status.map((st) => (
-                                <option key={st.statusId} value={st.statusId}>
-                                  {st.displayName}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                        <div className='col-md-4'>
-                          <div className="form-group selectcustom" style={{ width: "100%" }}>
-                            <label>Select Zone</label>
-                            <select className="form-control" value={selectedZone ? selectedZone : 0}
-                              onChange={(e) => setSelectedZone(Number(e.target.value))}>
-                              
-                              <option value={0}>All</option>
-                              {zones.map((zone) => (
-                                <option key={zone.zoneId} value={zone.zoneId}>
-                                  {zone.displayName}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                        <div className='col-md-4'>
-                          <div className="form-group selectcustom" style={{ width: "100%" }}>
-                            <label>Select Dma</label>
-                            <select className="form-control" value={selectedDma ? selectedDma : 0}
-                              onChange={(e) => setSelectedDma(Number(e.target.value))}>
-                         
-                              <option value={0}>All</option>
-                              {dmas.map((dma) => (
-                                <option key={dma.dmaId} value={dma.dmaId}>
-                                  {dma.displayName}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                        <div className='col-md-4 mt-3'>
-                          <div className="form-group selectcustom" style={{ width: "100%" }}>
-                            <label>Select Gateway</label>
-                            <select className="form-control" value={selectedGateway ? selectedGateway : 0}
-                              onChange={(e) => setSelectedGateway(Number(e.target.value))}>
-                            
-                              <option value={0}>All</option>
-                              {gateways.map((gateway) => (
-                                <option key={gateway.id} value={gateway.id}>
-                                  {gateway.displayName}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </DialogContent>
-                    <DialogActions style={{ display: 'flex', justifyContent: 'space-between', width: '100%', padding: "20px" }}>
-                      <Button
-                        onClick={handleDialogReset}
-                        color="primary"
-                        variant="outlined"
-                        style={{ flex: 1, marginRight: '4px', borderColor: "#00b4eb" }}
-                      >
-                        Reset
-                      </Button>
-                      <Button
-                        onClick={handleDialogApply}
-                 
-                        variant="contained"
-                        style={{ flex: 1, marginLeft: '4px', backgroundColor: "#00b4eb" }}
-                      >
-                        Apply
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                </div>
-
-              </div>
-
-            </div>
-
-          </div> */}
-          <div style={{ paddingLeft: "12px", marginBottom: "25px", display:"flex", justifyContent:"space-between" }}>
+          <div style={{ paddingLeft: "12px", marginBottom: "25px", display: "flex", justifyContent: "space-between" }}>
             <div style={{
               backgroundColor: "#eaeaeb", padding: "5px", borderRadius: "8px", display: "flex",
               justifyContent: "center",
             }}>
-
-
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example"
                 sx={{
 
@@ -775,6 +530,7 @@ const Client = () => {
                 }}
               >
                 {dashboardTab == true ? <Tab label="Dashboard" {...a11yProps(0)} /> : ''}
+                {console.log("isId", isId)}
                 {isId && (
                   <Tab
                     {...a11yProps(0)}
@@ -791,12 +547,10 @@ const Client = () => {
 
                 <Tab label="Zones" {...a11yProps(1)} />
                 <Tab label="DMAs" {...a11yProps(2)} />
-                <Tab label="Gateways" {...a11yProps(3)} />
-                <Tab label="Meters" {...a11yProps(4)} />
+                {/* <Tab label="Gateways" {...a11yProps(3)} /> */}
+                <Tab label="Meters" {...a11yProps(3)} />
               </Tabs>
             </div>
-            {/* <div style={{width:"15%"}}></div> */}
-            {/* <div className='col-md-2'></div> */}
             <div >
               {console.log('VALUE', value)}
               <div className="days-date-picker-outer-cls">
@@ -834,7 +588,7 @@ const Client = () => {
                   </div>
                   : ""}
 
-                {value == 2 || value == 3 || value == 4 ?
+                {value == 2 || value == 3?
                   <div>
                     <div className="form-group selectcustom">
                       <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
@@ -850,7 +604,7 @@ const Client = () => {
 
                   : ""}
 
-                {value == 3 || value == 4 ? <div style={{ marginLeft: "5px" }}>
+                {value == 3  ? <div style={{ marginLeft: "5px" }}>
                   <div className="form-group selectcustom">
                     <select className="form-control" value={selectedDma} onChange={(e) => setSelectedDma(Number(e.target.value))}>
 
@@ -1025,23 +779,7 @@ const Client = () => {
                               {outFlowData && outFlowData.inFlowDetails && outFlowData.inFlowDetails.count}
                             </h2>
                           </h2>
-                          {/* <div className="client-flow-stock d-flex">
-                        <div
-                          style={{
-                            width: 32,
-                            height: 23,
-                            borderRadius: 4,
-                            background: '#DEF7E4',
-                            color: '#25A244',
-                            textAlign: 'center',
-                            marginRight: '10px'
-                          }}
-                        >
-                          {outFlowData?.inFlowDetails?.lastWeekPercentage}
-                        </div>
-                        <img src={UpArrow} style={{ width: '12px', height: '15px', marginRight: '10px', marginTop: '3px' }} alt="uparrow" />
-                        <span style={{ fontSize: 12, paddingTop: '3px' }}>last week</span>
-                      </div> */}
+                        
                         </div>
                         <div className="client-flow-box">
                           <div className="d-flex mb-3">
@@ -1051,32 +789,14 @@ const Client = () => {
                           <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: '16px' }}>
                             {outFlowData && outFlowData.consumptionDetails && outFlowData.consumptionDetails.count}
                           </h2>
-                          {/* <div className="client-flow-stock d-flex">
-                        <div
-                          style={{
-                            width: 32,
-                            height: 23,
-                            borderRadius: 4,
-                            background: '#FFE8EC',
-                            color: '#DE092F',
-                            textAlign: 'center',
-                            marginRight: '10px'
-                          }}
-                        >
-                          {outFlowData?.consumptionDetails?.lastWeekPercentage}
-                        </div>
-                        <img
-                          src={DownArrow}
-                          style={{ width: '12px', height: '15px', marginRight: '10px', marginTop: '3px' }}
-                          alt="uparrow"
-                        />
-                        <span style={{ fontSize: 12, paddingTop: '3px' }}>last week</span>
-                      </div> */}
+                          
                         </div>
                       </div>
                     </Col>
                     <Col md={9} sm={8} xs={1}>
+                    {outFlowData && outFlowData.totalConsumption && outFlowData.totalConsumption.length > 0 ? 
                       <TotalOtFloow data={outFlowData} />
+                    : ""}
                     </Col>
                   </Row>
                 </Card.Body>
@@ -1117,7 +837,7 @@ const Client = () => {
             </Col>
           </Row>
 
-          <Card className="client-customer">
+          <Card className="client-customer" style={{ border: "none" }}>
             <Row>
               <Col md={9} sm={7} xs={7} className="d-flex">
                 <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className="d-flex align-items-center">
@@ -1143,17 +863,20 @@ const Client = () => {
                 </div>
               ) : (
                 <div>
-                  <Table>
-                    {renderTableHeader()}
-                    {renderTableBody()}
-                  </Table>
+                  <div style={{ overflowX: 'auto' }}>
+                    <Table>
+                      {renderTableHeader()}
+                      {renderTableBody()}
+                    </Table>
+                  </div>
                   {renderLegend()}
                 </div>
+
               )}
             </div>
           </Card>
 
-          <Card className="client-customer">
+          <Card className="client-customer" style={{ border: "none" }}>
             <Row>
               <Col md={9} sm={7} xs={7} className="d-flex">
                 <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className="d-flex align-items-center">
@@ -1163,7 +886,7 @@ const Client = () => {
                   >
                     <Image src={customer} alt="customer" className="icon" />
                   </span>{' '}
-                  Customer Segmentation{' '}
+                  Customer Details{' '}
                 </span>
                 <span style={{ padding: '13px' }}>
                   <Image src={info} alt="info" className="icon" />
@@ -1183,7 +906,7 @@ const Client = () => {
             <CustomerTable />
           </Card>
 
-          <Card className="client-customer">
+          <Card className="client-customer" style={{ border: "none" }}>
             <Row>
               <Col md={9} sm={7} xs={7} className="d-flex">
                 <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }} className="d-flex align-items-center">
@@ -1193,7 +916,7 @@ const Client = () => {
                   >
                     <Image src={zone} alt="zone" className="icon" />
                   </span>{' '}
-                  Zone Segmentation{' '}
+                  Zone Details{' '}
                 </span>
                 <span style={{ padding: '13px' }}>
                   <Image src={info} alt="gateway" />
@@ -1281,15 +1004,15 @@ const Client = () => {
           </BootstrapDialog>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <ZoneList />
+          <ZoneList shiftToDma={shiftToDma}/>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-          <DmaList />
+          <DmaList shiftToMeter = {shiftToMeter}/>
         </CustomTabPanel>
-        <CustomTabPanel value={value} index={3}>
+        {/* <CustomTabPanel value={value} index={3}>
           <GatewayList isTab={true} />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={4}>
+        </CustomTabPanel> */}
+        <CustomTabPanel value={value} index={3}>
           <MeterList />
         </CustomTabPanel>
       </Box>

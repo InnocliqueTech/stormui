@@ -14,8 +14,11 @@ import Paginations from '../../components/Paginatons'; // Make sure this path is
 // import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { ClientsContext } from '../dashboard/context';
 import { BASE_API_URL1 } from '../../config/constant';
+// import { useNavigate } from 'react-router';
 
-export default function ZoneList() {
+
+export default function ZoneList({shiftToDma}) {
+  // const navigate = useNavigate()
   const { clients } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
   const [expandedZone] = useState(null);
@@ -136,15 +139,21 @@ export default function ZoneList() {
                     <tr>
                       <td className='tablecontent-link'>
                         <Link
-                          to="/app/dmalist"
+                          // to="/app/dmalist"
+                          onClick={() => {
+
+                            // const dataToSend = { id: 2 };
+                            shiftToDma()
+                            // navigate("/app/client", { state: dataToSend })
+                          }}
                           state={{ zoneId: zone.zoneId }}
                           // to={{
                           //   pathname: "/app/dmalist",
                           //   state: { zoneId: zone.zoneId }
                           // }}
-                          onClick={() => console.log('Link clicked for zoneId:', zone.zoneId)}  // Debugging line
+                          // onClick={() => console.log('Link clicked for zoneId:', zone.zoneId)}  // Debugging line
                           style={{ textDecoration: 'none', cursor: 'pointer' }}>
-
+                        
                           {zone.displayName}
 
                         </Link>

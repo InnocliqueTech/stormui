@@ -25,10 +25,10 @@ function Settings() {
   }, [isSmallScreen]);
   const onlLogOut = () => {
     sessionStorage.removeItem('email');
-    sessionStorage.removeItem('dashboardReloaded');
-    sessionStorage.removeItem('gatewayReloaded');
-    sessionStorage.removeItem('zoneReloaded');
-    sessionStorage.removeItem('reloaded')
+    // sessionStorage.removeItem('dashboardReloaded');
+    // sessionStorage.removeItem('gatewayReloaded');
+    // sessionStorage.removeItem('zoneReloaded');
+    // sessionStorage.removeItem('reloaded')
     navigate('/login')
   }
   return (

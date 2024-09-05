@@ -14,6 +14,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 
 const DMAFlowChart = (props) => {
+  console.log(props)
   const [data, setData] = useState([])
   const {  selectedClient,  selectedZone } = useContext(ClientsContext);
   // const { clients, zones } = useContext(ClientsContext);
@@ -21,10 +22,11 @@ const DMAFlowChart = (props) => {
   const { presentDate, toDate } = useStateContext();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  
 
 
-  const minRange = props.data.minRange 
-  const maxRange = props.data.maxRange
+  const minRange = props.data.minRange || 0
+  const maxRange = props.data.maxRange || 100
   console.log('min', minRange)
   console.log('max', maxRange)
  
@@ -128,6 +130,7 @@ const DMAFlowChart = (props) => {
 
 
   useEffect(() => {
+    console.log(props)
     if (props.data && props.data.totalDmaOutFlow) {
       let totalFlowData = [];
       let totalOutFlowData = [];

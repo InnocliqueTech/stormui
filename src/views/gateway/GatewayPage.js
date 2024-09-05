@@ -127,7 +127,7 @@ export default function GatewayList(props) {
   const handleDialogApply = () => {
     setIsDialogOpen(false);
     // navigate('/app/meterlist');
-    const dataToSend = { id: 4 };
+    const dataToSend = { id: 3 };
     navigate("/app/client", { state: dataToSend })
   };
 

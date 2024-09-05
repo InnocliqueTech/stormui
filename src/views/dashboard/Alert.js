@@ -111,7 +111,7 @@ const Alert = ({ data }) => {
 };
 
   return (
-    <Card className='p-4' style={{ borderRadius: "10px", minHeight:"333px", maxHeight:"333px" }}>
+    <Card className='p-4' style={{ borderRadius: "10px", minHeight:"333px", maxHeight:"333px", border:"none" }}>
       <Row className="mb-2 justify-content-start" >
         <Col md={1} sm={1} xs={1} className="alertContainer">
           <Image src={alert} alt="alert" className="alertIcon" />

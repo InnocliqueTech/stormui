@@ -132,7 +132,7 @@ const DashDefault = () => {
             <Card.Body
                onClick={() => {
 
-                const dataToSend = { id: 4 };
+                const dataToSend = { id: 3 };
 
                 navigate("/app/client", { state: dataToSend })
               }}

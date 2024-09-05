@@ -58,13 +58,16 @@ const MeterList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5)
   const [totalItems, setTotalItems] = useState(0);
-  const { zoneId, dmaId, gatewayId } = location.state || { zoneId: selectedZone, dmaId: selectedDma, gatewayId: selectedGateway, status: selectedStatus };
+  const { zoneId: zoneId, dmaId: dmaId, gatewayId: gatewayId } = location.state || {};
+  // const { zoneId, dmaId, gatewayId } = location.state || { zoneId: selectedZone, dmaId: selectedDma, gatewayId: selectedGateway, status: selectedStatus };
   console.log('location.state:', location.state);
   console.log('zoneId:', zoneId);
   console.log('dmaId:', dmaId);
   console.log('gatewayId:', gatewayId);
 
-
+const zId = zoneId || selectedZone || 0
+const dId = dmaId || selectedDma || 0
+const gId = gatewayId || selectedGateway || 0
   useEffect(() => {
     getDashboardData()
   }, [currentPage, itemsPerPage, selectedClient, selectedZone, selectedDma, selectedGateway, selectedStatus])
@@ -99,22 +102,22 @@ const MeterList = () => {
 
 
   const getDashboardData = async () => {
-    const clientId = selectedClient || 0; // Default to 0 if selectedClient is null or undefined
-    const status = selectedStatus || 0;   // Default to 0 if selectedStatus is null or undefined
-    const zoneId = selectedZone || 0;     // Default to 0 if selectedZone is null or undefined
-    const dmaId = selectedDma || 0;       // Default to 0 if selectedDma is null or undefined
-    const gatewayId = selectedGateway || 0; // Default to 0 if selectedGateway is null or undefined
+    // const clientId =  selectedClient || 0; // Default to 0 if selectedClient is null or undefined
+    // const status =  selectedStatus || 0;   // Default to 0 if selectedStatus is null or undefined
+    // const zoneId =zoneId || selectedZone || 0;     // Default to 0 if selectedZone is null or undefined
+    // const dmaId =dmaId || selectedDma || 0;       // Default to 0 if selectedDma is null or undefined
+    // const gatewayId =gatewayId || selectedGateway || 0; // Default to 0 if selectedGateway is null or undefined
 
     const startIndex = (currentPage - 1) / itemsPerPage;
 
     try {
       setLoading(true);
       const requestBody = {
-        status: status,
-        clientId: clientId,
-        zoneId: zoneId ? zoneId : 0,
-        dmaId: dmaId ? dmaId : 0,
-        gatewayId: gatewayId ? gatewayId : 0,
+        status: selectedStatus,
+        clientId: selectedClient || 1,
+        zoneId: zId ? zId : 0,
+        dmaId: dId ? dId : 0,
+        gatewayId: gId ? gId : 0,
         startIndex: startIndex,
         rowCount: itemsPerPage
       }

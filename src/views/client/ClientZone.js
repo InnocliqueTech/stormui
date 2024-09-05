@@ -162,7 +162,7 @@ const ClientZone = (props) => {
           <Image src={water} alt="water" className='icon' />
         </Col>
         <Col md={9} sm={8} xs={8}
-        // style={{ marginBottom: "40px" }}
+        style={{ marginBottom: "40px" }}
         >
           <div className="cardhead">Zone Wise Supply</div>
         </Col>

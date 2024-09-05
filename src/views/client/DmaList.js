@@ -15,7 +15,7 @@ import Spinner from 'react-bootstrap/Spinner';
 // import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 
 
-const DmaList = React.memo(() => {
+const DmaList = React.memo(({shiftToMeter}) => {
   // const selectedZone = 0;
   const { clients, selectedZone } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
@@ -23,12 +23,30 @@ const DmaList = React.memo(() => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const location = useLocation();
+  // const [isId, setIsId] = useState(false)
   // Destructure the state directly from location.state
   const { zoneId } = location.state || { zoneId: selectedZone };
   console.log('location.state:', location.state);  // Debugging line
   console.log('zoneId:', zoneId);  // Debugging line
   // const [apiCalled, setApiCalled] = useState(false)
   console.log("DMALIST")
+
+  // const { id } = location.state || {};
+  // const [value, setValue] = React.useState(2);
+
+  
+  // useEffect(() => {
+  //   console.log(id)
+  //   if (id) {
+  //     setValue(id)
+  //     setIsId(true)
+     
+  //   } else {
+  //     setIsId(false)
+   
+  //   }
+  // }, [id])
+
   useEffect(() => {
     console.log("CLIENTS123",clients)
     if (clients && clients.length > 0) {
@@ -119,9 +137,12 @@ const DmaList = React.memo(() => {
                   <td className='tablecontent-link'>
                     <Link
                       // href="/app/meterlist" 
-                      to="/app/gatewaylist"
+                      // to="/app/gatewaylist"
                       state={{ zoneId: zoneId, dmaId: dma.dmaId}}
-                      onClick={() => console.log('Link clicked for dmaId:', dma.dmaId, zoneId )}
+                      onClick={() => {
+                        shiftToMeter()   
+                                  
+                      }}
                       style={{ textDecoration: 'none', cursor: 'pointer' }}>{dma.displayName}</Link>
                   </td>
                   <td className='tablecontent'>{dma.gatewayId}</td>

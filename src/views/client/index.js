@@ -128,7 +128,7 @@ const Client = () => {
     const fetchDashboardData = async () => {
 
       const requestBody = {
-        clientId: selectedClient,
+        clientId: selectedClient || 1,
         zoneId: selectedZone || 0,
         fromDate: presentDate,
         toDate: toDate

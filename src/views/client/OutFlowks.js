@@ -285,7 +285,7 @@ const Overflowks = (props) => {
   };
 
   return (
-    <div className="col-span-12 rounded-sm bg-white px-1 shadow-default sm:px-2 xl:col-span-6">
+    <div className="col-span-12 rounded-sm bg-white px-1 shadow-default sm:px-2 xl:col-span-6 p-4">
       <Row style={{ padding: "0px 0px 0px 18px" }}>
         <Col md={1} sm={1} xs={1} className="iconContainer" style={{ backgroundColor: '#F6C574' }}>
           <Image src={over} alt="over" className="icon" />

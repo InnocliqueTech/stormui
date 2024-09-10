@@ -49,11 +49,6 @@ const ClientZone = (props) => {
               formatter: function () {
                 return totalConsumption.toString(); // Use the state here
               },
-              // formatter: function () {
-              //   const total = props.data && props.data.totalConsumption ? props.data.totalConsumption : 0;
-              //   console.log("Formatter Total:", total);
-              //   return total;
-              // },
 
             },
             name: {
@@ -118,7 +113,8 @@ const ClientZone = (props) => {
   useEffect(() => {
     if (props && props.data && Array.isArray(props.data.zoneWiseConsumption)) {
       const consumptionData = props.data.zoneWiseConsumption.map((zone) => zone.consumption);
-      const labels = props.data.zoneWiseConsumption.map((zone) => `Zone ${zone.zoneId} (${zone.consumption})`);
+      const labels = props.data.zoneWiseConsumption.map((zone) => `Zone ${zone.zoneId} (${zone.consumption} kL)`);
+      console.log(labels)
 
       const totalConsumption = props.data.totalConsumption || 0; // Get the totalConsumption value
 

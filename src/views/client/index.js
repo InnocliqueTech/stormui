@@ -244,21 +244,26 @@ const Client = () => {
     }
   };
   const renderTableHeader = () => {
+    console.log('dayDashBoardData', dayDashBoardData)
     const dates = Object.keys(dayDashBoardData);
+    console.log("zone", dates)
     return (
       <thead>
         <tr>
-          <td style={{ textAlign: 'left', color: "#adb5bd" }}>Zones</td>
+          <td style={{ textAlign: 'left', color: "rgb(110 111 116)" }}>Zones</td>
           {dates.map((date, index) => (
-            <td style={{ color: "#adb5bd" }} key={index}>{date}</td>
+            <td style={{ color: "rgb(110 111 116)" }} key={index}>{date}</td>
           ))}
         </tr>
+        <tr>
+      
+      </tr>
       </thead>
     );
   };
 
   const renderTableBody = () => {
-    console.log(dayDashBoardData)
+    console.log(dayDashBoardData,'daydashboarddata')
     const dates = Object.keys(dayDashBoardData);
     const zones = dates.length > 0 ? dayDashBoardData[dates[0]].zoneDetails : [];
 
@@ -269,10 +274,22 @@ const Client = () => {
             <th>{zone.zoneName}</th>
             {dates.map((date, dateIndex) => {
               const zoneDetails = dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zone.zoneId);
-              const backgroundColor = getBackgroundColor(zoneDetails.total);
-              const color = getTextColor(zoneDetails.total);
+              
+               const total = zoneDetails ? zoneDetails.total : 0;
+              const backgroundColor = getBackgroundColor(total);
+              const color = getTextColor(total);
               return (
                 <td key={dateIndex} style={{ backgroundColor, color: color }}>
+                  {/* <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
+                  >
+                    <Button variant="link">
+                      {zoneDetails.total}%
+                    </Button>
+                  </OverlayTrigger> */}
+                   {zoneDetails ? (
                   <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
@@ -282,6 +299,9 @@ const Client = () => {
                       {zoneDetails.total}%
                     </Button>
                   </OverlayTrigger>
+                ) : (
+                  '-'
+                )}
                 </td>
               );
             })}
@@ -776,7 +796,7 @@ const Client = () => {
                           <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: '16px' }}>
                             {' '}
                             <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: '16px' }}>
-                              {outFlowData && outFlowData.inFlowDetails && outFlowData.inFlowDetails.count}
+                              {outFlowData && outFlowData.inFlowDetails && outFlowData.inFlowDetails.count} kL
                             </h2>
                           </h2>
                         
@@ -787,7 +807,7 @@ const Client = () => {
                             <h4 style={{ fontSize: 14, color: '#495057', fontWeight: '600' }}>Consumption</h4>
                           </div>
                           <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: '16px' }}>
-                            {outFlowData && outFlowData.consumptionDetails && outFlowData.consumptionDetails.count}
+                            {outFlowData && outFlowData.consumptionDetails && outFlowData.consumptionDetails.count} kL
                           </h2>
                           
                         </div>

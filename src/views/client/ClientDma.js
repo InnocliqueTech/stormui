@@ -177,7 +177,7 @@ const ClientDma = (props) => {
   useEffect(() => {
     if (props && props.dmaData && Array.isArray(props.dmaData.dmaWiseConsumption)) {
       const consumptionData = props.dmaData.dmaWiseConsumption.map((dma) => dma.consumption);
-      const labels = props.dmaData.dmaWiseConsumption.map((dma) => `DMA ${dma.dmaId} (${dma.consumption})`);
+      const labels = props.dmaData.dmaWiseConsumption.map((dma) => `DMA ${dma.dmaId} (${dma.consumption} kL)`);
 
       const totalConsumption = props.dmaData.totalConsumption || 0;
       console.log(consumptionData)

@@ -20,6 +20,7 @@ const ClientZone = (props) => {
     },
     colors: ['#4cc9f0', '#90e0ef', '#caf0f8'],
     legend: {
+      show: false,
       position: 'bottom',
       horizontalAlign: 'center',
       fontFamily: 'inter',

@@ -300,7 +300,7 @@ const Client = () => {
                     </Button>
                   </OverlayTrigger>
                 ) : (
-                  '-'
+                  '0%'
                 )}
                 </td>
               );

@@ -93,6 +93,7 @@ const ClientDma = (props) => {
     },
     colors: ['#2196F3', '#01A9D8', '#1DD0BB'],
     legend: {
+      show: false,
       position: 'bottom',
       horizontalAlign: 'center',
       fontFamily: 'inter',

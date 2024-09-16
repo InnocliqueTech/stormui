@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+// import { Card } from 'react-bootstrap';
 // import { Card, Button, Alert } from 'react-bootstrap';
 // import { NavLink, Link } from 'react-router-dom';
 
@@ -8,15 +8,28 @@ import { Card } from 'react-bootstrap';
 // import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import AuthLogin from './FirebaseLogin';
+import loginbg from '../../../assets/images/loginbg-3.webp';
+
 
 const Signin1 = () => {
   return (
     <React.Fragment>
       {/* <Breadcrumb /> */}
     
-        <div className="auth-wrapper">
+        <div 
+         style={{
+          backgroundImage: `url(${loginbg})`,
+          // backgroundSize:' cover',
+          backgroundSize: '100vw 100vh',
+          backgroundPosition: 'top center',
+          backgroundRepeat: 'no-repeat',
+          height: '100vh',
+          width: '100vw', 
+          overflow: 'hidden', 
+        }}
+        >
         {/* <Card style={{backgroundColor:"#212121", padding:"50px 150px"}}> */}
-          <div className="auth-content">
+          {/* <div className="auth-content1"> */}
             {/* <div className="auth-bg">
             <span className="r" />
             <span className="r s" />
@@ -24,8 +37,8 @@ const Signin1 = () => {
             <span className="r" />
           </div> */}
 
-            <Card className="borderless text-center" style={{borderRadius:"10px"}}>
-              <Card.Body>
+            {/* <div className="borderless text-center" style={{borderRadius:"10px"}}> */}
+              {/* <Card.Body> */}
                 {/* <div className="mb-4">
                 <i className="feather icon-unlock auth-icon" />
               </div> */}
@@ -57,10 +70,10 @@ const Signin1 = () => {
                   </Button>
                 </CopyToClipboard>
               </Alert> */}
-              </Card.Body>
-            </Card>
+              {/* </Card.Body> */}
+            {/* </div> */}
 
-          </div>
+          {/* </div> */}
           {/* </Card> */}
         </div>
      

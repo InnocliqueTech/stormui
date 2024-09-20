@@ -115,7 +115,7 @@ const Client = () => {
       setIsId(true)
       setDashboardTab(false)
     } else {
-      if(id != undefined) {
+      if (id != undefined) {
         setIsId(false)
         setDashboardTab(true)
         console.log(dashboardTab)
@@ -194,8 +194,37 @@ const Client = () => {
 
   // console.log(supplyByZoneData, { zoneNames }, { dates });
 
+  // const renderTooltip = (props, inflow, consumption, total, date) => (
+  //   <Tooltip className='card bg-white p-3' id="button-tooltip" {...props} >
+  //     <div className="d-flex pb-1 mb-2" style={{ borderBottom: '1px solid #ddd' }}>
+  //       <span className="col-md-6" style={{ fontSize: 14, color: '#212121' }}>
+  //         {date}
+  //       </span>
+  //       <b style={{ fontSize: 14, color: '#0D47A1' }} className="col-md-6 text-end">
+  //         {total}%
+  //       </b>
+  //     </div>
+  //     <div className="d-flex pb-1 mb-2">
+  //       <span className="col-md-6" style={{ fontSize: 14, color: '#717171' }}>
+  //         In Flow
+  //       </span>
+  //       <b style={{ fontSize: 14, color: '#212121' }} className="col-md-6 text-end">
+  //         {inflow ? inflow : '-'}
+  //       </b>
+  //     </div>
+  //     <div className="d-flex pb-1 mb-2">
+  //       <span className="col-md-6" style={{ fontSize: 14, color: '#717171' }}>
+  //         Consumption
+  //       </span>
+  //       <b style={{ fontSize: 14, color: '#212121' }} className="col-md-6 text-end">
+  //         {consumption ? consumption : '-'}
+  //       </b>
+  //     </div>
+  //   </Tooltip>
+  // );
+
   const renderTooltip = (props, inflow, consumption, total, date) => (
-    <Tooltip className='card bg-white p-3' id="button-tooltip" {...props} >
+    <Tooltip {...props} className="card bg-white p-3" id="button-tooltip">
       <div className="d-flex pb-1 mb-2" style={{ borderBottom: '1px solid #ddd' }}>
         <span className="col-md-6" style={{ fontSize: 14, color: '#212121' }}>
           {date}
@@ -222,6 +251,8 @@ const Client = () => {
       </div>
     </Tooltip>
   );
+  
+  
   const getBackgroundColor = (total) => {
     if (total < 30) {
       return '#e3f2fd';
@@ -243,70 +274,108 @@ const Client = () => {
       return 'black';
     }
   };
+  // const renderTableHeader = () => {
+  //   console.log('dayDashBoardData', dayDashBoardData)
+  //   const dates = Object.keys(dayDashBoardData);
+  //   console.log("zone", dates)
+  //   const zones = dates.length > 0 ? dayDashBoardData[dates[0]].zoneDetails : [];
+  //   return (
+  //     <thead>
+  //       <tr>
+  //         <td style={{ textAlign: 'left', color: "rgb(110 111 116)" }}>Zones</td>
+  //         {dates.map((date, index) => (
+  //           <td style={{ color: "rgb(110 111 116)" }} key={index}>{date}</td>
+  //         ))}
+  //       </tr>
+  //       <tr>
+  //         {/* Render Zone Names as Zone 1, Zone 2, etc. */}
+  //         {/* <td style={{ textAlign: 'left', color: "#adb5bd" }}>Zone Names</td> */}
+  //         {zones.map((zone, index) => (
+  //           <td style={{ color: "#adb5bd" }} key={index}>Zone {index + 1}</td>
+  //         ))}
+  //       </tr>
+  //     </thead>
+  //   );
+  // };
+
+
   const renderTableHeader = () => {
-    console.log('dayDashBoardData', dayDashBoardData)
+    console.log('dayDashBoardData', dayDashBoardData);
     const dates = Object.keys(dayDashBoardData);
-    console.log("zone", dates)
+    const zones = dates.length > 0 ? dayDashBoardData[dates[0]].zoneDetails : []; // Extract zones from the first date
+    const allZones = [...new Set(dates.flatMap(date => dayDashBoardData[date].zoneDetails.map(zone => zone.zoneId)))];
+
+
     return (
       <thead>
         <tr>
-          <td style={{ textAlign: 'left', color: "rgb(110 111 116)" }}>Zones</td>
+          <td style={{ textAlign: 'left', color: "#adb5bd" }}>Zones</td>
           {dates.map((date, index) => (
-            <td style={{ color: "rgb(110 111 116)" }} key={index}>{date}</td>
+            <td style={{ color: "#adb5bd" }} key={index}>{date}</td>
           ))}
         </tr>
         <tr>
-      
-      </tr>
+          {/* Render Zone Names as Zone 1, Zone 2, etc. */}
+          {/* <td style={{ textAlign: 'left', color: "#adb5bd" }}>Zone Names</td> */}
+          {/* {zones.map((zone, index) => (
+            <td style={{ color: "#adb5bd" }} key={index}>Zone {index + 1}</td>
+          ))} */}
+           {/* {allZones.map((zoneId, index) => (
+          <td style={{ color: "#adb5bd" }} key={index}>Zone {index + 1}</td>
+        ))} */}
+        </tr>
       </thead>
     );
   };
+  
 
-  const renderTableBody = () => {
-    console.log(dayDashBoardData,'daydashboarddata')
+  const renderTableBody1 = () => {
+    console.log(dayDashBoardData, 'daydashboarddata');
+  
     const dates = Object.keys(dayDashBoardData);
-    const zones = dates.length > 0 ? dayDashBoardData[dates[0]].zoneDetails : [];
-
+  
+    // Extract unique zones from all date entries
+    const allZones = [...new Set(dates.flatMap(date => dayDashBoardData[date].zoneDetails.map(zone => zone.zoneId)))];
+  
     return (
       <tbody>
-        {zones.map((zone) => (
-          <tr key={zone.zoneId}>
-            <th>{zone.zoneName}</th>
-            {dates.map((date, dateIndex) => {
-              const zoneDetails = dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zone.zoneId);
-              
-               const total = zoneDetails ? zoneDetails.total : 0;
-              const backgroundColor = getBackgroundColor(total);
-              const color = getTextColor(total);
-              return (
-                <td key={dateIndex} style={{ backgroundColor, color: color }}>
-                  {/* <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
-                  >
-                    <Button variant="link">
-                      {zoneDetails.total}%
-                    </Button>
-                  </OverlayTrigger> */}
-                   {zoneDetails ? (
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
-                  >
-                    <Button variant="link">
-                      {zoneDetails.total}%
-                    </Button>
-                  </OverlayTrigger>
-                ) : (
-                  '0%'
-                )}
-                </td>
-              );
-            })}
-          </tr>
-        ))}
+        {allZones.map((zoneId) => {
+          // Find the zone name for the current zoneId
+          const zoneName = dates
+            .map(date => dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zoneId))
+            .filter(Boolean)[0]?.zoneName || `Zone ${zoneId}`;
+  
+          return (
+            <tr key={zoneId}>
+              <th>{zoneName}</th>
+              {dates.map((date, dateIndex) => {
+                const zoneDetails = dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zoneId);
+  
+                const total = zoneDetails ? zoneDetails.total : 0;
+                const backgroundColor = getBackgroundColor(total);
+                const color = getTextColor(total);
+  
+                return (
+                  <td key={dateIndex} style={{ backgroundColor, color: color }}>
+                    {zoneDetails ? (
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
+                      >
+                        <Button variant="link">
+                          {zoneDetails.total}%
+                        </Button>
+                      </OverlayTrigger>
+                    ) : (
+                      '0%'
+                    )}
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
         <tr>
           <th>Average</th>
           {dates.map((date, dateIndex) => {
@@ -323,6 +392,128 @@ const Client = () => {
       </tbody>
     );
   };
+
+  const renderTableBody = () => {
+    const dates = Object.keys(dayDashBoardData);
+    const allZones = [...new Set(dates.flatMap(date => dayDashBoardData[date].zoneDetails.map(zone => zone.zoneId)))];
+  
+    return (
+      <tbody>
+        {allZones.map((zoneId) => {
+          const zoneName = dates
+            .map(date => dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zoneId))
+            .filter(Boolean)[0]?.zoneName || `Zone ${zoneId}`;
+  
+          return (
+            <tr key={zoneId}>
+              <th>{zoneName}</th>
+              {dates.map((date, dateIndex) => {
+                const zoneDetails = dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zoneId);
+                const total = zoneDetails ? zoneDetails.total : 0;
+                const backgroundColor = getBackgroundColor(total);
+                const color = getTextColor(total);
+  
+                return (
+                  <td key={dateIndex} style={{ backgroundColor, color }}>
+                    {zoneDetails ? (
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
+                      >
+                        <Button variant="link">
+                          {zoneDetails.total}%
+                        </Button>
+                      </OverlayTrigger>
+                    ) : (
+                      '0%'
+                    )}
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
+        <tr>
+          <th>Average</th>
+          {dates.map((date, dateIndex) => {
+            const average = dayDashBoardData[date].average;
+            const backgroundColor = getBackgroundColor(average);
+            const textColor = getTextColor(average);
+            return (
+              <td key={dateIndex} style={{ backgroundColor, color: textColor }}>
+                {average}%
+              </td>
+            );
+          })}
+        </tr>
+      </tbody>
+    );
+  };
+  
+  
+  // const renderTableBody = () => {
+  //   console.log(dayDashBoardData, 'daydashboarddata')
+  //   const dates = Object.keys(dayDashBoardData);
+  //   const zones = dates.length > 0 ? dayDashBoardData[dates[0]].zoneDetails : [];
+    
+
+  //   return (
+  //     <tbody>
+  //       {zones.map((zone) => (
+  //         <tr key={zone.zoneId}>
+  //           <th>{zone.zoneName}</th>
+  //           {dates.map((date, dateIndex) => {
+  //             const zoneDetails = dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zone.zoneId);
+
+  //             const total = zoneDetails ? zoneDetails.total : 0;
+  //             const backgroundColor = getBackgroundColor(total);
+  //             const color = getTextColor(total);
+  //             return (
+  //               <td key={dateIndex} style={{ backgroundColor, color: color }}>
+  //                 {/* <OverlayTrigger
+  //                   placement="top"
+  //                   delay={{ show: 250, hide: 400 }}
+  //                   overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
+  //                 >
+  //                   <Button variant="link">
+  //                     {zoneDetails.total}%
+  //                   </Button>
+  //                 </OverlayTrigger> */}
+  //                 {zoneDetails ? (
+  //                   <OverlayTrigger
+  //                     placement="top"
+  //                     delay={{ show: 250, hide: 400 }}
+  //                     overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
+  //                   >
+  //                     <Button variant="link">
+  //                       {zoneDetails.total}%
+  //                     </Button>
+  //                   </OverlayTrigger>
+  //                 ) : (
+  //                   '0%'
+  //                 )}
+  //               </td>
+  //             );
+  //           })}
+  //         </tr>
+  //       ))}
+  //       <tr>
+  //         <th>Average</th>
+  //         {dates.map((date, dateIndex) => {
+  //           const average = dayDashBoardData[date].average;
+  //           const backgroundColor = getBackgroundColor(average);
+  //           const textColor = getTextColor(average);
+  //           return (
+  //             <td key={dateIndex} style={{ backgroundColor, color: textColor }}>
+  //               {average}%
+  //             </td>
+  //           );
+  //         })}
+  //       </tr>
+  //     </tbody>
+  //   );
+  // };
   const renderLegend = () => {
     return (
       <div style={{ marginTop: '40px', display: "flex", justifyContent: "center" }}>
@@ -496,7 +687,7 @@ const Client = () => {
 
   const handleDialogApply = () => {
     setIsDialogOpen(false);
-   
+
     const dataToSend = { id: 3 };
 
     navigate("/app/client", { state: dataToSend })
@@ -608,7 +799,7 @@ const Client = () => {
                   </div>
                   : ""}
 
-                {value == 2 || value == 3?
+                {value == 2 || value == 3 ?
                   <div>
                     <div className="form-group selectcustom">
                       <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
@@ -624,7 +815,7 @@ const Client = () => {
 
                   : ""}
 
-                {value == 3  ? <div style={{ marginLeft: "5px" }}>
+                {value == 3 ? <div style={{ marginLeft: "5px" }}>
                   <div className="form-group selectcustom">
                     <select className="form-control" value={selectedDma} onChange={(e) => setSelectedDma(Number(e.target.value))}>
 
@@ -799,7 +990,7 @@ const Client = () => {
                               {outFlowData && outFlowData.inFlowDetails && outFlowData.inFlowDetails.count} kL
                             </h2>
                           </h2>
-                        
+
                         </div>
                         <div className="client-flow-box">
                           <div className="d-flex mb-3">
@@ -809,14 +1000,14 @@ const Client = () => {
                           <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: '16px' }}>
                             {outFlowData && outFlowData.consumptionDetails && outFlowData.consumptionDetails.count} kL
                           </h2>
-                          
+
                         </div>
                       </div>
                     </Col>
                     <Col md={9} sm={8} xs={1}>
-                    {outFlowData && outFlowData.totalConsumption && outFlowData.totalConsumption.length > 0 ? 
-                      <TotalOtFloow data={outFlowData} />
-                    : ""}
+                      {outFlowData && outFlowData.totalConsumption && outFlowData.totalConsumption.length > 0 ?
+                        <TotalOtFloow data={outFlowData} />
+                        : ""}
                     </Col>
                   </Row>
                 </Card.Body>
@@ -1024,10 +1215,10 @@ const Client = () => {
           </BootstrapDialog>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <ZoneList shiftToDma={shiftToDma}/>
+          <ZoneList shiftToDma={shiftToDma} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-          <DmaList shiftToMeter = {shiftToMeter}/>
+          <DmaList shiftToMeter={shiftToMeter} />
         </CustomTabPanel>
         {/* <CustomTabPanel value={value} index={3}>
           <GatewayList isTab={true} />

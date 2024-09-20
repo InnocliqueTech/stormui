@@ -66,7 +66,7 @@ function DmaTable({dmaData}) {
           <thead>
             <tr>
               <th className='clienttablehead'>DMA Id</th>
-              <th className='clienttablehead'>Gateway ID</th>
+              {/* <th className='clienttablehead'>Gateway ID</th> */}
               <th className='clienttablehead'>Last Communication Time</th>
               <th className='clienttablehead'>Meters</th>
               <th className='clienttablehead'>Status</th>
@@ -78,7 +78,7 @@ function DmaTable({dmaData}) {
               dmaData.dmaDetails.map((item, index) => (
                 <tr key={index}>
                   <td className='clienttabletext'>#DMA {item.dmaId || '-'}</td>
-                  <td className='clienttabletext'>{item.gatewayId || '-'}</td>
+                  {/* <td className='clienttabletext'>{item.gatewayId || '-'}</td> */}
                   <td className='clienttabletext'>{item.lastCommunication || '-'}</td>
                   <td className='clienttabletext'>
                     <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 40, paddingRight: 40, borderRadius: 20, color: '#1976D2', fontWeight: 600 }}>

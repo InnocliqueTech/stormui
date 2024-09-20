@@ -29,7 +29,7 @@ function ZoneTable({ dashboardData }) {
         <thead style={{ backgroundColor: '#F4F5F5' }}>
           <tr>
             <th className='clienttablehead'>Zone Id</th>
-            <th className='clienttablehead'>Gateway ID</th>
+            {/* <th className='clienttablehead'>Gateway ID</th> */}
             <th className='clienttablehead'>Reading</th>
             <th className='clienttablehead'>Date</th>
             <th className='clienttablehead'>DMA</th>
@@ -59,7 +59,7 @@ function ZoneTable({ dashboardData }) {
             dashboardData.zoneDetails.map((item, index) => (
               <tr key={index}>
                 <td className='clienttabletext' > Zone{item.zoneId || '-'}</td>
-                <td className='clienttabletext'> {item.gatewayId || '-'}</td>
+                {/* <td className='clienttabletext'> {item.gatewayId || '-'}</td> */}
                 <td className='clienttabletext'>
                   <span style={{ backgroundColor: 'rgba(244, 245, 245, 1)', padding: 5, paddingLeft: 20, paddingRight: 20, borderRadius: 20 }}>
                     {item.reading || '-'}

@@ -302,8 +302,8 @@ const Client = () => {
   const renderTableHeader = () => {
     console.log('dayDashBoardData', dayDashBoardData);
     const dates = Object.keys(dayDashBoardData);
-    const zones = dates.length > 0 ? dayDashBoardData[dates[0]].zoneDetails : []; // Extract zones from the first date
-    const allZones = [...new Set(dates.flatMap(date => dayDashBoardData[date].zoneDetails.map(zone => zone.zoneId)))];
+    // const zones = dates.length > 0 ? dayDashBoardData[dates[0]].zoneDetails : []; // Extract zones from the first date
+    // const allZones = [...new Set(dates.flatMap(date => dayDashBoardData[date].zoneDetails.map(zone => zone.zoneId)))];
 
 
     return (
@@ -329,69 +329,69 @@ const Client = () => {
   };
   
 
-  const renderTableBody1 = () => {
-    console.log(dayDashBoardData, 'daydashboarddata');
+  // const renderTableBody1 = () => {
+  //   console.log(dayDashBoardData, 'daydashboarddata');
   
-    const dates = Object.keys(dayDashBoardData);
+  //   const dates = Object.keys(dayDashBoardData);
   
-    // Extract unique zones from all date entries
-    const allZones = [...new Set(dates.flatMap(date => dayDashBoardData[date].zoneDetails.map(zone => zone.zoneId)))];
+  //   // Extract unique zones from all date entries
+  //   const allZones = [...new Set(dates.flatMap(date => dayDashBoardData[date].zoneDetails.map(zone => zone.zoneId)))];
   
-    return (
-      <tbody>
-        {allZones.map((zoneId) => {
-          // Find the zone name for the current zoneId
-          const zoneName = dates
-            .map(date => dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zoneId))
-            .filter(Boolean)[0]?.zoneName || `Zone ${zoneId}`;
+  //   return (
+  //     <tbody>
+  //       {allZones.map((zoneId) => {
+  //         // Find the zone name for the current zoneId
+  //         const zoneName = dates
+  //           .map(date => dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zoneId))
+  //           .filter(Boolean)[0]?.zoneName || `Zone ${zoneId}`;
   
-          return (
-            <tr key={zoneId}>
-              <th>{zoneName}</th>
-              {dates.map((date, dateIndex) => {
-                const zoneDetails = dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zoneId);
+  //         return (
+  //           <tr key={zoneId}>
+  //             <th>{zoneName}</th>
+  //             {dates.map((date, dateIndex) => {
+  //               const zoneDetails = dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zoneId);
   
-                const total = zoneDetails ? zoneDetails.total : 0;
-                const backgroundColor = getBackgroundColor(total);
-                const color = getTextColor(total);
+  //               const total = zoneDetails ? zoneDetails.total : 0;
+  //               const backgroundColor = getBackgroundColor(total);
+  //               const color = getTextColor(total);
   
-                return (
-                  <td key={dateIndex} style={{ backgroundColor, color: color }}>
-                    {zoneDetails ? (
-                      <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250, hide: 400 }}
-                        overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
-                      >
-                        <Button variant="link">
-                          {zoneDetails.total}%
-                        </Button>
-                      </OverlayTrigger>
-                    ) : (
-                      '0%'
-                    )}
-                  </td>
-                );
-              })}
-            </tr>
-          );
-        })}
-        <tr>
-          <th>Average</th>
-          {dates.map((date, dateIndex) => {
-            const average = dayDashBoardData[date].average;
-            const backgroundColor = getBackgroundColor(average);
-            const textColor = getTextColor(average);
-            return (
-              <td key={dateIndex} style={{ backgroundColor, color: textColor }}>
-                {average}%
-              </td>
-            );
-          })}
-        </tr>
-      </tbody>
-    );
-  };
+  //               return (
+  //                 <td key={dateIndex} style={{ backgroundColor, color: color }}>
+  //                   {zoneDetails ? (
+  //                     <OverlayTrigger
+  //                       placement="top"
+  //                       delay={{ show: 250, hide: 400 }}
+  //                       overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
+  //                     >
+  //                       <Button variant="link">
+  //                         {zoneDetails.total}%
+  //                       </Button>
+  //                     </OverlayTrigger>
+  //                   ) : (
+  //                     '0%'
+  //                   )}
+  //                 </td>
+  //               );
+  //             })}
+  //           </tr>
+  //         );
+  //       })}
+  //       <tr>
+  //         <th>Average</th>
+  //         {dates.map((date, dateIndex) => {
+  //           const average = dayDashBoardData[date].average;
+  //           const backgroundColor = getBackgroundColor(average);
+  //           const textColor = getTextColor(average);
+  //           return (
+  //             <td key={dateIndex} style={{ backgroundColor, color: textColor }}>
+  //               {average}%
+  //             </td>
+  //           );
+  //         })}
+  //       </tr>
+  //     </tbody>
+  //   );
+  // };
 
   const renderTableBody = () => {
     const dates = Object.keys(dayDashBoardData);

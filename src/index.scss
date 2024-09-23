@@ -493,4 +493,13 @@ td {
 .tablecontent .css-eqpfi5-MuiAccordionSummary-content.Mui-expanded { margin: 0px;}
 .meterlistTab .nav-tabs { background-color: #eaeaeb !important; width: 55%; display: flex; justify-content: space-around; padding: 5px; border-radius: 8px;}
 .meterlistTab .nav-tabs:active{background-color: #ffffff;}
+.green_circle {height: 15px; width: 15px; background-color: #23ad06; border-radius: 50%; display: inline-block;   box-shadow: 0 0 10px 4px rgba(0, 255, 0, 0.5)}
+.right-nav-green-circle{text-align: center;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 15px;
+  gap: 7px;
+
+}
 

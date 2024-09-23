@@ -290,12 +290,10 @@ const FirebaseLogin = ({ className, ...rest }) => {
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit} className={className} {...rest}>\
-            <div className='col-md-12'>
+            <div className='col-md-6 m-auto d-flex justify-content-center'>
               <div className='row'>
-                <div className='col-md-3'>
-
-                </div>
-                <div className='col-md-7'>
+                
+                <div>
                   <div
                     style={{
                       display: "flex",
@@ -303,7 +301,7 @@ const FirebaseLogin = ({ className, ...rest }) => {
                       // justifyContent: "flex-end",
                       height: "100vh",
                       alignItems: "end",
-                      padding: "70px",
+                      paddingBottom: "70px",
                       gap: "10px"
                     }}
                   >
@@ -312,7 +310,7 @@ const FirebaseLogin = ({ className, ...rest }) => {
                     {/* <div className='row'
 
                   > */}
-                    <div>
+                    <div style={{marginLeft:"20px"}}>
                       <h6 style={{ textAlign: 'left', fontSize: '12px', color: 'rgb(137 130 130)' }}>User Id</h6>
                       <input
                         className="form-control"
@@ -386,9 +384,7 @@ const FirebaseLogin = ({ className, ...rest }) => {
 
                   </div>
                 </div>
-                <div className='col-md-2'>
-
-                </div>
+              
               </div>
             </div>
 

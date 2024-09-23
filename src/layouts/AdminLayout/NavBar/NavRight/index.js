@@ -86,16 +86,28 @@ const NavRight = () => {
   // }));
 
   return (
+
     <React.Fragment>
-      <ListGroup as="ul" bsPrefix=" " className="navbar-nav ml-auto" id="navbar-right">
-        <ListGroup.Item as="li" bsPrefix=" " className="nav-item" style={{ lineHeight: '0px', padding: '0', paddingRight: '24px'}}>
-          <Image src={logo2} alt="logo2" style={{ height: 80, width: 80}} />
+       
+      <ListGroup as="ul" bsPrefix=" " className="navbar-nav ml-auto d-flex align-items-center" id="navbar-right">
+      <ListGroup.Item as="li" bsPrefix=" " className="nav-item" style={{ lineHeight: '0px', padding: '0', paddingRight: '24px' }}>
+          <div className='right-nav-green-circle'>
+            <span
+              className="green_circle"
+            ></span>
+            <span>Live Data</span>
+          </div>
+        </ListGroup.Item>
+        <ListGroup.Item as="li" bsPrefix=" " className="nav-item" style={{ lineHeight: '0px', padding: '0', paddingRight: '24px' }}>
+          <Image src={logo2} alt="logo2" style={{ height: 80, width: 80 }} />
         </ListGroup.Item>
         <ListGroup.Item as="li" bsPrefix=" " className="nav-item p-0" style={{ lineHeight: '0px' }}>
           <Image src={logo} alt="avatar" style={{ height: 60, width: 100 }} />
         </ListGroup.Item>
       </ListGroup>
+     
       <ChatList listOpen={listOpen} closed={() => setListOpen(false)} />
+        
     </React.Fragment>
   );
 };

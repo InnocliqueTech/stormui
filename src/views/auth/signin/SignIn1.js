@@ -19,8 +19,8 @@ const Signin1 = () => {
         <div 
          style={{
           backgroundImage: `url(${loginbg})`,
-          // backgroundSize:' cover',
-          backgroundSize: '100vw 100vh',
+          backgroundSize:'contain',
+          // backgroundSize: '100vw 100vh',
           backgroundPosition: 'top center',
           backgroundRepeat: 'no-repeat',
           height: '100vh',

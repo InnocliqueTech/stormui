@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './indexLanding.scss';
 import './location.css';
 // import { useNavigate } from 'react-router-dom';
-import map from '../../assets/images/map.png';
+import map from '../../assets/images/map-location.webp';
 // import { ClientsContext } from '../dashboard/context';
 
 const dummyData = {

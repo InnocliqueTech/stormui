@@ -116,7 +116,7 @@ const ClientDma = (props) => {
             show: true,
             total: {
               show: true,
-              label: "Total Supply",
+              label: "Total Supply (kL)",
               fontSize: '12px',
               color: "#495057",
               fontWeight: 600,

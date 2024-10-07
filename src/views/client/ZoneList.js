@@ -19,7 +19,7 @@ import { BASE_API_URL1 } from '../../config/constant';
 
 export default function ZoneList({shiftToDma}) {
   // const navigate = useNavigate()
-  const { clients } = useContext(ClientsContext);
+  const { clients, setSelectedZone } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
   const [expandedZone] = useState(null);
   const [data] = useState({});
@@ -139,23 +139,13 @@ export default function ZoneList({shiftToDma}) {
                     <tr>
                       <td className='tablecontent-link'>
                         <Link
-                          // to="/app/dmalist"
                           onClick={() => {
-
-                            // const dataToSend = { id: 2 };
-                            shiftToDma()
-                            // navigate("/app/client", { state: dataToSend })
+                            shiftToDma(zone.zoneId)
+                            setSelectedZone(zone.zoneId)
                           }}
                           state={{ zoneId: zone.zoneId }}
-                          // to={{
-                          //   pathname: "/app/dmalist",
-                          //   state: { zoneId: zone.zoneId }
-                          // }}
-                          // onClick={() => console.log('Link clicked for zoneId:', zone.zoneId)}  // Debugging line
-                          style={{ textDecoration: 'none', cursor: 'pointer' }}>
-                        
+                          style={{ textDecoration: 'none', cursor: 'pointer' }}>                        
                           {zone.displayName}
-
                         </Link>
                       </td>
 

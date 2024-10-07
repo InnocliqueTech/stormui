@@ -292,99 +292,102 @@ const FirebaseLogin = ({ className, ...rest }) => {
           <form noValidate onSubmit={handleSubmit} className={className} {...rest}>\
             <div className='col-md-6 m-auto d-flex justify-content-center'>
               <div className='row'>
-                
+
                 <div>
                   <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      // justifyContent: "flex-end",
-                      height: "100vh",
-                      alignItems: "end",
-                      paddingBottom: "70px",
-                      gap: "10px"
-                    }}
+                  className='loginpage-bg'
+                
                   >
 
                     {/* <div className='col-md-8'> */}
                     {/* <div className='row'
 
                   > */}
-                    <div style={{marginLeft:"20px"}}>
-                      <h6 style={{ textAlign: 'left', fontSize: '12px', color: 'rgb(137 130 130)' }}>User Id</h6>
-                      <input
-                        className="form-control"
-                        name="email"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        type="email"
-                        value={values.email}
-                        placeholder="Enter User Id"
-                      />
-                      {touched.email && errors.email && (
-                        <div style={{ textAlign: 'left', color: 'red', marginTop: '5px' }}>
-                          <small>{errors.email}</small>
-                        </div>
-                      )}
-                    </div>
-                    <div >
-                      <h6 style={{ textAlign: 'left', fontSize: '12px', color: 'rgb(137 130 130)' }}>Enter password</h6>
-                      <div style={{ position: 'relative' }}>
-                        <input
-                          className="form-control"
-                          name="password"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          type={showPassword ? 'text' : 'password'}
-                          value={values.password}
-                          placeholder="Enter Password"
-                          style={{ paddingRight: '40px' }}
-                        />
-                        <IconButton
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          style={{
-                            position: 'absolute',
-                            right: 0,
-                            top: 0,
-                            height: '100%',
-                            padding: '0 25px',
-                          }}
-                          edge="end"
+                    {/* <div className='d-flex gap-2'> */}
+                      <div className='row'>
+                        <div 
+                        className='col-md-6'
+                        // style={{ marginLeft: "20px" }}
                         >
-                          {showPassword ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
-                        </IconButton>
-                      </div>
-                      {touched.password && errors.password && (
-                        <div style={{ textAlign: 'left', color: 'red', marginTop: '5px' }}>
-                          <small>{errors.password}</small>
+                          <h6 style={{ textAlign: 'left', fontSize: '12px', color: 'black', fontWeight:"600" }}>User Id</h6>
+                          <input
+                            className="form-control"
+                            name="email"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            type="email"
+                            value={values.email}
+                            placeholder="Enter User Id"
+
+                          />
+                          {touched.email && errors.email && (
+                            <div style={{ textAlign: 'left', color: 'red', marginTop: '5px' }}>
+                              <small>{errors.email}</small>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                    <div>
-                      <Button
-                        className="btn-block"
-                        color="primary"
-                        disabled={isSubmitting}
-                        size="large"
-                        type="submit"
-                        variant="primary"
-                        style={{ width: '100%', marginTop: "20px" }}
-                      >
-                        {isSubmitting ? 'Processing...' : 'Log in'}
-                      </Button>
-                      {errors.submit && (
-                        <div style={{ textAlign: 'left', color: 'red', marginTop: '5px' }}>
-                          <small>{errors.submit}</small>
+                        <div  className='col-md-6'>
+                          <h6 style={{ textAlign: 'left', fontSize: '12px', color: 'black', fontWeight:"600" }}>Enter password</h6>
+                          <div style={{ position: 'relative' }}>
+                            <input
+                              className="form-control"
+                              name="password"
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                              type={showPassword ? 'text' : 'password'}
+                              value={values.password}
+                              placeholder="Enter Password"
+                              style={{ paddingRight: '40px' }}
+                            />
+                            <IconButton
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              style={{
+                                position: 'absolute',
+                                right: 0,
+                                top: 0,
+                                height: '100%',
+                                padding: '0 25px',
+                              }}
+                              edge="end"
+                            >
+                              {showPassword ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
+                            </IconButton>
+                          </div>
+                          {touched.password && errors.password && (
+                            <div style={{ textAlign: 'left', color: 'red', marginTop: '5px' }}>
+                              <small>{errors.password}</small>
+                            </div>
+                          )}
                         </div>
-                      )}
+                        <div  className='col-md-12 mt-2'>
+                          <Button
+                            className="btn-block"
+                            color="primary"
+                            disabled={isSubmitting}
+                            size="large"
+                            type="submit"
+                            // variant="primary"
+                            style={{ width: '100%', backgroundColor: "#001f60" }}
+                          >
+                            {isSubmitting ? 'Processing...' : 'Log in'}
+                          </Button>
+                          {errors.submit && (
+                            <div style={{ textAlign: 'left', color: 'red', marginTop: '5px' }}>
+                              <small>{errors.submit}</small>
+                            </div>
+                          )}
+                        </div>
+                      {/* </div> */}
                     </div>
+ 
+
                     {/* </div> */}
                     {/* </div> */}
 
                   </div>
                 </div>
-              
+
               </div>
             </div>
 

@@ -3,8 +3,8 @@ import { Image, Col, Row } from 'react-bootstrap';
 import { MoreVert } from '@mui/icons-material';
 import Table from 'react-bootstrap/Table';
 import zone from '../../assets/images/water.svg';
-import refresh from '../../assets/images/refresh.svg';
-import download from '../../assets/images/download.svg';
+// import refresh from '../../assets/images/refresh.svg';
+// import download from '../../assets/images/download.svg';
 import info from '../../assets/images/info.svg';
 // import axios from 'axios'; // Import Axios for making HTTP requests
 // import { ClientsContext } from '../dashboard/context/index';
@@ -56,10 +56,10 @@ function DmaTable({dmaData}) {
           <span><Image src={info} alt='gateway' /></span>
           <span style={{ textAlign: 'end' }}></span>
         </Col>
-        <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+        {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
           <span style={{ marginRight: 20 }}><Image src={refresh} alt='refresh' className='icon' /></span>
           <span style={{ marginRight: 10 }}><Image src={download} alt='download' className='icon' /></span>
-        </Col>
+        </Col> */}
       </Row>
       <div className='customer-table'>
         <Table style={{ borderRadius: 8 }}>

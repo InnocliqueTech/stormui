@@ -73,37 +73,45 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const Client = () => {
 
+  const [searchType, setSearchType] = useState(''); // CAN, Meter ID, DEVEUI
+  const [searchValue, setSearchValue] = useState('');
+  const [meterData, setMeterData] = useState([]); // Store the meter list
+  const [filteredmeterData, setFiteredMeterData] = useState([]); // Store the meter list
+
+  const [isSearching, setIsSearching] = useState(false);
   const [dashboardData, setDashboardData] = useState({});
   const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
   const { presentDate, toDate, onDateChange, selectedDate, setSelectedDate, isDatePickerOpen, toggleDatePicker }
     = useStateContext();
 
+  const [totalItems, setTotalItems] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5)
 
-  // const { clients } = useContext(ClientsContext);
-  const { selectedClient, zones, selectedZone, setSelectedZone, dmas, selectedDma, setSelectedDma, gateways, selectedGateway, setSelectedGateway, status, selectedStatus, setSelectedStatus } = useContext(ClientsContext);
+
+  const { selectedClient, zones, selectedZone, setSelectedZone, dmas, selectedDma, setSelectedDma, gateways, selectedGateway, setSelectedGateway, status, selectedStatus, setSelectedStatus, setSelectedClient } = useContext(ClientsContext);
   const [dmaData, setDmaData] = useState({});
   const [dayDashBoardData, setDayDashBoardData] = useState({});
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true); // setSelectedStatuselectedZone
-  // const [supplyByZoneData, setSupplyByZoneData] = useState([]);
-  // const { onDateChange, selectedDate, setSelectedDate, isDatePickerOpen, toggleDatePicker } = useStateContext();
-
-  //For Supply By zone Graph
-  // const [zoneNames, setZoneNames] = useState([]);
-  // const [dates, setDates] = useState([]);
   const [isId, setIsId] = useState(false)
   const [dashboardTab, setDashboardTab] = useState(true)
 
-
-
   const location = useLocation();
   const { id } = location.state || {};
+  const { zoneId: zoneId, dmaId: dmaId, gatewayId: gatewayId } = location.state || {};
+  let zId = zoneId || selectedZone || 0
+  let dId = dmaId || selectedDma || 0
+  const gId = gatewayId || selectedGateway || 0
+
 
   const handleFilterIconClick = () => {
     // navigate('/app/meterlist');
     setIsDialogOpen(true);
+
+    console.log(meterData)
 
   };
 
@@ -161,27 +169,12 @@ const Client = () => {
           fromDate: presentDate,
           toDate: toDate
         }
-        // const requestBody = {
-        //   clientId: 1,
-        //   zoneId: 0,
-        //   fromDate: "2024-06-01",
-        //   toDate: "2024-06-30"
-        // }
 
         console.log(requestBody)
         const response = await axios.post(`${BASE_API_URL1}zones/getDayWiseZoneConsumptionInClientDashboard`, requestBody);
         console.log(response)
         setDayDashBoardData(response.data);
-        // setSupplyByZoneData(response.data);
-        // let dates = Object.keys(response.data);
-        // setDates(dates);
-        // console.log(Object.values(response.data), 'values');
-        // let filteredData = Object.values(response.data).map((item) => {
-        //   return item.zoneDetails.map((item) => {
-        //     return item.zoneName;
-        //   });
-        // });
-        // setZoneNames(filteredData);
+
       } catch (e) {
         console.log(e);
       } finally {
@@ -192,36 +185,6 @@ const Client = () => {
     fetchDashboardData();
   }, [presentDate, toDate]);
 
-  // console.log(supplyByZoneData, { zoneNames }, { dates });
-
-  // const renderTooltip = (props, inflow, consumption, total, date) => (
-  //   <Tooltip className='card bg-white p-3' id="button-tooltip" {...props} >
-  //     <div className="d-flex pb-1 mb-2" style={{ borderBottom: '1px solid #ddd' }}>
-  //       <span className="col-md-6" style={{ fontSize: 14, color: '#212121' }}>
-  //         {date}
-  //       </span>
-  //       <b style={{ fontSize: 14, color: '#0D47A1' }} className="col-md-6 text-end">
-  //         {total}%
-  //       </b>
-  //     </div>
-  //     <div className="d-flex pb-1 mb-2">
-  //       <span className="col-md-6" style={{ fontSize: 14, color: '#717171' }}>
-  //         In Flow
-  //       </span>
-  //       <b style={{ fontSize: 14, color: '#212121' }} className="col-md-6 text-end">
-  //         {inflow ? inflow : '-'}
-  //       </b>
-  //     </div>
-  //     <div className="d-flex pb-1 mb-2">
-  //       <span className="col-md-6" style={{ fontSize: 14, color: '#717171' }}>
-  //         Consumption
-  //       </span>
-  //       <b style={{ fontSize: 14, color: '#212121' }} className="col-md-6 text-end">
-  //         {consumption ? consumption : '-'}
-  //       </b>
-  //     </div>
-  //   </Tooltip>
-  // );
 
   const renderTooltip = (props, inflow, consumption, total, date) => (
     <Tooltip {...props} className="card bg-white p-3" id="button-tooltip">
@@ -251,8 +214,8 @@ const Client = () => {
       </div>
     </Tooltip>
   );
-  
-  
+
+
   const getBackgroundColor = (total) => {
     if (total < 30) {
       return '#e3f2fd';
@@ -274,29 +237,6 @@ const Client = () => {
       return 'black';
     }
   };
-  // const renderTableHeader = () => {
-  //   console.log('dayDashBoardData', dayDashBoardData)
-  //   const dates = Object.keys(dayDashBoardData);
-  //   console.log("zone", dates)
-  //   const zones = dates.length > 0 ? dayDashBoardData[dates[0]].zoneDetails : [];
-  //   return (
-  //     <thead>
-  //       <tr>
-  //         <td style={{ textAlign: 'left', color: "rgb(110 111 116)" }}>Zones</td>
-  //         {dates.map((date, index) => (
-  //           <td style={{ color: "rgb(110 111 116)" }} key={index}>{date}</td>
-  //         ))}
-  //       </tr>
-  //       <tr>
-  //         {/* Render Zone Names as Zone 1, Zone 2, etc. */}
-  //         {/* <td style={{ textAlign: 'left', color: "#adb5bd" }}>Zone Names</td> */}
-  //         {zones.map((zone, index) => (
-  //           <td style={{ color: "#adb5bd" }} key={index}>Zone {index + 1}</td>
-  //         ))}
-  //       </tr>
-  //     </thead>
-  //   );
-  // };
 
 
   const renderTableHeader = () => {
@@ -320,90 +260,27 @@ const Client = () => {
           {/* {zones.map((zone, index) => (
             <td style={{ color: "#adb5bd" }} key={index}>Zone {index + 1}</td>
           ))} */}
-           {/* {allZones.map((zoneId, index) => (
+          {/* {allZones.map((zoneId, index) => (
           <td style={{ color: "#adb5bd" }} key={index}>Zone {index + 1}</td>
         ))} */}
         </tr>
       </thead>
     );
   };
-  
 
-  // const renderTableBody1 = () => {
-  //   console.log(dayDashBoardData, 'daydashboarddata');
-  
-  //   const dates = Object.keys(dayDashBoardData);
-  
-  //   // Extract unique zones from all date entries
-  //   const allZones = [...new Set(dates.flatMap(date => dayDashBoardData[date].zoneDetails.map(zone => zone.zoneId)))];
-  
-  //   return (
-  //     <tbody>
-  //       {allZones.map((zoneId) => {
-  //         // Find the zone name for the current zoneId
-  //         const zoneName = dates
-  //           .map(date => dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zoneId))
-  //           .filter(Boolean)[0]?.zoneName || `Zone ${zoneId}`;
-  
-  //         return (
-  //           <tr key={zoneId}>
-  //             <th>{zoneName}</th>
-  //             {dates.map((date, dateIndex) => {
-  //               const zoneDetails = dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zoneId);
-  
-  //               const total = zoneDetails ? zoneDetails.total : 0;
-  //               const backgroundColor = getBackgroundColor(total);
-  //               const color = getTextColor(total);
-  
-  //               return (
-  //                 <td key={dateIndex} style={{ backgroundColor, color: color }}>
-  //                   {zoneDetails ? (
-  //                     <OverlayTrigger
-  //                       placement="top"
-  //                       delay={{ show: 250, hide: 400 }}
-  //                       overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
-  //                     >
-  //                       <Button variant="link">
-  //                         {zoneDetails.total}%
-  //                       </Button>
-  //                     </OverlayTrigger>
-  //                   ) : (
-  //                     '0%'
-  //                   )}
-  //                 </td>
-  //               );
-  //             })}
-  //           </tr>
-  //         );
-  //       })}
-  //       <tr>
-  //         <th>Average</th>
-  //         {dates.map((date, dateIndex) => {
-  //           const average = dayDashBoardData[date].average;
-  //           const backgroundColor = getBackgroundColor(average);
-  //           const textColor = getTextColor(average);
-  //           return (
-  //             <td key={dateIndex} style={{ backgroundColor, color: textColor }}>
-  //               {average}%
-  //             </td>
-  //           );
-  //         })}
-  //       </tr>
-  //     </tbody>
-  //   );
-  // };
+
 
   const renderTableBody = () => {
     const dates = Object.keys(dayDashBoardData);
     const allZones = [...new Set(dates.flatMap(date => dayDashBoardData[date].zoneDetails.map(zone => zone.zoneId)))];
-  
+
     return (
       <tbody>
         {allZones.map((zoneId) => {
           const zoneName = dates
             .map(date => dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zoneId))
             .filter(Boolean)[0]?.zoneName || `Zone ${zoneId}`;
-  
+
           return (
             <tr key={zoneId}>
               <th>{zoneName}</th>
@@ -412,7 +289,7 @@ const Client = () => {
                 const total = zoneDetails ? zoneDetails.total : 0;
                 const backgroundColor = getBackgroundColor(total);
                 const color = getTextColor(total);
-  
+
                 return (
                   <td key={dateIndex} style={{ backgroundColor, color }}>
                     {zoneDetails ? (
@@ -450,70 +327,8 @@ const Client = () => {
       </tbody>
     );
   };
-  
-  
-  // const renderTableBody = () => {
-  //   console.log(dayDashBoardData, 'daydashboarddata')
-  //   const dates = Object.keys(dayDashBoardData);
-  //   const zones = dates.length > 0 ? dayDashBoardData[dates[0]].zoneDetails : [];
-    
 
-  //   return (
-  //     <tbody>
-  //       {zones.map((zone) => (
-  //         <tr key={zone.zoneId}>
-  //           <th>{zone.zoneName}</th>
-  //           {dates.map((date, dateIndex) => {
-  //             const zoneDetails = dayDashBoardData[date].zoneDetails.find(z => z.zoneId === zone.zoneId);
 
-  //             const total = zoneDetails ? zoneDetails.total : 0;
-  //             const backgroundColor = getBackgroundColor(total);
-  //             const color = getTextColor(total);
-  //             return (
-  //               <td key={dateIndex} style={{ backgroundColor, color: color }}>
-  //                 {/* <OverlayTrigger
-  //                   placement="top"
-  //                   delay={{ show: 250, hide: 400 }}
-  //                   overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
-  //                 >
-  //                   <Button variant="link">
-  //                     {zoneDetails.total}%
-  //                   </Button>
-  //                 </OverlayTrigger> */}
-  //                 {zoneDetails ? (
-  //                   <OverlayTrigger
-  //                     placement="top"
-  //                     delay={{ show: 250, hide: 400 }}
-  //                     overlay={(props) => renderTooltip(props, zoneDetails.inflow, zoneDetails.consumption, zoneDetails.total, date)}
-  //                   >
-  //                     <Button variant="link">
-  //                       {zoneDetails.total}%
-  //                     </Button>
-  //                   </OverlayTrigger>
-  //                 ) : (
-  //                   '0%'
-  //                 )}
-  //               </td>
-  //             );
-  //           })}
-  //         </tr>
-  //       ))}
-  //       <tr>
-  //         <th>Average</th>
-  //         {dates.map((date, dateIndex) => {
-  //           const average = dayDashBoardData[date].average;
-  //           const backgroundColor = getBackgroundColor(average);
-  //           const textColor = getTextColor(average);
-  //           return (
-  //             <td key={dateIndex} style={{ backgroundColor, color: textColor }}>
-  //               {average}%
-  //             </td>
-  //           );
-  //         })}
-  //       </tr>
-  //     </tbody>
-  //   );
-  // };
   const renderLegend = () => {
     return (
       <div style={{ marginTop: '40px', display: "flex", justifyContent: "center" }}>
@@ -544,12 +359,6 @@ const Client = () => {
   useEffect(() => {
     const fetchAlertData = async () => {
       try {
-        // const response = await axios.post(`${BASE_API_URL1}clients/getClientAlerts`, {
-        //   clientId: clients[0]?.clientId
-        // });
-
-        // const aData = await axios.post(BASE_API_URL + '/getAlerts');
-        // setAlertData(aData.data);
 
         const requestBody = {
           clientId: selectedClient
@@ -637,6 +446,9 @@ const Client = () => {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     console.log('NEW', newValue)
+    if (newValue == 3) {
+      getDashboardData(currentPage, itemsPerPage)
+    }
     setValue(newValue);
   };
 
@@ -700,14 +512,119 @@ const Client = () => {
     };
   }
 
-  const shiftToDma = () => {
+  const shiftToDma = (zoneId) => {
     setValue(2)
+    setSelectedZone(zoneId)
   }
 
-  const shiftToMeter = () => {
+  const shiftToMeter = (dmaId) => {
     setValue(3)
+    // setDmaData(dmaId)
+    setSelectedDma(dmaId)
+    dId = dmaId
+    getDashboardData(1, itemsPerPage, dId)
   }
 
+
+  const handleDropdownChange = (event) => {
+    if (event) event.stopPropagation()
+    setSearchType(event.target.value);
+    setSearchValue('');
+    setIsSearching(false);
+  };
+
+  const handleInputChange = (event) => {
+    setSearchValue(event.target.value); // Only update the search value, no search is triggered
+  };
+
+
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    console.log(newPage)
+
+
+    getDashboardData(newPage, itemsPerPage)
+  };
+  const handleItemsPerPageChange = (e) => {
+    console.log(e)
+    setItemsPerPage(Number(e));
+    setCurrentPage(1);
+    getDashboardData(1, e)
+
+  };
+
+
+  const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId) => {
+    const startIndex = (currentPage - 1) / itemsPerPage;
+    console.log("Update", selectedDma, dId, dmaId)
+
+    try {
+      setLoading(true);
+      const requestBody = {
+        status: selectedStatus,
+        clientId: selectedClient || 1,
+        zoneId: zoId ? zoId : zId ? zId : 0,
+        dmaId: dmaId ? dmaId : dId ? dId : 0,
+        gatewayId: gId ? gId : 0,
+        startIndex: startIndex,
+        rowCount: itemsPerPage
+      }
+
+      console.log(requestBody);
+      const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
+      console.log(response);
+      // setMeterList(response.data.meters || []);
+      console.log(response.data.totalCount);
+      setTotalItems(response.data.totalCount);
+      setMeterData(response.data.meters || []);
+      setFiteredMeterData(response.data.meters || [])
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    }
+  };
+
+
+  const handleClickRefresh = () => {
+    setSelectedClient(1);
+    setSelectedZone(0);
+    setSelectedDma(0);
+    setSelectedGateway(0);
+    setSelectedStatus(0);
+    console.log(selectedZone, selectedDma)
+    getDashboardData(1, 5);
+  }
+
+
+  const handleSearch = async (value) => {
+    if (!searchType || !searchValue) {
+      // Prevent search if either searchType or searchValue is not set
+      console.warn('Both search type and value are required.');
+      return;
+    }
+
+    setIsSearching(true); // Indicate a search is active
+    setLoading(true); // Show a loading indicator
+    try {
+      const requestBody = {
+        type: searchType,
+        value: value,
+      };
+      console.log(requestBody);
+      const response = await axios.post(`http://49.207.11.223:3307/meters/getMeterSearch`, requestBody);
+      console.log(response);
+      setMeterData(response.data.meterList || []); // Update the meter data based on the search result
+      setFiteredMeterData(response.data.meterList || [])
+
+
+    } catch (error) {
+      console.error("Error fetching search data:", error);
+    } finally {
+      setLoading(false); // Hide the loading indicator after search completes
+    }
+  };
 
   return (
     <React.Fragment>
@@ -762,7 +679,7 @@ const Client = () => {
                 <Tab label="Meters" {...a11yProps(3)} />
               </Tabs>
             </div>
-            <div >
+            <div className='mt-1'>
               {console.log('VALUE', value)}
               <div className="days-date-picker-outer-cls">
                 {value == 0 ?
@@ -799,11 +716,56 @@ const Client = () => {
                   </div>
                   : ""}
 
+                {value == 3 ?
+                  <div className='d-flex me-2 align-items-center'>
+                    <div className="form-group selectcustom me-2">
+                      <select onChange={handleDropdownChange} value={searchType} >
+                        <option value=""><em>Select</em></option>
+                        <option value="can">CAN</option>
+                        <option value="meter">Meter</option>
+                        <option value="deveui">DEVEUI</option>
+                      </select>
+
+
+                    </div>
+                    {/* {searchType && (                   */}
+                    <input
+                      className='search-input me-2'
+                      type="text"
+                      value={searchValue}
+                      onChange={handleInputChange}
+                      placeholder={searchType ? `Enter ${searchType}` : ''}
+                      disabled={!searchType}
+                    />
+
+                    {/* )} */}
+
+                    {searchValue && (
+                      <Button
+                        variant="contained"
+                        style={{ backgroundColor: "#1976d2" }}
+                        onClick={() => handleSearch(searchValue)}
+                        disabled={!searchType || !searchValue}
+                      >
+                        Search</Button>
+                    )}
+                  </div>
+                  : ""
+                }
+
                 {value == 2 || value == 3 ?
                   <div>
                     <div className="form-group selectcustom">
-                      <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}>
+                      <select className="form-control" value={selectedZone} onChange={(e) => {
+                        const selectedValue = Number(e.target.value);
+                        console.log("Selected Zone:", selectedValue); // To verify what zone is being selected
+                        setSelectedZone(selectedValue);
+                        zId = selectedValue;
+                        getDashboardData(1, itemsPerPage, selectedDma, selectedValue)
+                      }}>
+                        {/* <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}> */}
                         <option value={0}>All</option>
+                        {console.log(zones)}
                         {zones.map((zone) => (
                           <option key={zone.zoneId} value={zone.zoneId}>
                             {zone.displayName}
@@ -817,9 +779,15 @@ const Client = () => {
 
                 {value == 3 ? <div style={{ marginLeft: "5px" }}>
                   <div className="form-group selectcustom">
-                    <select className="form-control" value={selectedDma} onChange={(e) => setSelectedDma(Number(e.target.value))}>
+                    <select className="form-control" value={selectedDma} onChange={(e) => {
+                      setSelectedDma(Number(e.target.value))
+                      dId = Number(e.target.value);
+                      getDashboardData(1, itemsPerPage, Number(e.target.value))
+
+                    }}>
 
                       <option value={0}>All</option>
+                      {console.log(dmas)}
                       {dmas.map((dma) => (
                         <option key={dma.dmaId} value={dma.dmaId}>
                           {dma.displayName}
@@ -828,6 +796,8 @@ const Client = () => {
                     </select>
                   </div>
                 </div> : ""}
+
+
 
 
                 {value == 4 ? <div style={{ marginLeft: "5px" }}>
@@ -1224,7 +1194,20 @@ const Client = () => {
           <GatewayList isTab={true} />
         </CustomTabPanel> */}
         <CustomTabPanel value={value} index={3}>
-          <MeterList />
+          {console.log("METER3")}
+          <MeterList
+            meterData={filteredmeterData}
+            isSearching={isSearching}
+            load={loading}
+            totalItems={totalItems}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            handlePage={handlePageChange}
+            searchType={searchType}
+            searchValue={searchValue}
+            handleClickRef={handleClickRefresh}
+            handleItemsPerPage={handleItemsPerPageChange}
+          />
         </CustomTabPanel>
       </Box>
 

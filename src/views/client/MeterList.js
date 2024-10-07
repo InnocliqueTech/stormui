@@ -31,83 +31,68 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const MeterList = () => {
+const MeterList = ({meterData, isSearching, searchValue, searchType, load,
+  totalItems, itemsPerPage, currentPage, handlePage, handleItemsPerPage, handleClickRef  }) => {
+  // const [defaultMeterList, setDefaultMeterList] = useState([]);
+
   const location = useLocation();
   const { selectedClient,
     selectedZone,
     selectedDma,
     selectedGateway,
-    selectedStatus,
-    setSelectedZone,
-    setSelectedDma,
-    setSelectedGateway,
-    setSelectedStatus,
-    setSelectedClient
+    selectedStatus
   } = useContext(ClientsContext);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState("");
-
-  // const [fullWidth] = useState(true);
-  // const { clients } = useContext(ClientsContext);
-  const [meterList, setMeterList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  // Assuming these are your filters' state variables
-  // const [selectedClient, setSelectedClient] = useState('');
-  // const [selectedZone, setSelectedZone] = useState(0);
-  // const [selectedDma, setSelectedDma] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5)
-  const [totalItems, setTotalItems] = useState(0);
+  // const [meterList, setMeterList] = useState([]);
+  const [loading, setLoading] = useState(load);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [itemsPerPage, setItemsPerPage] = useState(5)
+  // const [totalItems, setTotalItems] = useState(0);
   const { zoneId: zoneId, dmaId: dmaId, gatewayId: gatewayId } = location.state || {};
+  const [displayedMeterList, setdisplayedMeterList] = useState([])
   // const { zoneId, dmaId, gatewayId } = location.state || { zoneId: selectedZone, dmaId: selectedDma, gatewayId: selectedGateway, status: selectedStatus };
-  console.log('location.state:', location.state);
+  console.log('location.state:', displayedMeterList);
   console.log('zoneId:', zoneId);
   console.log('dmaId:', dmaId);
   console.log('gatewayId:', gatewayId);
+  const zId = zoneId || selectedZone || 0
+  const dId = dmaId || selectedDma || 0
+  const gId = gatewayId || selectedGateway || 0
 
-const zId = zoneId || selectedZone || 0
-const dId = dmaId || selectedDma || 0
-const gId = gatewayId || selectedGateway || 0
-  useEffect(() => {
-    getDashboardData()
-  }, [currentPage, itemsPerPage, selectedClient, selectedZone, selectedDma, selectedGateway, selectedStatus])
-
-  // const getDashboardData = async () => {
-  //   const clientId = selectedClient
-  //   const startIndex = (currentPage - 1) * itemsPerPage;
-  //   try {
-  //     setLoading(true);
-  //     const requestBody = {
-  //       status: selectedStatus || 0,
-  //       clientId: clientId || 0,
-  //       zoneId: zoneId || 0,
-  //       dmaId: dmaId || 0,
-  //       gatewayId: gatewayId || 0,
-  //       startIndex: startIndex,
-  //       rowCount: itemsPerPage
-  //     }
-
-  //     console.log(requestBody)
-  //     const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
-  //     console.log(response)
-  //     setMeterList(response.data.meters || []);
-  //     setTotalItems(response.data.totalCount);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //     setLoading(false);
-
+  // useEffect(() => {
+  //   if (!isSearching) {
+  
+  //     getDashboardData();
   //   }
-  // };
+  // }, [isSearching, currentPage, itemsPerPage]);
+
+//   useEffect(() => {
+//   // Only fetch default data when not searching and searchType/searchValue are empty
+//   if (!isSearching && !searchType && !searchValue) {
+//     getDashboardData();
+//   }
+// }, [isSearching, currentPage, itemsPerPage, searchType, searchValue]);
+
+useEffect(() => {
+  if (!isSearching && !searchType && !searchValue) {
+    // getDashboardData();
+  }
+}, [isSearching, currentPage, itemsPerPage, searchType, searchValue]);
+
+
+useEffect(() => {
+  // getDashboardData();
+
+},[isSearching])
+
+
+  // useEffect(() => {
+  //   getDashboardData()
+  // }, [currentPage, itemsPerPage, selectedClient, selectedZone, selectedDma, selectedGateway, selectedStatus])
 
 
   const getDashboardData = async () => {
-    // const clientId =  selectedClient || 0; // Default to 0 if selectedClient is null or undefined
-    // const status =  selectedStatus || 0;   // Default to 0 if selectedStatus is null or undefined
-    // const zoneId =zoneId || selectedZone || 0;     // Default to 0 if selectedZone is null or undefined
-    // const dmaId =dmaId || selectedDma || 0;       // Default to 0 if selectedDma is null or undefined
-    // const gatewayId =gatewayId || selectedGateway || 0; // Default to 0 if selectedGateway is null or undefined
-
     const startIndex = (currentPage - 1) / itemsPerPage;
 
     try {
@@ -122,12 +107,10 @@ const gId = gatewayId || selectedGateway || 0
         rowCount: itemsPerPage
       }
 
-      console.log(requestBody);
       const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
-      console.log(response);
-      setMeterList(response.data.meters || []);
-      console.log(response.data.totalCount);
-      setTotalItems(response.data.totalCount);
+      // setMeterList(response.data.meters || []);
+      // setTotalItems(response.data.totalCount);
+      setdisplayedMeterList(response.data.meters || []);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -145,25 +128,16 @@ const gId = gatewayId || selectedGateway || 0
 
 
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+    // setCurrentPage(newPage);
+    handlePage(newPage);
   };
   const handleItemsPerPageChange = (e) => {
-    setItemsPerPage(Number(e.target.value));
-    setCurrentPage(1);
+    handleItemsPerPage(Number(e.target.value))
   };
   const totalPagesCount = Math.ceil(totalItems / itemsPerPage);
 
-  // const [refreshData, setRefrehData] = useState([]);
-
   const handleClickRefresh = () => {
-    setSelectedClient(1);
-    setSelectedZone(0);
-    setSelectedDma(0);
-    setSelectedGateway(0);
-    setSelectedStatus(0);
-
-    // Call getDashboardData to fetch updated data with reset values
-    getDashboardData();
+    handleClickRef()
   }
 
 
@@ -177,6 +151,12 @@ const gId = gatewayId || selectedGateway || 0
         return { backgroundColor: 'rgba(128, 128, 128, 1)', color: '#fff' }; // Default color for other statuses
     }
   };
+
+
+  // const displayedMeterList = isSearching || (dropdownChanged && !searchValue) ? meterData : meterList;
+
+  // const displayedMeterList = isSearching ? meterData : meterList;
+
 
   return (
     <div className='col-md-12'>
@@ -207,119 +187,105 @@ const gId = gatewayId || selectedGateway || 0
         </Row>
 
         <div className='customer-table mt-0'>
-          {/* <Row style={{ marginBottom: '24px' }}>
-              <Col md={9} sm={7} xs={7}>
-                <div className='pagination-controls' style={{marginLeft:"10px", marginTop:"10px"}}>
-                  <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
-                  <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
-                    <option value={5}>5</option>
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
-                  </select>
-                </div>
-              </Col>
-              <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
-                <CachedOutlinedIcon style={{ color: '#6C757D', marginTop:"10px", marginRight:"10px" }} onClick={handleClickRefresh}/>               
-              </Col>
-            </Row> */}
 
-          {loading ? (
-            <div style={{ textAlign: 'center', marginTop: '50px' }}>
-              <Spinner animation="border" variant="primary" />
-            </div>
-          ) : (
-            <>
-
-              <Table style={{ borderRadius: 8 }}>
-                <thead>
-                  <tr>
-                    <th className='tablehead'>CAN No</th>
-                    <th className='tablehead'>Meter Id</th>
-                    <th className='tablehead'>Gateway Id</th>
-                    <th className='tablehead'>DEVEUI</th>
-                    <th className='tablehead'>Zone no</th>
-                    <th className='tablehead'>DMA no</th>
-                    <th className='tablehead'>Timestamp</th>
-                    <th className='tablehead'>Reading</th>
-                    <th className='tablehead'>Consum (in KL)</th>
-                    <th className='tablehead'>Status</th>
-                    <th className='tablehead'>Battery Life</th>
-                    <th className='tablehead'>Remarks</th>
-                    {/* <th className='tablehead'>Action</th> */}
+          <Table style={{ borderRadius: 8 }}>
+            <thead>
+              <tr>
+                <th className='tablehead'>CAN No</th>
+                <th className='tablehead'>Meter Id</th>
+                <th className='tablehead'>Gateway Id</th>
+                <th className='tablehead'>DEVEUI</th>
+                <th className='tablehead'>Zone No</th>
+                <th className='tablehead'>DMA No</th>
+                <th className='tablehead'>Timestamp</th>
+                <th className='tablehead'>Reading</th>
+                <th className='tablehead'>Consumed (in KL)</th>
+                <th className='tablehead'>Status</th>
+                <th className='tablehead'>Battery Life</th>
+                <th className='tablehead'>Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="12" style={{ textAlign: 'center', padding: '20px' }}>
+                    <Spinner animation="border" variant="primary" />
+                  </td>
+                </tr>
+              ) : meterData.length === 0 ? (
+                <tr>
+                  <td colSpan="12" style={{ textAlign: 'center', padding: '20px', fontWeight: 'bold', color: 'red' }}>
+                    No data found
+                  </td>
+                </tr>
+              ) : (
+                meterData && meterData.map((meter) => (
+                  <tr key={meter.meterId}>
+                    <td className='tablecontent-link'>
+                      <Link
+                        key={meter.meterId}
+                        state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gatewayId, meterId: meter.meterId }}
+                        onClick={(e) => handleClickOpen(e, meter)}
+                        style={{ textDecoration: 'none', cursor: 'pointer' }}>
+                        {meter.canNo}
+                      </Link>
+                    </td>
+                    <td className='tablecontent'>{meter.meterId}</td>
+                    <td className='tablecontent'>{meter.gatewayId}</td>
+                    <td className='tablecontent'>{meter.deveui}</td>
+                    <td className='tablecontent'>
+                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0', fontWeight: '600' }}>Zone {meter.zoneNo}</span>
+                    </td>
+                    <td className='tablecontent'>
+                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0', fontWeight: '600' }}>DMA {meter.dmaNo}</span>
+                    </td>
+                    <td className='tablecontent'>{new Date(meter.timestamp).toLocaleString()}</td>
+                    <td className='tablecontent'>
+                      <span style={{ backgroundColor: '#F4F5F5', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#6C757D' }}>{meter.reading}</span>
+                    </td>
+                    <td className='tablecontent'>{meter.consumed}</td>
+                    <td className='tablecontent'>
+                      <span style={{ ...getStatusStyle(meter.status), padding: '8px 20px' }}>
+                        {meter.status}
+                      </span>
+                    </td>
+                    <td className='tablecontent'>{meter.batteryLife}</td>
+                    <td className='tablecontent'>{meter.remarks}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {meterList.map((meter) => (
-                    <tr key={meter.meterId}>
-                      <td className='tablecontent-link'>
-                        <Link
-                          key={meter.meterId}
-                          state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gatewayId, meterId: meter.meterId }}
-
-                          onClick={(e) => handleClickOpen(e, meter)}
-                          style={{ textDecoration: 'none', cursor: 'pointer' }}>
-                          {meter.canNo}
-                        </Link>
-                      </td>
-                      <td className='tablecontent'>  {meter.meterId}</td>
-                      <td className='tablecontent'>{meter.gatewayId}</td>
-                      <td className='tablecontent'>{meter.deveui}</td>
-                      <td className='tablecontent'>
-                        <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0', fontWeight: '600' }}>Zone {meter.zoneNo}</span>
-                      </td>
-                      <td className='tablecontent'>
-                        <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0', fontWeight: '600' }}>DMA {meter.dmaNo}</span>
-                      </td>
-                      <td className='tablecontent'>{new Date(meter.timestamp).toLocaleString()}</td>
-                      <td className='tablecontent'>
-                        <span style={{ backgroundColor: '#F4F5F5', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#6C757D' }}>{meter.reading}</span>
-                      </td>
-                      <td className='tablecontent'>{meter.consumed}</td>
-                      <td className='tablecontent'>
-                        <span style={{ ...getStatusStyle(meter.status), padding: '8px 20px' }}>
-                          {meter.status}
-                        </span>
-                      </td>
-                      <td className='tablecontent'>{meter.batteryLife}</td>
-                      <td className='tablecontent'>{meter.remarks}</td>
-                      {/* <td className='tablecontent'><MoreVert style={{ color: '#D6D9DC' }} /></td> */}
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </>
-          )}
+                ))
+              )}
+            </tbody>
+          </Table>
           {/* Pagination controls, items per page selector, and refresh icon */}
-      
 
         </div>
         <div className='row mt-3'>
-            <div className='col-md-5'>
-              <div className='pagination-controls' style={{ marginLeft: '10px' }}>
-                <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>
-                  Items per page:
-                </label>
-                <select
-                  id='itemsPerPage'
-                  value={itemsPerPage}
-                  onChange={handleItemsPerPageChange}
-                  style={{ marginLeft: '8px' }}>
-                  <option value={5}>5</option>
-                  <option value={10}>10</option>
-                  <option value={20}>20</option>
-                </select>
-              </div>
-            </div>
-            <div className='col-md-7'>
-              <div style={{ textAlign: 'center' }}>
-                <Paginations
-                  currentPage={currentPage}
-                  totalPages={totalPagesCount}
-                  onPageChange={handlePageChange}
-                />
-              </div>
+          <div className='col-md-5'>
+            <div className='pagination-controls' style={{ marginLeft: '10px' }}>
+              <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>
+                Items per page:
+              </label>
+              <select
+                id='itemsPerPage'
+                value={itemsPerPage}
+                onChange={(e) => handleItemsPerPageChange(e)}
+                style={{ marginLeft: '8px' }}>
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+              </select>
             </div>
           </div>
+          <div className='col-md-7'>
+            <div style={{ textAlign: 'center' }}>
+              <Paginations
+                currentPage={currentPage}
+                totalPages={totalPagesCount}
+                onPageChange={(e) => handlePageChange(e)}
+              />
+            </div>
+          </div>
+        </div>
         {/* <div style={{ textAlign: 'center', marginTop: '40PX' }}>
           <Paginations
             currentPage={currentPage}

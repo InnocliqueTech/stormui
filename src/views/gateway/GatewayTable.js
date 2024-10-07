@@ -165,7 +165,11 @@ const GatewayTable = ({onClickGateWay, gatewayIdClick}) => {
               <tr>
                 {/* <th className='tablehead'><Checkbox /></th> */}
                 <th className='tablehead'>Gateway ID</th>
+                <th className='tablehead'>Gateway Name</th>
                 <th className='tablehead'>Time</th>
+                <th className='tablehead'>Latitude</th>
+                <th className='tablehead'>Longitude</th>
+                <th className='tablehead'>Altitude</th>
                 <th className='tablehead'>ETH State</th>
                 <th className='tablehead'>LTE State</th>
                 <th className='tablehead'>Temperature</th>
@@ -194,6 +198,7 @@ const GatewayTable = ({onClickGateWay, gatewayIdClick}) => {
                         {gateway.gatewayId}
                       </Link>
                     </td>
+                    <td className='tablecontent text-end'>{gateway.gatewayName}</td>
                     {/* <td className='tablecontent'>{gateway.gatewayId}</td>
                 <td className='tablecontent'>{gateway.region}</td>
                 <td className='tablecontent'>
@@ -205,7 +210,9 @@ const GatewayTable = ({onClickGateWay, gatewayIdClick}) => {
                     <td className='tablecontent'>
                       {new Date(gateway.time).toISOString().replace('T', ' ').split('.')[0]}
                     </td>
-
+                    <td className='tablecontent text-end'>{gateway.latitude}</td>
+                    <td className='tablecontent text-end'>{gateway.longitude}</td>
+                    <td className='tablecontent text-end'>{gateway.altitude}</td>                    
                     <td className='tablecontent text-end'>{gateway.ethState}</td>
                     <td className='tablecontent text-end'>{gateway.lteState}</td>
                     <td className='tablecontent text-end'>{gateway.temperature}</td>

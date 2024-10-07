@@ -8,7 +8,8 @@ import React from 'react';
 // import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import AuthLogin from './FirebaseLogin';
-import loginbg from '../../../assets/images/loginbg-3.webp';
+import loginbg from '../../../assets/images/LoginPageBG.webp';
+// import logoshadow from '../../../assets/images/logo-shadow.webp'
 
 
 const Signin1 = () => {

@@ -2,8 +2,8 @@
 import { Col, Image, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import zone from '../../assets/images/water_drops.svg';
-import refresh from '../../assets/images/refresh.svg';
-import download from '../../assets/images/download.svg';
+// import refresh from '../../assets/images/refresh.svg';
+// import download from '../../assets/images/download.svg';
 import info from "../../assets/images/info.svg"
 // import { useStateContext } from '../../contexts/MainContext';
 
@@ -20,10 +20,10 @@ function ZoneTable({ dashboardData }) {
             </span>  Zone-wise  Consumption  </span><span><Image src={info} alt="gateway" /></span>
           <span style={{ textAlign: 'end' }}></span>
         </Col>
-        <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
+        {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
           <span style={{ marginRight: 20 }}><Image src={refresh} alt="refresh" className='icon' /></span>
           <span style={{ marginRight: 10 }}><Image src={download} alt="download" className='icon' /></span>
-        </Col>
+        </Col> */}
       </Row>
       <Table responsive style={{ marginTop: 30, borderRadius: 10, border: '1px solid #ccc' }}>
         <thead style={{ backgroundColor: '#F4F5F5' }}>

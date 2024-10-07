@@ -67,10 +67,12 @@ export const ClientsProvider = ({ children }) => {
   useEffect(() => {
     const getSelectDma = async () => {
       try {
-        const response = await axios.post('http://49.207.11.223:3307/dma/getAllDMAsWithClientIdAndZoneIdForDropdown', {
+        const requestBody = {
           clientId: selectedClient,
           zoneId: selectedZone
-        });
+        }
+        console.log(requestBody)
+        const response = await axios.post('http://49.207.11.223:3307/dma/getAllDMAsWithClientIdAndZoneIdForDropdown',requestBody);
         console.log(response)
         if (Array.isArray(response.data.dmasList)) {
           setDmas(response.data.dmasList);
@@ -91,11 +93,13 @@ export const ClientsProvider = ({ children }) => {
   useEffect(() => {
     const getSelectGateway = async () => {
       try {
-        const response = await axios.post('http://49.207.11.223:3307/gateways/getAllGatewaysForDropdown', {
+        const requestBody = {
           clientId: selectedClient,
           zoneId: selectedZone,
           dmaId: selectedDma
-        });
+        }
+        console.log(requestBody)
+        const response = await axios.post('http://49.207.11.223:3307/gateways/getAllGatewaysForDropdown', requestBody);
         console.log(response)
         if (Array.isArray(response.data.gatewayDetails)) {
           setGateways(response.data.gatewayDetails);

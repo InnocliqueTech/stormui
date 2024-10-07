@@ -25,11 +25,8 @@ const DmaList = React.memo(({shiftToMeter}) => {
   const location = useLocation();
   // const [isId, setIsId] = useState(false)
   // Destructure the state directly from location.state
-  const { zoneId } = location.state || { zoneId: selectedZone };
-  console.log('location.state:', location.state);  // Debugging line
-  console.log('zoneId:', zoneId);  // Debugging line
+  const { zoneId } = location.state || { zoneId: selectedZone || 0};
   // const [apiCalled, setApiCalled] = useState(false)
-  console.log("DMALIST")
 
   // const { id } = location.state || {};
   // const [value, setValue] = React.useState(2);
@@ -47,32 +44,37 @@ const DmaList = React.memo(({shiftToMeter}) => {
   //   }
   // }, [id])
 
-  useEffect(() => {
-    console.log("CLIENTS123",clients)
-    if (clients && clients.length > 0) {
-      getDashboardData(clients[0].clientId);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (clients && clients.length > 0) {
+  //     getDashboardData(clients[0].clientId);
+  //   }
+  // }, []);
 
-  const getDashboardData = async (clientId) => {
+  useEffect(() => {
+    if (clients && clients.length > 0) {
+      getDashboardData(clients[0].clientId, selectedZone); // Prioritize selectedZone
+    }
+  }, [selectedZone]);
+
+  const getDashboardData = async (clientId, zone) => {
     // if(!apiCalled) {
     // setApiCalled(true)
     setLoading(true);
     try {
+
+      let zoId = zone
       const requestBody = {
         clientId: clientId,
-        zoneId: zoneId ? zoneId : 0,
+        zoneId: zoId
+    
       }
-      console.log(requestBody)
       const response = await axios.post(BASE_API_URL1 + 'dma/getAllDMAsWithClientIdAndZoneId', requestBody);
       setZonesList(response.data.dmasList || []);
-      console.log(zonesList)
     } catch (e) {
       console.log('Error fetching data:', e);
     } finally {
       setLoading(false);
     }
-  // }
   };
 
   const handlePageChange = (newPage) => {
@@ -140,7 +142,8 @@ const DmaList = React.memo(({shiftToMeter}) => {
                       // to="/app/gatewaylist"
                       state={{ zoneId: zoneId, dmaId: dma.dmaId}}
                       onClick={() => {
-                        shiftToMeter()   
+                        console.log("DMA", dma);
+                        shiftToMeter(dma.dmaId)   
                                   
                       }}
                       style={{ textDecoration: 'none', cursor: 'pointer' }}>{dma.displayName}</Link>

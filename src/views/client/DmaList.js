@@ -125,7 +125,7 @@ const DmaList = React.memo(({shiftToMeter}) => {
             <thead style={{ backgroundColor: '#F4F5F5' }}>
               <tr>
                 <th className='tablehead'>DMA ID</th>
-                <th className='tablehead'>Gateway ID</th>
+                {/* <th className='tablehead'>Gateway ID</th> */}
                 <th className='tablehead'>Last Communication Time</th>
                 <th className='tablehead'>Reading</th>
                 <th className='tablehead'>Meters</th>
@@ -148,7 +148,7 @@ const DmaList = React.memo(({shiftToMeter}) => {
                       }}
                       style={{ textDecoration: 'none', cursor: 'pointer' }}>{dma.displayName}</Link>
                   </td>
-                  <td className='tablecontent'>{dma.gatewayId}</td>
+                  {/* <td className='tablecontent'>{dma.gatewayId}</td> */}
                   <td className='tablecontent'>{new Date(dma.lastCommunicationTime).toLocaleString()}</td>
                   <td className='tablecontent'>
                     <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>{dma.reading}</span>

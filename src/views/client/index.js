@@ -558,6 +558,7 @@ const Client = () => {
   const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId) => {
     const startIndex = (currentPage - 1) / itemsPerPage;
     console.log("Update", selectedDma, dId, dmaId)
+    console.log("Update", selectedZone, zoId, zoneId)
 
     try {
       setLoading(true);
@@ -594,7 +595,9 @@ const Client = () => {
     setSelectedGateway(0);
     setSelectedStatus(0);
     console.log(selectedZone, selectedDma)
-    getDashboardData(1, 5);
+    zId = 0
+    dId = 0
+    getDashboardData(1, 5, zId, dId);
   }
 
 
@@ -761,7 +764,8 @@ const Client = () => {
                         console.log("Selected Zone:", selectedValue); // To verify what zone is being selected
                         setSelectedZone(selectedValue);
                         zId = selectedValue;
-                        getDashboardData(1, itemsPerPage, selectedDma, selectedValue)
+                        {console.log(selectedValue)}
+                        getDashboardData(1, itemsPerPage, selectedValue)
                       }}>
                         {/* <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}> */}
                         <option value={0}>All</option>
@@ -780,9 +784,14 @@ const Client = () => {
                 {value == 3 ? <div style={{ marginLeft: "5px" }}>
                   <div className="form-group selectcustom">
                     <select className="form-control" value={selectedDma} onChange={(e) => {
-                      setSelectedDma(Number(e.target.value))
-                      dId = Number(e.target.value);
-                      getDashboardData(1, itemsPerPage, Number(e.target.value))
+                      // setSelectedDma(Number(e.target.value))
+                      // dId = Number(e.target.value);
+                      const selectedValue = Number(e.target.value);
+                      console.log("Selected Dma:", selectedValue); // To verify what zone is being selected
+                      setSelectedDma(selectedValue);
+                      dId = selectedValue;
+                      getDashboardData(1, itemsPerPage, selectedValue)
+                      // getDashboardData(1, itemsPerPage, Number(e.target.value))
 
                     }}>
 

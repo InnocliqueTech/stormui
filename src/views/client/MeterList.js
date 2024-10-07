@@ -14,8 +14,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Meter from './Meter';
-import axios from 'axios';
-import { BASE_API_URL1 } from '../../config/constant';
+// import axios from 'axios';
+// import { BASE_API_URL1 } from '../../config/constant';
 import { ClientsContext } from '../dashboard/context/index';
 import Spinner from 'react-bootstrap/Spinner';
 import Paginations from '../../components/Paginatons';
@@ -36,11 +36,12 @@ const MeterList = ({meterData, isSearching, searchValue, searchType, load,
   // const [defaultMeterList, setDefaultMeterList] = useState([]);
 
   const location = useLocation();
-  const { selectedClient,
+  const {
+    //  selectedClient,
     selectedZone,
     selectedDma,
     selectedGateway,
-    selectedStatus
+    // selectedStatus
   } = useContext(ClientsContext);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState("");
@@ -56,6 +57,8 @@ const MeterList = ({meterData, isSearching, searchValue, searchType, load,
   console.log('zoneId:', zoneId);
   console.log('dmaId:', dmaId);
   console.log('gatewayId:', gatewayId);
+  console.log(setLoading)
+  console.log(setdisplayedMeterList)
   const zId = zoneId || selectedZone || 0
   const dId = dmaId || selectedDma || 0
   const gId = gatewayId || selectedGateway || 0

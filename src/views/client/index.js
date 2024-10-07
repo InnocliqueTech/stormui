@@ -790,6 +790,7 @@ const Client = () => {
                       console.log("Selected Dma:", selectedValue); // To verify what zone is being selected
                       setSelectedDma(selectedValue);
                       dId = selectedValue;
+                      console.log(dId)
                       getDashboardData(1, itemsPerPage, selectedValue)
                       // getDashboardData(1, itemsPerPage, Number(e.target.value))
 

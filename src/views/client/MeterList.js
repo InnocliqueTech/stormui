@@ -92,31 +92,31 @@ useEffect(() => {
   // }, [currentPage, itemsPerPage, selectedClient, selectedZone, selectedDma, selectedGateway, selectedStatus])
 
 
-  const getDashboardData = async () => {
-    const startIndex = (currentPage - 1) / itemsPerPage;
+  // const getDashboardData = async () => {
+  //   const startIndex = (currentPage - 1) / itemsPerPage;
 
-    try {
-      setLoading(true);
-      const requestBody = {
-        status: selectedStatus,
-        clientId: selectedClient || 1,
-        zoneId: zId ? zId : 0,
-        dmaId: dId ? dId : 0,
-        gatewayId: gId ? gId : 0,
-        startIndex: startIndex,
-        rowCount: itemsPerPage
-      }
+  //   try {
+  //     setLoading(true);
+  //     const requestBody = {
+  //       status: selectedStatus,
+  //       clientId: selectedClient || 1,
+  //       zoneId: zId ? zId : 0,
+  //       dmaId: dId ? dId : 0,
+  //       gatewayId: gId ? gId : 0,
+  //       startIndex: startIndex,
+  //       rowCount: itemsPerPage
+  //     }
 
-      const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
-      // setMeterList(response.data.meters || []);
-      // setTotalItems(response.data.totalCount);
-      setdisplayedMeterList(response.data.meters || []);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setLoading(false);
-    }
-  };
+  //     const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
+  //     // setMeterList(response.data.meters || []);
+  //     // setTotalItems(response.data.totalCount);
+  //     setdisplayedMeterList(response.data.meters || []);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //     setLoading(false);
+  //   }
+  // };
   const handleClickOpen = (e, data) => {
     setOpen(true);
     setData(data)

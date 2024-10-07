@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 // import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 // import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
@@ -16,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Meter from './Meter';
 // import axios from 'axios';
 // import { BASE_API_URL1 } from '../../config/constant';
-import { ClientsContext } from '../dashboard/context/index';
+// import { ClientsContext } from '../dashboard/context/index';
 import Spinner from 'react-bootstrap/Spinner';
 import Paginations from '../../components/Paginatons';
 import { useLocation } from 'react-router-dom';
@@ -36,13 +36,13 @@ const MeterList = ({meterData, isSearching, searchValue, searchType, load,
   // const [defaultMeterList, setDefaultMeterList] = useState([]);
 
   const location = useLocation();
-  const {
-    //  selectedClient,
-    selectedZone,
-    selectedDma,
-    selectedGateway,
-    // selectedStatus
-  } = useContext(ClientsContext);
+  // const {
+  //   //  selectedClient,
+  //   selectedZone,
+  //   selectedDma,
+  //   selectedGateway,
+  //   // selectedStatus
+  // } = useContext(ClientsContext);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState("");
   // const [meterList, setMeterList] = useState([]);
@@ -59,9 +59,9 @@ const MeterList = ({meterData, isSearching, searchValue, searchType, load,
   console.log('gatewayId:', gatewayId);
   console.log(setLoading)
   console.log(setdisplayedMeterList)
-  const zId = zoneId || selectedZone || 0
-  const dId = dmaId || selectedDma || 0
-  const gId = gatewayId || selectedGateway || 0
+  // const zId = zoneId || selectedZone || 0
+  // const dId = dmaId || selectedDma || 0
+  // const gId = gatewayId || selectedGateway || 0
 
   // useEffect(() => {
   //   if (!isSearching) {

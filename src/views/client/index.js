@@ -515,14 +515,15 @@ const Client = () => {
   const shiftToDma = (zoneId) => {
     setValue(2)
     setSelectedZone(zoneId)
+    zId = zoneId
   }
 
   const shiftToMeter = (dmaId) => {
     setValue(3)
     // setDmaData(dmaId)
     setSelectedDma(dmaId)
-    dId = dmaId
-    getDashboardData(1, itemsPerPage, dId)
+    // dId = dmaId
+    getDashboardData(1, itemsPerPage, zId, dmaId)
   }
 
 
@@ -764,8 +765,10 @@ const Client = () => {
                         console.log("Selected Zone:", selectedValue); // To verify what zone is being selected
                         setSelectedZone(selectedValue);
                         zId = selectedValue;
-                        {console.log(selectedValue)}
-                        getDashboardData(1, itemsPerPage, selectedValue)
+                        setSelectedDma(0);
+                        dId = 0;
+                        {console.log(zId)}
+                        getDashboardData(1, itemsPerPage, selectedValue, 0)
                       }}>
                         {/* <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}> */}
                         <option value={0}>All</option>
@@ -784,15 +787,12 @@ const Client = () => {
                 {value == 3 ? <div style={{ marginLeft: "5px" }}>
                   <div className="form-group selectcustom">
                     <select className="form-control" value={selectedDma} onChange={(e) => {
-                      // setSelectedDma(Number(e.target.value))
-                      // dId = Number(e.target.value);
                       const selectedValue = Number(e.target.value);
                       console.log("Selected Dma:", selectedValue); // To verify what zone is being selected
                       setSelectedDma(selectedValue);
                       dId = selectedValue;
-                      console.log(dId)
-                      getDashboardData(1, itemsPerPage, selectedValue)
-                      // getDashboardData(1, itemsPerPage, Number(e.target.value))
+                      console.log(zId, selectedZone)
+                      getDashboardData(1, itemsPerPage, selectedZone, selectedValue)
 
                     }}>
 

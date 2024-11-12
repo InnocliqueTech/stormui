@@ -215,7 +215,7 @@ useEffect(() => {
                     <Spinner animation="border" variant="primary" />
                   </td>
                 </tr>
-              ) : meterData.length === 0 ? (
+              ) : meterData?.length === 0 ? (
                 <tr>
                   <td colSpan="12" style={{ textAlign: 'center', padding: '20px', fontWeight: 'bold', color: 'red' }}>
                     No data found

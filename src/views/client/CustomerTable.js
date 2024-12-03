@@ -16,6 +16,7 @@ function CustomerTable() {
     fetchData(); // Initial data fetch
   }, []);
 
+  //getTotalCustomerWiseSegementation
   const fetchData = () => {
     setLoading(true);
     axios.post('http://49.207.11.223:3307/clients/getTotalCustomerWiseSegementation', {

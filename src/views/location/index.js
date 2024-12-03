@@ -45,14 +45,6 @@ export default function Location() {
   return (
     <div
       className="home-section"
-    // onClick={handleClick}
-    // onKeyDown={(e) => {
-    //   if (e.key === 'Enter' || e.key === ' ') {
-    //     handleClick(e);
-    //   }
-    // }}
-    // role="button"
-    // tabIndex="0"
     >
       <section>
         <h3 className="welcome"> Welcome...</h3>

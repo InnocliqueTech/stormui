@@ -90,19 +90,6 @@ const ClientZone = (props) => {
       },
     ],
   });
-  // useEffect(() => {
-  //   if (props && props.data && Array.isArray(props.data.zoneWiseConsumption)) {
-  //     const consumptionData = props.data.zoneWiseConsumption.map((zone) => zone.consumption);
-  //     const labels = props.data.zoneWiseConsumption.map((zone) => `Zone ${zone.zoneId} (${zone.consumption})`);
-  //     console.log('consumptionDatazone',consumptionData)
-  //     setData(consumptionData);
-  //     setOpt((prevOpt) => ({
-  //       ...prevOpt,
-  //       labels: labels,
-  //     }));
-  //     setLoading(false);
-  //   }
-  // }, [props.data]);
 
   useEffect(() => {
     if (props && props.data) {
@@ -147,9 +134,6 @@ const ClientZone = (props) => {
     }
   }, [props.data]);
 
-  console.log('Total Consumption:', totalConsumption);
-  console.log('Updated Chart Options:', opt);
-  console.log('Chart Data:', data);
   return (
     <div className="col-span-12 rounded-sm bg-white px-1 pb-2 pt-7.5 shadow-default sm:px-2 xl:col-span-5">
       <Row 

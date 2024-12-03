@@ -30,6 +30,8 @@ export default function GatewayData() {
     }
   }, [clients]);
 
+
+  //getAllDMAsWithClientIdAndZoneId
   const getDashboardData = async (clientId) => {
     setLoading(true);
     try {

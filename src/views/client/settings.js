@@ -1,36 +1,33 @@
 import React from 'react';
 import { Box, Typography, List, ListItem, useMediaQuery, useTheme, Divider, Avatar, Paper } from '@mui/material';
-// import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
-// import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './setting.css';
-// import ClientNotification from '../../src/assets/images/ClientNotification.png';
-// import Mail from '../../src/assets/images/Mail.png';
-// import UpdateSystem from '../../src/assets/images/UpdateSystem.png';
-// import Logout from '../../src/assets/images/Logout.png';
 import { useNavigate } from 'react-router-dom';
 
 
 
 
 function Settings() {
-  const navigate = useNavigate();
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const [, setFlexDirection] = useState(isSmallScreen ? 'column' : 'row');
+  // Importing necessary hooks and components for navigation and theme handling
+  const navigate = useNavigate(); // Hook for programmatic navigation
+  const theme = useTheme(); // Hook to access the theme object (for responsive design)
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Hook to check if the screen size is small (below 'sm' breakpoint)
 
+  // State to manage the flex direction based on screen size (default is 'row')
+  const [, setFlexDirection] = useState(isSmallScreen ? 'column' : 'row'); // Initialize state with flex direction (column for small screens, row for larger ones)
+
+  // useEffect hook to update the flex direction whenever the screen size changes
   useEffect(() => {
-    setFlexDirection(isSmallScreen ? 'column' : 'row');
-  }, [isSmallScreen]);
+    setFlexDirection(isSmallScreen ? 'column' : 'row'); // Update the flex direction based on the screen size (column for small screens)
+  }, [isSmallScreen]); // Dependency array ensures this runs only when the screen size changes
+
+  // Function to handle user logout and navigate to the login page
   const onlLogOut = () => {
-    sessionStorage.removeItem('email');
-    // sessionStorage.removeItem('dashboardReloaded');
-    // sessionStorage.removeItem('gatewayReloaded');
-    // sessionStorage.removeItem('zoneReloaded');
-    // sessionStorage.removeItem('reloaded')
-    navigate('/login')
+    sessionStorage.removeItem('email'); // Remove the 'email' item from sessionStorage to log out the user
+    navigate('/login'); // Redirect the user to the login page
   }
+
   return (
     <>
       {/* <Row>
@@ -48,13 +45,13 @@ function Settings() {
           </div>
         </Col>
       </Row> */}
-      <div style={{display:"flex", justifyContent:"space-between", marginTop:"10px"}}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
         <div>
           <h3 style={{ fontWeight: "700" }}>Profile</h3>
         </div>
         <div>
           <div className='setting-nav'>
-            <ul style={{gap:"10px"}}>
+            <ul style={{ gap: "10px" }}>
               <li><Link className='active' to='/app/setting'>Profile</Link></li>
               <li><Link to='/app/about'>About us</Link></li>
               {/* <li><Link to='/app/terms'>Terms & Conditions</Link></li> */}

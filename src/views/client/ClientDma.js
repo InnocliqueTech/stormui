@@ -81,20 +81,21 @@ import Spinner from 'react-bootstrap/Spinner';
 // };
 
 const ClientDma = (props) => {
-  console.log(props)
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [totalConsumption, setTotalConsumption] = useState(0);
+ // Importing React hooks for managing state and side effects
+const [data, setData] = useState([]); // State to store the chart data
+const [loading, setLoading] = useState(true); // State to track loading status
+const [totalConsumption, setTotalConsumption] = useState(0); // State to track total consumption value
 
+// Chart options configuration
   const [opt, setOpt] = useState({
     chart: {
-      fontFamily: 'Inter',
-      type: 'donut',
+      fontFamily: 'Inter', // Setting the font for the chart
+      type: 'donut', // Chart type: donut
     },
-    colors: ['#2196F3', '#01A9D8', '#1DD0BB'],
+    colors: ['#2196F3', '#01A9D8', '#1DD0BB'], // Colors for the chart segments
     legend: {
-      show: false,
-      position: 'bottom',
+      show: false, // Do not display the legend by default
+      position: 'bottom', // Legend position
       horizontalAlign: 'center',
       fontFamily: 'inter',
       fontWeight: 600,
@@ -104,9 +105,9 @@ const ClientDma = (props) => {
       },
     },
     fill: {
-      opacity: 1,
+      opacity: 1, // Full opacity for the chart colors
     },
-    labels: [],
+    labels: [], // Labels for the chart segments (to be populated dynamically)
     plotOptions: {
       pie: {
         donut: {
@@ -127,7 +128,7 @@ const ClientDma = (props) => {
               // },        
               
               formatter: function () {
-                return totalConsumption.toString(); // Use the state here
+                return totalConsumption.toString(); // Display total consumption dynamically
               },
             },
             name: {
@@ -169,12 +170,15 @@ const ClientDma = (props) => {
     ],
   });
 
+  // Effect to update `totalConsumption` state when props change
   useEffect(() => {
     if (props.dmaData && props.dmaData) {
       setTotalConsumption(props.dmaData.totalConsumption);
     }
   }, [props.data]);
   
+
+  // Effect to update chart data and options when `dmaData` is available
   useEffect(() => {
     if (props && props.dmaData && Array.isArray(props.dmaData.dmaWiseConsumption)) {
       const consumptionData = props.dmaData.dmaWiseConsumption.map((dma) => dma.consumption);

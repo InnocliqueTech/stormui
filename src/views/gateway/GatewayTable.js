@@ -47,89 +47,80 @@ const GatewayTable = ({onClickGateWay, gatewayIdClick}) => {
   console.log('location.state:', location.state);
   console.log('zoneId:', zoneId);
   console.log('dmaId:', dmaId);
+
+  // useEffect hook to trigger the getAllGateways function whenever selectedClient, selectedZone, or selectedDma changes
   useEffect(() => {
-    getAllGateways();
+    getAllGateways(); // Fetch gateways data whenever dependencies change
   }, [selectedClient, selectedZone, selectedDma]);
+// Function to fetch all gateways based on the selected client, zone, and DMA
+const getAllGateways = async () => {
+  const clientId = selectedClient; // Assign the selected client ID
+  const requestBody = {
+    clientId, // Include the selected client ID in the request body
+    zoneId: zoneId, // Include the selected zone ID
+    dmaId: dmaId // Include the selected DMA ID
+  };
 
-  const getAllGateways = async () => {
-    const clientId = selectedClient;
-    const requestBody = {
-      clientId,
-      zoneId: zoneId,
-      dmaId: dmaId
+  console.log(requestBody); // Log the request body for debugging purposes
+
+  try {
+    // Make a POST request to fetch gateways with the specified parameters
+    const response = await axios.post(`${BASE_API_URL1}gateways/getAllGatewaysWithClientId`, requestBody);
+    console.log(response); // Log the API response for debugging
+
+    // Check if the response contains the expected gateway details
+    if (response.data && response.data.gatewayDetails) {
+      setGateways(response.data.gatewayDetails); // Update the gateways state with the fetched data
     }
-    console.log(requestBody)
-    try {
 
-      const response = await axios.post(`${BASE_API_URL1}gateways/getAllGatewaysWithClientId`, requestBody);
-      console.log(response)
-      if (response.data && response.data.gatewayDetails) {
-        setGateways(response.data.gatewayDetails);
-      }
-      setLoading(false);
-    } catch (e) {
-      console.error('Error fetching gateways:', e);
-    }
-  };
+    setLoading(false); // Set the loading state to false after data fetching is complete
+  } catch (e) {
+    // Log any errors encountered during the API call
+    console.error('Error fetching gateways:', e);
+  }
+};
 
-  // const handleClickOpen = async (Id) => {
-  //   try {
-  //     const clientId = selectedClient;
-  //     const response = await axios.post(`${BASE_API_URL1}gateways/getGatewayDetailsWithClientIdAndGatewayId`, {
-  //       clientId,
-  //       gatewayId: Id
-  //     });
-  //     if (response.data) {
-  //       setLastFrameData(response.data);
-  //       setBasicDetails({
-  //         id: response.data.id,
-  //         type: response.data.type,
-  //         subnet: response.data.subnet,
-  //         ceacon: response.data.ceacon,
-  //         transmittingPower: response.data.transmittingPower,
-  //         createdTime: response.data.createdTime,
-  //         name: response.data.name,
-  //         region: response.data.region,
-  //         beacon: response.data.beacon,
-  //         gdtp: response.data.gdtp,
-  //         http: response.data.http,
-  //         remarks: response.data.remarks,
-  //       });
-  //       setOpen(true);
-  //     }
-  //   } catch (e) {
-  //     console.error('Error fetching gateway details:', e);
-  //   }
-  // };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+ // Handles the closing of a modal or dialog by setting the `open` state to false
+const handleClose = () => {
+  setOpen(false); // Closes the modal/dialog
+};
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
-  const handleItemsPerPageChange = (e) => {
-    setItemsPerPage(Number(e.target.value));
-    setCurrentPage(1); // Reset to the first page
-  };
-  const offset = (currentPage - 1) * itemsPerPage;
-  const currentPageData = gateways.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(gateways.length / itemsPerPage);
-  console.log(gateways)
 
-  const getStatusStyle = (status) => {
-    switch (status) {
-      case 'Active':
-        return { backgroundColor: 'rgba(47, 182, 23, 1)', color: '#fff' };
-      case 'Inactive':
-        return { backgroundColor: 'rgba(255, 0, 0, 1)', color: '#fff' };
-      case 'Not Working':
-        return { backgroundColor: 'rgba(255, 0, 0, 1)', color: '#fff' };
-      default:
-        return { backgroundColor: 'transparent', color: '#fff' }; // Default color for other statuses
-    }
-  };
+// Handles page changes in pagination
+const handlePageChange = (newPage) => {
+  setCurrentPage(newPage); // Updates the current page state with the new page number
+};
+
+// Handles changes to the number of items displayed per page
+const handleItemsPerPageChange = (e) => {
+  setItemsPerPage(Number(e.target.value)); // Updates the items per page with the selected value
+  setCurrentPage(1); // Resets to the first page whenever items per page changes
+};
+
+
+// Calculates the starting index for the current page
+const offset = (currentPage - 1) * itemsPerPage;
+
+// Slices the `gateways` array to retrieve data for the current page
+const currentPageData = gateways.slice(offset, offset + itemsPerPage);
+
+// Calculates the total number of pages based on the `gateways` length and items per page
+const pageCount = Math.ceil(gateways.length / itemsPerPage);
+ 
+// Determines the style for gateway status based on its value
+const getStatusStyle = (status) => {
+  switch (status) {
+    case 'Active': // Style for 'Active' status
+      return { backgroundColor: 'rgba(47, 182, 23, 1)', color: '#fff' };
+    case 'Inactive': // Style for 'Inactive' status
+      return { backgroundColor: 'rgba(255, 0, 0, 1)', color: '#fff' };
+    case 'Not Working': // Style for 'Not Working' status
+      return { backgroundColor: 'rgba(255, 0, 0, 1)', color: '#fff' };
+    default: // Default style for other statuses
+      return { backgroundColor: 'transparent', color: '#fff' }; // Transparent background with white text
+  }
+};
 
   return (
     <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10 }}>
@@ -137,20 +128,6 @@ const GatewayTable = ({onClickGateWay, gatewayIdClick}) => {
         <Col md={9} sm={7} xs={7}>
         {gatewayIdClick == true ? 'click' : <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Gateways</span>}
           
-          {/* <span style={{ textAlign: 'end' }}>
-              <InfoOutlinedIcon style={{ height: 20, width: 20, justifyContent: 'center', color: '#D6D9DC', marginLeft: 5 }} />
-            </span>
-          </Col>
-          <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
-            <CachedOutlinedIcon style={{ color: '#6C757D' }} />{' '}
-            <span>
-              {' '}
-              <FilterAltOutlinedIcon style={{ color: '#6C757D', marginLeft: 20, marginRight: 20 }} />
-            </span>
-            <span>
-              {' '}
-              <FileUploadOutlinedIcon style={{ color: '#6C757D' }} />
-            </span> */}
         </Col>
       </Row>
       <div className='customer-table'>

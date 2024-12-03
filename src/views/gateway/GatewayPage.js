@@ -51,53 +51,60 @@ export default function GatewayList(props) {
 
 
   useEffect(() => {
-
     fetchCardData()
-
-
-
   }, [selectedClient])
 
-  const fetchCardData = async () => {
-    try {
-      const requestBody = {
-        clientId: selectedClient
+// Function to fetch gateway card data and update the state for rendering
+const fetchCardData = async () => {
+  try {
+    // Prepare the request body for the API call
+    const requestBody = {
+      clientId: selectedClient // Use the selected client ID for the API request
+    };
+
+    // Make a POST request to the API to fetch gateway counts
+    const response = await axios.post('http://49.207.11.223:3307/gateways/getGatewayCountsInGatewayDashboard', requestBody);
+
+    console.log(response.data); // Log the entire response data for debugging
+    const data = response.data; // Extract the response data
+    console.log(data); // Log the parsed data for additional debugging
+
+    // Update the state with an array of card data for the dashboard
+    setGatewayCardData([
+      {
+        type: 'Total Gateways', // Label for the card
+        count: data.gatewayCount.totalGateways || '0', // Fetch total gateways or default to '0'
+        icon: totalGateway, // Icon to represent the total gateways
+        bg: 'rgba(79, 187, 0, 0.15)' // Background color for this card
+      },
+      {
+        type: 'Active Gateways', // Label for the card
+        count: data.gatewayCount.activeGateways || '0', // Fetch active gateways or default to '0'
+        icon: activeGatway, // Icon to represent active gateways
+        bg: '#FFF3E8' // Background color for this card
+      },
+      {
+        type: 'Inactive Gateways', // Label for the card
+        count: data.gatewayCount.inactiveGateways || '0', // Fetch inactive gateways or default to '0'
+        icon: inactive, // Icon to represent inactive gateways
+        bg: '#FEF0F4' // Background color for this card
+      },
+      {
+        type: "Can's Communicated", // Label for the card
+        count: data.gatewayCount.totalCansCommunicatedToday || '0', // Fetch CANs communicated today or default to '0'
+        icon: cans, // Icon to represent communicated CANs
+        bg: '#E3F2FD' // Background color for this card
       }
-      const response = await axios.post('http://49.207.11.223:3307/gateways/getGatewayCountsInGatewayDashboard', requestBody)
-      console.log(response.data)
-      const data = response.data
-      console.log(data)
-      setGatewayCardData([
-        {
-          type: 'Total Gateways',
-          count: data.gatewayCount.totalGateways || '0',
-          icon: totalGateway,
-          bg: 'rgba(79, 187, 0, 0.15)'
-        },
-        {
-          type: 'Active Gateways',
-          count: data.gatewayCount.activeGateways || '0',
-          icon: activeGatway,
-          bg: '#FFF3E8'
-        },
-        {
-          type: 'Inactive Gateways',
-          count: data.gatewayCount.inactiveGateways || '0',
-          icon: inactive,
-          bg: '#FEF0F4'
-        },
-        {
-          type: "Can's Communicated",
-          count: data.gatewayCount.totalCansCommunicatedToday || '0',
-          icon: cans,
-          bg: '#E3F2FD'
-        }
-      ]);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
+    ]);
+
+    // Set loading to false once the data is successfully fetched and processed
+    setLoading(false);
+  } catch (error) {
+    // Log any errors encountered during the API call or data processing
+    console.error(error);
   }
+};
+
 
   const onClickGateWay = () => {
     console.log('Gateway')
@@ -105,12 +112,10 @@ export default function GatewayList(props) {
   }
 
   const handleFilterIconClick = () => {
-    // navigate('/app/meterlist');
     setIsDialogOpen(true);
 
   };
   const handleDialogReset = () => {
-    // setIsDialogOpen(false);
     setSelectedZone(0);
     setSelectedDma(0);
     setSelectedGateway(0);
@@ -120,13 +125,11 @@ export default function GatewayList(props) {
 
   const handleDialogClose = () => {
     setIsDialogOpen(false);
-    // navigate('/app/meterlist');
   };
 
 
   const handleDialogApply = () => {
     setIsDialogOpen(false);
-    // navigate('/app/meterlist');
     const dataToSend = { id: 3 };
     navigate("/app/client", { state: dataToSend })
   };
@@ -146,41 +149,6 @@ export default function GatewayList(props) {
               <h3 style={{ fontWeight: '700' }}>Gateways</h3>
             </div>
             <div style={{ display: "flex" }}>
-              {/* <div className="days-date-picker">
-                <div>
-                  {[
-                    { day: '1D', add: 1 },
-                    { day: '7D', add: 7 },
-                    { day: '14D', add: 14 },
-                    { day: '30D', add: 30 }
-                  ].map((obj) => {
-                    return (
-                      <button
-                        className={`days ${selectedDate === obj.day ? 'active' : ''}`}
-                        onClick={() => {
-                          setSelectedDate(obj.day);
-                          onDateChange(obj.add);
-                        }}
-                        key={obj.day}
-                      >
-                        {obj.day}
-                      </button>
-                    );
-                  })}
-
-                  {isDatePickerOpen && (
-                    <div className="date-picker">
-                      <NewDatePicker />
-                    </div>
-                  )}
-                </div>
-
-                <div className="">
-                  <button className="icon-button" onClick={toggleDatePicker}>
-                    <DateRangeIcon />
-                  </button>
-                </div>
-              </div> */}
               <div style={{ marginLeft: "10px", marginTop: "3px" }}>
                 <div className="form-group selectcustom"
                   style={{ height: "47px", width: "47px", backgroundColor: "#eaeaeb", borderRadius: "8px" }}>

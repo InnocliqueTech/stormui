@@ -110,9 +110,6 @@ const Client = () => {
   const handleFilterIconClick = () => {
     // navigate('/app/meterlist');
     setIsDialogOpen(true);
-
-    console.log(meterData)
-
   };
 
 
@@ -131,7 +128,7 @@ const Client = () => {
     }
   }, [id])
 
-  // zone wise supply
+  // getZoneWiseConsumptionInClientDashboard
   useEffect(() => {
     const fetchDashboardData = async () => {
 
@@ -377,258 +374,361 @@ const Client = () => {
   }, []);
 
 
-  // const today = format(new Date(), 'yyyy-MM-dd');
-  // const [presentDate, setPresentDate] = useState(format(subDays(new Date(today), 7), 'yyyy-MM-dd'));
-  // const [toDate, setToDate] = useState(today);
+  // Format the current date as 'yyyy-MM-dd' using `date-fns`
   const today = format(new Date(), 'yyyy-MM-dd');
-  const fromdate = format(subDays(new Date(today), 6), 'yyyy-MM-dd')
-  const todayDate = today
-  // out flow data
+
+  // Calculate the date 6 days before today and format it as 'yyyy-MM-dd'
+  const fromdate = format(subDays(new Date(today), 6), 'yyyy-MM-dd');
+
+  // Assign the formatted current date to `todayDate`
+  const todayDate = today;
+
+
+
+
+  // useEffect hook to fetch outflow data whenever `presentDate` or `toDate` changes
   useEffect(() => {
+    // Async function to fetch total consumption data
     const fetchOutFlowData = async () => {
-
       try {
-
+        // Construct the request body dynamically based on selected client, zone, and dates
         const requestBody = {
-          clientId: selectedClient,
-          zoneId: selectedZone || 0,
-          fromDate: fromdate,
-          toDate: todayDate
-        }
-        const response = await axios.post(`${BASE_API_URL1}dashboard/getTotalConsumptionInClientDashboard`, requestBody);
-        console.log(requestBody)
-        console.log(response)
+          clientId: selectedClient, // Selected client ID
+          zoneId: selectedZone || 0, // Use 0 as the default zone ID if none is selected
+          fromDate: fromdate, // Start date for the data range
+          toDate: todayDate // End date for the data range
+        };
+
+        // Log the request body for debugging
+        console.log(requestBody);
+
+        // Send a POST request to fetch total consumption data
+        const response = await axios.post(
+          `${BASE_API_URL1}dashboard/getTotalConsumptionInClientDashboard`,
+          requestBody
+        );
+
+        // Log the response for debugging
+        console.log(response);
+
+        // Update the state with the fetched data
         setOutFlowData(response.data);
       } catch (e) {
+        // Log any errors encountered during the API call
         console.log(e);
       }
     };
 
+    // Invoke the data fetching function
     fetchOutFlowData();
-  }, [presentDate, toDate]);
-  console.log(outFlowData)
+  }, [presentDate, toDate]); // Dependencies array to trigger the effect when these values change
 
-  // getDMAWiseConsumptionInClientDashboard
+  // Log the fetched outflow data to the console for debugging
+  console.log(outFlowData);
 
+
+
+  // useEffect to fetch DMA-wise consumption data whenever presentDate or toDate changes
   useEffect(() => {
+    // Function to fetch DMA data from the API
     const fetchDmaData = async () => {
+      // Prepare the request payload with necessary parameters
       const requestBody = {
-        clientId: selectedClient,
-        zoneId: selectedZone || 0,
-        fromDate: presentDate,
-        toDate: toDate
-      }
+        clientId: selectedClient, // The ID of the selected client
+        zoneId: selectedZone || 0, // Use selectedZone or default to 0 if not selected
+        fromDate: presentDate, // Start date for fetching data
+        toDate: toDate // End date for fetching data
+      };
 
-      // const requestBody = {
-      //   clientId: selectedClient,
-      //   zoneId: 0,
-      //   fromDate: "2024-06-01",
-      //   toDate: "2024-06-27"
-      // }
-      console.log(requestBody)
       try {
-        const response = await axios.post(`${BASE_API_URL1}dma/getDMAWiseConsumptionInClientDashboard`, requestBody);
-        console.log(response)
+        // Make a POST request to fetch DMA-wise consumption data
+        const response = await axios.post(
+          `${BASE_API_URL1}dma/getDMAWiseConsumptionInClientDashboard`,
+          requestBody
+        );
+
+        // Log the API response for debugging
+        console.log(response);
+
+        // Update state with the fetched DMA data
         setDmaData(response.data);
+
+        // Log the fetched data for verification
         console.log(response.data);
-        console.log(dmaData)
+
+        // Log the updated state to ensure it reflects the correct data
+        console.log(dmaData);
       } catch (e) {
+        // Log any errors that occur during the API request
         console.log(e);
       }
     };
 
+    // Invoke the fetchDmaData function
     fetchDmaData();
-  }, [presentDate, toDate]);
+  }, [presentDate, toDate]); // Dependencies: Trigger fetch when presentDate or toDate changes
 
-  const [open, setOpen] = React.useState(false);
-  const [opendma, setOpendma] = React.useState(false);
-  // const [fullWidth] = React.useState(true);
-  const [value, setValue] = React.useState(0);
+
+  // State variables using React's useState hook
+  const [open, setOpen] = React.useState(false); // Tracks whether a modal or dialog is open
+  const [opendma, setOpendma] = React.useState(false); // Tracks whether a DMA-specific modal or dialog is open
+  const [value, setValue] = React.useState(0); // Tracks the currently selected tab or value
+
+  // Event handler for handling changes (e.g., tab selection)
   const handleChange = (event, newValue) => {
-    console.log('NEW', newValue)
+    console.log('NEW', newValue); // Logs the new value for debugging purposes
+
+    // Check if the selected tab corresponds to index 3 (based on business logic)
     if (newValue == 3) {
-      getDashboardData(currentPage, itemsPerPage)
+      // Fetch dashboard data with pagination details when tab 3 is selected
+      getDashboardData(currentPage, itemsPerPage);
     }
+
+    // Update the state to reflect the newly selected value
     setValue(newValue);
   };
 
 
 
+  // Function to open a general modal/dialog
   const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+    setOpen(true); // Sets the 'open' state to true, which triggers the modal/dialog to open
   };
 
+  // Function to close a general modal/dialog
+  const handleClose = () => {
+    setOpen(false); // Sets the 'open' state to false, which closes the modal/dialog
+  };
+
+  // Function to open a DMA-specific modal/dialog
   const handledmaClickOpen = () => {
-    setOpendma(true);
+    setOpendma(true); // Sets the 'opendma' state to true, which triggers the DMA-specific modal/dialog to open
   };
+
+  // Function to close a DMA-specific modal/dialog
   const handledmaClose = () => {
-    setOpendma(false);
+    setOpendma(false); // Sets the 'opendma' state to false, which closes the DMA-specific modal/dialog
   };
+
+  // CustomTabPanel component to manage the rendering of content for each tab
   function CustomTabPanel(props) {
+    // Destructuring the props to extract 'children', 'value', 'index', and 'other' properties
     const { children, value, index, ...other } = props;
 
     return (
+      // The div element serves as the container for the content of each tab panel
       <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
+        role="tabpanel" // ARIA role for accessibility, indicating that this is a tab panel
+        hidden={value !== index} // Hides the tab panel if the value is not equal to the current index
+        id={`simple-tabpanel-${index}`} // Unique ID for each tab panel based on the index
+        aria-labelledby={`simple-tab-${index}`} // Links the tab panel to its corresponding tab using the tab's ID
+        {...other} // Spread operator to pass any other props not explicitly destructured (e.g., classNames, styles)
       >
+        {/* Only render children if the 'value' matches the 'index', indicating the current active tab */}
         {value === index && <Box sx={{ p: 0, mt: 2 }}>{children}</Box>}
       </div>
     );
   }
+
+
+  // Function to reset the selected filter values in the dialog
   const handleDialogReset = () => {
-    // setIsDialogOpen(false);
-    setSelectedZone(0);
-    setSelectedDma(0);
-    setSelectedGateway(0);
-    setSelectedStatus(0);
+    // setIsDialogOpen(false); // This line is commented out but would close the dialog if uncommented
+    setSelectedZone(0); // Reset selectedZone to 0 (likely representing a default or "All" option)
+    setSelectedDma(0);  // Reset selectedDma to 0 (likely representing a default or "All" option)
+    setSelectedGateway(0); // Reset selectedGateway to 0 (likely representing a default or "All" option)
+    setSelectedStatus(0); // Reset selectedStatus to 0 (likely representing a default or "All" option)
   };
 
-
+  // Function to close the dialog without applying any changes
   const handleDialogClose = () => {
-    setIsDialogOpen(false);
-    // navigate('/app/meterlist');
+    setIsDialogOpen(false); // Close the dialog by setting the state to false
+    // navigate('/app/meterlist'); // This line is commented out but would navigate to the '/app/meterlist' route if uncommented
   };
 
-
+  // Function to apply changes from the dialog and navigate to a new page
   const handleDialogApply = () => {
-    setIsDialogOpen(false);
+    setIsDialogOpen(false); // Close the dialog after applying changes
 
-    const dataToSend = { id: 3 };
+    const dataToSend = { id: 3 }; // Create an object with data to send to the next page (for example, an ID)
 
-    navigate("/app/client", { state: dataToSend })
+    // Navigate to the '/app/client' route and pass the data (state) as part of the navigation
+    navigate("/app/client", { state: dataToSend });
   };
 
+  // Function to generate accessibility props for the tabs
   function a11yProps(index) {
+    // Returns an object with the appropriate 'id' and 'aria-controls' attributes for a given tab
     return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
+      id: `simple-tab-${index}`, // 'id' of the tab based on its index
+      'aria-controls': `simple-tabpanel-${index}`, // 'aria-controls' attribute to associate the tab with its corresponding panel
     };
   }
 
+  // Function to change the current view to the 'DMA' tab and set the selected zone
   const shiftToDma = (zoneId) => {
-    setValue(2)
-    setSelectedZone(zoneId)
-    zId = zoneId
-  }
+    setValue(2); // Switch to the 'DMA' tab (index 2)
+    setSelectedZone(zoneId); // Set the selected zone ID based on the passed 'zoneId'
+    zId = zoneId; // Store the zone ID globally (if needed elsewhere)
+  };
 
+  // Function to change the current view to the 'Meter' tab and set the selected DMA
   const shiftToMeter = (dmaId) => {
-    setValue(3)
-    // setDmaData(dmaId)
-    setSelectedDma(dmaId)
-    // dId = dmaId
-    getDashboardData(1, itemsPerPage, zId, dmaId)
-  }
+    setValue(3); // Switch to the 'Meter' tab (index 3)
+    // setDmaData(dmaId) // This line is commented out, but it might be used to set DMA-specific data in the state
+    setSelectedDma(dmaId); // Set the selected DMA ID based on the passed 'dmaId'
+    // dId = dmaId // This line is commented out, but it might be used to store the DMA ID globally (if needed elsewhere)
+    getDashboardData(1, itemsPerPage, zId, dmaId); // Call the function to fetch dashboard data based on the current page, items per page, and selected zone/DMA
+  };
 
 
+  // Function to handle the change of the dropdown selection
   const handleDropdownChange = (event) => {
-    if (event) event.stopPropagation()
-    setSearchType(event.target.value);
-    setSearchValue('');
-    setIsSearching(false);
+    if (event) event.stopPropagation(); // Prevent the event from bubbling up to parent components (useful in case of event listeners attached to parent elements)
+
+    setSearchType(event.target.value); // Update the 'searchType' state with the selected value from the dropdown
+    setSearchValue(''); // Reset the 'searchValue' state to an empty string whenever the search type changes
+    setIsSearching(false); // Reset the 'isSearching' state to false when the search type changes, indicating no active search
   };
 
+  // Function to handle the change of input value for the search field
   const handleInputChange = (event) => {
-    setSearchValue(event.target.value); // Only update the search value, no search is triggered
+    setSearchValue(event.target.value); // Update the 'searchValue' state with the value entered in the search input field
+    // No search is triggered here, it only updates the search value state.
   };
 
 
 
+
+  // Function to handle the change of page number
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    console.log(newPage)
+    setCurrentPage(newPage); // Update the current page state with the new page number
+    console.log(newPage); // Log the new page number for debugging
 
-
-    getDashboardData(newPage, itemsPerPage)
+    // Fetch the data for the new page using the updated page number and the current items per page
+    getDashboardData(newPage, itemsPerPage);
   };
+
+  // Function to handle the change of items per page
   const handleItemsPerPageChange = (e) => {
-    console.log(e)
-    setItemsPerPage(Number(e));
-    setCurrentPage(1);
-    getDashboardData(1, e)
+    console.log(e); // Log the new value of items per page for debugging
 
+    setItemsPerPage(Number(e)); // Update the state for the number of items per page
+    setCurrentPage(1); // Reset the current page to 1 when items per page changes to avoid exceeding the new page count
+
+    // Fetch the data for the first page with the new items per page value
+    getDashboardData(1, e);
   };
 
 
+
+  // Function to fetch dashboard data based on pagination, zone, dma, and filter criteria
   const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId) => {
+    // Calculate the start index based on the current page and items per page
     const startIndex = (currentPage - 1) / itemsPerPage;
-    console.log("Update", selectedDma, dId, dmaId)
-    console.log("Update", selectedZone, zoId, zoneId)
+    console.log("Update", selectedDma, dId, dmaId); // Debug: Log the selected DMA and zone values
+    console.log("Update", selectedZone, zoId, zoneId); // Debug: Log the selected Zone and DMA IDs
 
     try {
-      setLoading(true);
+      setLoading(true); // Set loading state to true while the data is being fetched
+
+      // Construct the request body with all the required filters and pagination information
       const requestBody = {
-        status: selectedStatus,
-        clientId: selectedClient || 1,
-        zoneId: zoId ? zoId : zId ? zId : 0,
-        dmaId: dmaId ? dmaId : dId ? dId : 0,
-        gatewayId: gId ? gId : 0,
-        startIndex: startIndex,
-        rowCount: itemsPerPage
+        status: selectedStatus, // Include the selected status filter
+        clientId: selectedClient || 1, // Use the selected client ID or default to 1 if not selected
+        zoneId: zoId ? zoId : zId ? zId : 0, // Use the provided zone ID or fallback to `zId` or 0
+        dmaId: dmaId ? dmaId : dId ? dId : 0, // Use the provided DMA ID or fallback to `dId` or 0
+        gatewayId: gId ? gId : 0, // Use the gateway ID if provided, else default to 0
+        startIndex: startIndex, // Pagination: calculate the starting index
+        rowCount: itemsPerPage // Pagination: number of items per page
       }
 
-      console.log(requestBody);
+      console.log(requestBody); // Debug: Log the request body to verify the parameters being sent
+
+      // Send a POST request to the API with the constructed request body
       const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
-      console.log(response);
-      // setMeterList(response.data.meters || []);
-      console.log(response.data.totalCount);
+
+      console.log(response); // Debug: Log the API response to inspect the data returned
+      console.log(response.data.totalCount); // Debug: Log the total count of meters returned by the API
+
+      // Set the total number of items for pagination
       setTotalItems(response.data.totalCount);
-      setMeterData(response.data.meters || []);
-      setFiteredMeterData(response.data.meters || [])
-      setLoading(false);
+
+      // Set the meter data in the state
+      setMeterData(response.data.meters || []); // Fallback to empty array if meters data is not present
+      setFiteredMeterData(response.data.meters || []); // Store filtered meter data
+
+      setLoading(false); // Set loading state to false after data is fetched
+
     } catch (error) {
-      console.error('Error fetching data:', error);
-      setLoading(false);
+      console.error('Error fetching data:', error); // Log any error that occurs during the fetch
+      setLoading(false); // Ensure loading state is reset even in case of an error
     }
   };
 
 
-  const handleClickRefresh = () => {
-    setSelectedClient(1);
-    setSelectedZone(0);
-    setSelectedDma(0);
-    setSelectedGateway(0);
-    setSelectedStatus(0);
-    console.log(selectedZone, selectedDma)
-    zId = 0
-    dId = 0
-    getDashboardData(1, 5, zId, dId);
+
+// Function to handle the refresh button click and reset all selected filter values
+const handleClickRefresh = () => {
+  // Reset all the filter values to their default state
+  setSelectedClient(1); // Reset to default client ID (1)
+  setSelectedZone(0); // Reset to default zone ID (0)
+  setSelectedDma(0); // Reset to default DMA ID (0)
+  setSelectedGateway(0); // Reset to default gateway ID (0)
+  setSelectedStatus(0); // Reset to default status (0)
+
+  console.log(selectedZone, selectedDma); // Debugging: Log the current selected zone and DMA (before the state is updated)
+
+  // Manually reset the global variables for zone ID (zId) and DMA ID (dId)
+  zId = 0;
+  dId = 0;
+
+  // Call the getDashboardData function with default parameters to refresh the data
+  getDashboardData(1, 5, zId, dId); // Fetch the data with page 1, 5 items per page, and default filter values
+};
+
+// Function to handle search operation when the user provides search value
+const handleSearch = async (value) => {
+  // Check if searchType and searchValue are both provided; if not, warn the user and exit the function
+  if (!searchType || !searchValue) {
+    console.warn('Both search type and value are required.'); // Warn if either search type or search value is missing
+    return;
   }
 
+  // Indicate that the search process is starting by setting the searching state to true
+  setIsSearching(true); // Set isSearching state to true to indicate the search is active
 
-  const handleSearch = async (value) => {
-    if (!searchType || !searchValue) {
-      // Prevent search if either searchType or searchValue is not set
-      console.warn('Both search type and value are required.');
-      return;
-    }
+  // Show a loading indicator while the search request is being processed
+  setLoading(true); // Set loading state to true to display loading indicator
 
-    setIsSearching(true); // Indicate a search is active
-    setLoading(true); // Show a loading indicator
-    try {
-      const requestBody = {
-        type: searchType,
-        value: value,
-      };
-      console.log(requestBody);
-      const response = await axios.post(`http://49.207.11.223:3307/meters/getMeterSearch`, requestBody);
-      console.log(response);
-      setMeterData(response.data.meterList || []); // Update the meter data based on the search result
-      setFiteredMeterData(response.data.meterList || [])
+  try {
+    // Create the request body with search parameters: search type and search value
+    const requestBody = {
+      type: searchType, // Search type selected by the user
+      value: value, // Search value entered by the user
+    };
 
+    console.log(requestBody); // Debugging: Log the request body to check what data is being sent
 
-    } catch (error) {
-      console.error("Error fetching search data:", error);
-    } finally {
-      setLoading(false); // Hide the loading indicator after search completes
-    }
-  };
+    // Make an API call to search for meters using the provided search parameters
+    const response = await axios.post(`http://49.207.11.223:3307/meters/getMeterSearch`, requestBody);
+    console.log(response); // Debugging: Log the response from the API
+
+    // Update the meter data with the search results
+    setMeterData(response.data.meterList || []); // Set the meter data to the result of the search (empty array if no data)
+    setFiteredMeterData(response.data.meterList || []); // Also update the filtered meter data
+
+    console.log(meterData); // Debugging: Log the meter data after the search to check if it's updated
+
+  } catch (error) {
+    // If an error occurs during the search, log it
+    console.error("Error fetching search data:", error); // Log the error to the console
+  } finally {
+    // Hide the loading indicator after the search is complete (whether successful or failed)
+    setLoading(false); // Set loading state to false to stop the loading indicator
+  }
+};
+
 
   return (
     <React.Fragment>
@@ -767,7 +867,7 @@ const Client = () => {
                         zId = selectedValue;
                         setSelectedDma(0);
                         dId = 0;
-                        {console.log(zId)}
+                        { console.log(zId) }
                         getDashboardData(1, itemsPerPage, selectedValue, 0)
                       }}>
                         {/* <select className="form-control" value={selectedZone} onChange={(e) => setSelectedZone(Number(e.target.value))}> */}

@@ -210,44 +210,59 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 const FirebaseLogin = ({ className, ...rest }) => {
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+// Importing necessary modules from React and React Router
+const navigate = useNavigate(); // Hook for programmatic navigation
+const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = (event) => event.preventDefault();
+// Function to toggle the visibility of the password input field
+const handleClickShowPassword = () => setShowPassword(!showPassword);
 
-  const handleLogin = async (values, { setErrors, setSubmitting }) => {
-    try {
-      const response = await fetch('http://49.207.11.223:3307/dashboard/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password
-        })
-      });
+// Prevents the default behavior when the password visibility toggle is clicked
+const handleMouseDownPassword = (event) => event.preventDefault();
 
-      const result = await response.json();
+// Function to handle the login process
+const handleLogin = async (values, { setErrors, setSubmitting }) => {
+  try {
+    // Sending a POST request to the login endpoint
+    const response = await fetch('http://49.207.11.223:3307/dashboard/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json' // Informing the server that the body contains JSON
+      },
+      body: JSON.stringify({
+        email: values.email, // Email entered by the user
+        password: values.password // Password entered by the user
+      })
+    });
 
-      if (response.ok) {
-        sessionStorage.setItem('email', values.email);
-        sessionStorage.removeItem('dashboardReloaded');
-        sessionStorage.removeItem('gatewayReloaded');
-        sessionStorage.removeItem('zoneReloaded');
-        sessionStorage.removeItem('reloaded');
+    // Parsing the response JSON
+    const result = await response.json();
 
-        navigate('/app/dashboard/location');
-      } else {
-        setErrors({ submit: result.message || 'Something went wrong' });
-      }
-    } catch (error) {
-      setErrors({ submit: 'Failed to login. Please try again later.' });
-    } finally {
-      setSubmitting(false);
+    if (response.ok) {
+      // If the login is successful, store the email in sessionStorage
+      sessionStorage.setItem('email', values.email);
+
+      // Removing specific reload flags from sessionStorage
+      sessionStorage.removeItem('dashboardReloaded');
+      sessionStorage.removeItem('gatewayReloaded');
+      sessionStorage.removeItem('zoneReloaded');
+      sessionStorage.removeItem('reloaded');
+
+      // Navigating the user to the dashboard location page
+      navigate('/app/dashboard/location');
+    } else {
+      // If the response is not OK, show an error message from the server or a default message
+      setErrors({ submit: result.message || 'Something went wrong' });
     }
-  };
+  } catch (error) {
+    // Catch any errors during the request and display a general error message
+    setErrors({ submit: 'Failed to login. Please try again later.' });
+  } finally {
+    // Ensures the form's submitting state is reset regardless of success or failure
+    setSubmitting(false);
+  }
+};
+
 
   return (
     <div

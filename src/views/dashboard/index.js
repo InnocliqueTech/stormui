@@ -33,64 +33,72 @@ const DashDefault = () => {
 
 
 
+  // Function to fetch and process dashboard data
   const getDashboardData = async () => {
     try {
+      // Fetching overall dashboard values based on the selected client
       const response = await axios.post(BASE_API_URL1 + 'dashboard/getAllDashboardValues', {
-        clientId: selectedClient
+        clientId: selectedClient // Passing the selected client ID as part of the request body
       });
+
+      // Parsing the retrieved dashboard data into a structured format
       const parsedData = parseDashboardData(response.data);
-      setDashboardData(parsedData);
+      setDashboardData(parsedData); // Updating state with the parsed dashboard data
 
-      // const aData = await axios.post(BASE_API_URL + "/getAlerts");
-      // setAlertData(aData.data);
-
+      // Fetching DMA outflow data specific to the selected client and zone
       const flowData = await axios.post(BASE_API_URL1 + 'dma/getDMAOutFlowInGateWayDashBoard', {
-        clientId: selectedClient,
-        zoneId: selectedZone,
-        fromDate: presentDate,
-        toDate: toDate
+        clientId: selectedClient, // Client ID for filtering
+        zoneId: selectedZone, // Zone ID for filtering
+        fromDate: presentDate, // Starting date for the data range
+        toDate: toDate // Ending date for the data range
       });
+
+      // Updating state with the DMA outflow data
       setOutFlowData(flowData.data);
     } catch (e) {
+      // Logging errors in case of API failures
       console.log(e);
     }
   };
-  console.log('dashboard data', dashboardData);
-  const parseNumber = (value) => {
-    const number = Number(value);
-    return isNaN(number) ? 0 : number;
-  };
 
-  const parseDashboardData = (data) => {
-    return {
-      totalZone: {
-        activeZones: parseNumber(data.totalZone?.activeZones),
-        inactiveZones: parseNumber(data.totalZone?.inactiveZones),
-        totalCount: parseNumber(data.totalZone?.totalCount)
-      },
-      totalDma: {
-        activeDma: parseNumber(data.totalDma?.activeDma),
-        inactiveDma: parseNumber(data.totalDma?.inactiveDma),
-        faultyDma: parseNumber(data.totalDma?.faultyDma),
-        totalCount: parseNumber(data.totalDma?.totalCount)
-      },
-      totalMeters: {
-        activeMeters: parseNumber(data.totalMeters?.activeMeters),
-        inactiveMeters: parseNumber(data.totalMeters?.inactiveMeters),
-        faultyMeters: parseNumber(data.totalMeters?.faultyMeters),
-        totalCount: parseNumber(data.totalMeters?.totalCount)
-      },
-      totalGateway: {
-        activeGateways: parseNumber(data.totalGateway?.activeGateways),
-        inactiveGateways: parseNumber(data.totalGateway?.inactiveGateways),
-        totalCount: parseNumber(data.totalGateway?.totalCount)
-      }
-    };
+
+// Utility function to parse a value into a number
+const parseNumber = (value) => {
+  const number = Number(value); // Attempt to convert the value into a number
+  return isNaN(number) ? 0 : number; // If the value is not a number (NaN), return 0; otherwise, return the number
+};
+
+// Function to parse and structure dashboard data
+const parseDashboardData = (data) => {
+  return {
+    totalZone: {
+      activeZones: parseNumber(data.totalZone?.activeZones), // Convert active zones to a number; default to 0 if not valid
+      inactiveZones: parseNumber(data.totalZone?.inactiveZones), // Convert inactive zones to a number; default to 0 if not valid
+      totalCount: parseNumber(data.totalZone?.totalCount) // Total count of zones; default to 0 if not valid
+    },
+    totalDma: {
+      activeDma: parseNumber(data.totalDma?.activeDma), // Convert active DMA count to a number; default to 0 if not valid
+      inactiveDma: parseNumber(data.totalDma?.inactiveDma), // Convert inactive DMA count to a number; default to 0 if not valid
+      faultyDma: parseNumber(data.totalDma?.faultyDma), // Convert faulty DMA count to a number; default to 0 if not valid
+      totalCount: parseNumber(data.totalDma?.totalCount) // Total DMA count; default to 0 if not valid
+    },
+    totalMeters: {
+      activeMeters: parseNumber(data.totalMeters?.activeMeters), // Convert active meter count to a number; default to 0 if not valid
+      inactiveMeters: parseNumber(data.totalMeters?.inactiveMeters), // Convert inactive meter count to a number; default to 0 if not valid
+      faultyMeters: parseNumber(data.totalMeters?.faultyMeters), // Convert faulty meter count to a number; default to 0 if not valid
+      totalCount: parseNumber(data.totalMeters?.totalCount) // Total meter count; default to 0 if not valid
+    },
+    totalGateway: {
+      activeGateways: parseNumber(data.totalGateway?.activeGateways), // Convert active gateway count to a number; default to 0 if not valid
+      inactiveGateways: parseNumber(data.totalGateway?.inactiveGateways), // Convert inactive gateway count to a number; default to 0 if not valid
+      totalCount: parseNumber(data.totalGateway?.totalCount) // Total gateway count; default to 0 if not valid
+    }
   };
+};
   console.log('dashboard.totaldma', dashboardData.totalDma);
   return (
     <React.Fragment>
-      <Row style={{marginTop:"14px"}}>
+      <Row style={{ marginTop: "14px" }}>
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
             <Card.Body
@@ -130,7 +138,7 @@ const DashDefault = () => {
         <Col md={6} xl={4} sm={12}>
           <Card className="card-social">
             <Card.Body
-               onClick={() => {
+              onClick={() => {
 
                 const dataToSend = { id: 3 };
 

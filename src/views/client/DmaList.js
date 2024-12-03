@@ -1,21 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import {Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
-// import { MoreVert } from '@mui/icons-material';
-// import { ThreeDots } from 'react-loader-spinner';
 import Paginations from '../../components/Paginatons';
 import { ClientsContext } from '../dashboard/context';
 import { BASE_API_URL1 } from '../../config/constant';
 import { useLocation } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
-// import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-// import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-// import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 
 
-const DmaList = React.memo(({shiftToMeter}) => {
+const DmaList = React.memo(({ shiftToMeter }) => {
   // const selectedZone = 0;
   const { clients, selectedZone } = useContext(ClientsContext);
   const [zonesList, setZonesList] = useState([]);
@@ -23,39 +18,16 @@ const DmaList = React.memo(({shiftToMeter}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const location = useLocation();
-  // const [isId, setIsId] = useState(false)
-  // Destructure the state directly from location.state
-  const { zoneId } = location.state || { zoneId: selectedZone || 0};
-  // const [apiCalled, setApiCalled] = useState(false)
-
-  // const { id } = location.state || {};
-  // const [value, setValue] = React.useState(2);
-
-  
-  // useEffect(() => {
-  //   console.log(id)
-  //   if (id) {
-  //     setValue(id)
-  //     setIsId(true)
-     
-  //   } else {
-  //     setIsId(false)
-   
-  //   }
-  // }, [id])
-
-  // useEffect(() => {
-  //   if (clients && clients.length > 0) {
-  //     getDashboardData(clients[0].clientId);
-  //   }
-  // }, []);
+  const { zoneId } = location.state || { zoneId: selectedZone || 0 };
 
   useEffect(() => {
     if (clients && clients.length > 0) {
-      getDashboardData(clients[0].clientId, selectedZone); // Prioritize selectedZone
+      getDashboardData(clients[0].clientId, selectedZone);
     }
   }, [selectedZone]);
 
+
+  //getAllDMAsWithClientIdAndZoneId
   const getDashboardData = async (clientId, zone) => {
     // if(!apiCalled) {
     // setApiCalled(true)
@@ -66,7 +38,7 @@ const DmaList = React.memo(({shiftToMeter}) => {
       const requestBody = {
         clientId: clientId,
         zoneId: zoId
-    
+
       }
       const response = await axios.post(BASE_API_URL1 + 'dma/getAllDMAsWithClientIdAndZoneId', requestBody);
       setZonesList(response.data.dmasList || []);
@@ -106,7 +78,7 @@ const DmaList = React.memo(({shiftToMeter}) => {
       <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10, paddingBottom: 100 }}>
         <Row style={{ marginBottom: '24px' }}>
           <Col md={9} sm={7} xs={7}>
-          <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>DMA&apos;s </span>{' '}
+            <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>DMA&apos;s </span>{' '}
           </Col>
           {/* <Col md={3} sm={5} xs={5} style={{ textAlign: 'end' }}>
             <CachedOutlinedIcon style={{ color: '#6C757D' }} />
@@ -122,85 +94,85 @@ const DmaList = React.memo(({shiftToMeter}) => {
             </div>
           ) : (
             <Table style={{ borderRadius: 8 }}>
-            <thead style={{ backgroundColor: '#F4F5F5' }}>
-              <tr>
-                <th className='tablehead'>DMA ID</th>
-                {/* <th className='tablehead'>Gateway ID</th> */}
-                <th className='tablehead'>Last Communication Time</th>
-                <th className='tablehead'>Reading</th>
-                <th className='tablehead'>Meters</th>
-                <th className='tablehead'>Status</th>
-                {/* <th className='tablehead'>Action</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {currentPageData.map((dma) => (
-                <tr key={dma.dmaId}>
-                  <td className='tablecontent-link'>
-                    <Link
-                      // href="/app/meterlist" 
-                      // to="/app/gatewaylist"
-                      state={{ zoneId: zoneId, dmaId: dma.dmaId}}
-                      onClick={() => {
-                        console.log("DMA", dma);
-                        shiftToMeter(dma.dmaId)   
-                                  
-                      }}
-                      style={{ textDecoration: 'none', cursor: 'pointer' }}>{dma.displayName}</Link>
-                  </td>
-                  {/* <td className='tablecontent'>{dma.gatewayId}</td> */}
-                  <td className='tablecontent'>{new Date(dma.lastCommunicationTime).toLocaleString()}</td>
-                  <td className='tablecontent'>
-                    <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>{dma.reading}</span>
-                  </td>
-                  <td className='tablecontent'>
-                    <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>{dma.meters}</span>
-                  </td>
-                  {/* <td className='tablecontent'>
+              <thead style={{ backgroundColor: '#F4F5F5' }}>
+                <tr>
+                  <th className='tablehead'>DMA ID</th>
+                  {/* <th className='tablehead'>Gateway ID</th> */}
+                  <th className='tablehead'>Last Communication Time</th>
+                  <th className='tablehead'>Reading</th>
+                  <th className='tablehead'>Meters</th>
+                  <th className='tablehead'>Status</th>
+                  {/* <th className='tablehead'>Action</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                {currentPageData.map((dma) => (
+                  <tr key={dma.dmaId}>
+                    <td className='tablecontent-link'>
+                      <Link
+                        // href="/app/meterlist" 
+                        // to="/app/gatewaylist"
+                        state={{ zoneId: zoneId, dmaId: dma.dmaId }}
+                        onClick={() => {
+                          console.log("DMA", dma);
+                          shiftToMeter(dma.dmaId)
+
+                        }}
+                        style={{ textDecoration: 'none', cursor: 'pointer' }}>{dma.displayName}</Link>
+                    </td>
+                    {/* <td className='tablecontent'>{dma.gatewayId}</td> */}
+                    <td className='tablecontent'>{new Date(dma.lastCommunicationTime).toLocaleString()}</td>
+                    <td className='tablecontent'>
+                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>{dma.reading}</span>
+                    </td>
+                    <td className='tablecontent'>
+                      <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>{dma.meters}</span>
+                    </td>
+                    {/* <td className='tablecontent'>
                     <span style={{ backgroundColor: 'rgba(47, 182, 23, 1)', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: 'white' }}>{dma.status}</span>
                   </td> */}
-                   <td className='tablecontent'>
+                    <td className='tablecontent'>
                       <span style={{ ...getStatusStyle(dma.status), padding: '8px 20px' }}>
                         {dma.status}
                       </span>
                     </td>
-                  {/* <td className='tablecontent'>
+                    {/* <td className='tablecontent'>
                     <MoreVert />
                   </td> */}
-                </tr>
-              ))}
-              {zonesList.length === 0 && (
-                <tr>
-                  <td colSpan="8" className='tablecontent' style={{ textAlign: 'center' }}>No data available</td>
-                </tr>
-              )}
-            </tbody>
+                  </tr>
+                ))}
+                {zonesList.length === 0 && (
+                  <tr>
+                    <td colSpan="8" className='tablecontent' style={{ textAlign: 'center' }}>No data available</td>
+                  </tr>
+                )}
+              </tbody>
             </Table>
           )}
         </div>
         <div className='row mt-3'>
-        <div className='col-md-4'>
-          <div className='pagination-controls' style={{ marginTop: '10px', marginLeft: '10PX' }}>
-            <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
-            <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-            </select>
+          <div className='col-md-4'>
+            <div className='pagination-controls' style={{ marginTop: '10px', marginLeft: '10PX' }}>
+              <label htmlFor='itemsPerPage' style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>Items per page:</label><nsbp /><nsbp />
+              <select id='itemsPerPage' value={itemsPerPage} onChange={handleItemsPerPageChange} style={{ marginLeft: '8px' }}>
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div className='col-md-3'></div>
-        <div className='col-md-5'>
-          <div >
+          <div className='col-md-3'></div>
+          <div className='col-md-5'>
+            <div >
 
-            <Paginations
-              currentPage={currentPage}
-              totalPages={pageCount}
-              onPageChange={handlePageChange}
-            />
+              <Paginations
+                currentPage={currentPage}
+                totalPages={pageCount}
+                onPageChange={handlePageChange}
+              />
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );

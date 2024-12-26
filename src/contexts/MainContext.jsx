@@ -11,12 +11,21 @@ export const StateContextProvider = ({ children }) => {
   const [toDate, setToDate] = useState(today);
   const [isDatePickerOpen, setDatePickerOpen] = useState(false); //to Toggle date picker
 
+  // const onDateChange = (daysToSub) => {
+  //   setToDate(today);
+  //   const newDate = format(subDays(new Date(toDate), daysToSub), 'yyyy-MM-dd');
+  //   setPresentDate(newDate);
+  //   setDatePickerOpen(false);
+  // };
+
   const onDateChange = (daysToSub) => {
-    setToDate(today);
-    const newDate = format(subDays(new Date(toDate), daysToSub), 'yyyy-MM-dd');
+    const yesterday = subDays(new Date(), 1);
+    const newDate = format(subDays(yesterday, daysToSub-1), 'yyyy-MM-dd');
     setPresentDate(newDate);
+    // End date is yesterday
+    setToDate(format(yesterday, 'yyyy-MM-dd'));
     setDatePickerOpen(false);
-  };
+  }
 
   const toggleDatePicker = () => {
     setDatePickerOpen(!isDatePickerOpen);

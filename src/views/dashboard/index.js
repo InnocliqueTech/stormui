@@ -38,8 +38,11 @@ const DashDefault = () => {
     try {
       // Fetching overall dashboard values based on the selected client
       const response = await axios.post(BASE_API_URL1 + 'dashboard/getAllDashboardValues', {
-        clientId: selectedClient // Passing the selected client ID as part of the request body
+        clientId: selectedClient,
+        fromDate: presentDate, // Starting date for the data range
+        toDate: toDate 
       });
+      console.log(presentDate, toDate)
 
       // Parsing the retrieved dashboard data into a structured format
       const parsedData = parseDashboardData(response.data);

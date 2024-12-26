@@ -34,7 +34,7 @@ import ZoneSegmenation from './zoneSegmenation';
 import { useStateContext } from '../../contexts/MainContext';
 import Overflowks from './OutFlowks';
 import { ClientsContext } from '../dashboard/context';
-import { format, subDays } from 'date-fns';
+// import { format, subDays } from 'date-fns';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import DialogContent from '@mui/material/DialogContent';
@@ -374,14 +374,14 @@ const Client = () => {
   }, []);
 
 
-  // Format the current date as 'yyyy-MM-dd' using `date-fns`
-  const today = format(new Date(), 'yyyy-MM-dd');
+  // // Format the current date as 'yyyy-MM-dd' using `date-fns`
+  // const today = format(new Date(), 'yyyy-MM-dd');
 
-  // Calculate the date 6 days before today and format it as 'yyyy-MM-dd'
-  const fromdate = format(subDays(new Date(today), 6), 'yyyy-MM-dd');
+  // // Calculate the date 6 days before today and format it as 'yyyy-MM-dd'
+  // const fromdate = format(subDays(new Date(today), 6), 'yyyy-MM-dd');
 
-  // Assign the formatted current date to `todayDate`
-  const todayDate = today;
+  // // Assign the formatted current date to `todayDate`
+  // const todayDate = today;
 
 
 
@@ -395,8 +395,8 @@ const Client = () => {
         const requestBody = {
           clientId: selectedClient, // Selected client ID
           zoneId: selectedZone || 0, // Use 0 as the default zone ID if none is selected
-          fromDate: fromdate, // Start date for the data range
-          toDate: todayDate // End date for the data range
+          fromDate: presentDate, // Start date for the data range
+          toDate: toDate // End date for the data range
         };
 
         // Log the request body for debugging

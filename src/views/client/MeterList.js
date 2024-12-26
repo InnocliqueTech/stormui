@@ -195,7 +195,7 @@ useEffect(() => {
             <thead>
               <tr>
                 <th className='tablehead'>CAN No</th>
-                <th className='tablehead'>Meter Id</th>
+                <th className='tablehead'>Meter Number</th>
                 <th className='tablehead'>Gateway Id</th>
                 <th className='tablehead'>DEVEUI</th>
                 <th className='tablehead'>Zone No</th>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 // import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
@@ -31,10 +31,10 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const MeterList = ({meterData, isSearching, searchValue, searchType, load,
-  totalItems, itemsPerPage, currentPage, handlePage, handleItemsPerPage, handleClickRef  }) => {
+const MeterList = ({ meterData, isSearching, searchValue, searchType, load,
+  totalItems, itemsPerPage, currentPage, handlePage, handleItemsPerPage, handleClickRef }) => {
   // const [defaultMeterList, setDefaultMeterList] = useState([]);
-      console.log("meterData", meterData);
+  console.log("meterData", meterData);
   const location = useLocation();
   // const {
   //   //  selectedClient,
@@ -59,67 +59,19 @@ const MeterList = ({meterData, isSearching, searchValue, searchType, load,
   console.log('gatewayId:', gatewayId);
   console.log(setLoading)
   console.log(setdisplayedMeterList)
-  // const zId = zoneId || selectedZone || 0
-  // const dId = dmaId || selectedDma || 0
-  // const gId = gatewayId || selectedGateway || 0
 
-  // useEffect(() => {
-  //   if (!isSearching) {
-  
-  //     getDashboardData();
-  //   }
-  // }, [isSearching, currentPage, itemsPerPage]);
+  useEffect(() => {
+    if (!isSearching && !searchType && !searchValue) {
+      // getDashboardData();
+    }
+  }, [isSearching, currentPage, itemsPerPage, searchType, searchValue]);
 
-//   useEffect(() => {
-//   // Only fetch default data when not searching and searchType/searchValue are empty
-//   if (!isSearching && !searchType && !searchValue) {
-//     getDashboardData();
-//   }
-// }, [isSearching, currentPage, itemsPerPage, searchType, searchValue]);
 
-useEffect(() => {
-  if (!isSearching && !searchType && !searchValue) {
+  useEffect(() => {
     // getDashboardData();
-  }
-}, [isSearching, currentPage, itemsPerPage, searchType, searchValue]);
 
+  }, [isSearching])
 
-useEffect(() => {
-  // getDashboardData();
-
-},[isSearching])
-
-
-  // useEffect(() => {
-  //   getDashboardData()
-  // }, [currentPage, itemsPerPage, selectedClient, selectedZone, selectedDma, selectedGateway, selectedStatus])
-
-
-  // const getDashboardData = async () => {
-  //   const startIndex = (currentPage - 1) / itemsPerPage;
-
-  //   try {
-  //     setLoading(true);
-  //     const requestBody = {
-  //       status: selectedStatus,
-  //       clientId: selectedClient || 1,
-  //       zoneId: zId ? zId : 0,
-  //       dmaId: dId ? dId : 0,
-  //       gatewayId: gId ? gId : 0,
-  //       startIndex: startIndex,
-  //       rowCount: itemsPerPage
-  //     }
-
-  //     const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
-  //     // setMeterList(response.data.meters || []);
-  //     // setTotalItems(response.data.totalCount);
-  //     setdisplayedMeterList(response.data.meters || []);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //     setLoading(false);
-  //   }
-  // };
   const handleClickOpen = (e, data) => {
     setOpen(true);
     setData(data)
@@ -154,11 +106,6 @@ useEffect(() => {
         return { backgroundColor: 'rgba(128, 128, 128, 1)', color: '#fff' }; // Default color for other statuses
     }
   };
-
-
-  // const displayedMeterList = isSearching || (dropdownChanged && !searchValue) ? meterData : meterList;
-
-  // const displayedMeterList = isSearching ? meterData : meterList;
 
 
   return (
@@ -256,7 +203,8 @@ useEffect(() => {
                     <td className='tablecontent'>{meter.remarks}</td>
                   </tr>
                 ))
-              )}
+              )
+              }
             </tbody>
           </Table>
           {/* Pagination controls, items per page selector, and refresh icon */}

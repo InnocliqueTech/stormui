@@ -655,8 +655,13 @@ const Client = () => {
       setTotalItems(response.data.totalCount);
 
       // Set the meter data in the state
-      setMeterData(response.data.meters || []); // Fallback to empty array if meters data is not present
-      setFiteredMeterData(response.data.meters || []); // Store filtered meter data
+      // setMeterData(response.data.meters || []); // Fallback to empty array if meters data is not present
+
+      const meters = response.data.meters || [];
+      setMeterData(meters); 
+      console.log(meterData)
+      // setFiteredMeterData(response.data.meters || []); // Store filtered meter data
+      setFiteredMeterData(meters.slice(0, itemsPerPage));
       console.log(filteredmeterData)
       console.log(meterData)
 
@@ -664,7 +669,9 @@ const Client = () => {
 
     } catch (error) {
       console.error('Error fetching data:', error); // Log any error that occurs during the fetch
-      setLoading(false); // Ensure loading state is reset even in case of an error
+     // Ensure loading state is reset even in case of an error
+    } finally{
+      setLoading(false)
     }
   };
 
@@ -737,9 +744,18 @@ useEffect(() => {
     const startIdx = (currentPage - 1) * itemsPerPage;
   const endIdx = startIdx + itemsPerPage;
   setFiteredMeterData(meterData.slice(startIdx, endIdx));
+  }else {
+    // If not searching, show all data
+    const startIdx = (currentPage - 1) * itemsPerPage;
+    const endIdx = startIdx + itemsPerPage;
+    setFiteredMeterData(meterData.slice(startIdx, endIdx));
   }
   
-}, [meterData, currentPage, itemsPerPage]);
+}, [meterData, currentPage, itemsPerPage, isSearching]);
+
+useEffect(() => {
+  getDashboardData(1, itemsPerPage); // Load initial data with default page and items per page
+}, []);
 
 
   return (

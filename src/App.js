@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import routes, { renderRoutes } from './routes';
 import { ClientsProvider } from './views/dashboard/context';
 import { FilterProvider } from './views/dashboard/context/filter';
-import IdleTimerComponent from './views/auth/IdleTimerComponent';
+// import IdleTimerComponent from './views/auth/IdleTimerComponent';
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
         <FilterProvider>
           <BrowserRouter basename={process.env.REACT_APP_BASE_NAME}>
             {renderRoutes(routes)}
-            <IdleTimerComponent timeout={300000} />
+            {/* <IdleTimerComponent timeout={300000} /> */}
           </BrowserRouter>
         </FilterProvider>
       </ClientsProvider>

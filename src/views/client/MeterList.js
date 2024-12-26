@@ -34,7 +34,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 const MeterList = ({meterData, isSearching, searchValue, searchType, load,
   totalItems, itemsPerPage, currentPage, handlePage, handleItemsPerPage, handleClickRef  }) => {
   // const [defaultMeterList, setDefaultMeterList] = useState([]);
-
+      console.log("meterData", meterData);
   const location = useLocation();
   // const {
   //   //  selectedClient,

@@ -657,6 +657,8 @@ const Client = () => {
       // Set the meter data in the state
       setMeterData(response.data.meters || []); // Fallback to empty array if meters data is not present
       setFiteredMeterData(response.data.meters || []); // Store filtered meter data
+      console.log(filteredmeterData)
+      console.log(meterData)
 
       setLoading(false); // Set loading state to false after data is fetched
 
@@ -1272,7 +1274,7 @@ const handleSearch = async (value) => {
               <Row container style={{ backgroundColor: '#000' }}>
                 <Col md={10} sm={12} xs={10}>
                   <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                    Supply Details
+                    Supply Details1
                   </DialogTitle>
                 </Col>
                 <Col md={1} sm={1} xs={1}>

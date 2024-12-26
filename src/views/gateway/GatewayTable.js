@@ -31,7 +31,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   fullWidth: true,
 }));
 
-const GatewayTable = ({onClickGateWay, gatewayIdClick}) => {
+const GatewayTable = ({onClickGateWay}) => {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [gateways, setGateways] = useState([]);
@@ -104,6 +104,7 @@ const offset = (currentPage - 1) * itemsPerPage;
 
 // Slices the `gateways` array to retrieve data for the current page
 const currentPageData = gateways.slice(offset, offset + itemsPerPage);
+console.log(currentPageData)
 
 // Calculates the total number of pages based on the `gateways` length and items per page
 const pageCount = Math.ceil(gateways.length / itemsPerPage);
@@ -111,7 +112,7 @@ const pageCount = Math.ceil(gateways.length / itemsPerPage);
 // Determines the style for gateway status based on its value
 const getStatusStyle = (status) => {
   switch (status) {
-    case 'Active': // Style for 'Active' status
+    case 'Working': // Style for 'Active' status
       return { backgroundColor: 'rgba(47, 182, 23, 1)', color: '#fff' };
     case 'Inactive': // Style for 'Inactive' status
       return { backgroundColor: 'rgba(255, 0, 0, 1)', color: '#fff' };
@@ -126,7 +127,7 @@ const getStatusStyle = (status) => {
     <div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 10 }}>
       <Row>
         <Col md={9} sm={7} xs={7}>
-        {gatewayIdClick == true ? 'click' : <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Gateways</span>}
+        {/* {gatewayIdClick == true ? 'click' : <span style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Gateways</span>} */}
           
         </Col>
       </Row>
@@ -168,8 +169,9 @@ const getStatusStyle = (status) => {
                         // to="/app/meterlist"
                         state={{ zoneId: zoneId, dmaId: dmaId, gatewayId: gateway.id }}
                         onClick={() => {
-                          console.log('Link clicked for dmaId:', zoneId, dmaId, gateway.id)
-                          onClickGateWay()
+                          const gatewayId = gateway.id
+                          console.log('Link clicked for dmaId:', zoneId, dmaId, gatewayId)
+                          onClickGateWay(zoneId, dmaId, gatewayId)
                         }}
                       >
                         {gateway.gatewayId}

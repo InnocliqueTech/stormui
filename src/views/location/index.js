@@ -8,8 +8,8 @@ import map from '../../assets/images/location-map.webp';
 
 const dummyData = {
   Population: '3,23,412',
-  'no.of Households': '61840',
-  source: 'Lower Manair dam',
+  'No.of Households': '61840',
+  Source: 'Lower Manair dam',
   'No. of Wards': '60',
   'Distribution length': '315 KMS',
   'Installed Capacity': '58 MD',
@@ -57,14 +57,10 @@ export default function Location() {
           <div className="info">
             <h3>About</h3>
             <p className="first-para">
-              I am a passionate and detail-oriented UX designer with 3+ years of experience creating user-centered interfaces for web and
-              mobile applications. I am highly skilled in user research, wireframing, prototyping, and usability testing. I am a strong
-              believer in the power of design to solve problems and create a positive user experience.
+            The primary objective of the Karimnagar Smart City Project is to improve the quality of life of even poorest of poor and
+            improve happiness index of all its citizens.
             </p>
-            <p className="second-para">
-              “The primary objective of the Karimnagar Smart City Project is to improve the quality of life of even poorest of poor and
-              improve happiness index of all its citizens.”
-            </p>
+          
           </div>
           {/* <div className="area-data">
             {Object.keys(dummyData).map((item) => {

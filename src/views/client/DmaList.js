@@ -64,9 +64,9 @@ const DmaList = React.memo(({ shiftToMeter }) => {
 
   const getStatusStyle = (status) => {
     switch (status) {
-      case 'Active':
+      case 'Working':
         return { backgroundColor: 'rgba(47, 182, 23, 1)', color: '#fff' };
-      case 'Inactive':
+      case 'Not Working':
         return { backgroundColor: 'rgba(255, 0, 0, 1)', color: '#fff' };
       default:
         return { backgroundColor: 'white', color: '#fff' }; // Default color for other statuses

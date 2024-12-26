@@ -6,6 +6,7 @@ import zone from '../../assets/images/water_drops.svg';
 // import download from '../../assets/images/download.svg';
 import info from "../../assets/images/info.svg"
 // import { useStateContext } from '../../contexts/MainContext';
+import { format } from 'date-fns';
 
 function ZoneTable({ dashboardData }) {
   // const { presentDate, toDate } = useStateContext();
@@ -66,7 +67,10 @@ function ZoneTable({ dashboardData }) {
                   </span>
 
                 </td>
-                <td className='clienttabletext'> {item.date || '-'}</td>
+                <td className='clienttabletext'>
+                {format(new Date(item.date), 'dd-MM-yyyy') || '-'}
+                   {/* {item.date || '-'} */}
+                   </td>
                 <td className='clienttabletext'>
                   <span style={{ backgroundColor: 'rgba(149, 172, 255, 0.2)', padding: 5, paddingLeft: 25, paddingRight: 25, borderRadius: 30 }}>
                     {item.dma || '-'}

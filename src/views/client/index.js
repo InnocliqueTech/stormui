@@ -606,7 +606,7 @@ const Client = () => {
     console.log(newPage); // Log the new page number for debugging
 
     // Fetch the data for the new page using the updated page number and the current items per page
-    getDashboardData(newPage, itemsPerPage);
+   if(!isSearching) getDashboardData(newPage, itemsPerPage);
   };
 
   // Function to handle the change of items per page
@@ -617,7 +617,7 @@ const Client = () => {
     setCurrentPage(1); // Reset the current page to 1 when items per page changes to avoid exceeding the new page count
 
     // Fetch the data for the first page with the new items per page value
-    getDashboardData(1, e);
+    if(!isSearching) getDashboardData(1, e);
   };
 
 
@@ -718,6 +718,7 @@ const handleSearch = async (value) => {
 
     // Update the meter data with the search results
     setMeterData(response.data.meterList || []); // Set the meter data to the result of the search (empty array if no data)
+    setTotalItems(response.data.meterList.length || 0);
     setFiteredMeterData(response.data.meterList || []); // Also update the filtered meter data
 
     console.log(meterData); // Debugging: Log the meter data after the search to check if it's updated
@@ -730,6 +731,15 @@ const handleSearch = async (value) => {
     setLoading(false); // Set loading state to false to stop the loading indicator
   }
 };
+
+useEffect(() => {
+  if(isSearching){
+    const startIdx = (currentPage - 1) * itemsPerPage;
+  const endIdx = startIdx + itemsPerPage;
+  setFiteredMeterData(meterData.slice(startIdx, endIdx));
+  }
+  
+}, [meterData, currentPage, itemsPerPage]);
 
 
   return (
@@ -1274,7 +1284,7 @@ const handleSearch = async (value) => {
               <Row container style={{ backgroundColor: '#000' }}>
                 <Col md={10} sm={12} xs={10}>
                   <DialogTitle style={{ color: '#fff' }} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                    Supply Details1
+                    Supply Details
                   </DialogTitle>
                 </Col>
                 <Col md={1} sm={1} xs={1}>

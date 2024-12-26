@@ -685,15 +685,18 @@ const handleClickRefresh = () => {
   setSelectedDma(0); // Reset to default DMA ID (0)
   setSelectedGateway(0); // Reset to default gateway ID (0)
   setSelectedStatus(0); // Reset to default status (0)
-
+  setCurrentPage(1);
+  setSearchValue(''); 
+  setIsSearching(false);
+  setSearchType("");
   console.log(selectedZone, selectedDma); // Debugging: Log the current selected zone and DMA (before the state is updated)
 
   // Manually reset the global variables for zone ID (zId) and DMA ID (dId)
   zId = 0;
   dId = 0;
 
-  // Call the getDashboardData function with default parameters to refresh the data
-  getDashboardData(1, 5, zId, dId); // Fetch the data with page 1, 5 items per page, and default filter values
+  // Call the getDashboardData function with default parameters to refresh the data currentPage, itemsPerPage
+  getDashboardData(1, itemsPerPage, zId, dId); // Fetch the data with page 1, 5 items per page, and default filter values
 };
 
 // Function to handle search operation when the user provides search value
@@ -727,6 +730,7 @@ const handleSearch = async (value) => {
     setMeterData(response.data.meterList || []); // Set the meter data to the result of the search (empty array if no data)
     setTotalItems(response.data.meterList.length || 0);
     setFiteredMeterData(response.data.meterList || []); // Also update the filtered meter data
+    setCurrentPage(1);
 
     console.log(meterData); // Debugging: Log the meter data after the search to check if it's updated
 
@@ -744,13 +748,7 @@ useEffect(() => {
     const startIdx = (currentPage - 1) * itemsPerPage;
   const endIdx = startIdx + itemsPerPage;
   setFiteredMeterData(meterData.slice(startIdx, endIdx));
-  }else {
-    // If not searching, show all data
-    const startIdx = (currentPage - 1) * itemsPerPage;
-    const endIdx = startIdx + itemsPerPage;
-    setFiteredMeterData(meterData.slice(startIdx, endIdx));
   }
-  
 }, [meterData, currentPage, itemsPerPage, isSearching]);
 
 useEffect(() => {

@@ -133,7 +133,7 @@ const DmaList = React.memo(({ shiftToMeter }) => {
                   </td> */}
                     <td className='tablecontent'>
                       <span style={{ ...getStatusStyle(dma.status), padding: '8px 20px' }}>
-                        {dma.status}
+                        {dma.status == 'null' ? "Not Working" : dma.status}
                       </span>
                     </td>
                     {/* <td className='tablecontent'>

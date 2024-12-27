@@ -202,7 +202,7 @@ const getStatusStyle = (status) => {
                     {/* <td className='tablecontent'>{gateway.status}</td> */}
                     <td className='tablecontent'>
                       <span style={{ ...getStatusStyle(gateway.status), padding: '8px 20px' }}>
-                        {gateway.status}
+                        {gateway.status == 'null' ? 'Not Working' : gateway.status}
                       </span>
                     </td>
 

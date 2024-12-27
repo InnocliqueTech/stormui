@@ -32,7 +32,7 @@ const Overflowks = (props) => {
     const fetchData = async () => {
       try {
         const response = await axios.post('http://49.207.11.223:3307/dashboard/getTotalOutflowInDashboard', {
-          clientId: 1,
+          clientId:selectedClient ||  1,
           zoneId: selectedZone || 0,
           fromDate: presentDate,
           toDate: toDate

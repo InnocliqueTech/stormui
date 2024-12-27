@@ -161,7 +161,7 @@ const Client = () => {
       setLoading(true);
       try {
         const requestBody = {
-          clientId: 1,
+          clientId:selectedClient || 1,
           zoneId: selectedZone || 0,
           fromDate: presentDate,
           toDate: toDate

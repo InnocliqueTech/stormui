@@ -12,6 +12,7 @@ import cans from '../../assets/images/cansCommunicated.svg';
 import axios from 'axios';
 import { useEffect, useContext, useState } from 'react';
 import { ClientsContext } from '../dashboard/context';
+import { BASE_API_URL1 } from '../../config/constant';
 import Spinner from 'react-bootstrap/Spinner';
 import MeterList from '../client/MeterList';
 // import { useStateContext } from '../../contexts/MainContext';
@@ -34,11 +35,15 @@ export default function GatewayList(props) {
   const navigate = useNavigate();
   const [gatewayCardData, setGatewayCardData] = useState('')
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { selectedClient, zones, selectedZone, setSelectedZone, dmas, selectedDma, setSelectedDma, gateways, selectedGateway, setSelectedGateway, status, selectedStatus, setSelectedStatus } = useContext(ClientsContext);
+  const { selectedClient, zones, selectedZone, setSelectedZone, dmas, selectedDma, setSelectedDma, gateways, selectedGateway, setSelectedGateway, status, selectedStatus, setSelectedStatus,setSelectedClient } = useContext(ClientsContext);
   const [loading, setLoading] = useState(true);
   const [isTab, setIsTab] = useState(false);
 
   const [gatewayIdClick, setGatewayIdClick] = useState(false);
+    const [totalItems, setTotalItems] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5)
+    const [filteredmeterData, setFiteredMeterData] = useState([]);
   // const { onDateChange, selectedDate, setSelectedDate, isDatePickerOpen, toggleDatePicker }
   //   = useStateContext();
 
@@ -101,14 +106,70 @@ const fetchCardData = async () => {
     setLoading(false);
   } catch (error) {
     // Log any errors encountered during the API call or data processing
+    setLoading(false);
     console.error(error);
   }
 };
 
+const handleGateWayChange = (e) =>{
+  setSelectedGateway(Number(e.target.value))
+  handleClickRefresh(Number(e.target.value))
+}
 
-  const onClickGateWay = () => {
-    console.log('Gateway')
+const handleItemsPerPageChange = (e) => {
+  setItemsPerPage(Number(e));
+  setCurrentPage(1); 
+  getDashboardData(1, e);
+};
+
+const handleClickRefresh = (gId) => {
+  setSelectedClient(1);
+  setSelectedZone(0);
+  setSelectedDma(0);
+  setSelectedStatus(0);
+  setCurrentPage(1);
+  let zId = 0;
+  let dId = 0;
+  
+  let _gId = typeof gId !== "undefined" ? gId : selectedGateway || 0;
+  getDashboardData(1, itemsPerPage, zId, dId,_gId);
+};
+
+const handlePageChange = (newPage) => {
+  setCurrentPage(newPage);
+  console.log(newPage);
+  getDashboardData(newPage, itemsPerPage);
+};
+
+const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId,gId) => {
+  const startIndex = (currentPage - 1) / itemsPerPage;
+  try {
+    setLoading(true);
+    const requestBody = {
+      status: selectedStatus,
+      clientId: selectedClient || 1,
+      zoneId: zoId ? zoId : 0,
+      dmaId: dmaId ? dmaId : 0,
+      gatewayId: typeof gId !== "undefined" ? gId : selectedGateway || 0,
+      startIndex: startIndex,
+      rowCount: itemsPerPage
+    };
+    const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
+    setTotalItems(response.data.totalCount);
+    const meters = response.data.meters || [];
+    setFiteredMeterData(meters.slice(0, itemsPerPage));
+    setLoading(false);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  } finally {
+    setLoading(false);
+  }
+};
+
+  const onClickGateWay = (zoneId, dmaId, gatewayId) => {
     setGatewayIdClick(true);
+    setSelectedGateway(gatewayId);
+    getDashboardData(currentPage,itemsPerPage,zoneId,dmaId,gatewayId)
   }
 
   const handleFilterIconClick = () => {
@@ -304,7 +365,7 @@ const fetchCardData = async () => {
             <div style={{ display: "flex" }}>
               <div className="form-group selectcustom" style={{ width: "100%" }}>
                 <select className="form-control" value={selectedGateway ? selectedGateway : 0}
-                  onChange={(e) => setSelectedGateway(Number(e.target.value))}>
+                  onChange={handleGateWayChange}>
                   {/* <option>Gateways</option> */}
                   <option value={0}>All</option>
                   {gateways.map((gateway) => (
@@ -426,7 +487,16 @@ const fetchCardData = async () => {
               </div>
             </div>
           </div>
-          <MeterList />
+          <MeterList 
+            meterData={filteredmeterData}
+            totalItems={totalItems}
+            load={loading}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            handlePage={handlePageChange}
+            handleClickRef={handleClickRefresh}
+            handleItemsPerPage={handleItemsPerPageChange}
+          />
         </section>}
     </>
 

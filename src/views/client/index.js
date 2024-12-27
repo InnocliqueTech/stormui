@@ -96,6 +96,7 @@ const Client = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true); // setSelectedStatuselectedZone
+  const [meterListLoading,setMeterListLoading] = useState(false);
   const [isId, setIsId] = useState(false)
   const [dashboardTab, setDashboardTab] = useState(true)
 
@@ -630,7 +631,7 @@ const Client = () => {
     console.log("Update", selectedZone, zoId, zoneId); // Debug: Log the selected Zone and DMA IDs
 
     try {
-      setLoading(true); // Set loading state to true while the data is being fetched
+      setMeterListLoading(true); // Set loading state to true while the data is being fetched
 
       // Construct the request body with all the required filters and pagination information
       const requestBody = {
@@ -665,13 +666,13 @@ const Client = () => {
       console.log(filteredmeterData)
       console.log(meterData)
 
-      setLoading(false); // Set loading state to false after data is fetched
+      setMeterListLoading(false); // Set loading state to false after data is fetched
 
     } catch (error) {
       console.error('Error fetching data:', error); // Log any error that occurs during the fetch
      // Ensure loading state is reset even in case of an error
     } finally{
-      setLoading(false)
+      setMeterListLoading(false)
     }
   };
 
@@ -1334,7 +1335,7 @@ useEffect(() => {
           <MeterList
             meterData={filteredmeterData}
             isSearching={isSearching}
-            load={loading}
+            load={meterListLoading}
             totalItems={totalItems}
             currentPage={currentPage}
             itemsPerPage={itemsPerPage}

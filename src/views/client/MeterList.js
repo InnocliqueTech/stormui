@@ -46,7 +46,6 @@ const MeterList = ({ meterData, isSearching, searchValue, searchType, load,
   const [open, setOpen] = useState(false);
   const [data, setData] = useState("");
   // const [meterList, setMeterList] = useState([]);
-  const [loading, setLoading] = useState(load);
   // const [currentPage, setCurrentPage] = useState(1);
   // const [itemsPerPage, setItemsPerPage] = useState(5)
   // const [totalItems, setTotalItems] = useState(0);
@@ -57,7 +56,6 @@ const MeterList = ({ meterData, isSearching, searchValue, searchType, load,
   console.log('zoneId:', zoneId);
   console.log('dmaId:', dmaId);
   console.log('gatewayId:', gatewayId);
-  console.log(setLoading)
   console.log(setdisplayedMeterList)
 
   useEffect(() => {
@@ -156,7 +154,7 @@ const MeterList = ({ meterData, isSearching, searchValue, searchType, load,
               </tr>
             </thead>
             <tbody>
-              {loading ? (
+              {load ? (
                 <tr>
                   <td colSpan="12" style={{ textAlign: 'center', padding: '20px' }}>
                     <Spinner animation="border" variant="primary" />

@@ -255,7 +255,7 @@ const Overflow = () => {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
   const { presentDate, toDate } = useStateContext();
-  const {  selectedZone } = useContext(ClientsContext);
+  const {  selectedZone, selectedClient } = useContext(ClientsContext);
   const [min, setMin] = useState()
   const [max, setMax] = useState()
   const [loading, setLoading] = useState(true);

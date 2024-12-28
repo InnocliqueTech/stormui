@@ -154,7 +154,7 @@ export default function ZoneList({shiftToDma}) {
                           {zone.gatewayId}
                         </span>
                       </td>
-                      <td className='tablecontent'>{zone.lastCommunicationTime}</td>
+                      <td className='tablecontent'>{new Date(zone.lastCommunicationTime).toLocaleString()}</td>
                       <td className='tablecontent'>
                         <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>
                           {zone.reading || 'N/A'}

@@ -865,7 +865,7 @@ useEffect(() => {
                       type="text"
                       value={searchValue}
                       onChange={handleInputChange}
-                      placeholder={searchType ? `Enter ${searchType}` : ''}
+                      placeholder={searchType ? `Enter ${searchType}` : 'search...'}
                       disabled={!searchType}
                     />
 

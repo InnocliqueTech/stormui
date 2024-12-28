@@ -38,7 +38,8 @@ const options = {
             label: "Total Meters",
             fontSize: '12px',
             color: "#495057",
-            fontWeight: 400
+            fontWeight: 400,
+            formatter: () => "Loading...",
           },
           name: {
             show: true,
@@ -94,11 +95,23 @@ const TotalMeters = (props) => {
       ]);
       setOpt({
         ...options,
-        labels: [
-          `Active(${props.data.activeMeters})`, 
-          `Inactive(${props.data.inactiveMeters})`, 
-          `Faulty(${props.data.faultyMeters})`
-        ]
+        plotOptions: {
+          ...options.plotOptions,
+          pie: {
+            ...options.plotOptions.pie,
+            donut: {
+              ...options.plotOptions.pie.donut,
+              labels: {
+                ...options.plotOptions.pie.donut.labels,
+                total: {
+                  ...options.plotOptions.pie.donut.labels.total,
+                  formatter: () => props.data.totalCount
+                }
+              }
+            }
+          }
+        },
+        labels: [`Active(${props.data.activeMeters})`, `Inactive(${props.data.inactiveMeters})`, `Faulty(${props.data.faultyMeters})`]
       });
       setLoading(false);
     }

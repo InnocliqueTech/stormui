@@ -59,7 +59,7 @@ function ZoneTable({ dashboardData }) {
           {dashboardData && dashboardData.zoneDetails && dashboardData.zoneDetails.length > 0 ?
             dashboardData.zoneDetails.map((item, index) => (
               <tr key={index}>
-                <td className='clienttabletext' > Zone{item.zoneId || '-'}</td>
+                <td className='clienttabletext' > {item.zoneName || '-'}</td>
                 {/* <td className='clienttabletext'> {item.gatewayId || '-'}</td> */}
                 <td className='clienttabletext'>
                   <span style={{ backgroundColor: 'rgba(244, 245, 245, 1)', padding: 5, paddingLeft: 20, paddingRight: 20, borderRadius: 20 }}>

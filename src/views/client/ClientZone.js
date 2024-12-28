@@ -101,7 +101,7 @@ const ClientZone = (props) => {
   useEffect(() => {
     if (props && props.data && Array.isArray(props.data.zoneWiseConsumption)) {
       const consumptionData = props.data.zoneWiseConsumption.map((zone) => zone.consumption);
-      const labels = props.data.zoneWiseConsumption.map((zone) => `Zone ${zone.zoneId} (${zone.consumption} kL)`);
+      const labels = props.data.zoneWiseConsumption.map((zone) => `${zone.zoneName} (${zone.consumption} kL)`);
       console.log(labels)
 
       const totalConsumption = props.data.totalConsumption || 0; // Get the totalConsumption value

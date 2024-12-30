@@ -8,7 +8,8 @@ import React from 'react';
 // import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import AuthLogin from './FirebaseLogin';
-import loginbg from '../../../assets/images/LoginPageBG.webp';
+// import loginbg from '../../../assets/images/LoginPageBG.webp';
+import loginBg2 from '../../../assets/images/logInBg2.jpeg'
 // import logoshadow from '../../../assets/images/logo-shadow.webp'
 
 
@@ -19,7 +20,7 @@ const Signin1 = () => {
     
         <div 
          style={{
-          backgroundImage: `url(${loginbg})`,
+          backgroundImage: `url(${loginBg2})`,
           backgroundSize:'contain',
           // backgroundSize: '100vw 100vh',
           backgroundPosition: 'top center',

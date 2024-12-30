@@ -416,7 +416,7 @@ const Overflow = () => {
 
           </div>
           <div className="alerttext">
-            Total Outflow {' '}
+            Total Outflow (in kL) {' '}
             <span>
               <Image src={info} alt="gateway" />
             </span>{' '}

@@ -126,7 +126,7 @@ export default function ZoneList({shiftToDma}) {
                   <th className='tablehead'>Zone ID</th>
                   <th className='tablehead'>Gateway ID</th>
                   <th className='tablehead'>Last Communication Time</th>
-                  <th className='tablehead'>Reading</th>
+                  <th className='tablehead'>Reading (in kL)</th>
                   <th className='tablehead'>Meters</th>
                   <th className='tablehead'>Status</th>
                   {/* <th className='tablehead'>Action</th> */}

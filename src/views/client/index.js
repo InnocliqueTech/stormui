@@ -102,10 +102,10 @@ const Client = () => {
 
   const location = useLocation();
   const { id } = location.state || {};
-  const { zoneId: zoneId, dmaId: dmaId, gatewayId: gatewayId } = location.state || {};
+  const { zoneId: zoneId, dmaId: dmaId } = location.state || {};
   let zId = zoneId || selectedZone || 0
   let dId = dmaId || selectedDma || 0
-  const gId = gatewayId || selectedGateway || 0
+  //const gId = gatewayId || selectedGateway || 0
 
 
   const handleFilterIconClick = () => {
@@ -624,7 +624,7 @@ const Client = () => {
 
 
   // Function to fetch dashboard data based on pagination, zone, dma, and filter criteria
-  const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId) => {
+  const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId,gId) => {
     // Calculate the start index based on the current page and items per page
     const startIndex = (currentPage - 1) / itemsPerPage;
     console.log("Update", selectedDma, dId, dmaId); // Debug: Log the selected DMA and zone values
@@ -695,9 +695,10 @@ const handleClickRefresh = () => {
   // Manually reset the global variables for zone ID (zId) and DMA ID (dId)
   zId = 0;
   dId = 0;
+  let gId = 0;
 
   // Call the getDashboardData function with default parameters to refresh the data currentPage, itemsPerPage
-  getDashboardData(1, itemsPerPage, zId, dId); // Fetch the data with page 1, 5 items per page, and default filter values
+  getDashboardData(1, itemsPerPage, zId, dId , gId); // Fetch the data with page 1, 5 items per page, and default filter values
 };
 
 // Function to handle search operation when the user provides search value
@@ -753,7 +754,8 @@ useEffect(() => {
 }, [meterData, currentPage, itemsPerPage, isSearching]);
 
 useEffect(() => {
-  getDashboardData(1, itemsPerPage); // Load initial data with default page and items per page
+  handleClickRefresh();
+  //getDashboardData(1, itemsPerPage); // Load initial data with default page and items per page
 }, []);
 
 

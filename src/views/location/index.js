@@ -18,6 +18,17 @@ const dummyData = {
   'Present Supply': '58 MD'
 };
 
+const smartCityPilotdata = [
+  { label: "Population Covered", value: ["28,000"] },
+  { label: "Distribution Length", value: ["63.1 kms"] },
+  { label: "Installed Reservoir", value: ["2200 kl","1000 kl" ] },
+  { label: "No. of Wards", value: ["60"] },
+  { label: "No. of House Holds", value:["4455"] },
+  { label: "No. of Zones", value: ["2"] },
+  { label: "No. of DMA's", value: ["6"] }, 
+  { label: "Population Covered Percentage", value: ["8% Apporx"] }
+];
+
 
 
 export default function Location() {
@@ -47,7 +58,7 @@ export default function Location() {
       className="home-section"
     >
       <section>
-        <h3 className="welcome"> Welcome...</h3>
+        <h3 className="welcome"> Welcome</h3>
       </section>
       <section className="flex-section">
         <div className="map-img">
@@ -56,11 +67,10 @@ export default function Location() {
         <div className="about-section">
           <div className="info">
             <h3>About</h3>
-            <p className="first-para">
-            The primary objective of the Karimnagar Smart City Project is to improve the quality of life of even poorest of poor and
-            improve happiness index of all its citizens.
-            </p>
-          
+            <h6 className="first-para">
+              The primary objective of the Karimnagar Smart City Project is to improve the quality of life of even poorest of poor and
+              improve happiness index of all its citizens.
+            </h6>
           </div>
           {/* <div className="area-data">
             {Object.keys(dummyData).map((item) => {
@@ -73,24 +83,50 @@ export default function Location() {
             })}
           </div> */}
 
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
             {Object.keys(dummyData).map((item, index) => (
-              <div key={index} style={{
-                flex: "0 0 calc(33.333% - 20px)",
-                boxSizing: "border-box",
-                backgroundColor: "white",
-                padding: "10px",
-                marginBottom: "20px",
-                borderRadius: "8px",
-                // textAlign: "center",
-                marginRight: index % 3 !== 2 ? "20px" : "0", // Add margin except for the last card in a row
-              }}>
-                <p style={{ margin: "0", fontWeight: "bold", fontSize:"14px", color:"#6c757d" }}>{item}</p>
-                <h2 style={{ marginTop: "10px", fontSize:"14px" }}>{dummyData[item]}</h2>
+              <div
+                key={index}
+                style={{
+                  flex: '0 0 calc(33.333% - 20px)',
+                  boxSizing: 'border-box',
+                  backgroundColor: 'white',
+                  padding: '10px',
+                  marginBottom: '20px',
+                  borderRadius: '8px',
+                  // textAlign: "center",
+                  marginRight: index % 3 !== 2 ? '20px' : '0' // Add margin except for the last card in a row
+                }}
+              >
+                <p style={{ margin: '0', fontWeight: 'bold', fontSize: '14px', color: '#6c757d' }}>{item}</p>
+                <h2 style={{ marginTop: '10px', fontSize: '14px' }}>{dummyData[item]}</h2>
               </div>
             ))}
           </div>
-
+          <h3 style={{ fontWeight: '700', margin: '1rem auto' }}>Under Smart City Pilot Project</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+            {smartCityPilotdata.map((item, index) => (
+              <div
+                key={index}
+                style={{
+                  flex: '0 0 calc(33.333% - 20px)',
+                  boxSizing: 'border-box',
+                  backgroundColor: 'white',
+                  padding: '10px',
+                  borderRadius: '8px'
+                  // textAlign: "center",
+                  //marginRight: index % 3 !== 2 ? "20px" : "0", // Add margin except for the last card in a row
+                }}
+              >
+                <p style={{ margin: '0', fontWeight: 'bold', fontSize: '14px', color: '#6c757d' }}>{item.label}</p>
+                {item.value.map((itm, index) => (
+                  <h2 key={index} style={{ marginTop: '10px', fontSize: '14px' }}>
+                    {itm}
+                  </h2>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </div>

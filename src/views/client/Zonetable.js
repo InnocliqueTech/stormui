@@ -31,7 +31,7 @@ function ZoneTable({ dashboardData }) {
           <tr>
             <th className='clienttablehead'>Zone Id</th>
             {/* <th className='clienttablehead'>Gateway ID</th> */}
-            <th className='clienttablehead'>Reading</th>
+            <th className='clienttablehead'>Reading (in k/L)</th>
             <th className='clienttablehead'>Date</th>
             <th className='clienttablehead'>DMA</th>
             <th className='clienttablehead'>Meters</th>

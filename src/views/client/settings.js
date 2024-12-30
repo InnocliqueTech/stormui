@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, List, ListItem, useMediaQuery, useTheme, Divider, Avatar, Paper } from '@mui/material';
+import { Box,  List, ListItem, useMediaQuery, useTheme, Divider, Avatar, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './setting.css';
@@ -118,7 +118,7 @@ function Settings() {
         </Box>
 
         <Box>
-          <List className='setting-detail-list' style={{ borderRadius: 16, border: '1px solid #F4F5F5' }} sx={{
+          <List className='setting-detail-list' sx={{
             p: 0,
             width: '100%',
             marginTop: '25px'
@@ -180,12 +180,12 @@ function Settings() {
                 sx={{ marginLeft: 'auto' }}
               />
             </ListItem> */}
-            <Divider component="li" style={{ borderBottom: '1px solid #F4F5F5' }} />
-            <ListItem sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {/* <Divider component="li" style={{ borderBottom: '1px solid #F4F5F5' }} /> */}
+            <ListItem sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: 'none'}}>
               <Box sx={{ display: 'flex', alignItems: 'center', padding: '16px' }}>
                 {/* <img src={Logout} alt="Logout" width={20} height={20} /> */}
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', ml: 2 }}>
-                  <Typography gutterBottom style={{ color: '#D81B60', fontWeight: '700', fontSize: 20, }}>LogOut</Typography>
+                  {/* <Typography gutterBottom style={{ color: '#D81B60', fontWeight: '700', fontSize: 20, }}>LogOut</Typography> */}
                   {/* <Typography variant="body2" color="#ADB5BD">
                     You will be notified when customers order any product
                   </Typography> */}

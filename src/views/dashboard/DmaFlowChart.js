@@ -264,7 +264,7 @@ console.log('categories', categories)
         </Col>
         <Col md={8} sm={8} xs={8}>
           <div className="alerttext">
-            DMA Outflow {' '}
+            DMA Outflow (in kL) {' '}
             <span>
               <Image src={info} alt="gateway" />
             </span>{' '}

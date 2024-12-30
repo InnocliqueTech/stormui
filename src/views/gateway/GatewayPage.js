@@ -52,6 +52,7 @@ export default function GatewayList(props) {
 
   useEffect(() => {
     if (props && props.isTab == true) setIsTab(true)
+    handleClickRefresh(0,false)
   }, [])
 
 
@@ -122,7 +123,7 @@ const handleItemsPerPageChange = (e) => {
   getDashboardData(1, e);
 };
 
-const handleClickRefresh = (gId) => {
+const handleClickRefresh = (gId,getData=true) => {
   setSelectedClient(1);
   setSelectedZone(0);
   setSelectedDma(0);
@@ -132,7 +133,7 @@ const handleClickRefresh = (gId) => {
   let dId = 0;
   
   let _gId = typeof gId !== "undefined" ? gId : selectedGateway || 0;
-  getDashboardData(1, itemsPerPage, zId, dId,_gId);
+  if(getData) getDashboardData(1, itemsPerPage, zId, dId,_gId);
 };
 
 const handlePageChange = (newPage) => {

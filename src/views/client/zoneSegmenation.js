@@ -61,7 +61,7 @@ const ZoneSegmenation = () => {
               <th className='tablehead'>ZoneId</th>
               {/* <th className='tablehead'>Gateway ID</th> */}
               <th className='tablehead'>Last Communication Time</th>
-              <th className='tablehead'>Reading</th>
+              <th className='tablehead'>Reading (in k/L)</th>
               <th className='tablehead'>DMAS</th>
               <th className='tablehead'>Meters</th>
               <th className='tablehead'>Status</th>
@@ -71,7 +71,7 @@ const ZoneSegmenation = () => {
           <tbody>
             {currentPageData.map((customer, index) => (
               <tr key={index}>
-                <td className='clienttabletext'>{customer.zoneId || 'N/A'}</td>
+                <td className='clienttabletext'>{customer.displayName || 'N/A'}</td>
                 {/* <td className='clienttabletext'>{customer.gatewayId}</td> */}
                 <td className='clienttabletext'>{new Date(customer.lastCommunicationTime).toLocaleString()}</td>
                 <td className='clienttabletext'>

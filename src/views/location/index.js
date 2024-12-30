@@ -22,11 +22,11 @@ const smartCityPilotdata = [
   { label: "Population Covered", value: ["28,000"] },
   { label: "Distribution Length", value: ["63.1 kms"] },
   { label: "Installed Reservoir", value: ["2200 kl","1000 kl" ] },
-  { label: "No. of Wards", value: ["60"] },
+  { label: "No. of Wards", value: ["10"] },
   { label: "No. of House Holds", value:["4455"] },
   { label: "No. of Zones", value: ["2"] },
   { label: "No. of DMA's", value: ["6"] }, 
-  { label: "Population Covered Percentage", value: ["8% Apporx"] }
+  { label: "Population Covered Percentage", value: ["8%"] }
 ];
 
 

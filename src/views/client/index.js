@@ -96,7 +96,7 @@ const Client = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true); // setSelectedStatuselectedZone
-  const [meterListLoading,setMeterListLoading] = useState(false);
+  const [meterListLoading, setMeterListLoading] = useState(false);
   const [isId, setIsId] = useState(false)
   const [dashboardTab, setDashboardTab] = useState(true)
 
@@ -162,7 +162,7 @@ const Client = () => {
       setLoading(true);
       try {
         const requestBody = {
-          clientId:selectedClient || 1,
+          clientId: selectedClient || 1,
           zoneId: selectedZone || 0,
           fromDate: presentDate,
           toDate: toDate
@@ -607,7 +607,7 @@ const Client = () => {
     console.log(newPage); // Log the new page number for debugging
 
     // Fetch the data for the new page using the updated page number and the current items per page
-   if(!isSearching) getDashboardData(newPage, itemsPerPage);
+    if (!isSearching) getDashboardData(newPage, itemsPerPage);
   };
 
   // Function to handle the change of items per page
@@ -618,18 +618,18 @@ const Client = () => {
     setCurrentPage(1); // Reset the current page to 1 when items per page changes to avoid exceeding the new page count
 
     // Fetch the data for the first page with the new items per page value
-    if(!isSearching) getDashboardData(1, e);
+    if (!isSearching) getDashboardData(1, e);
   };
 
 
 
   // Function to fetch dashboard data based on pagination, zone, dma, and filter criteria
-  const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId,gId) => {
+  const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId, gId) => {
     // Calculate the start index based on the current page and items per page
-    const startIndex = (currentPage - 1) / itemsPerPage;
+    const startIndex = (currentPage - 1) * itemsPerPage;
     console.log("Update", selectedDma, dId, dmaId); // Debug: Log the selected DMA and zone values
     console.log("Update", selectedZone, zoId, zoneId); // Debug: Log the selected Zone and DMA IDs
-
+    console.log(startIndex)
     try {
       setMeterListLoading(true); // Set loading state to true while the data is being fetched
 
@@ -640,7 +640,7 @@ const Client = () => {
         zoneId: zoId ? zoId : zId ? zId : 0, // Use the provided zone ID or fallback to `zId` or 0
         dmaId: dmaId ? dmaId : dId ? dId : 0, // Use the provided DMA ID or fallback to `dId` or 0
         gatewayId: gId ? gId : 0, // Use the gateway ID if provided, else default to 0
-        startIndex: startIndex, // Pagination: calculate the starting index
+        startIndex: currentPage-1, // Pagination: calculate the starting index
         rowCount: itemsPerPage // Pagination: number of items per page
       }
 
@@ -659,7 +659,7 @@ const Client = () => {
       // setMeterData(response.data.meters || []); // Fallback to empty array if meters data is not present
 
       const meters = response.data.meters || [];
-      setMeterData(meters); 
+      setMeterData(meters);
       console.log(meterData)
       // setFiteredMeterData(response.data.meters || []); // Store filtered meter data
       setFiteredMeterData(meters.slice(0, itemsPerPage));
@@ -670,93 +670,93 @@ const Client = () => {
 
     } catch (error) {
       console.error('Error fetching data:', error); // Log any error that occurs during the fetch
-     // Ensure loading state is reset even in case of an error
-    } finally{
+      // Ensure loading state is reset even in case of an error
+    } finally {
       setMeterListLoading(false)
     }
   };
 
 
 
-// Function to handle the refresh button click and reset all selected filter values
-const handleClickRefresh = () => {
-  // Reset all the filter values to their default state
-  setSelectedClient(1); // Reset to default client ID (1)
-  setSelectedZone(0); // Reset to default zone ID (0)
-  setSelectedDma(0); // Reset to default DMA ID (0)
-  setSelectedGateway(0); // Reset to default gateway ID (0)
-  setSelectedStatus(0); // Reset to default status (0)
-  setCurrentPage(1);
-  setSearchValue(''); 
-  setIsSearching(false);
-  setSearchType("");
-  console.log(selectedZone, selectedDma); // Debugging: Log the current selected zone and DMA (before the state is updated)
-
-  // Manually reset the global variables for zone ID (zId) and DMA ID (dId)
-  zId = 0;
-  dId = 0;
-  let gId = 0;
-
-  // Call the getDashboardData function with default parameters to refresh the data currentPage, itemsPerPage
-  getDashboardData(1, itemsPerPage, zId, dId , gId); // Fetch the data with page 1, 5 items per page, and default filter values
-};
-
-// Function to handle search operation when the user provides search value
-const handleSearch = async (value) => {
-  // Check if searchType and searchValue are both provided; if not, warn the user and exit the function
-  if (!searchType || !searchValue) {
-    console.warn('Both search type and value are required.'); // Warn if either search type or search value is missing
-    return;
-  }
-
-  // Indicate that the search process is starting by setting the searching state to true
-  setIsSearching(true); // Set isSearching state to true to indicate the search is active
-
-  // Show a loading indicator while the search request is being processed
-  setLoading(true); // Set loading state to true to display loading indicator
-
-  try {
-    // Create the request body with search parameters: search type and search value
-    const requestBody = {
-      type: searchType, // Search type selected by the user
-      value: value, // Search value entered by the user
-    };
-
-    console.log(requestBody); // Debugging: Log the request body to check what data is being sent
-
-    // Make an API call to search for meters using the provided search parameters
-    const response = await axios.post(`http://49.207.11.223:3307/meters/getMeterSearch`, requestBody);
-    console.log(response); // Debugging: Log the response from the API
-
-    // Update the meter data with the search results
-    setMeterData(response.data.meterList || []); // Set the meter data to the result of the search (empty array if no data)
-    setTotalItems(response.data.meterList.length || 0);
-    setFiteredMeterData(response.data.meterList || []); // Also update the filtered meter data
+  // Function to handle the refresh button click and reset all selected filter values
+  const handleClickRefresh = () => {
+    // Reset all the filter values to their default state
+    setSelectedClient(1); // Reset to default client ID (1)
+    setSelectedZone(0); // Reset to default zone ID (0)
+    setSelectedDma(0); // Reset to default DMA ID (0)
+    setSelectedGateway(0); // Reset to default gateway ID (0)
+    setSelectedStatus(0); // Reset to default status (0)
     setCurrentPage(1);
+    setSearchValue('');
+    setIsSearching(false);
+    setSearchType("");
+    console.log(selectedZone, selectedDma); // Debugging: Log the current selected zone and DMA (before the state is updated)
 
-    console.log(meterData); // Debugging: Log the meter data after the search to check if it's updated
+    // Manually reset the global variables for zone ID (zId) and DMA ID (dId)
+    zId = 0;
+    dId = 0;
+    let gId = 0;
 
-  } catch (error) {
-    // If an error occurs during the search, log it
-    console.error("Error fetching search data:", error); // Log the error to the console
-  } finally {
-    // Hide the loading indicator after the search is complete (whether successful or failed)
-    setLoading(false); // Set loading state to false to stop the loading indicator
-  }
-};
+    // Call the getDashboardData function with default parameters to refresh the data currentPage, itemsPerPage
+    getDashboardData(1, itemsPerPage, zId, dId, gId); // Fetch the data with page 1, 5 items per page, and default filter values
+  };
 
-useEffect(() => {
-  if(isSearching){
-    const startIdx = (currentPage - 1) * itemsPerPage;
-  const endIdx = startIdx + itemsPerPage;
-  setFiteredMeterData(meterData.slice(startIdx, endIdx));
-  }
-}, [meterData, currentPage, itemsPerPage, isSearching]);
+  // Function to handle search operation when the user provides search value
+  const handleSearch = async (value) => {
+    // Check if searchType and searchValue are both provided; if not, warn the user and exit the function
+    if (!searchType || !searchValue) {
+      console.warn('Both search type and value are required.'); // Warn if either search type or search value is missing
+      return;
+    }
 
-useEffect(() => {
-  handleClickRefresh();
-  //getDashboardData(1, itemsPerPage); // Load initial data with default page and items per page
-}, []);
+    // Indicate that the search process is starting by setting the searching state to true
+    setIsSearching(true); // Set isSearching state to true to indicate the search is active
+
+    // Show a loading indicator while the search request is being processed
+    setLoading(true); // Set loading state to true to display loading indicator
+
+    try {
+      // Create the request body with search parameters: search type and search value
+      const requestBody = {
+        type: searchType, // Search type selected by the user
+        value: value, // Search value entered by the user
+      };
+
+      console.log(requestBody); // Debugging: Log the request body to check what data is being sent
+
+      // Make an API call to search for meters using the provided search parameters
+      const response = await axios.post(`http://49.207.11.223:3307/meters/getMeterSearch`, requestBody);
+      console.log(response); // Debugging: Log the response from the API
+
+      // Update the meter data with the search results
+      setMeterData(response.data.meterList || []); // Set the meter data to the result of the search (empty array if no data)
+      setTotalItems(response.data.meterList.length || 0);
+      setFiteredMeterData(response.data.meterList || []); // Also update the filtered meter data
+      setCurrentPage(1);
+
+      console.log(meterData); // Debugging: Log the meter data after the search to check if it's updated
+
+    } catch (error) {
+      // If an error occurs during the search, log it
+      console.error("Error fetching search data:", error); // Log the error to the console
+    } finally {
+      // Hide the loading indicator after the search is complete (whether successful or failed)
+      setLoading(false); // Set loading state to false to stop the loading indicator
+    }
+  };
+
+  useEffect(() => {
+    if (isSearching) {
+      const startIdx = (currentPage - 1) * itemsPerPage;
+      const endIdx = startIdx + itemsPerPage;
+      setFiteredMeterData(meterData.slice(startIdx, endIdx));
+    }
+  }, [meterData, currentPage, itemsPerPage, isSearching]);
+
+  useEffect(() => {
+    handleClickRefresh();
+    //getDashboardData(1, itemsPerPage); // Load initial data with default page and items per page
+  }, []);
 
 
   return (

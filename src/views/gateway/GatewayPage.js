@@ -175,6 +175,8 @@ const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId,gId) => {
 
   const handleFilterIconClick = () => {
     setIsDialogOpen(true);
+    const dataToSend = { id: 3 };
+    navigate("/app/client", { state: dataToSend })
 
   };
   const handleDialogReset = () => {

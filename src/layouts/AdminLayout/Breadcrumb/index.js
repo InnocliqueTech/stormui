@@ -39,11 +39,11 @@ const Breadcrumb = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   // const [status, setStatus] = useState(0);
 
-  const handleFilterIconClick = () => {
-    // navigate('/app/meterlist');
-    setIsDialogOpen(true);
+  // const handleFilterIconClick = () => {
+  //   // navigate('/app/meterlist');
+  //   setIsDialogOpen(true);
 
-  };
+  // };
 
   const handleDialogReset = () => {
     // setIsDialogOpen(false);
@@ -59,14 +59,34 @@ const Breadcrumb = () => {
     // navigate('/app/meterlist');
   };
 
-
   const handleDialogApply = () => {
-    setIsDialogOpen(false);
-   
+    setIsDialogOpen(true);
     const dataToSend = { id: 3 };
-
     navigate("/app/client", { state: dataToSend })
-  };
+  }
+
+  // const handleDialogApply = () => {
+  //   const dataToSend = { id: 3 };
+  //   const queryParams = new URLSearchParams({
+  //     status: selectedStatus.toString(),
+  //     zone: selectedZone.toString(),
+  //     dma: selectedDma.toString(),
+  //     gateway: selectedGateway.toString(),
+  //   }).toString();
+  //   console.log(selectedDma, selectedStatus, selectedZone)
+  //   console.log(queryParams)
+  //   setIsDialogOpen(false);
+  //   setIsDialogOpen(false);
+  //   navigate({
+  //     pathname: '/app/client',
+  //     search: `?${queryParams}`,
+  //   }, {
+  //     state: dataToSend,
+  //   })
+
+  //   // navigate(`/app/client?${queryParams}`);
+  //   // navigate("/app/client", { state: dataToSend })
+  // };
   // const handleApplyFilters = () => {
   //   // Redirect to meterlist with filters as query parameters
   //   const queryParams = new URLSearchParams({
@@ -195,10 +215,10 @@ const Breadcrumb = () => {
                           </span>
                         )}
                         {location.pathname === '/app/dashboard/default' && (
-                          <h3 className='welcome' style={{fontWeight:"700"}}>Dashboard</h3>
+                          <h3 className='welcome' style={{ fontWeight: "700" }}>Dashboard</h3>
                         )}
 
-                       
+
                         {title !== 'Dashboard' && title !== 'Gateway' && (
                           <span style={{ background: "white", padding: "18px 6px 16px 6px", borderRadius: "8px", display: 'none' }}>
                             {(
@@ -357,7 +377,7 @@ const Breadcrumb = () => {
                                       <option value={0}>All</option>
                                       {gateways.map((gateway) => (
                                         <option key={gateway.id} value={gateway.id}>
-                                          {gateway.displayName}
+                                          {gateway.gatewayName}
                                         </option>
                                       ))}
                                     </select>
@@ -383,7 +403,9 @@ const Breadcrumb = () => {
                                   marginLeft: "12px",
                                   cursor: "pointer"
                                 }}
-                                onClick={handleFilterIconClick} />
+                                onClick={handleDialogApply}
+                                // onClick={handleFilterIconClick}
+                                 />
                             </div>
 
                             <Dialog open={isDialogOpen} onClose={handleDialogClose}>
@@ -469,7 +491,7 @@ const Breadcrumb = () => {
                                   Reset
                                 </Button>
                                 <Button
-                                  onClick={handleDialogApply}
+                                  // onClick={handleDialogApply}
                                   // color="primary"
                                   variant="contained"
                                   style={{ flex: 1, marginLeft: '4px', backgroundColor: "#00b4eb" }}

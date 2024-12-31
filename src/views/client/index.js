@@ -102,16 +102,20 @@ const Client = () => {
 
   const location = useLocation();
   const { id } = location.state || {};
-  const { zoneId: zoneId, dmaId: dmaId } = location.state || {};
+  const { zoneId: zoneId, dmaId: dmaId, gatewayId:gatewayId } = location.state || {};
   let zId = zoneId || selectedZone || 0
   let dId = dmaId || selectedDma || 0
+  let gateId = gatewayId || selectedGateway || 0
   //const gId = gatewayId || selectedGateway || 0
 
+  console.log(gateId)
 
-  const handleFilterIconClick = () => {
-    // navigate('/app/meterlist');
-    setIsDialogOpen(true);
-  };
+
+  // const handleFilterIconClick = () => {
+  //   console.log(id)
+  //   // navigate('/app/meterlist');
+  //   setIsDialogOpen(true);
+  // };
 
 
   useEffect(() => {
@@ -120,6 +124,7 @@ const Client = () => {
       setValue(id)
       setIsId(true)
       setDashboardTab(false)
+      setIsDialogOpen(true);
     } else {
       if (id != undefined) {
         setIsId(false)
@@ -549,13 +554,24 @@ const Client = () => {
 
   // Function to apply changes from the dialog and navigate to a new page
   const handleDialogApply = () => {
-    setIsDialogOpen(false); // Close the dialog after applying changes
+    setIsDialogOpen(true); // Close the dialog after applying changes
 
     const dataToSend = { id: 3 }; // Create an object with data to send to the next page (for example, an ID)
 
     // Navigate to the '/app/client' route and pass the data (state) as part of the navigation
     navigate("/app/client", { state: dataToSend });
+    
   };
+
+  const handleFilter = () => {
+    console.log("handleFilter", selectedStatus, zId, dId, gateId, itemsPerPage, currentPage)
+    //  gId = selectedGateway
+    // zoId = selectedZone;
+    // getDashboardData( selectedStatus,zId, dId, gateId)
+    getDashboardData(currentPage, itemsPerPage, zId, dId, gateId);
+    setIsDialogOpen(false);
+
+  }
 
   // Function to generate accessibility props for the tabs
   function a11yProps(index) {
@@ -630,6 +646,7 @@ const Client = () => {
     console.log("Update", selectedDma, dId, dmaId); // Debug: Log the selected DMA and zone values
     console.log("Update", selectedZone, zoId, zoneId); // Debug: Log the selected Zone and DMA IDs
     console.log(startIndex)
+    console.log(selectedGateway)
     try {
       setMeterListLoading(true); // Set loading state to true while the data is being fetched
 
@@ -639,12 +656,12 @@ const Client = () => {
         clientId: selectedClient || 1, // Use the selected client ID or default to 1 if not selected
         zoneId: zoId ? zoId : zId ? zId : 0, // Use the provided zone ID or fallback to `zId` or 0
         dmaId: dmaId ? dmaId : dId ? dId : 0, // Use the provided DMA ID or fallback to `dId` or 0
-        gatewayId: gId ? gId : 0, // Use the gateway ID if provided, else default to 0
+        gatewayId: gId ? gId : gateId ? gateId : 0, // Use the gateway ID if provided, else default to 0
         startIndex: currentPage-1, // Pagination: calculate the starting index
         rowCount: itemsPerPage // Pagination: number of items per page
       }
 
-      console.log(requestBody); // Debug: Log the request body to verify the parameters being sent
+      console.log("requestBody", requestBody); // Debug: Log the request body to verify the parameters being sent
 
       // Send a POST request to the API with the constructed request body
       const response = await axios.post(`${BASE_API_URL1}meters/getAllMetersWithClientIdZoneIdAndDmaId`, requestBody);
@@ -965,7 +982,9 @@ const Client = () => {
                         marginLeft: "12px",
                         cursor: "pointer"
                       }}
-                      onClick={handleFilterIconClick} />
+                      // onClick={handleFilterIconClick}
+                      onClick={handleDialogApply}
+                       />
                   </div>
 
                   <Dialog open={isDialogOpen} onClose={handleDialogClose}>
@@ -1052,7 +1071,8 @@ const Client = () => {
                         Reset
                       </Button>
                       <Button
-                        onClick={handleDialogApply}
+                        // onClick={handleDialogApply}
+                        onClick={handleFilter}
 
                         variant="contained"
                         style={{ flex: 1, marginLeft: '4px', backgroundColor: "#00b4eb" }}

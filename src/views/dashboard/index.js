@@ -22,7 +22,7 @@ const DashDefault = () => {
   // const [alertData, setAlertData] = useState({});
   const [outFlowData, setOutFlowData] = useState({});
   // const { clients, selectedClient } = useContext(ClientsContext);
-  const { clients, selectedClient, selectedZone } = useContext(ClientsContext);
+  const { clients, selectedClient, selectedZone, setSelectedZone, setSelectedDma,setSelectedGateway,setSelectedStatus} = useContext(ClientsContext);
 
   console.log(clients, 'the check');
   useEffect(() => {
@@ -98,7 +98,14 @@ const parseDashboardData = (data) => {
     }
   };
 };
-  console.log('dashboard.totaldma', dashboardData.totalDma);
+
+  useEffect(()=>{
+    setSelectedZone(0); // Reset to default zone ID (0)
+    setSelectedDma(0); // Reset to default DMA ID (0)
+    setSelectedGateway(0); // Reset to default gateway ID (0)
+    setSelectedStatus(0);
+  },[])
+
   return (
     <React.Fragment>
       <Row style={{ marginTop: "14px" }}>

@@ -12,10 +12,10 @@ const dummyData = {
   Source: 'Lower Manair dam',
   'No. of Wards': '60',
   'Distribution length': '315 KMS',
-  'Installed Capacity': '58 MD',
-  'Tap water connections': '60',
-  'Storage Capacity': '315 KMS',
-  'Present Supply': '58 MD'
+  'Installed Capacity': '84 MLD',
+  // 'Tap water connections': '60',
+  // 'Storage Capacity': '315 KMS',
+  // 'Present Supply': '58 MD'
 };
 
 const smartCityPilotdata = [
@@ -103,7 +103,7 @@ export default function Location() {
               </div>
             ))}
           </div>
-          <h3 style={{ fontWeight: '700', margin: '1rem auto' }}>Under Smart City Pilot Project</h3>
+          <h3 style={{ fontWeight: '700', margin: '1rem auto' }}>24*7 Smart City Pilot Project</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
             {smartCityPilotdata.map((item, index) => (
               <div

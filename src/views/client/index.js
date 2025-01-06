@@ -19,7 +19,7 @@ import CustomerTable from './CustomerTable';
 import ClientZone from './ClientZone';
 import ClientDma from './ClientDma';
 // import { Link } from '@mui/material';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import DmaTable from './dmatable';
 import ZoneTable from './Zonetable';
 // import Totalcounsumption from '../../src/views/dashboard/Totalcounsumption';
@@ -94,7 +94,7 @@ const Client = () => {
   const [dmaData, setDmaData] = useState({});
   const [dayDashBoardData, setDayDashBoardData] = useState({});
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [loading, setLoading] = useState(true); // setSelectedStatuselectedZone
   const [meterListLoading, setMeterListLoading] = useState(false);
   const [isId, setIsId] = useState(false)
@@ -111,11 +111,11 @@ const Client = () => {
   console.log(gateId)
 
 
-  // const handleFilterIconClick = () => {
-  //   console.log(id)
-  //   // navigate('/app/meterlist');
-  //   setIsDialogOpen(true);
-  // };
+  const handleFilterIconClick = () => {
+    // console.log(id)
+    // navigate('/app/meterlist');
+    setIsDialogOpen(true);
+  };
 
 
   useEffect(() => {
@@ -124,7 +124,7 @@ const Client = () => {
       setValue(id)
       setIsId(true)
       setDashboardTab(false)
-      setIsDialogOpen(true);
+      //setIsDialogOpen(true);
     } else {
       if (id != undefined) {
         setIsId(false)
@@ -553,18 +553,19 @@ const Client = () => {
   };
 
   // Function to apply changes from the dialog and navigate to a new page
-  const handleDialogApply = () => {
-    setIsDialogOpen(true); // Close the dialog after applying changes
+  // const handleDialogApply = () => {
+  //   setIsDialogOpen(true); // Close the dialog after applying changes
 
-    const dataToSend = { id: 3 }; // Create an object with data to send to the next page (for example, an ID)
+  //   const dataToSend = { id: 3 }; // Create an object with data to send to the next page (for example, an ID)
 
-    // Navigate to the '/app/client' route and pass the data (state) as part of the navigation
-    navigate("/app/client", { state: dataToSend });
+  //   // Navigate to the '/app/client' route and pass the data (state) as part of the navigation
+  //   navigate("/app/client", { state: dataToSend });
     
-  };
+  // };
 
   const handleFilter = () => {
     console.log("handleFilter", selectedStatus, zId, dId, gateId, itemsPerPage, currentPage)
+    setValue(3);
     //  gId = selectedGateway
     // zoId = selectedZone;
     // getDashboardData( selectedStatus,zId, dId, gateId)
@@ -771,8 +772,12 @@ const Client = () => {
   }, [meterData, currentPage, itemsPerPage, isSearching]);
 
   useEffect(() => {
-    handleClickRefresh();
-    //getDashboardData(1, itemsPerPage); // Load initial data with default page and items per page
+    if(id){
+       getDashboardData(1, itemsPerPage);
+    }else{
+      handleClickRefresh();
+    }
+    // Load initial data with default page and items per page
   }, []);
 
 
@@ -982,8 +987,8 @@ const Client = () => {
                         marginLeft: "12px",
                         cursor: "pointer"
                       }}
-                      // onClick={handleFilterIconClick}
-                      onClick={handleDialogApply}
+                      onClick={handleFilterIconClick}
+                      // onClick={handleDialogApply}
                        />
                   </div>
 

@@ -39,11 +39,11 @@ const Breadcrumb = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   // const [status, setStatus] = useState(0);
 
-  // const handleFilterIconClick = () => {
-  //   // navigate('/app/meterlist');
-  //   setIsDialogOpen(true);
+  const handleFilterIconClick = () => {
+    // navigate('/app/meterlist');
+    setIsDialogOpen(true);
 
-  // };
+  };
 
   const handleDialogReset = () => {
     // setIsDialogOpen(false);
@@ -60,9 +60,9 @@ const Breadcrumb = () => {
   };
 
   const handleDialogApply = () => {
-    setIsDialogOpen(true);
     const dataToSend = { id: 3 };
     navigate("/app/client", { state: dataToSend })
+    setIsDialogOpen(false);
   }
 
   // const handleDialogApply = () => {
@@ -403,8 +403,8 @@ const Breadcrumb = () => {
                                   marginLeft: "12px",
                                   cursor: "pointer"
                                 }}
-                                onClick={handleDialogApply}
-                                // onClick={handleFilterIconClick}
+                                // onClick={handleDialogApply}
+                                onClick={handleFilterIconClick}
                                  />
                             </div>
 
@@ -491,7 +491,7 @@ const Breadcrumb = () => {
                                   Reset
                                 </Button>
                                 <Button
-                                  // onClick={handleDialogApply}
+                                  onClick={handleDialogApply}
                                   // color="primary"
                                   variant="contained"
                                   style={{ flex: 1, marginLeft: '4px', backgroundColor: "#00b4eb" }}

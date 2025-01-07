@@ -124,7 +124,7 @@ export default function ZoneList({shiftToDma}) {
                 <tr>
                   {/* <th className='tablehead'></th> */}
                   <th className='tablehead'>Zone ID</th>
-                  <th className='tablehead'>Gateway ID</th>
+                  {/* <th className='tablehead'>Gateway ID</th> */}
                   <th className='tablehead'>Last Communication Time</th>
                   <th className='tablehead'>Reading (in kL)</th>
                   <th className='tablehead'>Meters</th>
@@ -149,11 +149,11 @@ export default function ZoneList({shiftToDma}) {
                         </Link>
                       </td>
 
-                      <td className='tablecontent'>
+                      {/* <td className='tablecontent'>
                         <span style={{ backgroundColor: '#FFF3E8', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#FF8515' }}>
                           {zone.gatewayId}
                         </span>
-                      </td>
+                      </td> */}
                       <td className='tablecontent'>{new Date(zone.lastCommunicationTime).toLocaleString()}</td>
                       <td className='tablecontent'>
                         <span style={{ backgroundColor: '#E3F2FD', padding: 8, paddingLeft: 20, paddingRight: 20, borderRadius: 20, color: '#1565C0' }}>

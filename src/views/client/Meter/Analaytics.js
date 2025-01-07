@@ -440,7 +440,7 @@ const Analytics = ({ data1, onAnalyticsData }) => {
                />
             </Col>
             <Col md={3} sm={6} xs={6}>
-            <h6 style={{fontWeight:"600"}}>Min Usage/day</h6>
+            <h6 style={{fontWeight:"600"}}>Max Usage/day</h6>
               <SemiDonutChart 
               title="Max Usage Per Day" 
               series={[maxUsagePerDay]} 

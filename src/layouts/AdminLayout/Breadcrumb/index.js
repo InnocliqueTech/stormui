@@ -468,7 +468,7 @@ const Breadcrumb = () => {
                                     <div className="form-group selectcustom" style={{ width: "100%" }}>
                                       <label>Select Gateway</label>
                                       <select className="form-control" value={selectedGateway ? selectedGateway : 0}
-                                        onChange={(e) => setSelectedGateway(Number(e.target.value))}>
+                                        onChange={(e) => setSelectedGateway(Number(e.target.value))} style={{width:"14rem"}}>
                                         {/* <option>Gateways</option> */}
                                         <option value={0}>All</option>
                                         {gateways.map((gateway) => (

@@ -129,6 +129,7 @@ const handleClickRefresh = (gId,getData=true) => {
   setSelectedDma(0);
   setSelectedStatus(0);
   setCurrentPage(1);
+  setSelectedGateway(0);
   let zId = 0;
   let dId = 0;
   
@@ -175,8 +176,8 @@ const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId,gId) => {
 
   const handleFilterIconClick = () => {
     setIsDialogOpen(true);
-    const dataToSend = { id: 3 };
-    navigate("/app/client", { state: dataToSend })
+    // const dataToSend = { id: 3 };
+    // navigate("/app/client", { state: dataToSend })
 
   };
   const handleDialogReset = () => {
@@ -201,6 +202,8 @@ const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId,gId) => {
   const ArrowBack = () => {
     console.log("click")
     setGatewayIdClick(false)
+    setSelectedGateway(0);
+
   }
 
   return (
@@ -290,7 +293,7 @@ const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId,gId) => {
                         <div className="form-group selectcustom" style={{ width: "100%" }}>
                           <label>Select Gateway</label>
                           <select className="form-control" value={selectedGateway ? selectedGateway : 0}
-                            onChange={(e) => setSelectedGateway(Number(e.target.value))}>
+                            onChange={(e) => setSelectedGateway(Number(e.target.value))} style={{width:"14rem"}}>
                             {/* <option>Gateways</option> */}
                             <option value={0}>All</option>
                             {gateways.map((gateway) => (
@@ -368,7 +371,7 @@ const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId,gId) => {
             <div style={{ display: "flex" }}>
               <div className="form-group selectcustom" style={{ width: "100%" }}>
                 <select className="form-control" value={selectedGateway ? selectedGateway : 0}
-                  onChange={handleGateWayChange}>
+                  onChange={handleGateWayChange} style={{width:"14rem"}}>
                   {/* <option>Gateways</option> */}
                   <option value={0}>All</option>
                   {gateways.map((gateway) => (
@@ -455,7 +458,7 @@ const getDashboardData = async (currentPage, itemsPerPage, zoId, dmaId,gId) => {
                         <div className="form-group selectcustom" style={{ width: "100%" }}>
                           <label>Select Gateway</label>
                           <select className="form-control" value={selectedGateway ? selectedGateway : 0}
-                            onChange={(e) => setSelectedGateway(Number(e.target.value))}>
+                            onChange={(e) => setSelectedGateway(Number(e.target.value))} style={{width:"14rem"}}>
                             {/* <option>Gateways</option> */}
                             <option value={0}>All</option>
                             {gateways.map((gateway) => (
